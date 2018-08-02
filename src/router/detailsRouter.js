@@ -5,23 +5,6 @@
 /*项目主页相关 路由*/
 export const detailsRouter = [
 	/*测评详细部分（start）*/
-
-	//测评
-	//{
-	//  path: '/project/articleInfo',
-	//  meta: {
-	//    title: '测评'
-	//  },
-	//  component: (resolve) => require(['@/views/project/articleInfo.vue'], resolve)
-	//},
-	//讨论
-	//{
-	//  path: '/project/discuss',
-	//  meta: {
-	//    title: '讨论'
-	//  },
-	//  component: (resolve) => require(['@/views/project/discuss.vue'], resolve)
-	//},
 	//文章
 	{
 		path: '/details/article',
