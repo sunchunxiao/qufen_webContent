@@ -7,100 +7,38 @@ export const writeRouter = [
 	{
 		path: "/quhomelist",
 
-		component: (resolve) => require(['@/components/realse/showproject.vue'], resolve),
-		children: [
-			{
+		component: (resolve) => require(['@/components/layout/header.vue'], resolve),
+		children: [{
 				path: '/quhomelist',
 				meta: {
 					title: '左边导航'
 				},
-				component: (resolve) => require(['@/components/realse/showprojectInfo.vue'], resolve),
-				children: [
-					{
+				component: (resolve) => require(['@/components/realse/showproject.vue'], resolve),
+				children: [{
+					path: '/quhomelist',
+					meta: {
+						title: '左边导航'
+					},
+					component: (resolve) => require(['@/components/realse/showprojectInfo.vue'], resolve),
+					children: [{
 						path: '/quhomelist',
 						meta: {
 							title: '左边导航'
 						},
 						component: (resolve) => require(['@/views/realse/publishing.vue'], resolve),
-						
-					}
-				]
-			},
-			
-			
-			
-			{
-				path: "/discussion",
-				meta: {
-					title: '发布爆料',
-				},
-				component: (resolve) => require(['@/views/realse/discussion.vue'], resolve)
-			},
-			{
-				path: "/addproject",
-				meta: {
-					title: '发布文章',
-				},
-				component: (resolve) => require(['@/views/realse/addproject.vue'], resolve)
-			},
-			{
 
-				path: '/showproject',
-				meta: {
-					title: '左边导航'
-				},
-				component: (resolve) => require(['@/components/realse/showprojectInfo.vue'], resolve),
-				children: [
-					{
-						path: '/showprojectInfo',
-						meta: {
-							title: '左边导航'
-						},
-						component: (resolve) => require(['@/components/realse/showprojectInfo.vue'], resolve),
-					},
-					
-					{
-						path: '/showproject',
-						meta: {
-							title: '发表完整评论'
-						},
-						component: (resolve) => require(['@/views/realse/publishing.vue'], resolve)
-					},
+					}]
 
-					{
-						path: '/publishing',
-						meta: {
-							title: '发表精评'
-						},
-						component: (resolve) => require(['@/views/realse/publishing.vue'], resolve)
-					},
-					{
-						path: '/publish',
-						meta: {
-							title: '发表FIND评测'
-						},
-						component: (resolve) => require(['@/views/realse/publish.vue'], resolve)
-					},
-					{
-						path: '/previewsuc',
-						meta: {
-							title: '发布成功'
-						},
-						component: (resolve) => require(['@/views/realse/previewsuc.vue'], resolve)
-					},
-					
-				]
+				}]
 			},
-		]
-	},
-	{
+			{
 				path: '/attentionselect',
 				meta: {
 					title: '选择三方认证'
 				},
 				component: (resolve) => require(['@/views/select/attentionselect.vue'], resolve)
-	},
-	{
+			},
+			{
 				path: '/official',
 				meta: {
 					title: '项目方'
@@ -128,6 +66,70 @@ export const writeRouter = [
 				},
 				component: (resolve) => require(['@/views/select/examine.vue'], resolve)
 			},
+			{
+
+				path: '/showproject',
+				meta: {
+					title: '左边导航'
+				},
+				component: (resolve) => require(['@/components/realse/showproject.vue'], resolve),
+				children: [{
+						path: '/showproject',
+						meta: {
+							title: '左边导航'
+						},
+						component: (resolve) => require(['@/components/realse/showprojectInfo.vue'], resolve),
+						children: [{
+								path: '/showproject',
+								meta: {
+									title: '发表完整评论'
+								},
+								component: (resolve) => require(['@/views/realse/publishing.vue'], resolve)
+							},
+							{
+								path: '/publishing',
+								meta: {
+									title: '发表精评'
+								},
+								component: (resolve) => require(['@/views/realse/publishing.vue'], resolve)
+							},
+							{
+								path: '/publish',
+								meta: {
+									title: '发表FIND评测'
+								},
+								component: (resolve) => require(['@/views/realse/publish.vue'], resolve)
+							},
+							{
+								path: '/previewsuc',
+								meta: {
+									title: '发布成功'
+								},
+								component: (resolve) => require(['@/views/realse/previewsuc.vue'], resolve)
+							},
+						]
+					},
+					{
+						path: "/discussion",
+						meta: {
+							title: '发布爆料',
+						},
+						component: (resolve) => require(['@/views/realse/discussion.vue'], resolve)
+					},
+					{
+						path: "/addproject",
+						meta: {
+							title: '发布文章',
+						},
+						component: (resolve) => require(['@/views/realse/addproject.vue'], resolve)
+					},
+
+				]
+			},
+
+		]
+	},
+
 	//{
 	//		    path: "/m_index",
 	//		    meta: {

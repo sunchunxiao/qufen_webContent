@@ -1,5 +1,7 @@
 <template>
-  <div style="background-color:rgb(246,246,246) ;">
+ <div>
+ 	<!--<Header></Header>-->
+ 	 <div style="background-color:rgb(246,246,246) ;">
     <div class="commmon">
       <!--左边部分-->
       <div class="common-article">
@@ -161,10 +163,12 @@
       </div>
     </div>
   </div>
+ </div>
 </template>
 
 <script>
   import { recommend } from '@/service/home';
+  import Header from '@/components/layout/header.vue'
   export default {
     name: 'discovery',
     data() {
@@ -172,9 +176,9 @@
 
       }
     },
-    created(){
-
-    },
+    components: {
+			Header
+		},
     mounted() {
 
     },

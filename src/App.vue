@@ -1,15 +1,16 @@
 <template>
 	<div id="app">
-	<div class="app-wrap">
+	<!--<div class="app-wrap">
 			<el-container>
 				<el-header>
-					<!--头部-->
+					
 					<Header></Header>
 				</el-header>
 				<router-view/>
 			</el-container>
-		</div>
+		</div>-->
 		<!--<router-view/>-->
+		<router-view/>
 	</div>
 </template>
 
@@ -22,6 +23,8 @@
 			Header
 		},
 		mounted() {
+			
+			
 			//    if (this._isMobile()) {
 			// alert("手机端");
 			//      window.location.href="https://m.qufen.top"
@@ -47,7 +50,7 @@
 		-moz-osx-font-smoothing: grayscale;
 		/*text-align: center;*/
 		color: #2c3e50;
-		/*height: 100%;*/
+		height: 100%;
 	}
 	
 	.app-wrap {

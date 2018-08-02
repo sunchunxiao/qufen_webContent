@@ -7,26 +7,38 @@ export const detailsRouter = [
 	/*测评详细部分（start）*/
 	//文章
 	{
-		path: '/details/article',
+		path: "/details",
 		meta: {
-			title: '文章'
+			title: '发现',
 		},
-		component: (resolve) => require(['@/views/details/article.vue'], resolve)
+		component: (resolve) => require(['@/components/layout/header.vue'], resolve),
+		children: [
+			//文章
+			{
+				path: '/details/article',
+				meta: {
+					title: '文章'
+				},
+				component: (resolve) => require(['@/views/details/article.vue'], resolve)
+			},
+			//爆料
+			{
+				path: '/details/burst',
+				meta: {
+					title: '爆料'
+				},
+				component: (resolve) => require(['@/views/details/burst.vue'], resolve)
+			},
+			//评测
+			{
+				path: '/details/evaluating',
+				meta: {
+					title: '爆料'
+				},
+				component: (resolve) => require(['@/views/details/evaluating.vue'], resolve)
+			},
+
+		]
 	},
-	//爆料
-	{
-		path: '/details/burst',
-		meta: {
-			title: '爆料'
-		},
-		component: (resolve) => require(['@/views/details/burst.vue'], resolve)
-	},
-	//评测
-	{
-		path: '/details/evaluating',
-		meta: {
-			title: '爆料'
-		},
-		component: (resolve) => require(['@/views/details/evaluating.vue'], resolve)
-	},
+
 ]

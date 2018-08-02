@@ -1,51 +1,62 @@
 <template>
-	<el-row>
-		<el-col :span="4">
-			<img src="../../assets/login/logo.png" class="logo">
-		</el-col>
-		<el-col :span="17">
-			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
-				<template v-for="(menu,index) in menuData">
-					<el-menu-item :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
+	<div>
+		<div class="app-wrap">
+			<el-container>
+				<el-header>
+					<!--头部-->
+					<el-row>
+						<el-col :span="4">
+							<img src="../../assets/login/logo.png" class="logo">
+						</el-col>
+						<el-col :span="17">
+							<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
+								<template v-for="(menu,index) in menuData" >
+									<el-menu-item :class="{'bor':clicked==index}" @click="changeTab(index)" :index="menu.path" :key="index" >{{menu.name}}</el-menu-item>
 
-				</template>
-				<div class="nav-wrap">
-					<input class="nav-input" type="text" placeholder="搜索您感兴趣的内容">
-					<img class="navIcon" src="../../assets/login/search.png" />
-				</div>
-			</el-menu>
-		</el-col>
-		<el-col :span="2">
-			<div class="logout" @click="release">
-				<img class="nav-release" src="../../assets/login/release.png" />
-				<a href="#"> 发布 </a>
-			</div>
-		</el-col>
-		<el-col :span="1">
-			<div class="logout">
-				<div class="headerOcenter">
-					<img class="nav-release" src="../../assets/login/onecenter.png" />
-				</div>
-				<!--<a href="#"></a>-->
-				<div class="header-select">
-					<Dropdown trigger="click" style="margin-left: 20px">
-					<img class="headerImg" :src="src" />
-					<img class="layoutV" src="" />
-					<a href="javascript:void(0)">
-						{{userNick}}
-						<Icon type="arrow-down-b"></Icon>
-					</a>
-					<DropdownMenu slot="list">
-						<DropdownItem><span  @click="attention">认证</span></DropdownItem>
-						<DropdownItem>
-							<a  @click="quit">点击注销</a>
-						</DropdownItem>
-					</DropdownMenu>
-				</Dropdown>
-				</div>
-			</div>
-		</el-col>
-	</el-row>
+								</template>
+								<div class="nav-wrap">
+									<input class="nav-input" type="text" placeholder="搜索您感兴趣的内容">
+									<img class="navIcon" src="../../assets/login/search.png" />
+								</div>
+							</el-menu>
+						</el-col>
+						<el-col :span="2">
+							<div class="logout" @click="release">
+								<img class="nav-release" src="../../assets/login/release.png" />
+								<a href="javascript:void(0)"> 发布 </a>
+							</div>
+						</el-col>
+						<el-col :span="1">
+							<div class="logout">
+								<div class="headerOcenter">
+									<img class="nav-release" src="../../assets/login/onecenter.png" />
+								</div>
+								<!--<a href="#"></a>-->
+								<div class="header-select">
+									<Dropdown trigger="click" style="margin-left: 20px">
+										<img class="headerImg" :src="src" />
+										<img class="layoutV" src="" />
+										<a href="javascript:void(0)">
+											{{userNick}}
+											<Icon type="arrow-down-b"></Icon>
+										</a>
+										<DropdownMenu slot="list">
+											<DropdownItem><span @click="attention">认证</span></DropdownItem>
+											<DropdownItem>
+												<a href="javascript:void(0)" @click="quit">点击注销</a>
+											</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
+								</div>
+							</div>
+						</el-col>
+					</el-row>
+				</el-header>
+				<router-view/>
+			</el-container>
+		</div>
+	</div>
+
 </template>
 
 <script>
@@ -58,20 +69,29 @@
 				menuData,
 				userNick: '',
 				src: "",
-				userType:''
+				userType: '',
+				clicked:''  //标识，初始化默认选中第一项
 			};
 		},
+
 		mounted() {
-			console.log(unescape(getCookie('user')),getCookie('token'))
+			$(".el-menu--horizontal li").on("click",function(){
+				console.log(111)
+//			var index = $(this).index();
+//			$(".el-menu--horizontal>.el-menu-item").removeClass("header-active");
+			$(this).css("border-bottom","2px solid rgba(64, 158, 255, 1)!important");
+			console.log($(this).css("border-bottom"))
+		});
+
 			//登录后
-			if(getCookie('username')){
-				$(".header-select").css("display","block")
-				$(".headerOcenter").css("display","none")
-			}else{
-				$(".header-select").css("display","none")
-				$(".headerOcenter").css("display","block")
+			if(getCookie('username') && getCookie('token')) {
+				$(".header-select").css("display", "block")
+				$(".headerOcenter").css("display", "none")
+			} else {
+				$(".header-select").css("display", "none")
+				$(".headerOcenter").css("display", "block")
 			}
-			
+
 			//头像
 			this.src = getCookie('img')
 			//用户名
@@ -79,25 +99,30 @@
 			//加V
 			this.userType = getCookie('userType')
 			//普通用户
-			if(this.userType ==1){
+			if(this.userType == 1) {
 				$(".layoutV").css("display", "none")
 			}
 			//项目方
-			if(this.userType ==2){
-				 $(".layoutV").attr("src", "../../static/img/p.gif")
+			if(this.userType == 2) {
+				$(".layoutV").attr("src", "../../static/img/p.gif")
 			}
 			//评测媒体
-			if(this.userType ==3){
-				 $(".layoutV").attr("src", "../../static/img/F.gif")
+			if(this.userType == 3) {
+				$(".layoutV").attr("src", "../../static/img/F.gif")
 			}
 			//机构号
-			if(this.userType ==4){
+			if(this.userType == 4) {
 				$(".layoutV").attr("src", "../../static/img/V.gif")
 			}
-			
+
 			this.handleSelect()
 		},
 		methods: {
+			 changeTab(index){
+			 	
+            this.clicked = index;
+            console.log(this.clicked)
+       },
 			attention() {
 				var _this = this
 				this.$router.push("/attentionselect")
@@ -148,6 +173,7 @@
 				console.log(unescape(getCookie('user')), getCookie('token'))
 				if(getCookie('username')) {
 					window.open('/quhomelist', "_blank")
+
 				} else {
 					this.$router.push('/user/register')
 				}
@@ -165,6 +191,45 @@
 </script>
 
 <style>
+	.bor{
+  		border-bottom:2px solid #409EFF!important;
+}
+	.header-active{
+		border-bottom:2px solid #409EFF!important;
+	}
+	.app-wrap {
+		height: 100%;
+	}
+	
+	.el-container.is-vertical {
+		height: 100%;
+	}
+	
+	.el-header,
+	.el-footer {
+		background-color: #B3C0D1;
+		color: #333;
+		text-align: center;
+		line-height: 60px;
+	}
+	
+	.el-aside {
+		background-color: #D3DCE6;
+		color: #333;
+		height: 750px;
+		text-align: center;
+		line-height: 200px;
+	}
+	
+	.el-main {
+		background-color: #E9EEF3;
+		color: #333;
+		text-align: center;
+	}
+	
+	body>.el-container {
+		margin-bottom: 40px;
+	}
 	.ivu-select-dropdown {
 		top: 70px!important;
 	}
@@ -175,9 +240,11 @@
 		position: relative;
 		border-radius: 4px;
 	}
-	.header-select{
+	
+	.header-select {
 		display: none;
 	}
+	
 	.layout-logo {
 		display: inline-block;
 		width: 300px;
@@ -212,9 +279,11 @@
 		position: absolute;
 		right: -10px;
 	}
-	.ivu-dropdown-rel{
+	
+	.ivu-dropdown-rel {
 		width: 66px;
 	}
+	
 	.ivu-dropdown-rel>a {
 		color: #fff;
 	}
@@ -337,6 +406,7 @@
 	/*.el-footer, .el-header{
 		background-color: #fff;
 	}*/
+	
 	.el-header,
 	.el-footer {
 		width: 100%;
@@ -355,6 +425,7 @@
 	
 	.el-menu--horizontal>.el-menu-item {
 		height: 59px!important;
+		/*border-bottom: none;*/
 	}
 	
 	.el-menu--horizontal li {
@@ -362,9 +433,9 @@
 		background-color: #fff!important;
 	}
 	
-	.el-menu--horizontal>.el-menu-item.is-active {
+	/*.el-menu--horizontal>.el-menu-item.is-active {
 		border-bottom: 2px solid #409EFF!important;
-	}
+	}*/
 	
 	@media only screen and (max-width: 1600px) {
 		.el-row {

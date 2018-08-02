@@ -1,4 +1,6 @@
 <template>
+	<div>
+		<!--<Header></Header>-->
 		<div style="background-color:rgb(246,246,246) ;">
 			<div class="commmon">
 				<!--左边文章-->
@@ -198,11 +200,12 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </template>
 
 <script>
 	import { recommend } from '@/service/home';
-	
+	import Header from '@/components/layout/header.vue'
 	export default {
 		name: 'discovery',
 		data() {
@@ -225,11 +228,12 @@
 				documentHeight: []
 			}
 		},
-
-		created() {
-
+		components: {
+			Header
 		},
+
 		mounted() {
+			
 			this.loadPageList() //加载文章
 			//保留this属性
 			var _this = this
@@ -341,5 +345,4 @@
 </script>
 <style lang="less">
 	@import '../../css/global.css';
-	
 </style>

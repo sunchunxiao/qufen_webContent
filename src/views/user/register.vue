@@ -1,6 +1,6 @@
 <template>
 	<div class="cx-register">
-		<!--<Header></Header>-->
+		<Header></Header>
 		<div class="registerLon">
 		<div class="bgc">
 			<div class="register-title">
@@ -63,7 +63,7 @@
 <script>
 	import { setCookie, getCookie } from '../../assets/js/cookie.js'
 	import { login } from '@/service/user'
-	import Header from '@/components/common/home.vue'
+	import Header from '@/components/layout/header'
 	export default {
 		data() {
 			return {
@@ -87,9 +87,9 @@
 				 this.phone = getCookie("username");
 //				 this.phone = getCookie("");
 			}
-			if(getCookie('username')) {
-				this.$router.push('/discovery')
-			}
+//			if(getCookie('username')) {
+//				this.$router.push('/discovery')
+//			}
 
 		},
 		methods: {
@@ -120,19 +120,14 @@
 					}
 					login(data).then(res => {
 						if(res.code == 0) {
-//							console.log(res.data);
-//							let data1 = {
-//								img: res.data.userModel.icon,
-//								user: res.data.userModel.userNick,
-//								userType: res.data.userModel.userType
-//							}
+							setCookie('changeLogin', 100, timer)
 							setCookie('img', res.data.userModel.icon, timer)
 							setCookie('user', res.data.userModel.userNick, timer)
 							setCookie('userType', res.data.userModel.userType, timer)
 							setCookie('token', res.data.s, timer)
-//							localStorage.setItem("token", res.data.s)
-//							localStorage.setItem("user", JSON.stringify(data1))
+							
 							this.$router.push("/discovery")
+//							window.open('/discovery', "_blank")
 							
 							
 						}
