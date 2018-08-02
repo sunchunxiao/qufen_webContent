@@ -1,0 +1,428 @@
+.commmon {
+	width: 1050px;
+	margin: 20px auto 0;
+	overflow: hidden;
+	padding-top: 55px;
+	position: relative;
+	min-height: 700px;
+}
+
+.content1 {
+	padding-top: 62px;
+}
+
+.common-article {
+	width: 700px;
+	margin-left: 22px;
+	float: left;
+}
+
+.common-attention {
+	position: absolute;
+	right: 0;
+	width: 314px;
+	height: 600px;
+}
+
+.common-article-wrap {
+	background-color: white;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	/*box-shadow:0 1px 3px rgba(200,200,200,0.48);*/
+	box-shadow: 0 1px 3px 0 1px 3px rgba(26, 26, 26, .1);
+}
+
+.common-article-wrap:hover {
+	box-shadow: 0 1px 3px 0 1px 3px rgba(103, 166, 255, 0.27);
+}
+
+.common-article-content {
+	padding: 20px;
+}
+
+.row {
+	display: flex;
+	position: relative;
+}
+
+.row1 {
+	align-items: center;
+}
+
+.row2 {
+	padding: 15px 0;
+}
+
+.photo {
+	width: 32px;
+	height: 32px;
+}
+
+.photo>img {
+	width: 100%;
+	border-radius: 50%;
+	border: 1px solid #dddddd;
+}
+
+.name {
+	margin-left: 10px;
+}
+
+.projectName {
+	font-size: 14px;
+	color: #333333;
+}
+
+.projectName-name {
+	font-size: 16px;
+	color: rgb(51, 51, 51);
+}
+
+.projectName-time {
+	font-size: 14px;
+	color: rgb(133, 144, 166);
+	margin-top: 5px;
+}
+
+.atten-span {
+	font-size: 16px;
+	color: rgb(133, 144, 166);
+}
+
+.discoveryBtn {
+	width: 70px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	text-align: center;
+	background-color: rgb(59, 136, 246);
+	border-radius: 4px;
+	position: absolute;
+	right: 0;
+	cursor: pointer;
+}
+
+.test {
+	font-family: PingFang-SC-Heavy;
+	font-size: 18px;
+	color: rgb(51, 51, 51);
+	overflow: hidden;
+	margin-right: 30px;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	/*! autoprefixer: off */
+	-webkit-box-orient: vertical;
+	/*  autoprefixer: on */
+	-webkit-line-clamp: 1;
+	/*火狐*/
+	display: -moz-box;
+	-moz-line-clamp: 2;
+	-moz-box-orient: vertical;
+}
+
+.test:hover {
+	color: #000;
+}
+
+.index-score {
+	font-size: 18px;
+	color: #3b88f6;
+	text-align: right;
+	font-weight: bolder;
+	position: absolute;
+	right: 7px;
+	font-family: PingFang-SC-Heavy;
+}
+
+.row4 {
+	padding: 20px 0 0;
+}
+
+.contentImg {
+	width: 227px;
+	height: 118px;
+	float: left;
+	margin-right: 25px;
+}
+
+.contentImg>img {
+	width: 100%;
+	height: 100%;
+}
+
+.row3-content {
+	height: 100px;
+	line-height: 25px;
+	font-size: 15px;
+	color: rgb(63, 69, 81);
+	line-height: 25px;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/*! autoprefixer: off */
+	-webkit-box-orient: vertical;
+	/*  autoprefixer: on */
+	-webkit-line-clamp: 4;
+
+}
+
+
+/*标签*/
+
+.crack-tag1 {
+	display: inline-block;
+	background-color: #d8e7fd;
+	border-radius: 35px;
+	width: 61px;
+	height: 22px;
+	text-align: center;
+	line-height: 22px;
+}
+
+.span-name {
+	font-size: 14px;
+	color: #3b88f6;
+}
+
+.crack-tag2 {
+	font-size: 14px;
+	color: #3b88f6;
+	letter-spacing: 0;
+	margin-left: 10px
+}
+
+
+/*文章赞*/
+
+.row5 {
+	overflow: hidden;
+	padding: 15px;
+	border-top: 1px solid #ededed;
+}
+
+.article-atten {
+	float: left;
+}
+
+.article-detail {
+	float: right;
+}
+
+.detail {
+	margin-left: 60px;
+	float: left;
+	position: relative;
+}
+
+.detail img {
+	width: 18px;
+	height: 17px;
+	position: absolute;
+	left: -22px;
+}
+
+.detail label {
+	font-size: 14px;
+	color: #aaaaaa;
+	margin-left: 5px;
+}
+
+.article-title {
+	float: left;
+}
+
+.atten-name {
+	font-size: 15px;
+	color: rgb(59, 136, 246);
+}
+
+#content {
+	overflow: scroll;
+}
+
+.item .name {
+	height: 200px;
+	background-color: green;
+	margin-bottom: 10px;
+}
+
+
+/*热门*/
+
+.attention-bag {
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(200, 200, 200, 0.48);
+}
+
+.attention-code {
+	height: 160px;
+	position: relative;
+}
+
+.attention-hot {
+	height: 300px;
+}
+
+.attention-user {
+	height: 300px;
+}
+
+.attention-wrap {
+	padding: 20px;
+}
+
+
+/*二维码*/
+
+.common-attention-code {
+	width: 116px;
+	height: 116px;
+	border: 1px solid rgba(0, 0, 0, 0.07);
+	display: inline-block;
+}
+
+.common-attention-code img {
+	width: 100%;
+	height: 100%;
+}
+
+.common-attention-down {
+	font-family: PingFang-SC-Bold;
+	font-size: 16px;
+	color: rgb(59, 136, 246);
+	width: 110px;
+	position: absolute;
+	top: 44px;
+	line-height: 28px;
+	right: 22px;
+}
+
+
+/*热门项目*/
+
+.attention-hot-title {
+	line-height: 18px;
+	overflow: hidden;
+}
+
+.attention-hot-title>img {
+	width: 7%;
+	float: left;
+}
+
+.attention-hot-pro {
+	color: rgb(51, 51, 51);
+	float: left;
+	font-size: 15px;
+	margin-left: 10px;
+	font-weight: 600;
+}
+
+.rowList {
+	align-items: center;
+	padding: 10px;
+}
+
+.photoList {
+	width: 25px;
+	height: 25px;
+}
+
+.photoList>img {
+	width: 100%;
+	border-radius: 50%;
+	border: 1px solid #dddddd;
+}
+
+.name {
+	margin-left: 10px;
+}
+
+.projectNameL {
+	font-size: 12px;
+	color: #333333;
+}
+
+.atten-spanL {
+	font-size: 14px;
+	color: rgb(133, 144, 166);
+}
+
+.btnL {
+	width: 50px;
+	height: 26px;
+	line-height: 26px;
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+	background-color: rgb(59, 136, 246);
+	border-radius: 3px;
+	position: absolute;
+	right: 10px;
+}
+
+.attenList li {}
+
+
+/*加载更多*/
+
+.row6 {
+	padding: 7px;
+	font-size: 14px;
+	/*height: 32px;*/
+	/*line-height: 32px;*/
+	color: #0084ff;
+	text-align: center;
+	border-radius: 4px;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
+	margin-bottom: 10px;
+}
+
+.end {
+	display: none;
+}
+
+@media only screen and (max-width: 1600px) {
+	.commmon {
+		width: 923px;
+	}
+	.common-article {
+		width: 635px;
+		margin-left: 18px;
+	}
+	.common-attention {
+		width: 257px;
+		
+	}
+	.common-attention-code {
+		width: 105px;
+		height: 105px;
+	}
+	.attention-code {
+		height: 138px;
+	}
+	.row3-content {
+		font-size: 15px;
+		height: 90px;
+		line-height: 22px;
+	}
+	.contentImg {
+		width: 200px;
+		height: 90px;
+		margin-right: 25px;
+	}
+	.attention-wrap {
+		padding: 15px 10px;
+	}
+	.common-attention-down {
+		width: 95px;
+		font-size: 14px;
+		right: 20px;
+	}
+	.btnL {
+		right: 0;
+	}
+}
