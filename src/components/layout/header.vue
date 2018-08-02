@@ -334,7 +334,9 @@
 		background-color: rgb(246, 246, 246);
 	}
 	/*固定头部*/
-	
+	.el-footer, .el-header{
+		background-color: #fff;
+	}
 	.el-header,
 	.el-footer {
 		width: 100%;
