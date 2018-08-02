@@ -10,8 +10,8 @@
 						</el-col>
 						<el-col :span="17">
 							<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
-								<template v-for="(menu,index) in menuData" >
-									<el-menu-item :class="{'bor':clicked==index}" @click="changeTab(index)" :index="menu.path" :key="index" >{{menu.name}}</el-menu-item>
+								<template v-for="(menu,index) in menuData">
+									<el-menu-item :class="{'bor':index==clicked}" @click="changeTab(index)" :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
 
 								</template>
 								<div class="nav-wrap">
@@ -70,18 +70,18 @@
 				userNick: '',
 				src: "",
 				userType: '',
-				clicked:''  //标识，初始化默认选中第一项
+				clicked: undefined //标识，初始化默认选中第一项
 			};
 		},
 
 		mounted() {
-			$(".el-menu--horizontal li").on("click",function(){
+			$(".el-menu--horizontal li").on("click", function() {
 				console.log(111)
-//			var index = $(this).index();
-//			$(".el-menu--horizontal>.el-menu-item").removeClass("header-active");
-			$(this).css("border-bottom","2px solid rgba(64, 158, 255, 1)!important");
-			console.log($(this).css("border-bottom"))
-		});
+				//			var index = $(this).index();
+				//			$(".el-menu--horizontal>.el-menu-item").removeClass("header-active");
+				$(this).css("border-bottom", "2px solid rgba(64, 158, 255, 1)!important");
+				console.log($(this).css("border-bottom"))
+			});
 
 			//登录后
 			if(getCookie('username') && getCookie('token')) {
@@ -118,11 +118,11 @@
 			this.handleSelect()
 		},
 		methods: {
-			 changeTab(index){
-			 	
-            this.clicked = index;
-            console.log(this.clicked)
-       },
+			changeTab(index) {
+				if(index == index) {
+					this.clicked = this.clicked === index ? undefined : index
+				}
+			},
 			attention() {
 				var _this = this
 				this.$router.push("/attentionselect")
@@ -191,12 +191,14 @@
 </script>
 
 <style>
-	.bor{
-  		border-bottom:2px solid #409EFF!important;
-}
-	.header-active{
-		border-bottom:2px solid #409EFF!important;
+	.bor {
+		border-bottom: 2px solid #409EFF!important;
 	}
+	
+	.header-active {
+		border-bottom: 2px solid #409EFF!important;
+	}
+	
 	.app-wrap {
 		height: 100%;
 	}
@@ -230,6 +232,7 @@
 	body>.el-container {
 		margin-bottom: 40px;
 	}
+	
 	.ivu-select-dropdown {
 		top: 70px!important;
 	}
@@ -432,7 +435,6 @@
 		color: rgb(133, 144, 166)!important;
 		background-color: #fff!important;
 	}
-	
 	/*.el-menu--horizontal>.el-menu-item.is-active {
 		border-bottom: 2px solid #409EFF!important;
 	}*/
