@@ -225,9 +225,7 @@
 				documentHeight: []
 			}
 		},
-//		components: {
-//			Header
-//		},
+
 		created() {
 
 		},

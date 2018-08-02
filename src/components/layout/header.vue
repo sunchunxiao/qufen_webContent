@@ -325,7 +325,7 @@
 	}
 	
 	.el-header {
-		/*padding: 0 380px;*/
+		background-color: #fff!important;
 		border-bottom: 1px solid #dcdfe2;
 		box-shadow: 0 1px 3px 0 rgba(23, 81, 153, .05);
 	}
@@ -334,9 +334,9 @@
 		background-color: rgb(246, 246, 246);
 	}
 	/*固定头部*/
-	.el-footer, .el-header{
+	/*.el-footer, .el-header{
 		background-color: #fff;
-	}
+	}*/
 	.el-header,
 	.el-footer {
 		width: 100%;

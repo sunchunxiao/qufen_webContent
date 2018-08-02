@@ -25,7 +25,7 @@ const request = (url, options = {}) => {
 
 
  //本地 栋栋
-//var url = "http://192.168.10.153:803" + url;
+// var url = "http://192.168.10.153:803" + url;
 
    // var url = "http://192.168.10.133:8081/wap" + url;
   // 数据单据处理 get请求 params
