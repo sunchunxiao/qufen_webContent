@@ -354,7 +354,7 @@
 	}
 	
 	.el-menu--horizontal>.el-menu-item {
-		height: 59px;
+		height: 59px!important;
 	}
 	
 	.el-menu--horizontal li {
