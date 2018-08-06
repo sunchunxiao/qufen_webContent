@@ -61,7 +61,7 @@
 							<!--请写下你的评论-->
 							<div class="articleF">
 								<img style="float: left;" src="../../assets/common/FIND.png" />
-								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能只对APP开放.." /></div>
+								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
 								<span class="articleBack">回复</span>
 							</div>
 							<!--<div class="previewContent">

@@ -73,7 +73,7 @@ import { getCookie} from '../../assets/js/cookie.js'
 
              // url: "http://192.168.10.151:803/kff/upload/postPicsf", //文件上传的接口地址
             params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-            fileKey: 'upfile', //服务器端获取文件数据的参数名
+            fileKey: 'file', //服务器端获取文件数据的参数名
             connectionCount: 200,//同时上传个数
             leaveConfirm: '正在上传文件'
           },
