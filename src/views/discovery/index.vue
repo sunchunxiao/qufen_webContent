@@ -13,10 +13,10 @@
 									<img slot="icon" :src="item.createUserIcon">
 								</div>
 								<div class="name">
-									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span><span class="atten-span">/ 柚子</span></div>
+									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
 									<div class="projectName-time">{{item.createTimeStr}}</div>
 								</div>
-								<div class="discoveryBtn">
+								<div @click="attention" class="discoveryBtn">
 									+ 关注
 								</div>
 							</div>
@@ -43,22 +43,23 @@
 								</div>
 							</div>
 						</div>
-						<div class="row5">
+						<div class="row5" style="cursor: pointer;" @click="article(item.postType,item.postId)">
 							<div class="article-atten">
-								<span v-if="item.postType==1" class="atten-name">专业评测</span>
+								<span v-if="item.postType==1" class="atten-name">评测</span>
 
 							</div>
 							<div class="article-detail">
-								<div class="detail zan">
-									<img src="../../assets/common/FIND1.png">
+								<!--打赏-->
+								<!--<div class="detail zan">
+									<img src="../../assets/common/FIND.png">
 									<label>{{item.donateNum}}</label>
-								</div>
+								</div>-->
 								<div class="detail index-preview">
-									<img src="../../assets/common/zan1.png">
+									<img src="../../assets/common/zan.png">
 									<label>{{item.praiseNum}}</label>
 								</div>
 								<div class="detail index-preview">
-									<img src="../../assets/common/preview1.png">
+									<img src="../../assets/common/preview.png">
 									<label>{{item.commentsNum}}</label>
 								</div>
 							</div>
@@ -81,7 +82,7 @@
 						<div class="attention-wrap">
 							<div class="common-attention-code">
 								<div style="padding: 7px;">
-									<img src="../../../build/logo.png" />
+									<img src="../../assets/common/download.png" />
 								</div>
 								<p class="common-attention-down">下载区分APP不一样的区分</p>
 							</div>
@@ -90,11 +91,14 @@
 					<!--热门项目-->
 					<div class="attention-hot attention-bag margin-bottom">
 						<div class="attention-wrap">
-							<div class="attention-hot-title">
+							<div class="margin-bottom-10 " style="font-size: 13px;">本网站更多的功能还在完善中，请耐心等待...</div>
+							<div class="margin-bottom-10 " style="font-size: 13px;">官方QQ群：820043115</div>
+							<div class="margin-bottom-10 " style="font-size: 13px;">官方微信：qudong0405</div>
+							<!--<div class="attention-hot-title">
 								<img src="../../assets/common/hot.png" />
 								<span class="attention-hot-pro">热门项目</span>
-							</div>
-							<ul class="attenList">
+							</div>-->
+							<!--<ul class="attenList">
 								<li>
 									<div class="row rowList">
 										<div class="photoList">
@@ -109,41 +113,12 @@
 										</div>
 									</div>
 								</li>
-								<li>
-									<div class="row rowList">
-										<div class="photoList">
-											<img slot="icon" src="../../assets/login/icon2.png">
-										</div>
-										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">QTU </span><span class="atten-spanL">/ 柚子</span></div>
-											<div class="projectName-timeL">18:24</div>
-										</div>
-										<div class="btnL">
-											+ 关注
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="row rowList">
-										<div class="photoList">
-											<img slot="icon" src="../../assets/login/icon2.png">
-										</div>
-										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">QTU </span><span class="atten-spanL">/ 柚子</span></div>
-											<div class="projectName-timeL">18:24</div>
-										</div>
-										<div class="btnL">
-											+ 关注
-										</div>
-									</div>
-								</li>
-								<li></li>
-								<li></li>
-							</ul>
+								
+							</ul>-->
 						</div>
 					</div>
 					<!--活跃用户-->
-					<div class="attention-user attention-bag margin-bottom">
+					<!--<div class="attention-user attention-bag margin-bottom">
 						<div class="attention-wrap">
 							<div class="attention-hot-title">
 								<img src="../../assets/common/user.png" />
@@ -164,39 +139,10 @@
 										</div>
 									</div>
 								</li>
-								<li>
-									<div class="row rowList">
-										<div class="photoList">
-											<img slot="icon" src="../../assets/login/icon2.png">
-										</div>
-										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">QTU </span><span class="atten-spanL">/ 柚子</span></div>
-											<div class="projectName-timeL">18:24</div>
-										</div>
-										<div class="btnL">
-											+ 关注
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="row rowList">
-										<div class="photoList">
-											<img slot="icon" src="../../assets/login/icon2.png">
-										</div>
-										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">QTU </span><span class="atten-spanL">/ 柚子</span></div>
-											<div class="projectName-timeL">18:24</div>
-										</div>
-										<div class="btnL">
-											+ 关注
-										</div>
-									</div>
-								</li>
-								<li></li>
-								<li></li>
+								
 							</ul>
 						</div>
-					</div>
+					</div>-->
 				</div>
 			</div>
 		</div>
@@ -206,6 +152,7 @@
 <script>
 	import { recommend } from '@/service/home';
 	import Header from '@/components/layout/header.vue'
+	import Data from '../../assets/js/date'
 	export default {
 		name: 'discovery',
 		data() {
@@ -221,6 +168,7 @@
 				loading: false,
 				bottomText: '',
 				bottomStatus: '',
+				timestr: '',
 				historyData: [],
 				postType: "",
 				state: "",
@@ -233,7 +181,7 @@
 		},
 
 		mounted() {
-			
+
 			this.loadPageList() //加载文章
 			//保留this属性
 			var _this = this
@@ -250,6 +198,11 @@
 			})
 		},
 		methods: {
+			attention() {
+				this.$alert('本功能目前只对APP开放', {
+					confirmButtonText: '确定',
+				});
+			},
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {
@@ -270,11 +223,28 @@
 				recommend(data).then(res => {
 					// console.log(res.data.recommends.rows)
 					this.itemList = res.data.recommends.rows;
+
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
 						if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
 							//							console.log(res.data.recommends.rows[i].postSmallImagesList)
 							res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
 						}
+
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+						//						console.log(nowdate)
+						var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
+
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							console.log(a1)
+							res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+						} else {
+							res.data.recommends.rows[i].createTimeStr = arr[0];
+						}
+
 						this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 						// console.log(this.tagInfos)
 						res.data.recommends.rows[i].tagInfos = this.tagInfos
@@ -309,7 +279,23 @@
 									//									console.log(res.data.recommends.rows[i].postSmallImagesList)
 									res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
 								}
-								//					 	console.log(JSON.parse( res.data.recommends.rows[i].tagInfos))
+
+								//时间  字符串切割
+								//调用 Data.customData()
+								var nowdate = Data.customData()
+								var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
+
+								this.timestr = arr[0];
+								if(nowdate == this.timestr) {
+									var a1 = arr[1].split(":")
+									console.log(a1)
+									res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+									console.log(res.data.recommends.rows[i].createTimeStr)
+								} else {
+									res.data.recommends.rows[i].createTimeStr = arr[0];
+									
+								}
+
 								this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 								// console.log(this.tagInfos)
 								res.data.recommends.rows[i].tagInfos = this.tagInfos
@@ -345,4 +331,5 @@
 </script>
 <style lang="less">
 	@import '../../css/global.css';
+	@import '../../styles/common.less';
 </style>

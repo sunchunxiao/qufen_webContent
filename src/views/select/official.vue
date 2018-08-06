@@ -27,7 +27,7 @@
 				<span class="progress-per">项目方</span>
 			</div>
 		</div>
-		<div class="content">
+		<div class="realseContent">
 			<div class="qf-type">
 				<Steps :current="current">
 					<Step title="选择类型"></Step>
@@ -92,10 +92,6 @@
 						<Input v-model="operator.mail" placeholder="请填联系邮箱"></Input>
 					</FormItem>
 
-					<!--<FormItem>
-						<Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-						<Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-					</FormItem>-->
 				</Form>
 
 			</div>

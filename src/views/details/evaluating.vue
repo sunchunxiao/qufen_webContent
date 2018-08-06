@@ -11,10 +11,10 @@
 									<img slot="icon" :src="src">
 								</div>
 								<div class="name">
-									<div class="projectName"><span class="projectName-name">{{username}} </span><span class="atten-span">/ 柚子</span></div>
-									<div class="projectName-time">{{timestr}}</div>
+									<div class="projectName"><span class="projectName-name">{{username}} </span></div>
+									<div class="projectName-time">{{timestr1}}</div>
 								</div>
-								<div class="discoveryBtn">
+								<div @click="attention" class="discoveryBtn">
 									+ 关注
 								</div>
 							</div>
@@ -33,18 +33,11 @@
 							<div class="article-atten">
 								<div class="detail1 zan">
 									<img src="../../assets/common/FIND1.png">
-									<label>{{donateNum}}</label>
+									<label>待结算</label>
 								</div>
-								<div class="detail index-preview">
-									<img src="../../assets/common/preview1.png">
-									<label>{{commentsNum}}</label>
-								</div>
+								
 							</div>
 							<div class="articleDetail">
-								<div class="detail zan">
-									<img src="../../assets/common/zan1.png">
-									<label>{{praiseNum}}</label>
-								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/shou.png">
 									<label>111</label>
@@ -53,6 +46,14 @@
 									<img src="../../assets/common/share.png">
 									<label>111</label>
 								</div>
+								<div class="detail index-preview">
+									<img src="../../assets/common/preview.png">
+									<label>{{commentsNum}}</label>
+								</div>
+								<div class="detail zan">
+									<img src="../../assets/common/zan.png">
+									<label>{{praiseNum}}</label>
+								</div>
 							</div>
 						</div>
 						<!--评论-->
@@ -60,10 +61,10 @@
 							<!--请写下你的评论-->
 							<div class="articleF">
 								<img style="float: left;" src="../../assets/common/FIND.png" />
-								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="请写下你的评论.." /></div>
+								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能只对APP开放.." /></div>
 								<span class="articleBack">回复</span>
 							</div>
-							<div class="previewContent">
+							<!--<div class="previewContent">
 								<h2>评论</h2>
 								<div class="contentList">
 									<div class="list">
@@ -77,7 +78,7 @@
 									<p class="listContent">
 										体自在EOS引力区的知识星球里有一个人，他在知识星球分享了一篇文章《数字会说明，老猫在想什么，写给eos的投资者们》，精明地推测出老猫分批地积累了上百万个EOS，这更能说明老猫看好EOS。道理很简单：因为看好，所以大量持有。
 									</p>
-									<!--点赞-->
+									
 									<div class="row articleRow">
 										<div class="article-atten">
 											<div class="detail1 zan">
@@ -93,14 +94,14 @@
 									</div>
 
 								</div>
-								<!--评论人-->
+								
 								<div class="listContent">
 									<div>
 										<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
 										<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
 									</div>
 								</div>
-								<!--评论点赞-->
+								
 								<div class="row articleRow rowLeft">
 									<div class="article-atten">
 										<div class="detail1 zan">
@@ -114,7 +115,7 @@
 									</div>
 
 								</div>
-							</div>
+							</div>-->
 						</div>
 					</div>
 
@@ -158,6 +159,7 @@
 
 <script>
 	import { articleInfo } from '@/service/home';
+	import Data from '../../assets/js/date'
 	export default {
 		name: 'discovery',
 		data() {
@@ -172,6 +174,7 @@
 				m: '',
 				donateNum: '',
 				timestr: '',
+				timestr1: '',
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
@@ -225,34 +228,28 @@
 					//						 console.log(res.data.projectEvaluationDetailResponse)
 					var data = res.data.projectEvaluationDetailResponse
 
-					//头像加V
-					var cuser = data.cUsertype
-					//						if(cuser == 1) {
-					//							$(".imgV").css("display", "none")
-					//						}
-					//						//项目方
-					//						if(cuser == 2) {
-					//							$(".imgV").attr("src", "../../../static/elevation/p.gif")
-					//						}
-					//						//评测媒体
-					//						if(cuser == 3) {
-					//							$(".imgV").attr("src", "../../../static/elevation/F.gif")
-					//						}
-					//						//机构号
-					//						if(cuser == 4) {
-					//							$(".imgV").attr("src", "../../../static/elevation/V.gif")
-					//
-					//						}
-					// console.log(JSON.parse(data.post.createUserIcon).fileUrl)
 					this.articleTitle = data.post.postTitle
 					//头像
 					this.src = data.post.createUserIcon;
 					//用户名
 					this.username = data.post.createUserName;
+					
 					//时间  字符串切割
+					//调用 Data.customData()
+					var nowdate = Data.customData()
+//					console.log(nowdate)
 					var arr = data.post.createTimeStr.split(" ")
 
 					this.timestr = arr[0];
+					
+//					console.log(this.timestr)
+					if(nowdate == this.timestr) {
+						var a1 = arr[1].split(":")
+						console.log(a1)
+						this.timestr1 = a1[0]+":"+a1[1];
+					} else {
+						this.timestr1 = arr[0];
+					}
 
 					//综合评分
 					this.totalscore = data.evaluation.totalScore;
@@ -271,11 +268,6 @@
 					this.m = data.evaluation.evauationContent
 					//标签
 					this.tag = data.post.projectCode;
-					//时间  字符串切割
-					var arr = data.post.createTimeStr.split(" ")
-					console.log(arr[0])
-					this.timestr = arr[0];
-
 					//赞助人数
 					this.donateNum = data.post.donateNum;
 					//评论人数
@@ -289,7 +281,12 @@
 
 		},
 		methods: {
-
+			
+			attention(){
+				this.$alert('本功能目前只对APP开放', {
+						confirmButtonText: '确定',
+					});
+			}
 		}
 	}
 </script>

@@ -13,7 +13,7 @@
 				<span class="progress-per">测评媒体</span>
 			</div>
 		</div>
-		<div class="content">
+		<div class="realseContent">
 			<div class="qf-type">
 				<Steps :current="current">
 					<Step title="选择类型"></Step>

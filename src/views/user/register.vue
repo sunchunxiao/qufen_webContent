@@ -111,7 +111,7 @@
 				var timer = 60 * 60 * 2
 				setCookie('username', this.phone, timer)
 				if(this.phone == "" || this.password == "") {
-					this.$alert('请输入用户名或密码', {
+					this.$alert('请输入手机号或密码', {
 						confirmButtonText: '确定',
 					});
 				} else {

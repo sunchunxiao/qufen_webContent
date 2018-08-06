@@ -6,14 +6,15 @@
 					<!--头部-->
 					<el-row>
 						<el-col :span="4">
-							<img src="../../assets/login/logo.png" class="logo">
+							<img style="cursor: pointer;" @click="dian" src="../../assets/login/logo.png" class="logo">
 						</el-col>
-						<el-col :span="17">
+						<el-col :span="16">
 							<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
 								<template v-for="(menu,index) in menuData">
-									<el-menu-item :class="{'bor':index==clicked}" @click="changeTab(index)" :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
+									<el-menu-item :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
 
 								</template>
+								<div class="understand" @click="next">了解区分</div>
 								<div class="nav-wrap">
 									<input class="nav-input" type="text" placeholder="搜索您感兴趣的内容">
 									<img class="navIcon" src="../../assets/login/search.png" />
@@ -26,7 +27,7 @@
 								<a href="javascript:void(0)"> 发布 </a>
 							</div>
 						</el-col>
-						<el-col :span="1">
+						<el-col :span="2">
 							<div class="logout">
 								<div class="headerOcenter">
 									<img class="nav-release" src="../../assets/login/onecenter.png" />
@@ -36,7 +37,7 @@
 									<Dropdown trigger="click" style="margin-left: 20px">
 										<img class="headerImg" :src="src" />
 										<img class="layoutV" src="" />
-										<a href="javascript:void(0)">
+										<a class="cx-username" href="javascript:void(0)">
 											{{userNick}}
 											<Icon type="arrow-down-b"></Icon>
 										</a>
@@ -118,6 +119,12 @@
 			this.handleSelect()
 		},
 		methods: {
+			dian(){
+				this.$router.push("/discovery")
+			},
+			next(){
+				window.open('https://www.qufen.top', "_blank")
+			},
 			changeTab(index) {
 				if(index == index) {
 					this.clicked = this.clicked === index ? undefined : index
@@ -170,7 +177,7 @@
 				//				console.log(key, keyPath);
 			},
 			release() {
-				console.log(unescape(getCookie('user')), getCookie('token'))
+//				console.log(unescape(getCookie('user')), getCookie('token'))
 				if(getCookie('username')) {
 					window.open('/quhomelist', "_blank")
 
@@ -195,9 +202,7 @@
 		border-bottom: 2px solid #409EFF!important;
 	}
 	
-	.header-active {
-		border-bottom: 2px solid #409EFF!important;
-	}
+	
 	
 	.app-wrap {
 		height: 100%;
@@ -283,8 +288,23 @@
 		right: -10px;
 	}
 	
-	.ivu-dropdown-rel {
-		width: 66px;
+	.cx-username {
+		height: 50px;
+		overflow: hidden;
+		line-height: none!important;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		/*! autoprefixer: off */
+		-webkit-box-orient: vertical;
+		/*  autoprefixer: on */
+		-webkit-line-clamp: 1;
+	}
+	
+	.cx-username:after {
+		content: "...";
+		position: absolute;
+		right: -9px;
+		top: 0px;
 	}
 	
 	.ivu-dropdown-rel>a {
@@ -362,7 +382,14 @@
 	.nav-input:focus {
 		outline: none;
 	}
-	
+	.understand{
+		width: 100px;
+		outline: none;
+		cursor: pointer;
+		color: #000;
+		float: left;
+		
+	}
 	.navIcon {
 		width: 6%;
 		position: absolute;
@@ -420,6 +447,7 @@
 	}
 	
 	.el-menu--horizontal {
+		height: 60px;
 		background-color: #fff!important;
 		box-sizing: border-box;
 		border-bottom: 1px solid #dcdfe2;
@@ -428,16 +456,15 @@
 	
 	.el-menu--horizontal>.el-menu-item {
 		height: 59px!important;
-		/*border-bottom: none;*/
+		color: #000!important;
+		font-weight: 600;
+		 border-bottom: 2px solid #409EFF!important;
 	}
 	
 	.el-menu--horizontal li {
 		color: rgb(133, 144, 166)!important;
 		background-color: #fff!important;
 	}
-	/*.el-menu--horizontal>.el-menu-item.is-active {
-		border-bottom: 2px solid #409EFF!important;
-	}*/
 	
 	@media only screen and (max-width: 1600px) {
 		.el-row {

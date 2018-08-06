@@ -5,18 +5,19 @@
 export const menuData = [
   {
     path:"/discovery",
-    name:'发现',
+    name:'推荐',
     children:''
   },
-  {
-    path:"/attention",
-    name:'关注',
-    children:''
-  },
-  {
-    path:"/project",
-    name:'项目',
-    children:''
-  }
+  
+//{
+//  path:"/attention",
+//  name:'关注',
+//  children:''
+//},
+//{
+//  path:"/project",
+//  name:'项目',
+//  children:''
+//}
 ]
 
