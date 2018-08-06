@@ -113,7 +113,7 @@
 										</div>
 									</div>
 								</li>
-								
+
 							</ul>-->
 						</div>
 					</div>
@@ -139,7 +139,7 @@
 										</div>
 									</div>
 								</li>
-								
+
 							</ul>
 						</div>
 					</div>-->
@@ -163,17 +163,12 @@
 				pageSize: 10,
 				itemList: [],
 				allLoaded: false, //是否可以上拉属性，false可以加载，true为禁止加载，就是不让往上划加载数据了
-				scrollMode: "auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
 				totalpage: 0,
 				loading: false,
-				bottomText: '',
-				bottomStatus: '',
 				timestr: '',
-				historyData: [],
 				postType: "",
 				state: "",
 				tagInfos: [],
-				documentHeight: []
 			}
 		},
 		components: {
@@ -293,7 +288,7 @@
 									console.log(res.data.recommends.rows[i].createTimeStr)
 								} else {
 									res.data.recommends.rows[i].createTimeStr = arr[0];
-									
+
 								}
 
 								this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
