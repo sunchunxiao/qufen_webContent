@@ -5,6 +5,7 @@
 		<div class="cx-code">
 			<div id="qrcode"></div>
 			<div style="color: #363E4F;margin-top: 20px;">扫码预览</div>
+			<button class="seek" @click="dian">点击查看</button>
 		</div>
 	</div>
 </template>
@@ -15,41 +16,42 @@
 		data() {
 			return {
 				c: "",
-				id: "",
-				a: ""
+				id: 0,
+				a: "",
+				post:''
 			}
 		},
 		mounted() {
 //			 console.log(JSON.parse(localStorage.url))
 			//获取用户类型和用户id
-			var post = JSON.parse(localStorage.url)
+			this.post = JSON.parse(localStorage.url)
 			//1-评测  2-讨论 3-文章',
 
-			if(post.postType == 1) {
+			if(this.post.postType == 1) {
 				//完整评测
-				if(post.modelType == 2) {
+				if(this.post.modelType == 2) {
 					this.a = "articleInfo",
-					this.id = post.postId
-
+					this.id = this.post.postId
+					
 				}
 				//单项测评
-				if(post.modelType == 3) {
+				if(this.post.modelType == 3) {
 					this.a = "evaluationLitt",
-					this.id = post.postId
+					this.id = this.post.postId
 
 				}
-				if(post.modelType == 4) {
+				if(this.post.modelType == 4) {
 					this.a = "articleInfo",
-					this.id = post.postId
+					this.id = this.post.postId
 				}
 				//2 讨论
-			} else if(post.postType == 2) {
+			} else if(this.post.postType == 2) {
 				this.a = "discuss";
-				this.id = post.postId
+				this.id = this.post.postId
 				//文章
-			} else if(post.postType == 3) {
+			} else if(this.post.postType == 3) {
 				this.a = 'article';
-				this.id = post.postId
+				this.id = this.post.postId
 			}
 
 //			console.log(this.id)
@@ -62,6 +64,34 @@
 			})
 		},
 		methods: {
+			dian(){
+				
+				if(this.post.postType == 1) {
+					this.$router.push({
+						path: "/details/evaluating",
+						query: {
+							id:this.id-0
+						}
+					})
+				}
+				if(this.post.postType == 2) {
+					this.$router.push({
+						path: "/details/burst",
+						query: {
+							id:this.id-0
+						}
+					})
+				}
+				if(this.post.postType == 3) {
+					this.$router.push({
+						path: "/details/article",
+						query: {
+							id:this.id-0
+						}
+					})
+				}
+				
+			},
 			userEvent(data) {
 //				console.log(data)
 			},
@@ -104,4 +134,14 @@
 	#qrcode img {
 		display: inline!important;
 	}
+	.seek{
+		margin-top: 15px;
+		width: 70px;
+		height: 30px;
+		color: #fff;
+		cursor: pointer;
+		background-color:rgb(59, 136, 246);
+		border-radius:4px;
+		border: none;
+		}
 </style>
