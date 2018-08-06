@@ -47,14 +47,16 @@
 						<div class="loginBtn" @click="login">立即登录</div>
 						<div class="span">
 							<input type="checkbox" name="autolog" id="autolog" />下次自动登录
-							<span class="forgetpas">忘记密码</span>
+							<!--<span class="forgetpas">忘记密码</span>-->
 							<!--<span class="toregister" style="margin-left: 26px;" @click="ToRegister">注册</span>-->
-							<el-popover  placement="top-start" width="150" trigger="click">
-									<img class="hover-img" src="../../assets/common/download.png" alt="" />
-									
-									<!--<el-button class="toregister" slot="reference">注册</el-button>-->
-									<span class="toregister" slot="reference" style="margin-left: 26px;" >注册</span>
-								</el-popover>
+							<el-popover title="请扫码下载区分" placement="top-start" width="150" trigger="click">
+								<img class="hover-img" src="../../assets/common/download.png" alt="" />
+								<span class="toregister1" slot="reference" style="margin-left: 26px;">忘记密码</span>
+							</el-popover>
+							<el-popover title="请扫码注册区分" placement="top-start" width="150" trigger="click">
+								<img class="hover-img" src="../../assets/common/register.png" alt="" />
+								<span class="toregister" slot="reference" style="margin-left: 26px;">注册</span>
+							</el-popover>
 						</div>
 
 					</div>

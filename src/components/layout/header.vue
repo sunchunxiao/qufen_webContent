@@ -179,7 +179,8 @@
 			release() {
 //				console.log(unescape(getCookie('user')), getCookie('token'))
 				if(getCookie('username')) {
-					window.open('/quhomelist', "_blank")
+//					window.open('/quhomelist', "_blank")
+					this.$router.push('/quhomelist')
 
 				} else {
 					this.$router.push('/user/register')
@@ -292,12 +293,12 @@
 		height: 50px;
 		overflow: hidden;
 		line-height: none!important;
-		text-overflow: ellipsis;
-		display: -webkit-box;
+		/*text-overflow: ellipsis;
+		display: -webkit-box;*/
 		/*! autoprefixer: off */
-		-webkit-box-orient: vertical;
+		/*-webkit-box-orient: vertical;*/
 		/*  autoprefixer: on */
-		-webkit-line-clamp: 1;
+		/*-webkit-line-clamp: 1;*/
 	}
 	
 	.cx-username:after {

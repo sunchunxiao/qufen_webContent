@@ -3,7 +3,7 @@
 	<!--<div class="app-wrap">
 			<el-container>
 				<el-header>
-					
+
 					<Header></Header>
 				</el-header>
 				<router-view/>
@@ -23,8 +23,8 @@
 			Header
 		},
 		mounted() {
-			
-			
+
+
 			//    if (this._isMobile()) {
 			// alert("手机端");
 			//      window.location.href="https://m.qufen.top"
@@ -53,15 +53,15 @@
 		height: 100%;
 		background-color: rgb(246, 246, 246);
 	}
-	
+
 	.app-wrap {
 		height: 100%;
 	}
-	
+
 	.el-container.is-vertical {
 		height: 100%;
 	}
-	
+
 	.el-header,
 	.el-footer {
 		background-color: #B3C0D1;
@@ -69,7 +69,7 @@
 		text-align: center;
 		line-height: 60px;
 	}
-	
+
 	.el-aside {
 		background-color: #D3DCE6;
 		color: #333;
@@ -77,13 +77,13 @@
 		text-align: center;
 		line-height: 200px;
 	}
-	
+
 	.el-main {
 		background-color: #E9EEF3;
 		color: #333;
 		text-align: center;
 	}
-	
+
 	body>.el-container {
 		margin-bottom: 40px;
 	}

@@ -66,7 +66,7 @@
 					<div class="articleF">
 						<img style="float: left;" src="../../assets/common/FIND.png" />
 						<div class="articleInputC articleInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
-						<span class="articleBack">回复</span>
+						<span @click="attention" class="articleBack">回复</span>
 					</div>
 					<!--评论-->
 					<!--<div class="previewContent">

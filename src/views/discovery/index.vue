@@ -234,7 +234,7 @@
 						this.timestr = arr[0];
 						if(nowdate == this.timestr) {
 							var a1 = arr[1].split(":")
-							console.log(a1)
+//							console.log(a1)
 							res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 						} else {
 							res.data.recommends.rows[i].createTimeStr = arr[0];

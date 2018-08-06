@@ -1,5 +1,5 @@
 <template>
-  <textarea :id="textnames">
+  <textarea :id="textnames" autofocus>
     <p>{{value}}</p>
 </textarea>
 </template>
@@ -36,6 +36,7 @@ import { getCookie} from '../../assets/js/cookie.js'
 
       })
       //获取七牛云token和用户id
+      console.log(getCookie('token'))
 			this.getToken();
 
     },
@@ -62,7 +63,7 @@ import { getCookie} from '../../assets/js/cookie.js'
 			});
 			},
       createEditor() {
-
+				
         var _this = this
         this.editor = new Simditor({
           textarea: document.getElementById(this.textnames),
