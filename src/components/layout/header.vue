@@ -63,6 +63,7 @@
 <script>
 	import { menuData } from '@/common/menu'
 	import { getCookie, delCookie } from '../../assets/js/cookie.js'
+	import { reviewedL } from '@/service/home'
 	export default {
 		data() {
 			return {
@@ -71,6 +72,7 @@
 				userNick: '',
 				src: "",
 				userType: '',
+				token: getCookie('token'),
 				clicked: undefined //标识，初始化默认选中第一项
 			};
 		},
@@ -164,7 +166,11 @@
 			quit() {
 				delCookie('username')
 				delCookie('token')
-				this.$router.push("/login");
+				delCookie('changeLogin')
+				delCookie('img')
+				delCookie('user')
+				delCookie('userType')
+				this.$router.push("/user/register");
 			},
 			handleSelect(key, keyPath) {
 				if(key == '/discovery') {

@@ -50,7 +50,7 @@
 	}
 </style>
 <template>
-	<div>
+	<div class="realseCommon">
 		<div class="qf-ofiicial">
 			<div class="qf-attention">
 				<Icon type="ios-navigate"></Icon>区分认证</div>
@@ -85,11 +85,12 @@
 <script>
 	import { reviewedL } from '@/service/home'
 	import { submitattention } from '@/service/attention'
+	import { getCookie, } from '../../assets/js/cookie.js'
 	export default {
 		data() {
 			return {
 				current: 2,
-				token: localStorage.token
+				token: getCookie('token')
 			}
 		},
 		mounted() {
@@ -100,10 +101,9 @@
 			reviewedL(data).then(res => {
 				// console.log(res.data);
 				if(res.code == 0) {
-					console.log(res.data)
+//					console.log(res.data)
 					//通过审核
 					if(res.data.status == 2) {
-						console.log(111)
 						$(".examine-img").attr("src", "../../../static/img/shenG.png")
 						$(".examineZ").html("审核成功")
 						$(".mes").html("快去发声吧!");
