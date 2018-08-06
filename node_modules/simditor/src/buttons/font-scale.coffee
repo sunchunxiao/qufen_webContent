@@ -5,9 +5,9 @@ class FontScaleButton extends Button
 
   icon: 'font'
 
-  htmlTag: 'span'
+  disableTag: 'pre'
 
-  disableTag: 'pre, h1, h2, h3, h4, h5'
+  htmlTag: 'span'
 
   sizeMap:
     'x-large': '1.5em'
@@ -43,10 +43,8 @@ class FontScaleButton extends Button
     range = @editor.selection.range()
     startNodes = @editor.selection.startNodes()
     endNodes = @editor.selection.endNodes()
-    
     startNode = startNodes.filter('span[style*="font-size"]')
     endNode = endNodes.filter('span[style*="font-size"]')
-
     active = startNodes.length > 0 and endNodes.length > 0 and startNode.is(endNode)
     @setActive active
     @active
@@ -54,9 +52,6 @@ class FontScaleButton extends Button
   command: (param)->
     range = @editor.selection.range()
     return if range.collapsed
-
-    # 为了搜狗解决浏览器的兼容性问题
-    @editor.selection.range range
 
     # Use span[style] instead of font[size]
     document.execCommand 'styleWithCSS', false, true
@@ -79,11 +74,7 @@ class FontScaleButton extends Button
       if /large|x-large|small|x-small/.test(size)
         $span.css('fontSize', @sizeMap[size])
       else if size is 'medium'
-        # 避免错误的清除掉其它样式
-        if $span[0].style.length > 1
-          $span.css('fontSize', '')
-        else
-          $span.replaceWith $span.contents()
+        $span.replaceWith $span.contents()
 
     @editor.trigger 'valuechanged'
 

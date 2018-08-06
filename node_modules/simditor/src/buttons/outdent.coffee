@@ -6,8 +6,7 @@ class OutdentButton extends Button
   icon: 'outdent'
 
   _init: ->
-    hotkey = if @editor.opts.tabIndent == false then '' else ' (Shift + Tab)'
-    @title = @_t(@name) + hotkey
+    @title = @_t(@name) + ' (Shift + Tab)'
     super()
 
   _status: ->

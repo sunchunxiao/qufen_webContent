@@ -48,7 +48,13 @@
 						<div class="span">
 							<input type="checkbox" name="autolog" id="autolog" />下次自动登录
 							<span class="forgetpas">忘记密码</span>
-							<span class="toregister" style="margin-left: 26px;" @click="ToRegister">注册</span>
+							<!--<span class="toregister" style="margin-left: 26px;" @click="ToRegister">注册</span>-->
+							<el-popover  placement="top-start" width="150" trigger="click">
+									<img class="hover-img" src="../../assets/common/download.png" alt="" />
+									
+									<!--<el-button class="toregister" slot="reference">注册</el-button>-->
+									<span class="toregister" slot="reference" style="margin-left: 26px;" >注册</span>
+								</el-popover>
 						</div>
 
 					</div>

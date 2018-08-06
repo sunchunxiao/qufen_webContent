@@ -18,7 +18,6 @@
     "less-loader": "^4.1.0",
     "qiniu-js": "^2.4.0",
     "qrcodejs2": "0.0.2",
-    "simditor": "^2.3.6",
     "simple-uploader": "^3.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
