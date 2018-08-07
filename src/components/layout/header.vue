@@ -29,7 +29,7 @@
 						</el-col>
 						<el-col :span="2">
 							<div class="logout">
-								<div class="headerOcenter">
+								<div @click="go" class="headerOcenter">
 									<img class="nav-release" src="../../assets/login/onecenter.png" />
 								</div>
 								<!--<a href="#"></a>-->
@@ -121,6 +121,9 @@
 			this.handleSelect()
 		},
 		methods: {
+			go(){
+				this.$router.push("/user/register")
+			},
 			dian(){
 				this.$router.push("/discovery")
 			},

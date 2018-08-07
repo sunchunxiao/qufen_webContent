@@ -7,9 +7,9 @@
 	min-height: 700px;
 }
 
-/*.content1 {
+.content1 {
 	padding-top: 62px;
-}*/
+}
 
 .common-article {
 	width: 700px;
@@ -152,11 +152,10 @@
 }
 
 .row3-content {
-	height: 100px;
-	line-height: 25px;
-	font-size: 15px;
+	height: 118px;
+	line-height: 30px;
+	font-size: 16px;
 	color: rgb(63, 69, 81);
-	line-height: 25px;
 	display: -webkit-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -408,7 +407,6 @@
 	.row3-content {
 		font-size: 15px;
 		height: 90px;
-		line-height: 22px;
 	}
 	.contentImg {
 		width: 200px;

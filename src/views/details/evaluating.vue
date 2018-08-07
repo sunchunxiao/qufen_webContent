@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div style="background-color:rgb(246,246,246) ;" class="content1">
+		<div style="background-color:rgb(246,246,246) ;" >
 			<div class="commmon">
 				<!--左边文章-->
 				<div class="common-article">
