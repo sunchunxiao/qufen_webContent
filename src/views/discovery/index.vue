@@ -202,7 +202,7 @@
 				var _width1 = $(".common-article").offset().left
 				// console.log(_width,_width1)
 
-				if(_width<1600){
+				if(_width<1590){
 					var left = _width1+650
 					$(".common-attention").css("left",left)
 				}else{

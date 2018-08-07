@@ -121,7 +121,7 @@
 
 				</div>
 				<!--右边部分-->
-				<div class="common-attention1">
+				<div class="common-attention">
 					<!--评测分数-->
 					<div class=" attention-bag margin-bottom">
 						<div class="attention-wrap">
@@ -215,6 +215,10 @@
 
 		},
 		mounted() {
+			//小于1600px   main-right展开
+			this.resizeBannerImage();
+			window.onresize = this.resizeBannerImage;
+			
 
 			//请求文章
 			this.id = this.$route.query.id;
@@ -281,7 +285,20 @@
 
 		},
 		methods: {
-			
+			resizeBannerImage() {
+				var _width = $(window).width();
+				var _width1 = $(".common-article").offset().left
+				// console.log(_width,_width1)
+
+				if(_width<1590){
+					var left = _width1+650
+					$(".common-attention").css("left",left)
+				}else{
+					var left = _width1+715
+					$(".common-attention").css("left",left)
+				}
+
+			},
 			attention(){
 				this.$alert('本功能目前只对APP开放', {
 						confirmButtonText: '确定',
