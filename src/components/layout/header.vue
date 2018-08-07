@@ -309,7 +309,7 @@
 	.cx-username:after {
 		content: "...";
 		position: absolute;
-		right: 0;
+		right: -4px;
 		top: 0px;
 	}
 	.ivu-dropdown-rel{
