@@ -1,5 +1,5 @@
 .commmon {
-	width: 1050px;
+	width: 1060px;
 	margin: 20px auto 0;
 	overflow: hidden;
 	padding-top: 55px;
@@ -13,7 +13,7 @@
 
 .common-article {
 	width: 700px;
-	margin-left: 22px;
+	margin-left: 32px;
 	float: left;
 }
 
@@ -388,11 +388,11 @@
 
 @media only screen and (max-width: 1600px) {
 	.commmon {
-		width: 923px;
+		width: 930px;
 	}
 	.common-article {
 		width: 635px;
-		margin-left: 18px;
+		margin-left: 26px;
 	}
 	.common-attention {
 		width: 257px;

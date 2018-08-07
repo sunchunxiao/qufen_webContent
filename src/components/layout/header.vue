@@ -296,8 +296,7 @@
 	}
 	
 	.cx-username {
-		height: 50px;
-		overflow: hidden;
+		
 		line-height: none!important;
 		/*text-overflow: ellipsis;
 		display: -webkit-box;*/
@@ -310,10 +309,14 @@
 	.cx-username:after {
 		content: "...";
 		position: absolute;
-		right: -9px;
+		right: 0;
 		top: 0px;
 	}
-	
+	.ivu-dropdown-rel{
+		width: 87px;
+		height: 50px;
+		overflow: hidden;
+	}
 	.ivu-dropdown-rel>a {
 		color: #fff;
 	}
