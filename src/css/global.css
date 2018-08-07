@@ -18,8 +18,14 @@
 }
 
 .common-attention {
+	position: fixed;
+	/*left: 900px;*/
+	width: 314px;
+	height: 600px;
+}
+.common-attention1 {
 	position: absolute;
-	right: 0;
+	left: 742px;
 	width: 314px;
 	height: 600px;
 }

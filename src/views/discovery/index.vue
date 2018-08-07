@@ -176,6 +176,10 @@
 		},
 
 		mounted() {
+			//小于1600px   main-right展开
+			this.resizeBannerImage();
+			window.onresize = this.resizeBannerImage;
+
 
 			this.loadPageList() //加载文章
 			//保留this属性
@@ -193,6 +197,20 @@
 			})
 		},
 		methods: {
+			resizeBannerImage() {
+				var _width = $(window).width();
+				var _width1 = $(".common-article").offset().left
+				// console.log(_width,_width1)
+
+				if(_width<1600){
+					var left = _width1+650
+					$(".common-attention").css("left",left)
+				}else{
+					var left = _width1+715
+					$(".common-attention").css("left",left)
+				}
+
+			},
 			attention() {
 				this.$alert('本功能目前只对APP开放', {
 					confirmButtonText: '确定',
@@ -234,7 +252,7 @@
 						this.timestr = arr[0];
 						if(nowdate == this.timestr) {
 							var a1 = arr[1].split(":")
-//							console.log(a1)
+							//							console.log(a1)
 							res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 						} else {
 							res.data.recommends.rows[i].createTimeStr = arr[0];

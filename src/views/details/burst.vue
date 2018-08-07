@@ -85,11 +85,11 @@
 									<div class="row articleRow">
 										<div class="article-atten">
 											<div class="detail1 zan">
-												<img src="../../assets/common/FIND1.png">
+												<img src="../../assets/common/FIND.png">
 												<label>{{item.praiseNum}}</label>
 											</div>
 											<div class="detail index-preview">
-												<img src="../../assets/common/preview1.png">
+												<img src="../../assets/common/preview.png">
 												<label>{{item.childCommentsNum}}</label>
 											</div>
 										</div>
@@ -109,7 +109,7 @@
 									<div class="row articleRow rowLeft">
 										<div class="article-atten">
 											<div class="detail1 zan">
-												<img src="../../assets/common/zan1.png">
+												<img src="../../assets/common/zan.png">
 												<label>{{a.praiseNum}}</label>
 											</div>
 											

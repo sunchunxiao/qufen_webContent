@@ -121,7 +121,7 @@
 
 				</div>
 				<!--右边部分-->
-				<div class="common-attention">
+				<div class="common-attention1">
 					<!--评测分数-->
 					<div class=" attention-bag margin-bottom">
 						<div class="attention-wrap">
