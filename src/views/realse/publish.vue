@@ -26,7 +26,7 @@
 		font-size: 15px;
 	}
 
-	.el-slider__runway.disabled .el-slider__bar {
+	.evaluation .el-slider__runway.disabled .el-slider__bar {
 		background-color: #000;
 	}
 
