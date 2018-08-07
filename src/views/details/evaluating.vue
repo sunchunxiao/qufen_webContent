@@ -191,6 +191,7 @@
 				width: "100%",
 				margin: "1em 0",
 				wordWrap: "break-word",
+				lineHeight:'25px'
 			});
 			$(".el-slider__runway.disabled .el-slider__bar").each(function() {
 				$(".slider .el-slider__runway.disabled .el-slider__bar").eq(0).css("background-color", "rgb(60,137,247)")
@@ -222,7 +223,7 @@
 
 			//请求文章
 			this.id = this.$route.query.id;
-			console.log(this.$route.query.id)
+//			console.log(this.$route.query.id)
 			var data = {
 				postId: this.id
 			}

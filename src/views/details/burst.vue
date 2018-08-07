@@ -257,6 +257,7 @@
 				width: "100%",
 				margin: "1em 0",
 				wordWrap: "break-word",
+				lineHeight:'25px'
 			});
 
 		},
