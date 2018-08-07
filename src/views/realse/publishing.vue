@@ -132,7 +132,8 @@
 					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
 				</div>
 				<h3 class="progess margin-top-20 margin-bottom-10">评测报告</h3>
-				<Simditor></Simditor>
+				<simditor></simditor>
+				<!--<simditor :value.sync='value' v-ref:simditor></simditor>-->
 			</div>
 			<div>
 				<Row class="margin-top-20 publish-button-con">
@@ -145,7 +146,7 @@
 </template>
 
 <script>
-	import Simditor from '../../components/realse/simditor.vue'
+	import simditor from '../../components/realse/simditor.vue'
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
 	import { publishW } from '@/service/publish'
@@ -190,7 +191,7 @@
 			}
 		},
 		components: {
-			Simditor,
+			simditor,
 			Search,
 			Tip
 		},

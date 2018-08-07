@@ -6,7 +6,7 @@
 
 <script>
 import Simditor from 'simditor'
-import '../../assets/styles/simditor.css'
+import 'simditor/styles/simditor.css'
 import { upload } from '@/service/publish'
 import { getCookie} from '../../assets/js/cookie.js'
 
@@ -48,8 +48,9 @@ import { getCookie} from '../../assets/js/cookie.js'
 				}
 				var  _this = this
 				upload(data1).then(res => {
+
 					if(res.code == 0) {
-//						console.log(res)
+
 						this.uptoken.token = res.data.upToken
 						this.userId = res.data.uid
 						localStorage.setItem("upToken",res.data.upToken)
@@ -63,7 +64,7 @@ import { getCookie} from '../../assets/js/cookie.js'
 			});
 			},
       createEditor() {
-				
+
         var _this = this
         this.editor = new Simditor({
           textarea: document.getElementById(this.textnames),

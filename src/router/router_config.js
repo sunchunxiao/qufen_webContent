@@ -8,6 +8,7 @@ export const mainRouter = [
 		meta: {
 			auth: true
 		},
+//		redirect: "/discovery"
 		redirect: "/discovery"
 	},
 
@@ -26,7 +27,8 @@ export const mainRouter = [
 			title: '发现',
 		},
 		component: (resolve) => require(['@/components/layout/header.vue'], resolve),
-		children: [{
+		children: [
+			{
 				path: "/discovery",
 				meta: {
 					title: '发现',

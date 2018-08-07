@@ -16,7 +16,7 @@
 		data() {
 			return {
 				c: "",
-				id: 0,
+				id: '',
 				a: "",
 				post:''
 			}
@@ -32,7 +32,7 @@
 				if(this.post.modelType == 2) {
 					this.a = "articleInfo",
 					this.id = this.post.postId
-					
+
 				}
 				//单项测评
 				if(this.post.modelType == 3) {
@@ -65,12 +65,12 @@
 		},
 		methods: {
 			dian(){
-				
+
 				if(this.post.postType == 1) {
 					this.$router.push({
 						path: "/details/evaluating",
 						query: {
-							id:this.id-0
+							id:this.id.toString()
 						}
 					})
 				}
@@ -78,7 +78,7 @@
 					this.$router.push({
 						path: "/details/burst",
 						query: {
-							id:this.id-0
+							id:this.id.toString()
 						}
 					})
 				}
@@ -86,11 +86,11 @@
 					this.$router.push({
 						path: "/details/article",
 						query: {
-							id:this.id-0
+							id:this.id.toString()
 						}
 					})
 				}
-				
+
 			},
 			userEvent(data) {
 //				console.log(data)

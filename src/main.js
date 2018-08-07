@@ -9,6 +9,7 @@ import './css/reset.css'
 import $ from 'jquery'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import 'babel-polyfill'
 
 
 //七牛
