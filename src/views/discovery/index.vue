@@ -94,6 +94,14 @@
 							<div class="margin-bottom-10 " style="font-size: 13px;">本网站更多的功能还在完善中，请耐心等待...</div>
 							<div class="margin-bottom-10 " style="font-size: 13px;">官方QQ群：820043115</div>
 							<div class="margin-bottom-10 " style="font-size: 13px;">官方微信：qudong0405</div>
+							<div class="margin-bottom-10 " style="font-size: 13px;">微信客服：qudong0405</div>
+							<div class="margin-bottom-10 " style="font-size: 13px;">官方微信社区</div>
+							<div class="common-attention-code">
+								<div style="padding: 7px;">
+									<img src="../../assets/common/wxcode.png" />
+								</div>
+							</div>
+
 							<!--<div class="attention-hot-title">
 								<img src="../../assets/common/hot.png" />
 								<span class="attention-hot-pro">热门项目</span>
@@ -180,7 +188,6 @@
 			this.resizeBannerImage();
 			window.onresize = this.resizeBannerImage;
 
-
 			this.loadPageList() //加载文章
 			//保留this属性
 			var _this = this
@@ -202,12 +209,12 @@
 				var _width1 = $(".common-article").offset().left
 				// console.log(_width,_width1)
 
-				if(_width<1590){
-					var left = _width1+650
-					$(".common-attention").css("left",left)
-				}else{
-					var left = _width1+715
-					$(".common-attention").css("left",left)
+				if(_width < 1590) {
+					var left = _width1 + 650
+					$(".common-attention").css("left", left)
+				} else {
+					var left = _width1 + 715
+					$(".common-attention").css("left", left)
 				}
 
 			},
