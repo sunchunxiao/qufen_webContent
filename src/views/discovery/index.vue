@@ -245,7 +245,7 @@
 					this.itemList = res.data.recommends.rows;
 
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
-						if(res.data.recommends.rows[i].postSmallImagesList !== null) {
+						if(res.data.recommends.rows[i].postSmallImagesList != null) {
 							if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
 								//							console.log(res.data.recommends.rows[i].postSmallImagesList)
 								res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
