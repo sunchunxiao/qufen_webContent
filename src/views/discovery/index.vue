@@ -264,9 +264,10 @@
 							res.data.recommends.rows[i].createTimeStr = arr[0];
 						}
 
-						this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
-						 console.log(this.tagInfos)
-						if(this.tagInfos!=null){
+						
+						 console.log(res.data.recommends.rows[i].tagInfos)
+						if(res.data.recommends.rows[i].tagInfos!=null){
+							this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 							res.data.recommends.rows[i].tagInfos = this.tagInfos
 						}else{
 							$(".crack-tag2").css("display","none")
@@ -319,10 +320,17 @@
 									res.data.recommends.rows[i].createTimeStr = arr[0];
 
 								}
-
-								this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
+								
+								
+								if(res.data.recommends.rows[i].tagInfos!=null){
+	res.data.recommends.rows[i].tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
+							console.log(res.data.recommends.rows[i].tagInfos)
+						}else{
+							$(".crack-tag2").css("display","none")
+						}
+								
 								// console.log(this.tagInfos)
-								res.data.recommends.rows[i].tagInfos = this.tagInfos
+//								res.data.recommends.rows[i].tagInfos = this.tagInfos
 
 							}
 							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
