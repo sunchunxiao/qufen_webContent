@@ -39,7 +39,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2"  v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -245,9 +245,11 @@
 					this.itemList = res.data.recommends.rows;
 
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
-						if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
-							//							console.log(res.data.recommends.rows[i].postSmallImagesList)
-							res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
+						if(res.data.recommends.rows[i].postSmallImagesList !== null) {
+							if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
+								//							console.log(res.data.recommends.rows[i].postSmallImagesList)
+								res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
+							}
 						}
 
 						//时间  字符串切割
@@ -264,15 +266,14 @@
 							res.data.recommends.rows[i].createTimeStr = arr[0];
 						}
 
-						
-						 console.log(res.data.recommends.rows[i].tagInfos)
-						if(res.data.recommends.rows[i].tagInfos!=null){
+						console.log(res.data.recommends.rows[i].tagInfos)
+						if(res.data.recommends.rows[i].tagInfos != null) {
 							this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 							res.data.recommends.rows[i].tagInfos = this.tagInfos
-						}else{
-							$(".crack-tag2").css("display","none")
+						} else {
+							$(".crack-tag2").css("display", "none")
 						}
-						
+
 						this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
 					}
 				})
@@ -287,7 +288,7 @@
 					} else {
 						this.pageIndex = parseInt(this.pageIndex) + 1;
 						this.allLoaded = false;
-//						console.log(this.pageIndex, this.totalpage, this.allLoaded)
+						//						console.log(this.pageIndex, this.totalpage, this.allLoaded)
 					}
 					let params = {
 						pageIndex: this.pageIndex,
@@ -320,17 +321,16 @@
 									res.data.recommends.rows[i].createTimeStr = arr[0];
 
 								}
-								
-								
-								if(res.data.recommends.rows[i].tagInfos!=null){
-	res.data.recommends.rows[i].tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
-							console.log(res.data.recommends.rows[i].tagInfos)
-						}else{
-							$(".crack-tag2").css("display","none")
-						}
-								
+
+								if(res.data.recommends.rows[i].tagInfos != null) {
+									res.data.recommends.rows[i].tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
+									console.log(res.data.recommends.rows[i].tagInfos)
+								} else {
+									$(".crack-tag2").css("display", "none")
+								}
+
 								// console.log(this.tagInfos)
-//								res.data.recommends.rows[i].tagInfos = this.tagInfos
+								//								res.data.recommends.rows[i].tagInfos = this.tagInfos
 
 							}
 							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
@@ -339,7 +339,7 @@
 							if(this.pageIndex == this.totalpage) {
 
 								this.allLoaded = true;
-//								console.log(this.pageIndex, this.totalpage, this.allLoaded)
+								//								console.log(this.pageIndex, this.totalpage, this.allLoaded)
 								$(".end").css("display", "block")
 								$(".start").css("display", "none")
 							}
