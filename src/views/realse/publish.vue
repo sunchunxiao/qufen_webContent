@@ -4,38 +4,38 @@
 	#tinymceEditer_ifr {
 		height: 350px;
 	}
-
+	
 	.ivu-row {
 		margin: 40px 0;
 	}
-
+	
 	.ivu-input-group .ivu-input {
 		width: 25%;
 		text-align: center;
 	}
-
+	
 	.ivu-card-shadow {
 		box-shadow: none;
 	}
-
+	
 	.little {
 		font-size: 14px;
 	}
-
+	
 	.pc-title {
 		font-size: 15px;
 	}
-
+	
 	.evaluation .el-slider__runway.disabled .el-slider__bar {
 		background-color: #000;
 	}
-
+	
 	.pcInfo {
 		width: 800px;
 		margin-top: 15px;
 		box-shadow: 0 2px 7px 0 rgba(103, 166, 255, 0.37);
 	}
-
+	
 	.pcInfo:hover {
 		box-shadow: 0 2px 12px 0 rgba(103, 166, 255, 0.27);
 	}
@@ -56,7 +56,7 @@
 			<!--评测分数-->
 			<div class="pcZ pcWid">
 				<div class="pc-title">综合评分</div>
-				<el-slider  @change="change1(m)" :max="10" style="width: 50%;display: inline-block;margin-left:6px" type="range" v-model="value3" :show-tooltip="false" disabled></el-slider>
+				<el-slider @change="change1(m)" :max="10" style="width: 50%;display: inline-block;margin-left:6px" type="range" v-model="value3" :show-tooltip="false" disabled></el-slider>
 				<div class="label"><label class="store">{{m}}<span class="littleStore">分</span></label><span class="cp1">BBB</span></div>
 			</div>
 			<!--评分-->
@@ -96,7 +96,7 @@
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
 	import { searchEvaluation, publishW } from '@/service/publish'
-	import { getCookie} from '../../assets/js/cookie.js'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		name: 'index',
 		data() {
@@ -177,7 +177,7 @@
 				}
 			},
 			change1(value) {
-//				console.log(value)
+				//				console.log(value)
 				if(value >= 0 && value < 3) {
 					$(".cp1").html("D")
 				}
@@ -332,40 +332,52 @@
 								});
 							} else {
 								if(ddsd.toString().length < 25000) {
-									//点击发布显示正在发布中
-									$(".web-tip").show();
 
-									setTimeout(() => {
-										//发送请求  发布文章publishW
-										let data = {
-											token: this.token,
-											projectName: this.search,
-											modelType: 2,
-											totalScore: this.m,
-											postTitle: this.articleTitle,
-											evauationContent: $("textarea").val(),
-											professionalEvaDetail: JSON.stringify(this.arr)
-										}
+									this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
+										confirmButtonText: '确认发布',
+										cancelButtonText: '再斟酌下  ',
+										type: 'warning',
+										center: true
+									}).then(() => {
+										//点击发布显示正在发布中
+										$(".web-tip").show();
 
-										publishW(data).then(res => {
-
-											if(res.code == 0) {
-												//										this.$Notice.success({
-												//											title: '发布成功',
-												//											desc: '完整测评发布成功'
-												//										});
-												localStorage.setItem("url", JSON.stringify(res.data))
-												this.$router.push('/previewsuc');
-
+										setTimeout(() => {
+											//发送请求  发布文章publishW
+											let data = {
+												token: this.token,
+												projectName: this.search,
+												modelType: 2,
+												totalScore: this.m,
+												postTitle: this.articleTitle,
+												evauationContent: $("textarea").val(),
+												professionalEvaDetail: JSON.stringify(this.arr)
 											}
-										}).catch(function(error) {
-											//如果后台报错就关闭弹窗
-											$(".web-tip").hide();
 
-											alert(error.msg);
+											publishW(data).then(res => {
 
+												if(res.code == 0) {
+													localStorage.setItem("url", JSON.stringify(res.data))
+													this.$router.push('/previewsuc');
+
+												}
+											}).catch(function(error) {
+												//如果后台报错就关闭弹窗
+												$(".web-tip").hide();
+
+												alert(error.msg);
+
+											});
+										}, 500);
+
+									}).catch(() => {
+										this.$message({
+											type: 'info',
+											message: '已取消',
+											duration: 1500
 										});
-									}, 500);
+									});
+
 								} else {
 									this.$alert('内容不符合，不能为空', {
 										confirmButtonText: '确定',

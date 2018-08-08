@@ -53,8 +53,7 @@
 				this.a = 'article';
 				this.id = this.post.postId
 			}
-
-//			console.log(this.id)
+			//调用二维码
 			this.qrcode()
 		},
 		created() {

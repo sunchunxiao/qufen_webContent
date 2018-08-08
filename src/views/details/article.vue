@@ -170,7 +170,7 @@
 
 		},
 		mounted() {
-			console.log(this.$route.query.id)
+//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id;
 
 			//发送请求
@@ -197,14 +197,11 @@
 					//时间  字符串切割
 					//调用 Data.customData()
 					var nowdate = Data.customData()
-					console.log(nowdate)
 					var arr = data.createTimeStr.split(" ")
 
 					this.timestr = arr[0];
-					console.log(this.timestr)
 					if(nowdate == this.timestr) {
 						var a1 = arr[1].split(":")
-//						console.log(a1)
 						this.timestr1 = a1[0]+":"+a1[1];
 					} else {
 						this.timestr1 = arr[0];

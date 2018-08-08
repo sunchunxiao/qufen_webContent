@@ -23,7 +23,6 @@ const request = (url, options = {}) => {
   //测试地址2
      var url = "/wap" + url;
 
-
  //本地 栋栋
 	//    var url = "http://192.168.10.153:803" + url;
 

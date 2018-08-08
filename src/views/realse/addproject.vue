@@ -31,7 +31,7 @@
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
 	import { publishW, savearticle } from '@/service/publish'
-	import { getCookie} from '../../assets/js/cookie.js'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		data() {
 			return {
@@ -129,7 +129,7 @@
 										alert(error.msg);
 
 									});
-									}, 500);
+								}, 500);
 
 							} else {
 								this.$message({
@@ -157,15 +157,11 @@
 <style lang="less">
 	@import '../../views/realse/pub.less';
 	@import '../../styles/common.less';
-
-
 	.progess {
 		text-align: left;
 	}
-
+	
 	.ivu-row {
 		text-align: left;
 	}
-
-
 </style>

@@ -259,7 +259,6 @@
 						this.timestr = arr[0];
 						if(nowdate == this.timestr) {
 							var a1 = arr[1].split(":")
-							//							console.log(a1)
 							res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 						} else {
 							res.data.recommends.rows[i].createTimeStr = arr[0];
@@ -282,7 +281,7 @@
 					} else {
 						this.pageIndex = parseInt(this.pageIndex) + 1;
 						this.allLoaded = false;
-						console.log(this.pageIndex, this.totalpage, this.allLoaded)
+//						console.log(this.pageIndex, this.totalpage, this.allLoaded)
 					}
 					let params = {
 						pageIndex: this.pageIndex,
@@ -327,7 +326,7 @@
 							if(this.pageIndex == this.totalpage) {
 
 								this.allLoaded = true;
-								console.log(this.pageIndex, this.totalpage, this.allLoaded)
+//								console.log(this.pageIndex, this.totalpage, this.allLoaded)
 								$(".end").css("display", "block")
 								$(".start").css("display", "none")
 							}

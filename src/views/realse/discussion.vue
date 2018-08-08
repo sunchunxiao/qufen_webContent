@@ -36,19 +36,7 @@
 						</template>
 
 					</div>
-					<Upload ref="upload" 
-						name="file" 
-						:show-upload-list="false" 
-						:default-file-list="defaultList" 
-						:on-success="handleSuccess" 
-						:format="['jpg','jpeg','png']" 
-						:max-size="5120" 
-						:on-format-error="handleFormatError" 
-						:on-exceeded-size="handleMaxSize" 
-						:before-upload="handleBeforeUpload" 
-						multiple type="drag" 
-						action="https://upload-z2.qiniup.com" 
-						:data="uptoken" style="display: inline-block;width:58px;">
+					<Upload ref="upload" name="file" :show-upload-list="false" :default-file-list="defaultList" :on-success="handleSuccess" :format="['jpg','jpeg','png']" :max-size="5120" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" multiple type="drag" action="https://upload-z2.qiniup.com" :data="uptoken" style="display: inline-block;width:58px;">
 						<div style="width: 58px;height:58px;line-height: 58px;">
 							<Icon type="ios-camera" size="20"></Icon>
 						</div>
@@ -82,7 +70,7 @@
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
 	import { publishtag, savediscuss, upload } from '@/service/publish'
-	import { getCookie} from '../../assets/js/cookie.js'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		data() {
 			return {
@@ -337,7 +325,6 @@
 					});
 				}
 
-				//				console.log(this.tagthree)
 				//发布文章
 				if(this.search != "") {
 					if(this.articleTitle != "") {

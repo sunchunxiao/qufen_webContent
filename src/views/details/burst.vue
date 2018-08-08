@@ -38,7 +38,7 @@
 								<img src="../../assets/common/FIND1.png">
 								<label>待结算</label>
 							</div>
-							
+
 						</div>
 						<div class="articleDetail">
 							<div class="detail index-preview">
@@ -112,7 +112,7 @@
 												<img src="../../assets/common/zan.png">
 												<label>{{a.praiseNum}}</label>
 											</div>
-											
+
 										</div>
 
 									</div>
@@ -145,7 +145,7 @@
 				commentsehot: [],
 				commenticon: [],
 				timestr: '',
-				timestr1:'',
+				timestr1: '',
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
@@ -155,7 +155,7 @@
 
 		mounted() {
 			this.id = this.$route.query.id;
-			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 			let data = {
 				postId: this.id
 			}
@@ -163,7 +163,7 @@
 			discuss(data).then(res => {
 				if(res.code == 0) {
 					var data = res.data.discussShare
-					
+
 					//标题
 					this.articleTitle = data.post.postTitle
 					//头像
@@ -173,28 +173,23 @@
 					//时间  字符串切割
 					//调用 Data.customData()
 					var nowdate = Data.customData()
-//					console.log(nowdate)
 					var arr = data.post.createTimeStr.split(" ")
 
 					this.timestr = arr[0];
-//					console.log(this.timestr)
 					if(nowdate == this.timestr) {
 						var a1 = arr[1].split(":")
-						console.log(a1)
-						this.timestr1 = a1[0]+":"+a1[1];
+						this.timestr1 = a1[0] + ":" + a1[1];
 					} else {
 						this.timestr1 = arr[0];
 					}
-					
 
 					this.userSignature = data.post.createUserSignature;
+					
 					//文章内容
 					this.disscussContents = data.discuss.disscussContents;
-					//					console.log(this.disscussContents)
 
 					//图片
 					var a = JSON.parse(data.post.postSmallImages);
-					//					console.log(a)
 					if(a.length != 0) {
 						if(a.length >= 3) {
 							a = a.slice(0, 3)
@@ -205,7 +200,6 @@
 							this.postImg.push({
 								src: this.imgUrl
 							})
-							//							console.log(this.postImg)
 						}
 					}
 
@@ -218,7 +212,7 @@
 					//点赞人数
 					this.praiseNum = data.post.praiseNum;
 					//最多选择标签
-					//					this.tagInfo = JSON.parse(data.tagInfo);
+					//this.tagInfo = JSON.parse(data.tagInfo);
 					//热门评论
 					this.commentsehot = data.commentsehot;
 					var result = data.commentsehot;
@@ -227,7 +221,6 @@
 						for(let i = 0; i < result.length; i++) {
 							var b = data.commentsehot[i].commentUserIcon;
 							this.commenticon.push(b)
-							console.log(this.commenticon)
 						}
 					}
 					//热门评论如果是没有，不显示
@@ -237,7 +230,6 @@
 
 					//时间  字符串切割
 					var arr = data.post.createTimeStr.split(" ")
-					//					console.log(arr[0])
 					this.timestr = arr[0];
 					//缩略图
 					// this.imgUrl = JSON.parse(data.post.postSmallImages)
@@ -257,15 +249,15 @@
 				width: "100%",
 				margin: "1em 0",
 				wordWrap: "break-word",
-				lineHeight:'26px'
+				lineHeight: '26px'
 			});
 
 		},
 		methods: {
-			attention(){
+			attention() {
 				this.$alert('本功能目前只对APP开放', {
-						confirmButtonText: '确定',
-					});
+					confirmButtonText: '确定',
+				});
 			},
 			fun(index) {
 				if(index <= 3) {
