@@ -301,9 +301,11 @@
 						recommend(params).then(res => {
 							for(var i = 0; i < res.data.recommends.rows.length; i++) {
 								this.itemList.push(res.data.recommends.rows[i]);
-								if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
-									//									console.log(res.data.recommends.rows[i].postSmallImagesList)
-									res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
+								if(res.data.recommends.rows[i].postSmallImagesList != null) {
+									if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
+										//									console.log(res.data.recommends.rows[i].postSmallImagesList)
+										res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
+									}
 								}
 
 								//时间  字符串切割
