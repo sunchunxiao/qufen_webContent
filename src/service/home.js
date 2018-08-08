@@ -38,7 +38,7 @@ export const articleInfo = (params = {}) => {
     },
   })
 }
-//发布文章
+
 //首页
 export const reviewedL = (params = {}) => {
   return request(`/kff/authentication/reviewed`, {

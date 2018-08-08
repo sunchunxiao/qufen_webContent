@@ -39,7 +39,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos.length!=0" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>

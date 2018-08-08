@@ -8,7 +8,6 @@ export const writeRouter = [
     path: "/quhomelist",
 //  redirect: '/quhomelist',
 //  meta:{auth:true},
-
     component: (resolve) => require(['@/components/realse/showproject.vue'], resolve),
     children: [
       {
@@ -37,7 +36,7 @@ export const writeRouter = [
 	       },
         ]
       },
-      
+
       {
       	path: '/official',
       	meta: {
