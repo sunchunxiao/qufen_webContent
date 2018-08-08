@@ -191,6 +191,7 @@
 }
 
 .crack-tag2 {
+	display: inline-block;
 	font-size: 14px;
 	color: #3b88f6;
 	letter-spacing: 0;

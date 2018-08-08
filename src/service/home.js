@@ -12,6 +12,15 @@ export const recommend = (params = {}) => {
   })
 }
 
+//首页关注  
+export const followList = (params = {}) => {
+  return request(`/kff/home/followList`, {
+    body: {
+      ...params
+    },
+  })
+}
+
 // 文章详情
 export const article = (params = {}) => {
   return request(`/kff/home/shareArticleDetail`, {
@@ -39,7 +48,7 @@ export const articleInfo = (params = {}) => {
   })
 }
 
-//首页
+//认证
 export const reviewedL = (params = {}) => {
   return request(`/kff/authentication/reviewed`, {
     body: {

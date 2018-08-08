@@ -78,13 +78,13 @@
 		},
 
 		mounted() {
-			$(".el-menu--horizontal li").on("click", function() {
-				console.log(111)
-				//			var index = $(this).index();
-				//			$(".el-menu--horizontal>.el-menu-item").removeClass("header-active");
-				$(this).css("border-bottom", "2px solid rgba(64, 158, 255, 1)!important");
-				console.log($(this).css("border-bottom"))
-			});
+//			$(".el-menu--horizontal li").on("click", function() {
+//				console.log(111)
+//				//			var index = $(this).index();
+//				//			$(".el-menu--horizontal>.el-menu-item").removeClass("header-active");
+//				$(this).css("border-bottom", "2px solid rgba(64, 158, 255, 1)!important");
+//				console.log($(this).css("border-bottom"))
+//			});
 
 			//登录后
 			if(getCookie('username') && getCookie('token')) {
@@ -473,7 +473,9 @@
 		font-weight: 600;
 		 border-bottom: 2px solid #409EFF!important;
 	}
-	
+	/*.el-menu--horizontal>.el-menu-item.is-active{
+		border-bottom: 2px solid #409EFF!important;
+	}*/
 	.el-menu--horizontal li {
 		color: rgb(133, 144, 166)!important;
 		background-color: #fff!important;

@@ -39,7 +39,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span class="crack-tag2"  v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -265,8 +265,13 @@
 						}
 
 						this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
-						// console.log(this.tagInfos)
-						res.data.recommends.rows[i].tagInfos = this.tagInfos
+						 console.log(this.tagInfos)
+						if(this.tagInfos!=null){
+							res.data.recommends.rows[i].tagInfos = this.tagInfos
+						}else{
+							$(".crack-tag2").css("display","none")
+						}
+						
 						this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
 					}
 				})
