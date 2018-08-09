@@ -168,6 +168,12 @@
 	.ivu-icon-ios-arrow-down:before {
 		content: ""!important;
 	}
+	.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after{
+		background: none!important;
+	}
+	.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+		background: none!important;
+	}
 </style>
 <template>
 	<div class="cx-showproject">

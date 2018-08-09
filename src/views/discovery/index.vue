@@ -82,7 +82,7 @@
 						<div class="attention-wrap">
 							<div class="common-attention-code">
 								<div style="padding: 7px;">
-									<img src="../../assets/common/download.png" />
+									<img src="https://pic.qufen.top/Appdownload.png" />
 								</div>
 								<p class="common-attention-down">下载区分APP不一样的区分</p>
 							</div>
