@@ -103,5 +103,8 @@ import { getCookie} from '../../assets/js/cookie.js'
 		max-width: 100%;
 		height: 100%;
 	}
+	.simditor-toolbar{
+		top: 60px!important;
+	}
 
 </style>
