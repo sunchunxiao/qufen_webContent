@@ -208,7 +208,7 @@
 				var code1 = /(\d{15})$/
 				var code2 = /^[0-9A-Z]{18}$/g;
 				var _this = this;
-				var token = localStorage.token
+				var token = getCookie('token')
 				if(this.formValidate.name == '') {
 					console.log(this.formValidate.name.length)
 					this.$alert('请填写区分昵称', {

@@ -88,6 +88,7 @@
 	import UploadR from "../../components/realse/uploadren1"
 	import Tip from '../../components/realse/message'
 	import { submitAuthenTiForm } from '@/service/attention'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		data() {
 			return {
@@ -191,7 +192,7 @@
 			next() {
 				var mail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,5}$/;
 				var _this = this;
-				var token = localStorage.token
+				var token = getCookie('token')
 				if(this.formValidate.name == '') {
 					console.log(this.formValidate.name.length)
 					this.$alert('请填写区分昵称', {
