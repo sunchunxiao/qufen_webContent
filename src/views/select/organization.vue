@@ -100,6 +100,7 @@
 	import UploadRe from "../../components/realse/uploadren2"
 	import Tip from '../../components/realse/message'
 	import { submitAuthenTiForm } from '@/service/attention'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		data() {
 			return {
