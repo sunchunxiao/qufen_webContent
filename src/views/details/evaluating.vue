@@ -26,7 +26,7 @@
 								{{m}}
 							</div>
 							<div class="articleTag">
-								<div class="crack-tag1"><span class="span-name">BTC</span></div>
+								<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
 							</div>
 						</div>
 						<div class="row articleRow5">
@@ -178,6 +178,7 @@
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
+				projectCode:''
 			}
 		},
 		
@@ -238,6 +239,7 @@
 					this.src = data.post.createUserIcon;
 					//用户名
 					this.username = data.post.createUserName;
+					this.projectCode = data.post.projectCode;
 					
 					//时间  字符串切割
 					//调用 Data.customData()
