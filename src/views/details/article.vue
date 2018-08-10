@@ -26,7 +26,7 @@
 					</div>
 					<div class="articleTag">
 						<div class="crack-tag1"><span class="span-name">{{tag}}</span></div>
-            <!--<span class="crack-tag2"  v-for="item1 in tagInfos">#{{item1.tagName}}#</span>-->
+						<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 					</div>
 				</div>
 				<div class="row articleRow5">
@@ -145,7 +145,7 @@
 				userSignature: '',
 				tag: '',
 				timestr: '',
-				timestr1:'',
+				timestr1: '',
 				imgUrls: [],
 				donateNum: '',
 				commentsNum: '',
@@ -153,7 +153,7 @@
 				articleContents: '',
 				imgUrl: '',
 				commendationListL: '',
-        tagInfos:[]
+				tagInfos: []
 
 			}
 		},
@@ -167,12 +167,12 @@
 				width: "100%",
 				margin: "1em 0",
 				wordWrap: "break-word",
-				lineHeight:'26px'
+				lineHeight: '26px'
 			});
 
 		},
 		mounted() {
-//			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id;
 
 			//发送请求
@@ -195,10 +195,10 @@
 					this.userSignature = data.createUserSignature;
 					//标签
 					this.tag = data.projectCode;
-
-          if(data.tagInfo!=null){
-            this.tagInfos = JSON.parse( data.tagInfo)
-          }
+					console.log(data.article.tagInfos)
+					if(data.article.tagInfos != null) {
+						this.tagInfos = JSON.parse(data.article.tagInfos)
+					}
 
 					//时间  字符串切割
 					//调用 Data.customData()
@@ -208,7 +208,7 @@
 					this.timestr = arr[0];
 					if(nowdate == this.timestr) {
 						var a1 = arr[1].split(":")
-						this.timestr1 = a1[0]+":"+a1[1];
+						this.timestr1 = a1[0] + ":" + a1[1];
 					} else {
 						this.timestr1 = arr[0];
 					}
