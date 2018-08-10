@@ -35,6 +35,8 @@ export const mainRouter = [
 				},
 				component: (resolve) => require(['@/views/discovery/index.vue'], resolve)
 			},
+			
+			
 			//关注
 			{
 				path: "/attention",
