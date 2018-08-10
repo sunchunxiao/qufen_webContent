@@ -26,6 +26,7 @@
 					</div>
 					<div class="articleTag">
 						<div class="crack-tag1"><span class="span-name">{{tag}}</span></div>
+            <!--<span class="crack-tag2"  v-for="item1 in tagInfos">#{{item1.tagName}}#</span>-->
 					</div>
 				</div>
 				<div class="row articleRow5">
@@ -84,7 +85,7 @@
 									<p class="listContent">
 										体自在EOS引力区的知识星球里有一个人，他在知识星球分享了一篇文章《数字会说明，老猫在想什么，写给eos的投资者们》，精明地推测出老猫分批地积累了上百万个EOS，这更能说明老猫看好EOS。道理很简单：因为看好，所以大量持有。
 									</p>
-									
+
 									<div class="row articleRow">
 										<div class="article-atten">
 											<div class="detail1 zan">
@@ -100,14 +101,14 @@
 									</div>
 
 								</div>
-								
+
 								<div class="listContent">
 									<div>
 										<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
 										<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
 									</div>
 								</div>
-								
+
 								<div class="row articleRow rowLeft">
 									<div class="article-atten">
 										<div class="detail1 zan">
@@ -151,7 +152,8 @@
 				praiseNum: '',
 				articleContents: '',
 				imgUrl: '',
-				commendationListL: ''
+				commendationListL: '',
+        tagInfos:[]
 
 			}
 		},
@@ -193,7 +195,11 @@
 					this.userSignature = data.createUserSignature;
 					//标签
 					this.tag = data.projectCode;
-					
+
+          if(data.tagInfo!=null){
+            this.tagInfos = JSON.parse( data.tagInfo)
+          }
+
 					//时间  字符串切割
 					//调用 Data.customData()
 					var nowdate = Data.customData()
@@ -206,7 +212,7 @@
 					} else {
 						this.timestr1 = arr[0];
 					}
-					
+
 					//赞助人数
 					this.donateNum = data.donateNum;
 					//评论人数

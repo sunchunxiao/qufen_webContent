@@ -25,11 +25,11 @@
 							</div>
 							<div class="burstImg">
 								<img v-for="(img,index) in postImg" @click="img1(index)" :class="{scale:index==isScale}" :style="fun(index)" :src="img.src" />
-
 							</div>
 						</div>
 						<div class="articleTag">
-							<div class="crack-tag1"><span class="span-name">BTC</span></div>
+							<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
+              <span class="crack-tag2"  v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 						</div>
 					</div>
 					<div class="row articleRow5">
@@ -142,6 +142,7 @@
 				disscussContents: '',
 				imgUrl: '',
 				postImg: [],
+        projectCode:'',
 				commentsehot: [],
 				commenticon: [],
 				timestr: '',
@@ -149,6 +150,7 @@
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
+        tagInfos:[]
 
 			}
 		},
@@ -174,6 +176,11 @@
 					//调用 Data.customData()
 					var nowdate = Data.customData()
 					var arr = data.post.createTimeStr.split(" ")
+          this.projectCode = data.post.projectCode
+
+          if(data.tagInfo!=null){
+            this.tagInfos = JSON.parse( data.tagInfo)
+          }
 
 					this.timestr = arr[0];
 					if(nowdate == this.timestr) {
@@ -184,7 +191,7 @@
 					}
 
 					this.userSignature = data.post.createUserSignature;
-					
+
 					//文章内容
 					this.disscussContents = data.discuss.disscussContents;
 

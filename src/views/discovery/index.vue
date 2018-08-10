@@ -271,7 +271,7 @@
 							this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 							res.data.recommends.rows[i].tagInfos = this.tagInfos
 						} else {
-							$(".crack-tag2").css("display", "none")
+							// $(".crack-tag2").css("display", "none")
 						}
 
 						this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
@@ -328,7 +328,7 @@
 									res.data.recommends.rows[i].tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 									console.log(res.data.recommends.rows[i].tagInfos)
 								} else {
-									$(".crack-tag2").css("display", "none")
+									// $(".crack-tag2").css("display", "none")
 								}
 
 								// console.log(this.tagInfos)
@@ -360,6 +360,9 @@
 			//     $(".start").css("display","none")
 			//   }
 			// }
+		},
+		watch: {
+
 		}
 	}
 </script>
