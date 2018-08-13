@@ -37,6 +37,32 @@ export const detailsRouter = [
 				},
 				component: (resolve) => require(['@/views/details/evaluating.vue'], resolve)
 			},
+			
+			
+			//预览文章
+			{
+				path: '/preview/article',
+				meta: {
+					title: '文章'
+				},
+				component: (resolve) => require(['@/views/preview/article.vue'], resolve)
+			},
+			//爆料
+			{
+				path: '/preview/burst',
+				meta: {
+					title: '爆料'
+				},
+				component: (resolve) => require(['@/views/preview/burst.vue'], resolve)
+			},
+			//评测
+			{
+				path: '/preview/evaluating',
+				meta: {
+					title: '爆料'
+				},
+				component: (resolve) => require(['@/views/preview/evaluating.vue'], resolve)
+			},
 
 		]
 	},

@@ -18,6 +18,7 @@
 					<Simditor></Simditor>
 				</div>
 				<Row class="margin-top-20 publish-button-con">
+					<span class="publish-button"><Button @click="handlePreview">预览</Button></span>
 					<span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
 				</Row>
 			</div>
@@ -32,6 +33,7 @@
 	import Tip from '../../components/realse/publishon.vue'
 	import { publishW, savearticle } from '@/service/publish'
 	import { getCookie } from '../../assets/js/cookie.js'
+
 	export default {
 		data() {
 			return {
@@ -71,6 +73,61 @@
 				} else {
 					this.$Message.error('文章标题不可为空哦');
 				}
+			},
+			p(s) {
+				return s < 10 ? '0' + s : s;
+			},
+			//预览
+			handlePreview() {
+				//去除文本编译器的标签
+				var dd = $("textarea").val().replace(/<\/?.+?>/g, "");
+
+				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
+				var ddsd = dds.replace(/&nbsp;/ig, "");
+				if(this.search != "") {
+					if(this.articleTitle.length <= 60 && this.articleTitle != "") {
+
+						if(ddsd != "") {
+							let date = new Date();
+							let year = date.getFullYear();
+							let month = date.getMonth() + 1;
+							let day = date.getDate();
+							let hour = date.getHours();
+							let minute = date.getMinutes();
+
+							localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + hour + ':' + minute;
+							localStorage.search = this.search
+							localStorage.articleTitle = this.articleTitle;
+							localStorage.content = $("textarea").val();
+
+							window.open("/preview/article", "_blank")
+							this.$router.push({
+								path: "",
+							})
+
+						} else {
+							this.$message({
+								showClose: true,
+								message: '内容不能为空',
+								type: 'error'
+							});
+						}
+
+					} else {
+						this.$message({
+							showClose: true,
+							message: '文章标题小于60字且不能为空',
+							type: 'error'
+						});
+					}
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请选择项目',
+						type: 'error'
+					});
+				}
+
 			},
 			canPublish() {
 				if(this.articleTitle.length === 0 && this.articleTitle.length <= 30) {

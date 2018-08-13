@@ -241,13 +241,12 @@
 					pageSize: 10
 				}
 				recommend(data).then(res => {
-					// console.log(res.data.recommends.rows)
+					
 					this.itemList = res.data.recommends.rows;
 
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
 						if(res.data.recommends.rows[i].postSmallImagesList != null) {
 							if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
-								//							console.log(res.data.recommends.rows[i].postSmallImagesList)
 								res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
 							}
 						}
@@ -255,7 +254,7 @@
 						//时间  字符串切割
 						//调用 Data.customData()
 						var nowdate = Data.customData()
-						//						console.log(nowdate)
+						
 						var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
 
 						this.timestr = arr[0];
@@ -266,7 +265,6 @@
 							res.data.recommends.rows[i].createTimeStr = arr[0];
 						}
 
-//						console.log(res.data.recommends.rows[i].tagInfos)
 						if(res.data.recommends.rows[i].tagInfos != null) {
 							this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
 							res.data.recommends.rows[i].tagInfos = this.tagInfos
@@ -295,15 +293,13 @@
 						pageSize: 10
 					}
 
-					//				console.log(this.pageIndex);
 					if(this.allLoaded == false) {
-						// console.log(this.allLoaded)
+						
 						recommend(params).then(res => {
 							for(var i = 0; i < res.data.recommends.rows.length; i++) {
 								this.itemList.push(res.data.recommends.rows[i]);
 								if(res.data.recommends.rows[i].postSmallImagesList != null) {
 									if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
-										//									console.log(res.data.recommends.rows[i].postSmallImagesList)
 										res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
 									}
 								}
@@ -316,9 +312,9 @@
 								this.timestr = arr[0];
 								if(nowdate == this.timestr) {
 									var a1 = arr[1].split(":")
-									console.log(a1)
+//									console.log(a1)
 									res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-									console.log(res.data.recommends.rows[i].createTimeStr)
+//									console.log(res.data.recommends.rows[i].createTimeStr)
 								} else {
 									res.data.recommends.rows[i].createTimeStr = arr[0];
 
@@ -326,22 +322,17 @@
 
 								if(res.data.recommends.rows[i].tagInfos != null) {
 									res.data.recommends.rows[i].tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
-									console.log(res.data.recommends.rows[i].tagInfos)
 								} else {
 									// $(".crack-tag2").css("display", "none")
 								}
 
-								// console.log(this.tagInfos)
-								//								res.data.recommends.rows[i].tagInfos = this.tagInfos
-
 							}
-							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
+							
 
 							// 是否还有下一页，如果没有就禁止上拉刷新
 							if(this.pageIndex == this.totalpage) {
 
 								this.allLoaded = true;
-								//								console.log(this.pageIndex, this.totalpage, this.allLoaded)
 								$(".end").css("display", "block")
 								$(".start").css("display", "none")
 							}

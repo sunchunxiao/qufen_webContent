@@ -137,6 +137,7 @@
 			</div>
 			<div>
 				<Row class="margin-top-20 publish-button-con">
+					<span class="publish-button"><Button @click="handlePreview">预览</Button></span>
 					<span class="publish-button"><Button @click="handlePublish" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
 				</Row>
 			</div>
@@ -607,13 +608,87 @@
 				}
 
 			},
+			p1(s) {
+				return s < 10 ? '0' + s : s;
+			},
+			//预览
+			handlePreview() {
+				//去除文本编译器的标签
+				var dd = $("textarea").val().replace(/<\/?.+?>/g, "");
 
+				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
+				var ddsd = dds.replace(/&nbsp;/ig, "");
+				if(this.search != "") {
+					if(this.articleTitle.length !== 0) {
+						if(this.articleTitle.length <= 60) {
+							if(ddsd != "") {
+								let date = new Date();
+								let year = date.getFullYear();
+								let month = date.getMonth() + 1;
+								let day = date.getDate();
+								let hour = date.getHours();
+								let minute = date.getMinutes();
+
+								localStorage.publishTime = year + '-' + this.p1(month) + '-' + this.p1(day) + ' ' + this.p1(hour) + ':' + this.p1(minute);
+								//项目
+								localStorage.search = this.search
+								//自定义评分项
+								this.arr = [];
+								for(let i = 0; i < this.listData.length; i++) {
+//									console.log(this.listData)
+									this.arr.push({
+										modelId: this.listData[i].modelId,
+										modelName: this.listData[i].title,
+										modelWeight: this.listData[i].percent,
+										score: this.listData[i].value
+									});
+								}
+								localStorage.scoreList = JSON.stringify(this.arr) //标题
+								localStorage.articleTitle = this.articleTitle;
+								//内容
+								localStorage.content = $("textarea").val();
+								//总分
+								localStorage.totalscore = this.m
+								window.open("/preview/evaluating", "_blank")
+
+							} else {
+								this.$message({
+									showClose: true,
+									message: '内容不能为空',
+									type: 'error'
+								});
+							}
+
+						} else {
+							this.$message({
+								showClose: true,
+								message: '标题小于60字',
+								type: 'error'
+							});
+						}
+
+					} else {
+						this.$message({
+							showClose: true,
+							message: '文章标题不能为空',
+							type: 'error'
+						});
+					}
+
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请选择项目',
+						type: 'error'
+					});
+				}
+
+			},
 			//发布
 			handlePublish() {
 
 				this.arr = [];
 				for(let i = 0; i < this.listData.length; i++) {
-
 					this.arr.push({
 						modelId: this.listData[i].modelId,
 						modelName: this.listData[i].title,

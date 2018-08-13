@@ -83,6 +83,7 @@
 			</div>
 			<div>
 				<Row class="margin-top-20 publish-button-con">
+					<span class="publish-button"><Button @click="handlePreview">预览</Button></span>
 					<span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
 				</Row>
 			</div>
@@ -175,6 +176,91 @@
 				} else {
 					this.$Message.error('文章标题不可为空哦');
 				}
+			},
+			p(s) {
+				return s < 10 ? '0' + s : s;
+			},
+			//预览
+			handlePreview() {
+				//去除文本编译器的标签
+				var dd = $("textarea").val().replace(/<\/?.+?>/g, "");
+
+				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
+				//替换空格
+				var ddsd = dds.replace(/&nbsp;/ig, "");
+				if(this.search != "") {
+					if(this.articleTitle.length !== 0) {
+						if(this.articleTitle.length <= 60) {
+							if(ddsd != "") {
+
+								if(1) {
+									let date = new Date();
+									let year = date.getFullYear();
+									let month = date.getMonth() + 1;
+									let day = date.getDate();
+									let hour = date.getHours();
+									let minute = date.getMinutes();
+
+									localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
+
+								} else {
+									localStorage.publishTime = this.publishTime; // 本地存储发布时间
+								}
+								//项目
+								localStorage.search = this.search
+								//评分项
+								for(let i = 0; i < this.listData.length; i++) {
+									if(this.arr.length < 4) {
+										this.arr.push({
+											modelId: this.listData[i].modelId,
+											modelName: this.listData[i].title,
+											modelWeight: this.listData[i].percent,
+											score: this.listData[i].value,
+
+										});
+									}
+
+								}
+								localStorage.scoreList = JSON.stringify(this.arr)
+								//标题
+								localStorage.articleTitle = this.articleTitle;
+								//内容
+								localStorage.content = $("textarea").val();
+								//总分
+								localStorage.totalscore = this.m
+								window.open("/preview/evaluating", "_blank")
+							} else {
+								this.$message({
+									showClose: true,
+									message: '内容不能为空',
+									type: 'error'
+								});
+							}
+
+						} else {
+							this.$message({
+								showClose: true,
+								message: '标题小于60字',
+								type: 'error'
+							});
+						}
+
+					} else {
+						this.$message({
+							showClose: true,
+							message: '文章标题不能为空',
+							type: 'error'
+						});
+					}
+
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请选择项目',
+						type: 'error'
+					});
+				}
+
 			},
 			change1(value) {
 				//				console.log(value)
@@ -318,8 +404,10 @@
 				var ddsd = dds.replace(/&nbsp;/ig, "");
 				//				console.log(ddsd.toString().length,ddsd)
 				if(this.search == "") {
-					this.$alert('请选择项目', {
-						confirmButtonText: '确定',
+					this.$message({
+						showClose: true,
+						message: '请选择项目',
+						type: 'error'
 					});
 				} else {
 					if(this.articleTitle != "") {
@@ -379,21 +467,28 @@
 									});
 
 								} else {
-									this.$alert('内容不符合，不能为空', {
-										confirmButtonText: '确定',
+									this.$message({
+										showClose: true,
+										message: '内容不符合，不能为空',
+										type: 'error'
 									});
 
 								}
 							}
 						} else {
-							this.$alert('标题小于60字', {
-								confirmButtonText: '确定',
+							this.$message({
+								showClose: true,
+								message: '标题小于60字',
+								type: 'error'
 							});
+
 						}
 
 					} else {
-						this.$alert('标题不能为空', {
-							confirmButtonText: '确定',
+						this.$message({
+							showClose: true,
+							message: '标题不能为空',
+							type: 'error'
 						});
 					}
 

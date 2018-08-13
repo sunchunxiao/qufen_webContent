@@ -59,6 +59,7 @@
 
 				</div>
 				<Row class="margin-top-20 publish-button-con">
+					<span class="publish-button"><Button @click="handlePreview">预览</Button></span>
 					<span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
 				</Row>
 			</div>
@@ -289,6 +290,7 @@
 				}
 				return check;
 			},
+
 			//失焦事件
 			handleArticletitleBlur() {
 				if(this.articleTitle.length !== 0) {
@@ -309,13 +311,107 @@
 					this.$Message.error('文章标题不可为空哦');
 				}
 			},
+			p(s) {
+				return s < 10 ? '0' + s : s;
+			},
+			//预览
+			handlePreview() {
+				this.arr = []
+				//循环图片
+				for(let i = 0; i < this.uploadList.length; i++) {
+					 console.log(this.uploadList)
+					this.arr.push({
+						fileUrl: this.uploadList[i].url
+					});
+				}
+				if(this.search != "") {
+					if(this.articleTitle != "") {
+						if(this.articleTitle.length <= 60) {
+							if($("textarea").val().length > 0) {
+								if($("textarea").val().length < 1001) {
+									if(this.arr.length >= 1 && this.arr.length <= 9) {
+										if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
+											let date = new Date();
+										let year = date.getFullYear();
+										let month = date.getMonth() + 1;
+										let day = date.getDate();
+										let hour = date.getHours();
+										let minute = date.getMinutes();
 
+										localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
+
+										localStorage.search = this.search
+										localStorage.articleTitle = this.articleTitle;
+										localStorage.content = $("textarea").val();
+										//标签
+										localStorage.tag = JSON.stringify(this.tagthree)
+										localStorage.postImg = JSON.stringify(this.arr)
+
+										window.open("/preview/burst", "_blank")
+											
+										}else{
+											this.$message({
+												showClose: true,
+												message: '标签至少一条，不能超过三条',
+												type: 'error',
+												duration: 1500
+											});
+										}
+										
+										
+									} else {
+										this.$message({
+											showClose: true,
+											message: '请上传图片',
+											type: 'error',
+											duration: 1500
+										});
+									}
+
+								} else {
+									this.$message({
+										showClose: true,
+										message: '发布内容不能超过1000字',
+										type: 'error',
+										duration: 1500
+									});
+								}
+
+							} else {
+								this.$message({
+									showClose: true,
+									message: '内容不能为空',
+									type: 'error'
+								});
+							}
+
+						} else {
+							this.$message({
+								showClose: true,
+								message: '文章标题小于60字',
+								type: 'error'
+							});
+						}
+
+					} else {
+						this.$message({
+							showClose: true,
+							message: '文章标题不能为空',
+							type: 'error'
+						});
+					}
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请选择项目',
+						type: 'error'
+					});
+				}
+
+			},
 			//发布
 			handlePublish() {
-				console.log($("textarea").text())
-				var val = $("textarea").val()
-				val.replace(new RegExp("\n", "gm"), "<br>");
-				// console.log(val)
+
 				this.arr = [];
 				var _this = this
 				for(let i = 0; i < this.uploadList.length; i++) {
