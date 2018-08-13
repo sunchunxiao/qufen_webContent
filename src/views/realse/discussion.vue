@@ -59,8 +59,8 @@
 
 				</div>
 				<Row class="margin-top-20 publish-button-con">
-					<span class="publish-button"><Button @click="handlePreview">预览</Button></span>
 					<span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
+					<span class="publish-button"><Button style="width:90px;margin-left: 10px;" @click="handlePreview">预览</Button></span>
 				</Row>
 			</div>
 		</div>
