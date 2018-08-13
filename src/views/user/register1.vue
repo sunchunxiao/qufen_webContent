@@ -110,7 +110,7 @@
       //				}
       //			},
       login() {
-        var myreg = /^1[34578]\d{9}$/;
+        var myreg = /^1[345789]\d{9}$/;
         console.log($("#autolog").is(":checked"))
         if($("#autolog").is(":checked") == true) {
           setCookie('rmbUser', "true", timer)
