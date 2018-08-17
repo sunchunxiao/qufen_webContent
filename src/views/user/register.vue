@@ -14,19 +14,22 @@
 						<p v-show="showTishi">{{tishi}}</p>
 						<div class="wrap" style="margin-top: 35px;">
 							<!--autocomplete="off" 禁止输入框显示用户历史记录-->
-							<input autocomplete="off" class="wrap-input" type="text" placeholder="请输入手机号">
+							<input autocomplete="off" v-model="registerphone" class="wrap-input" type="text" placeholder="请输入手机号">
 							<img class="loginIcon" src="../../assets/login/icon1.png" />
 						</div>
 						<div class="wrap">
-							<input class="wrap-input1" type="text" id="code" placeholder="请输入验证码">
+							<input class="wrap-input1" v-model="code" type="text" id="code" placeholder="请输入验证码">
 							<img class="loginIcon" src="../../assets/login/icon2.png" />
-							<span class="getCode">获取验证码</span>
+							<span v-show="show" class="getCode" @click="getcode">获取验证码</span>
+							<span class=" getCode" v-show="!show">({{count}}S)</span>
+							<!--<button @click="getcode" id="getcode">获取验证码</button>-->
+
 						</div>
 						<div class="wrap">
-							<input class="wrap-input" type="password" placeholder="请输入密码">
+							<input class="wrap-input" v-model="password1" type="password" placeholder="请输入密码">
 							<img class="loginIcon" src="../../assets/login/icon3.png" />
 						</div>
-						<div class="loginBtn">立即注册</div>
+						<div class="loginBtn" @click="register">立即注册</div>
 						<div class="span toregister" style="text-align: right;" @click="ToLogin">已有账号？登录</div>
 					</div>
 					<!--登录-->
@@ -48,15 +51,16 @@
 						<div class="span">
 							<!--<input type="checkbox" name="autolog" id="autolog" />下次自动登录-->
 							<!--<span class="forgetpas">忘记密码</span>-->
-							<!--<span class="toregister" style="margin-left: 26px;" @click="ToRegister">注册</span>-->
 							<el-popover title="请下载区分APP修改密码" placement="top-start" width="150" trigger="click">
 								<img class="hover-img" src="../../assets/common/download.png" alt="" />
 								<span class="toregister1" slot="reference" style="margin-left: 26px;">忘记密码</span>
 							</el-popover>
-							<el-popover title="请扫码注册区分" placement="top-start" width="150" trigger="click">
+							<span class="toregister" style="margin-left: 26px;" @click="ToRegister">注册</span>
+
+							<!--<el-popover title="请扫码注册区分" placement="top-start" width="150" trigger="click">
 								<img class="hover-img" src="../../assets/common/register.png" alt="" />
 								<span class="toregister" slot="reference" style="margin-left: 26px;">注册</span>
-							</el-popover>
+							</el-popover>-->
 						</div>
 
 					</div>
@@ -70,19 +74,25 @@
 
 <script>
 	import { setCookie, getCookie } from '../../assets/js/cookie.js'
-	import { login } from '@/service/user'
+	import { login, register, getCode } from '@/service/user'
 	import Header from '@/components/layout/header'
 	export default {
 		data() {
 			return {
 				phone: '',
 				password: '',
+				registerphone: '',
+				code: '',
+				password1: '',
 				newUsername: '',
 				newPassword: '',
 				tishi: '',
 				showTishi: false,
 				showLogin: true,
-				showRegister: false
+				showRegister: false,
+				show: true,
+				count: "",
+				timer: null,
 			}
 		},
 		components: {
@@ -116,7 +126,7 @@
 					setCookie('rmbUser', "true", timer)
 
 				}
-				var timer = 60 * 60 * 2
+				var timer = 60 * 60 * 24
 				setCookie('username', this.phone, timer)
 				if(this.phone == "" || this.password == "") {
 					this.$alert('请输入手机号或密码', {
@@ -155,6 +165,99 @@
 						});
 					}
 
+				}
+
+			},
+			//注册
+			register() {
+				var myreg = /^1[345789]\d{9}$/;
+				if(this.registerphone == "") {
+					this.$alert('请输入手机号', {
+						confirmButtonText: '确定',
+					});
+				} else if(!myreg.test(this.registerphone)) {
+					this.$alert('手机号码格式错误', {
+						confirmButtonText: '确定',
+					});
+				} else if(this.code == "") {
+					this.$alert('请输入验证码', {
+						confirmButtonText: '确定',
+					});
+				} else if(this.password1 == "") {
+					this.$alert('请输入密码', {
+						confirmButtonText: '确定',
+					});
+				} else {
+
+					let data = {
+						phoneNumber: this.registerphone,
+						password: this.password1,
+						dynamicVerifyCode: this.code
+					}
+					var _this = this
+					register(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.msg)
+							if(res.msg = 'Success') {
+								this.$message('注册成功');
+							}
+							this.showLogin = true
+							this.showRegister = false
+						}
+
+					}).catch(function(error) {
+						//						alert(error.msg)
+						_this.$alert(error.msg, {
+							confirmButtonText: '确定',
+						});
+					});
+				}
+			},
+			//手机验证码
+			getcode() {
+				var myreg = /^1[345789]\d{9}$/;
+				var _this = this
+				//输入框
+				//				var val = $(".input-val").val().toLowerCase();
+				if(myreg.test(this.registerphone)) {
+					if(this.registerphone != "") {
+						//发送获取验证码的接口请求
+						if(this.show) { //倒计时内只能点一次
+							console.log(111)
+							getCode({
+								phone: this.registerphone,
+								module: "register"
+							}).catch(function(error) {
+								_this.$alert(error.msg, {
+									confirmButtonText: '确定',
+								});
+							});;
+						}
+						const TIME_COUNT = 60;
+						if(!this.timer) {
+							console.log(222)
+							this.count = TIME_COUNT;
+							this.show = false;
+							this.timer = setInterval(() => {
+								if(this.count > 0 && this.count <= TIME_COUNT) {
+									this.count--;
+								} else {
+									this.show = true;
+									clearInterval(this.timer);
+									this.timer = null;
+								}
+							}, 1000)
+						}
+
+					} else {
+						this.$alert('请输入手机号', {
+							confirmButtonText: '确定',
+						});
+					}
+				} else {
+					this.$alert('手机号码格式不正确', {
+						confirmButtonText: '确定',
+					});
 				}
 
 			},

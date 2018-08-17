@@ -19,7 +19,7 @@
 
 .content1 ul,
 li {
-	list-style: none;
+	/*list-style: none;*/
 }
 
 .detail-box {
@@ -195,6 +195,10 @@ li {
 .contenlist-title {
 	float: left;
 }
+.contenlist-title img{
+	border-radius: 50%;
+	border: 1px solid #dddddd;
+}
 
 .list {
 	overflow: hidden;
@@ -313,6 +317,8 @@ li {
 /*.slider .el-slider__runway.disabled .el-slider__bar{
 	background-color:rgb(60,137,247);
 }*/
+
+
 
 @media only screen and (max-width: 1600px) {
 	

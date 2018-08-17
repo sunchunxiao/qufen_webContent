@@ -14,8 +14,6 @@ export const submitattention = (params = {}) => {
   })
 }
 
-
-
 //项目方  评测媒体  机构号
 export const submitAuthenTiForm = (params = {}) => {
   return request(`/kff/authentication/submitAuthenTiForm`, {

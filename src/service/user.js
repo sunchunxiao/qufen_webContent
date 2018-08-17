@@ -12,3 +12,21 @@ export const login = (params = {}) => {
   })
 }
 
+//注册
+export const register = (params = {}) => {
+  return request(`/kff/user/register`, {
+    body: {
+      ...params
+    },
+  })
+}
+
+//getCode 获取验证码
+export const getCode = (params = {}) => {
+  return request('/kff/dynamicValidateCode/sendAliyun',{
+    body: {
+      ...params
+    }
+  })
+}
+

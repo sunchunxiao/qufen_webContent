@@ -10,7 +10,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/kff':{
+      	
+        target:'http://app.qufen.top/wap',
+//      target:'http://192.168.10.151:803/kff',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/kff': '/'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST

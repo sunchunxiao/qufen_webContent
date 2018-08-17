@@ -54,6 +54,14 @@ export const mainRouter = [
 				},
 				component: (resolve) => require(['@/views/project/index.vue'], resolve),
 			},
+			{
+				path: "/onecenter",
+				meta: {
+					title: '个人主页',
+				},
+				component: (resolve) => require(['@/views/details/onecenter.vue'], resolve),
+			},
+			
 			
 		]
 	},

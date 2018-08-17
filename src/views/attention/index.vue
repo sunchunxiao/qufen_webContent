@@ -2,7 +2,7 @@
 	<div>
 		<!--<Header></Header>-->
 		<div style="background-color:rgb(246,246,246) ;">
-			<div class="commmon">
+			<div class="commmon indexCommon">
 				<!--左边文章-->
 				<div class="common-article">
 					<!--文章-->
@@ -16,7 +16,7 @@
 									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
 									<div class="projectName-time">{{item.createTimeStr}}</div>
 								</div>
-								<div @click="attention" class="discoveryBtn">
+								<div @click="attention(item.createUserId,index)" class="discoveryBtn">
 									+ 关注
 								</div>
 							</div>
@@ -28,7 +28,7 @@
 								<div class="row row3">
 									<div class="discoveryContent">
 										<!--缩略图-->
-										<div v-for="item1 in item.postSmallImagesList" class="contentImg">
+										<div v-for="item1 in item.postSmallImages" class="contentImg">
 											<img :src="item1.fileUrl" />
 										</div>
 										<p class="row3-content">
@@ -44,9 +44,12 @@
 							</div>
 						</div>
 						<div class="row5" style="cursor: pointer;" @click="article(item.postType,item.postId)">
+							<!--<div class="article-atten">
+								<span  class="atten-name">{{item.actionDesc}}</span>
+
+							</div>-->
 							<div class="article-atten">
 								<span v-if="item.postType==1" class="atten-name">评测</span>
-
 							</div>
 							<div class="article-detail">
 								<!--打赏-->
@@ -161,8 +164,9 @@
 	import { followList } from '@/service/home';
 	import Header from '@/components/layout/header.vue'
 	import Data from '../../assets/js/date'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
-		name: 'discovery',
+		//		name: 'attention',
 		data() {
 			return {
 				value: 5,
@@ -177,6 +181,7 @@
 				postType: "",
 				state: "",
 				tagInfos: [],
+				token: getCookie('token')
 			}
 		},
 		components: {
@@ -191,26 +196,113 @@
 			this.loadPageList() //加载文章
 			//保留this属性
 			var _this = this
-			$(window).scroll(function() {
+			window.addEventListener('scroll', this.scrollHandler)
 
-				var scrollTop = $(this).scrollTop(); // 滚动条Y轴滚动的距离
-				var windowHeight = $(this).height(); // 可视区域的高度
+		},
+		updated() {
+			for(let i = 0; i < this.itemList.length; i++) {
+				//							console.log(res.data.projectResponsePage.rows[i].followStatus)
+				this.followStatus = this.itemList[i].followStatus
+				if(this.itemList[i].followStatus == 1) {
+					$(".discoveryBtn").eq(i).css({
+						backgroundColor: "rgb(244, 244, 244)",
+						color: "rgb(126, 126, 126)"
+					})
+					$(".discoveryBtn").eq(i).html("已关注")
+				} else {
+					$(".discoveryBtn").eq(i).css({
+						backgroundColor: "rgb(59, 136, 246)",
+						color: "rgb(255,255,255)"
+					})
+					$(".discoveryBtn").eq(i).html("+ 关注")
+				}
+
+			}
+		},
+		destroyed() {
+			window.removeEventListener("scroll", this.scrollHandler);
+		},
+		methods: {
+			//点击关注
+			attention(createUserId, index) {
+				console.log(createUserId)
+				if(this.token != "") {
+					//					console.log($(".discoveryBtn").eq(index).html())
+					if($(".discoveryBtn").eq(index).html() == "已关注") {
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: createUserId
+						}
+						cancelFollow(data).then(res => {
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".discoveryBtn").eq(index).css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".discoveryBtn").eq(index).html("+ 关注")
+								}
+							}
+						}).catch(function(res) {
+							alert(res.msg)
+						});
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: createUserId
+						}
+						var _this = this
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
+
+								//								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".discoveryBtn").eq(index).css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".discoveryBtn").eq(index).html("已关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+					}
+				} else {
+					this.$alert('前去登录', {
+						confirmButtonText: '确定',
+					});
+				}
+
+			},
+			//下滑加载
+			scrollHandler() {
+				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
+				var windowHeight = $(window).height(); // 可视区域的高度
 				var scrollHeight = $(document).height(); // 整个内容的高度
 
 				if(scrollTop + windowHeight == scrollHeight) {
 					// alert('已经到浏览器底部了，这时你可以做你需要的业务了');
-					_this.more()
+					this.more()
 				}
-			})
-		},
-		methods: {
+			},
 			resizeBannerImage() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-				// console.log(_width,_width1)
 
 				if(_width < 1590) {
-					var left = _width1 + 643
+					var left = _width1 + 650
 					$(".common-attention").css("left", left)
 				} else {
 					var left = _width1 + 715
@@ -235,42 +327,58 @@
 
 			},
 			loadPageList() {
-				// 查询数据
-				let data = {
-					pageIndex: 1,
-					pageSize: 10,
-					
-				}
-				followList(data).then(res => {
-					// console.log(res.data.recommends.rows)
-					this.itemList = res.data.recommends.rows;
-
-					for(var i = 0; i < res.data.recommends.rows.length; i++) {
-						if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
-							//							console.log(res.data.recommends.rows[i].postSmallImagesList)
-							res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
-						}
-
-						//时间  字符串切割
-						//调用 Data.customData()
-						var nowdate = Data.customData()
-						//						console.log(nowdate)
-						var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
-
-						this.timestr = arr[0];
-						if(nowdate == this.timestr) {
-							var a1 = arr[1].split(":")
-							res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-						} else {
-							res.data.recommends.rows[i].createTimeStr = arr[0];
-						}
-
-						this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
-						// console.log(this.tagInfos)
-						res.data.recommends.rows[i].tagInfos = this.tagInfos
-						this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
+				if(getCookie('token')) {
+					// 查询数据
+					let data = {
+						pageIndex: 1,
+						pageSize: 10,
+						token: this.token
 					}
-				})
+					followList(data).then(res => {
+						this.itemList = res.data.follows.rows;
+						console.log(res.data.follows.rows.length)
+						if(res.data.follows.rows.length<=2){
+							$(".start").css("display","none")
+						}
+						for(var i = 0; i < res.data.follows.rows.length; i++) {
+							if(res.data.follows.rows[i].postSmallImages != null) {
+								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+								var postSmallImages = JSON.parse(res.data.follows.rows[i].postSmallImages)
+								if(postSmallImages.length != 0) {
+									res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+								} else {
+									res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+								}
+							}
+
+							//时间  字符串切割
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							//						console.log(nowdate)
+							var arr = res.data.follows.rows[i].createTimeStr.split(" ")
+
+							this.timestr = arr[0];
+							if(nowdate == this.timestr) {
+								var a1 = arr[1].split(":")
+								res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+							} else {
+								res.data.follows.rows[i].createTimeStr = arr[0];
+							}
+
+							this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
+							// console.log(this.tagInfos)
+							res.data.follows.rows[i].tagInfos = this.tagInfos
+							this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
+						}
+					})
+
+				} else {
+					this.$message('请登录阅读更多精彩内容');
+					this.$router.push('user/register')
+				}
+
 			},
 
 			more() {
@@ -282,43 +390,48 @@
 					} else {
 						this.pageIndex = parseInt(this.pageIndex) + 1;
 						this.allLoaded = false;
-//						console.log(this.pageIndex, this.totalpage, this.allLoaded)
 					}
 					let params = {
 						pageIndex: this.pageIndex,
-						pageSize: 10
+						pageSize: 10,
+						token: this.token
 					}
 
-					//				console.log(this.pageIndex);
 					if(this.allLoaded == false) {
-						// console.log(this.allLoaded)
 						followList(params).then(res => {
-							for(var i = 0; i < res.data.recommends.rows.length; i++) {
-								this.itemList.push(res.data.recommends.rows[i]);
-								if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
-									//									console.log(res.data.recommends.rows[i].postSmallImagesList)
-									res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
+							for(var i = 0; i < res.data.follows.rows.length; i++) {
+								this.itemList.push(res.data.follows.rows[i]);
+								if(res.data.follows.rows[i].postSmallImages) {
+									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+									var postSmallImages = JSON.parse(res.data.follows.rows[i].postSmallImages)
+									if(postSmallImages.length != 0) {
+										res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+										//									console.log(postSmallImages.slice(0, 1))
+									} else {
+										res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+									}
 								}
 
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
-								var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
+								var arr = res.data.follows.rows[i].createTimeStr.split(" ")
 
 								this.timestr = arr[0];
 								if(nowdate == this.timestr) {
 									var a1 = arr[1].split(":")
-									console.log(a1)
-									res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-									console.log(res.data.recommends.rows[i].createTimeStr)
+									//									console.log(a1)
+									res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+									//									console.log(res.data.follows.rows[i].createTimeStr)
 								} else {
-									res.data.recommends.rows[i].createTimeStr = arr[0];
+									res.data.follows.rows[i].createTimeStr = arr[0];
 
 								}
 
-								this.tagInfos = JSON.parse(res.data.recommends.rows[i].tagInfos)
+								this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
 								// console.log(this.tagInfos)
-								res.data.recommends.rows[i].tagInfos = this.tagInfos
+								res.data.follows.rows[i].tagInfos = this.tagInfos
 
 							}
 							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
@@ -327,7 +440,7 @@
 							if(this.pageIndex == this.totalpage) {
 
 								this.allLoaded = true;
-//								console.log(this.pageIndex, this.totalpage, this.allLoaded)
+
 								$(".end").css("display", "block")
 								$(".start").css("display", "none")
 							}
@@ -336,7 +449,7 @@
 				}
 
 			},
-			
+
 		}
 	}
 </script>

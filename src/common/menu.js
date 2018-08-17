@@ -9,15 +9,15 @@ export const menuData = [
     children:''
   },
   
-//{
-//  path:"/attention",
-//  name:'关注',
-//  children:''
-//},
-//{
-//  path:"/project",
-//  name:'项目',
-//  children:''
-//}
+{
+    path:"/attention",
+    name:'关注',
+    children:''
+},
+{
+    path:"/project",
+    name:'项目',
+    children:''
+}
 ]
 

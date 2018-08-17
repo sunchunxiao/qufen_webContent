@@ -70,49 +70,26 @@
 						<span @click="attention" class="articleBack">回复</span>
 					</div>
 					<!--评论-->
-					<!--<div class="previewContent">
-							<h2>评论</h2>
-							<div>
-								<div class="contentList">
-									<div class="list">
-										<div class="contenlist-title"><img src="../../assets/common/FIND.png" /></div>
-										<span class="listName">游来游去</span>
-										<div class="listfloor">
-											<span class="floor">16楼 03.15 11:15 </span>
+					<div class="previewContent">
+						<h2>评论</h2>
+						<div>
+							<div class="contentList" v-for="item in newestComments">
+								<div class="list">
+									<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
+									<span class="listName">{{item.commentUserName}}</span>
+									<div class="listfloor">
+										<span class="floor">{{item.floor}}楼 {{item.createTimeStr}}</span>
 
-										</div>
-									</div>
-									<p class="listContent">
-										体自在EOS引力区的知识星球里有一个人，他在知识星球分享了一篇文章《数字会说明，老猫在想什么，写给eos的投资者们》，精明地推测出老猫分批地积累了上百万个EOS，这更能说明老猫看好EOS。道理很简单：因为看好，所以大量持有。
-									</p>
-
-									<div class="row articleRow">
-										<div class="article-atten">
-											<div class="detail1 zan">
-												<img src="../../assets/common/FIND.png">
-												<label>128</label>
-											</div>
-											<div class="detail index-preview">
-												<img src="../../assets/common/preview.png">
-												<label>111</label>
-											</div>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="listContent">
-									<div>
-										<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
-										<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
 									</div>
 								</div>
+								<p class="listContent">
+									{{item.commentContent}}
+								</p>
 
-								<div class="row articleRow rowLeft">
+								<!--<div class="row articleRow">
 									<div class="article-atten">
 										<div class="detail1 zan">
-											<img src="../../assets/common/zanS.png">
+											<img src="../../assets/common/FIND.png">
 											<label>128</label>
 										</div>
 										<div class="detail index-preview">
@@ -121,9 +98,32 @@
 										</div>
 									</div>
 
+								</div>-->
+
+							</div>
+
+							<!--<div class="listContent">
+								<div>
+									<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
+									<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
 								</div>
 							</div>
-						</div>-->
+
+							<div class="row articleRow rowLeft">
+								<div class="article-atten">
+									<div class="detail1 zan">
+										<img src="../../assets/common/zanS.png">
+										<label>128</label>
+									</div>
+									<div class="detail index-preview">
+										<img src="../../assets/common/preview.png">
+										<label>111</label>
+									</div>
+								</div>
+
+							</div>-->
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -131,9 +131,10 @@
 </template>
 
 <script>
-	//	import Header from '@/components/common/home.vue'
-	import { article } from '@/service/home';
+	import { article,postCommentList } from '@/service/home';
 	import Data from '../../assets/js/date'
+	import { getCookie } from '../../assets/js/cookie.js'
+	import { saveFollow, cancelFollow } from '@/service/home';
 	export default {
 		data() {
 			return {
@@ -153,8 +154,10 @@
 				articleContents: '',
 				imgUrl: '',
 				commendationListL: '',
-				tagInfos: []
-
+				tagInfos: [],
+				token: getCookie('token'),
+				followStatus: 0,
+				newestComments:[]
 			}
 		},
 		updated() {
@@ -169,69 +172,141 @@
 				wordWrap: "break-word",
 				lineHeight: '26px'
 			});
+			//关注状态
+			if(this.followStatus == 1) {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(244, 244, 244)",
+					color: "rgb(126, 126, 126)"
+				})
+				$(".discoveryBtn").html("已关注")
+			} else {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(59, 136, 246)",
+					color: "rgb(255,255,255)"
+				})
+				$(".discoveryBtn").html("+ 关注")
+			}
 
 		},
 		mounted() {
-			//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id;
+			//请求文章
+			this.articleC()
+			//请求评论
+			this.preview()
 
-			//发送请求
-			var data = {
-				postId: this.id
-			}
-			article(data).then(res => {
-				if(res.code == 0) {
-					var data = res.data.articleDetail
-
-					//文章内容
-					this.m = data.article.articleContents
-
-					//标题
-					this.articleTitle = data.postTitle
-					//头像
-					this.src = data.createUserIcon;
-
-					this.username = data.createUserName;
-					this.userSignature = data.createUserSignature;
-					//标签
-					this.tag = data.projectCode;
-					console.log(data.article.tagInfos)
-					if(data.article.tagInfos != null) {
-						this.tagInfos = JSON.parse(data.article.tagInfos)
-					}
-
-					//时间  字符串切割
-					//调用 Data.customData()
-					var nowdate = Data.customData()
-					var arr = data.createTimeStr.split(" ")
-
-					this.timestr = arr[0];
-					if(nowdate == this.timestr) {
-						var a1 = arr[1].split(":")
-						this.timestr1 = a1[0] + ":" + a1[1];
-					} else {
-						this.timestr1 = arr[0];
-					}
-
-					//赞助人数
-					this.donateNum = data.donateNum;
-					//评论人数
-					this.commentsNum = data.commentsNum;
-					//点赞人数
-					this.praiseNum = data.praiseNum;
-
-					//文章介绍
-					this.articleContents = data.article.articleContents;
-
-				}
-
-			})
 		},
 		methods: {
+			articleC() {
+				//发送请求
+				var data = {
+					token: this.token,
+					postId: this.id - 0
+				}
+				article(data).then(res => {
+					if(res.code == 0) {
+						var data = res.data.articleDetail
+						//文章内容
+						this.m = data.articleContents
+
+						//标题
+						this.articleTitle = data.postTitle
+						//头像
+						this.src = data.createUserIcon;
+						//用户名
+						this.username = data.createUserName;
+						//
+						this.userSignature = data.createUserSignature;
+						//关注状态
+						this.followStatus = data.followStatus
+						//标签
+						this.tag = data.projectCode;
+						if(data.tagInfos != null) {
+							this.tagInfos = JSON.parse(data.article.tagInfos)
+						}
+
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+						var arr = data.createTimeStr.split(" ")
+
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							this.timestr1 = a1[0] + ":" + a1[1];
+						} else {
+							this.timestr1 = arr[0];
+						}
+
+						//赞助人数
+						this.donateNum = data.donateNum;
+						//评论人数
+						this.commentsNum = data.commentsNum;
+						//点赞人数
+						this.praiseNum = data.praiseNum;
+
+					}
+
+				})
+			},
+			preview() {
+				let data = {
+					token: this.token,
+					pageIndex:1,
+					pageSize:5,
+					postId:this.id-0,
+					postType:3
+				}
+				postCommentList(data).then(res => {
+					if(res.code == 0) {
+						this.newestComments = res.data.newestComments.rows
+					}
+				})
+			},
 			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
+				if($(".discoveryBtn").html() == "已关注") {
+					//取消关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.id
+					}
+					cancelFollow(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 0) {
+								console.log('取消关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(59, 136, 246)",
+									color: "rgb(255,255,255)"
+								})
+								$(".discoveryBtn").html("+ 关注")
+							}
+						}
+					})
+				} else {
+					//去关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.id
+					}
+					saveFollow(data).then(res => {
+						if(res.code == 0) {
+
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 1) {
+								console.log('已经关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(244, 244, 244)",
+									color: "rgb(126, 126, 126)"
+								})
+								$(".discoveryBtn").html("已关注")
+							}
+						}
+					})
+				}
+
 			}
 		}
 	}

@@ -36,7 +36,7 @@ import { getCookie} from '../../assets/js/cookie.js'
 
       })
       //获取七牛云token和用户id
-      console.log(getCookie('token'))
+//    console.log(getCookie('token'))
 			this.getToken();
 
     },

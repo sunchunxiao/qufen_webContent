@@ -1,8 +1,28 @@
 .commmon {
-	width: 1060px;
 	margin: 20px auto 0;
 	overflow: hidden;
 	padding-top: 55px;
+	position: relative;
+}
+.indexCommon{
+	width: 1060px;
+}
+.commmon1 {
+	width: 760px;
+	margin: 20px auto 0;
+	overflow: hidden;
+	padding-top: 55px;
+	position: relative;
+	min-height: 700px;
+}
+.projectCommon{
+	width: 1060px;
+}
+
+.detailcommmon {
+	width: 760px;
+	margin: 0 auto;
+	overflow: hidden;
 	position: relative;
 	min-height: 700px;
 }
@@ -16,13 +36,24 @@
 	margin-left: 32px;
 	float: left;
 }
+.detailcommmon{
+	width: 700px;
+	float: left;
+}
 
 .common-attention {
 	position: fixed;
 	/*left: 900px;*/
 	width: 314px;
-	height: 600px;
+	/*height: 600px;*/
 }
+.project-attention{
+	/*position: absolute;
+	right: 0;*/
+	float: right;
+	width: 314px;
+}
+
 .common-attention1 {
 	position: absolute;
 	left: 742px;
@@ -35,15 +66,15 @@
 	margin-bottom: 10px;
 	border-radius: 4px;
 	/*box-shadow:0 1px 3px rgba(200,200,200,0.48);*/
-	box-shadow: 0 1px 3px 0 1px 3px rgba(26, 26, 26, .1);
+	box-shadow: 0 1px 3px 0 rgba(26, 26, 26, .1);
 }
 
 .common-article-wrap:hover {
-	box-shadow: 0 1px 3px 0 1px 3px rgba(103, 166, 255, 0.27);
+	box-shadow: 0 1px 3px 0 rgba(103, 166, 255, 0.27);
 }
 
 .common-article-content {
-	padding: 20px;
+	padding: 20px 20px 10px;
 }
 
 .row {
@@ -66,6 +97,7 @@
 
 .photo>img {
 	width: 100%;
+	height: 100%;
 	border-radius: 50%;
 	border: 1px solid #dddddd;
 }
@@ -82,12 +114,13 @@
 .projectName-name {
 	font-size: 15px;
 	color: rgb(51, 51, 51);
+	font-weight: 600;
 }
 
 .projectName-time {
 	font-size: 14px;
 	color: rgb(133, 144, 166);
-	margin-top: 5px;
+	/*margin-top: 5px;*/
 }
 
 .atten-span {
@@ -96,7 +129,20 @@
 }
 
 .discoveryBtn {
-	width: 70px;
+	width: 64px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	text-align: center;
+	background-color: rgb(59, 136, 246);
+	border-radius: 4px;
+	position: absolute;
+	right: 0;
+	cursor: pointer;
+}
+
+.discoveryBtndetail {
+	width: 64px;
 	height: 30px;
 	line-height: 30px;
 	color: #fff;
@@ -109,8 +155,8 @@
 }
 
 .test {
-	font-family: PingFang-SC-Heavy;
-	font-size: 18px;
+	/*font-family: PingFang-SC-Heavy;*/
+	font-size: 21px;
 	color: rgb(51, 51, 51);
 	overflow: hidden;
 	margin-right: 30px;
@@ -128,7 +174,7 @@
 }
 
 .test:hover {
-	color: #000;
+	color: #406599;
 }
 
 .index-score {
@@ -157,7 +203,38 @@
 	height: 100%;
 }
 
+
+/*个人中心*/
+
+.onecontentImg {
+	width: 227px;
+	height: 118px;
+	float: left;
+	margin-right: 25px;
+}
+
+.onecontentImg>img {
+	width: 100%;
+	height: 100%;
+}
+
 .row3-content {
+	/*font-family: PingFang-SC-Medium;*/
+	height: 118px;
+	line-height: 30px;
+	font-size: 16px;
+	color: rgb(63, 69, 81);
+	display: -webkit-box;
+	word-break: break-word;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/*! autoprefixer: off */
+	-webkit-box-orient: vertical;
+	/*  autoprefixer: on */
+	-webkit-line-clamp: 4;
+}
+
+.onecontent {
 	height: 118px;
 	line-height: 30px;
 	font-size: 16px;
@@ -169,7 +246,6 @@
 	-webkit-box-orient: vertical;
 	/*  autoprefixer: on */
 	-webkit-line-clamp: 4;
-
 }
 
 
@@ -269,11 +345,11 @@
 }
 
 .attention-hot {
-	height: 300px;
+	/*height: 300px;*/
 }
 
 .attention-user {
-	height: 300px;
+	/*height: 300px;*/
 }
 
 .attention-wrap {
@@ -296,7 +372,7 @@
 }
 
 .common-attention-down {
-	font-family: PingFang-SC-Bold;
+	/*font-family: PingFang-SC-Bold;*/
 	font-size: 16px;
 	color: rgb(59, 136, 246);
 	width: 110px;
@@ -370,7 +446,8 @@
 	right: 10px;
 }
 
-.attenList li {}
+
+
 
 
 /*加载更多*/
@@ -392,18 +469,208 @@
 	display: none;
 }
 
+
+/*项目主页*/
+
+.projectwrap {
+	font-size: 15px;
+	color: rgb(51, 51, 51);
+	font-weight: 600;
+	float: left;
+}
+
+.projectH {
+	float: left;
+	width: 180px;
+}
+
+.projectSpecial {
+	width: 230px;
+	display: flex;
+	align-items: center;
+	float: left;
+}
+
+.projectUl {
+	box-shadow: 0 1px 3px rgba(200, 200, 200, 0.48);
+	background-color: #fff;
+	border-radius: 4px;
+}
+
+.projectUl li {
+	padding: 10px 20px;
+	border-bottom: 1px solid rgb(237, 237, 237);
+	list-style: none;
+	overflow: hidden;
+}
+.projectUl li:hover{
+	box-shadow: 1px 1px 3px rgba(200, 200, 200, 0.48);
+}
+.photoP {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: 1px solid rgb(221, 221, 221);
+	float: left;
+}
+
+.photoP img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.pname {
+	margin-left: 15px;
+}
+
+.projectIcon {
+	float: left;
+}
+
+.projectNamedec {
+	width: 145px;
+	font-size: 12px;
+	color: rgb(133, 144, 166);
+}
+
+.projectNamedec1 {
+	font-size: 15px;
+	color: rgb(133, 144, 166);
+}
+
+.block {
+	background-color: #fff;
+	margin-top: 10px;
+	padding: 10px 50px;
+	margin-bottom: 30px;
+}
+
+.block .el-pagination__total {
+	color: rgb(59, 136, 246);
+}
+
+.pt {
+	top: 40px;
+}
+
+.projectScore {
+	top: 0;
+}
+.specialleftname{
+	width:200px;
+	height:50px;
+}
+/*项目列表*/
+.projectintroduce{
+	font-family: PingFang-SC-Medium;
+	font-size: 14px;
+	color: rgb(51,51,51);
+	padding: 10px 0;
+	line-height: 25px;
+}
+.attenListname  li{
+	font-family: PingFang-SC-Medium;
+	color: rgb(51,51,51);
+	display: inline-block;
+	font-size: 14px;
+	/*width: 110px;*/
+	padding-bottom: 10px;
+	position: relative;
+}
+.attenListname  li span{
+	display: inline-block;
+	width: 110px;
+	word-break: break-word;
+}
+.leftname{
+	position: absolute;
+    top: 0;
+}
+.rightname{
+	position: absolute;
+    top: 0;
+    left: 110px;
+}
+
+/*个人主页*/
+
+.onephoto {
+	width: 70px;
+	height: 70px;
+	border: 1px dotted rgb(221, 221, 221);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.onephoto img {
+	width: 40px;
+	height: 40px;
+	border-radius:50% ;
+}
+
+.oneusername {
+	font-size: 18px;
+}
+
+.onedec {
+	color: rgb(133, 144, 166);
+	font-size: 14px;
+	/*margin-left: 3px;*/
+}
+
+.commmon1 ul {
+	overflow: hidden;
+}
+.onecommon{
+	margin-top: 10px;
+}
+.onecommon ul{
+	overflow: hidden;
+	height: 30px;
+}
+.onecommon ul li {
+	list-style: none;
+	float: left;
+	width: 95px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+	position: relative;
+}
+
+.onecommon .ping:after {
+	content: '';
+	display: inline-block;
+	width: 20%;
+	margin: 2px 5%;
+	border-bottom: 3px solid rgb(59,136,246);
+	border-radius: 26%;
+	position: absolute;
+	bottom: -5px;
+	left: 32px;
+}
+
 @media only screen and (max-width: 1600px) {
-	.commmon {
+	.indexCommon {
 		width: 930px;
 	}
+	.projectCommon{
+		width: 937px;
+	}
 	.common-article {
-		width: 635px;
+		width: 640px;
 		margin-left: 26px;
 	}
 	.common-attention {
 		width: 257px;
-		
 	}
+	.project-attention{
+	width: 257px;
+	
+}
 	.common-attention1 {
 		width: 257px;
 		left: 671px;
@@ -419,13 +686,17 @@
 		font-size: 15px;
 		height: 90px;
 	}
+	.onecontent {
+		font-size: 15px;
+		height: 115px;
+	}
 	.contentImg {
 		width: 200px;
 		height: 90px;
 		margin-right: 25px;
 	}
 	.attention-wrap {
-		padding: 15px 10px;
+		padding: 15px;
 	}
 	.common-attention-down {
 		width: 95px;
@@ -434,5 +705,14 @@
 	}
 	.btnL {
 		right: 0;
+	}
+	.onedetailArticle {
+		width: 640px;
+	}
+	.commmon1 {
+		width: 670px;
+	}
+	.detailcommmon {
+		width: 670px;
 	}
 }

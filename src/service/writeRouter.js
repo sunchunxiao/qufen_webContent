@@ -135,6 +135,7 @@ export const writeRouter = [
         },
         component: (resolve) => require(['@/views/select/attentionselect.vue'], resolve)
       },
+      
 //{
 //		    path: "/m_index",
 //		    meta: {

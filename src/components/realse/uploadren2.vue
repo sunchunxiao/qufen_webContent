@@ -100,7 +100,7 @@ import { getCookie} from '../../assets/js/cookie.js'
 				}
 				upload(data1).then(res => {
 					if(res.code == 0) {
-						console.log(res.data)
+//						console.log(res.data)
 						this.uptoken.token = res.data.upToken
 						this.userId = res.data.uid
 

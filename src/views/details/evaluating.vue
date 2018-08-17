@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div style="background-color:rgb(246,246,246) ;" >
-			<div class="commmon">
+			<div class="commmon indexCommon">
 				<!--左边文章-->
 				<div class="common-article">
 					<div class="detail-box evaluating">
@@ -40,11 +40,11 @@
 							<div class="articleDetail">
 								<div class="detail index-preview">
 									<img src="../../assets/common/shou.png">
-									<label>111</label>
+									<label>收藏</label>
 								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/share.png">
-									<label>111</label>
+									<label>分享</label>
 								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/preview.png">
@@ -160,8 +160,10 @@
 <script>
 	import { articleInfo } from '@/service/home';
 	import Data from '../../assets/js/date'
+	import { getCookie } from '../../assets/js/cookie.js'
+	import {saveFollow, cancelFollow } from '@/service/home';
 	export default {
-		name: 'discovery',
+		name: 'evaluating',
 		data() {
 			return {
 				value1: 8,
@@ -172,13 +174,13 @@
 				totalscore: 0,
 				storeList: [],
 				m: '',
-				donateNum: '',
 				timestr: '',
 				timestr1: '',
-				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
-				projectCode:''
+				projectCode:'',
+				token: getCookie('token'),
+				followStatus:0
 			}
 		},
 		
@@ -214,6 +216,21 @@
 				$(".totlescore").eq(4).css("color", "rgb(255,40,81)")
 
 			});
+			
+			//关注状态
+			if(this.followStatus == 1) {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(244, 244, 244)",
+					color: "rgb(126, 126, 126)"
+				})
+				$(".discoveryBtn").html("已关注")
+			} else {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(59, 136, 246)",
+					color: "rgb(255,255,255)"
+				})
+				$(".discoveryBtn").html("+ 关注")
+			}
 
 		},
 		mounted() {
@@ -224,45 +241,47 @@
 
 			//请求文章
 			this.id = this.$route.query.id;
-//			console.log(this.$route.query.id)
+
 			var data = {
-				postId: this.id
+				token:this.token,
+				postId: this.id-0
 			}
 			//测评
 			articleInfo(data).then(res => {
 				if(res.code == 0) {
-					//						 console.log(res.data.projectEvaluationDetailResponse)
-					var data = res.data.projectEvaluationDetailResponse
+					
+					var data = res.data.evaluationDetail
 
-					this.articleTitle = data.post.postTitle
+					this.articleTitle = data.postTitle
 					//头像
-					this.src = data.post.createUserIcon;
+					this.src = data.createUserIcon;
 					//用户名
-					this.username = data.post.createUserName;
-					this.projectCode = data.post.projectCode;
+					this.username = data.createUserName;
+					this.projectCode = data.projectCode;
+					//关注状态
+					this.followStatus= data.followStatus
 					
 					//时间  字符串切割
 					//调用 Data.customData()
 					var nowdate = Data.customData()
-//					console.log(nowdate)
-					var arr = data.post.createTimeStr.split(" ")
+
+					var arr = data.createTimeStr.split(" ")
 
 					this.timestr = arr[0];
 					
-//					console.log(this.timestr)
 					if(nowdate == this.timestr) {
 						var a1 = arr[1].split(":")
-						console.log(a1)
+//						console.log(a1)
 						this.timestr1 = a1[0]+":"+a1[1];
 					} else {
 						this.timestr1 = arr[0];
 					}
 
 					//综合评分
-					this.totalscore = data.evaluation.totalScore;
+					this.totalscore = data.totalScore;
 					//评分
-					if(data.evaluation.professionalEvaDetail != null) {
-						this.storeList = JSON.parse(data.evaluation.professionalEvaDetail);
+					if(data.professionalEvaDetail != null) {
+						this.storeList = JSON.parse(data.professionalEvaDetail);
 						if(this.storeList.length == 0) {
 							$(".sliderList").css("display", "none")
 						}
@@ -272,15 +291,15 @@
 					}
 
 					//文章
-					this.m = data.evaluation.evauationContent
+					this.m = data.evauationContent
 					//标签
-					this.tag = data.post.projectCode;
+					this.tag = data.projectCode;
 					//赞助人数
-					this.donateNum = data.post.donateNum;
+					this.donateNum = data.donateNum;
 					//评论人数
-					this.commentsNum = data.post.commentsNum;
+					this.commentsNum = data.commentsNum;
 					//点赞人数
-					this.praiseNum = data.post.praiseNum;
+					this.praiseNum = data.praiseNum;
 
 				}
 
@@ -294,7 +313,7 @@
 				// console.log(_width,_width1)
 
 				if(_width<1590){
-					var left = _width1+643
+					var left = _width1+650
 					$(".common-attention").css("left",left)
 				}else{
 					var left = _width1+715
@@ -302,10 +321,50 @@
 				}
 
 			},
-			attention(){
-				this.$alert('本功能目前只对APP开放', {
-						confirmButtonText: '确定',
-					});
+			attention() {
+				if($(".discoveryBtn").html() == "已关注") {
+					//取消关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.id
+					}
+					cancelFollow(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 0) {
+								console.log('取消关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(59, 136, 246)",
+									color: "rgb(255,255,255)"
+								})
+								$(".discoveryBtn").html("+ 关注")
+							}
+						}
+					})
+				} else {
+					//去关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.id
+					}
+					saveFollow(data).then(res => {
+						if(res.code == 0) {
+
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 1) {
+								console.log('已经关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(244, 244, 244)",
+									color: "rgb(126, 126, 126)"
+								})
+								$(".discoveryBtn").html("已关注")
+							}
+						}
+					})
+				}
+				
 			}
 		}
 	}

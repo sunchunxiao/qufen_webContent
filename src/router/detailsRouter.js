@@ -63,6 +63,7 @@ export const detailsRouter = [
 				},
 				component: (resolve) => require(['@/views/preview/evaluating.vue'], resolve)
 			},
+			
 
 		]
 	},

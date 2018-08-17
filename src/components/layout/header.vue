@@ -14,7 +14,7 @@
 									<el-menu-item :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
 
 								</template>
-								<div class="understand" @click="next">了解区分</div>
+								<!--<div class="understand" @click="next">了解区分</div>-->
 								<div class="nav-wrap">
 									<input class="nav-input" type="text" placeholder="搜索您感兴趣的内容">
 									<img class="navIcon" src="../../assets/login/search.png" />
@@ -42,7 +42,9 @@
 											<Icon type="arrow-down-b"></Icon>
 										</a>
 										<DropdownMenu slot="list">
+											<DropdownItem><span @click="onecenter">用户主页</span></DropdownItem>
 											<DropdownItem><span @click="attention">认证</span></DropdownItem>
+											
 											<DropdownItem>
 												<a href="javascript:void(0)" @click="quit">点击注销</a>
 											</DropdownItem>
@@ -78,13 +80,6 @@
 		},
 
 		mounted() {
-//			$(".el-menu--horizontal li").on("click", function() {
-//				console.log(111)
-//				//			var index = $(this).index();
-//				//			$(".el-menu--horizontal>.el-menu-item").removeClass("header-active");
-//				$(this).css("border-bottom", "2px solid rgba(64, 158, 255, 1)!important");
-//				console.log($(this).css("border-bottom"))
-//			});
 
 			//登录后
 			if(getCookie('username') && getCookie('token')) {
@@ -121,6 +116,10 @@
 			this.handleSelect()
 		},
 		methods: {
+			onecenter(){
+				console.log(111)
+				this.$router.push("/onecenter")
+			},
 			go(){
 				this.$router.push("/user/register")
 			},
@@ -170,9 +169,9 @@
 				delCookie('username')
 				delCookie('token')
 				delCookie('changeLogin')
-				delCookie('img')
 				delCookie('user')
 				delCookie('userType')
+				delCookie('img')
 				this.$router.push("/user/register");
 			},
 			handleSelect(key, keyPath) {
@@ -299,7 +298,9 @@
 	}
 	
 	.cx-username {
-		
+		position: absolute;
+		left: 40px;
+		height: 50px;
 		line-height: none!important;
 		/*text-overflow: ellipsis;
 		display: -webkit-box;*/
@@ -312,7 +313,7 @@
 	.cx-username:after {
 		content: "...";
 		position: absolute;
-		right: -4px;
+		right: -3px;
 		top: 0px;
 	}
 	.ivu-dropdown-rel{
@@ -471,11 +472,11 @@
 		height: 59px!important;
 		color: #000!important;
 		font-weight: 600;
-		 border-bottom: 2px solid #409EFF!important;
+		 /*border-bottom: 2px solid #409EFF!important;*/
 	}
-	/*.el-menu--horizontal>.el-menu-item.is-active{
+	.el-menu--horizontal>.el-menu-item.is-active{
 		border-bottom: 2px solid #409EFF!important;
-	}*/
+	}
 	.el-menu--horizontal li {
 		color: rgb(133, 144, 166)!important;
 		background-color: #fff!important;

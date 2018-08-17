@@ -29,7 +29,7 @@
 						</div>
 						<div class="articleTag">
 							<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
-              <span class="crack-tag2"  v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
+							<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 						</div>
 					</div>
 					<div class="row articleRow5">
@@ -129,20 +129,20 @@
 <script>
 	import { discuss } from '@/service/home';
 	import Data from '../../assets/js/date'
+	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		data() {
 			return {
-				isChoose: undefined,
 				isScale: undefined,
 				articleTitle: '',
 				src: '',
-
+				token: getCookie('token'),
 				username: '',
 				userSignature: '',
 				disscussContents: '',
 				imgUrl: '',
 				postImg: [],
-        projectCode:'',
+				projectCode: '',
 				commentsehot: [],
 				commenticon: [],
 				timestr: '',
@@ -150,37 +150,37 @@
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
-        tagInfos:[]
+				tagInfos: []
 
 			}
 		},
 
 		mounted() {
 			this.id = this.$route.query.id;
-			//			console.log(this.$route.query.id)
 			let data = {
-				postId: this.id
+				token: this.token,
+				postId: this.id - 0
 			}
 			//爆料
 			discuss(data).then(res => {
 				if(res.code == 0) {
-					var data = res.data.discussShare
+					var data = res.data.discussDetail
 
 					//标题
-					this.articleTitle = data.post.postTitle
+					this.articleTitle = data.postTitle
 					//头像
-					this.src = data.post.createUserIcon;
+					this.src = data.createUserIcon;
 					//用户昵称
-					this.username = data.post.createUserName;
+					this.username = data.createUserName;
 					//时间  字符串切割
 					//调用 Data.customData()
 					var nowdate = Data.customData()
-					var arr = data.post.createTimeStr.split(" ")
-          this.projectCode = data.post.projectCode
+					var arr = data.createTimeStr.split(" ")
+					this.projectCode = data.projectCode
 
-          if(data.tagInfo!=null){
-            this.tagInfos = JSON.parse( data.tagInfo)
-          }
+					if(data.tagInfos != null) {
+						this.tagInfos = JSON.parse(data.tagInfos)
+					}
 
 					this.timestr = arr[0];
 					if(nowdate == this.timestr) {
@@ -190,34 +190,38 @@
 						this.timestr1 = arr[0];
 					}
 
-					this.userSignature = data.post.createUserSignature;
+					this.userSignature = data.createUserSignature;
 
 					//文章内容
-					this.disscussContents = data.discuss.disscussContents;
+					this.disscussContents = data.disscussContents;
 
 					//图片
-					var a = JSON.parse(data.post.postSmallImages);
-					if(a.length != 0) {
-						if(a.length >= 3) {
-							a = a.slice(0, 3)
-						}
+					if(data.postSmallImages != null) {
+						var a = JSON.parse(data.postSmallImages);
+						if(a.length != 0) {
+							if(a.length >= 3) {
+								a = a.slice(0, 3)
+							}
 
-						for(let i = 0; i < a.length; i++) {
-							this.imgUrl = a[i].fileUrl
-							this.postImg.push({
-								src: this.imgUrl
-							})
+							for(let i = 0; i < a.length; i++) {
+								this.imgUrl = a[i].fileUrl
+								this.postImg.push({
+									src: this.imgUrl
+								})
+							}
 						}
+					} else {
+						$('.burstImg').css('display', 'none')
 					}
 
 					//标签
-					this.projectCode = data.post.projectCode;
+					this.projectCode = data.projectCode;
 					//赞助人数
-					this.donateNum = data.post.donateNum;
+					this.donateNum = data.donateNum;
 					//评论人数
-					this.commentsNum = data.post.commentsNum;
+					this.commentsNum = data.commentsNum;
 					//点赞人数
-					this.praiseNum = data.post.praiseNum;
+					this.praiseNum = data.praiseNum;
 					//最多选择标签
 					//this.tagInfo = JSON.parse(data.tagInfo);
 					//热门评论
@@ -236,12 +240,12 @@
 					}
 
 					//时间  字符串切割
-					var arr = data.post.createTimeStr.split(" ")
+					var arr = data.createTimeStr.split(" ")
 					this.timestr = arr[0];
 					//缩略图
 					// this.imgUrl = JSON.parse(data.post.postSmallImages)
 					//缩略文章
-					this.postShortDesc = data.post.postShortDesc
+					this.postShortDesc = data.postShortDesc
 				}
 
 			})

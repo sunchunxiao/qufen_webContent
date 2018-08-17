@@ -1,5 +1,5 @@
 /**
- * Created by zhengchangshun on 2018/4/15.
+ * Created by sunchuxniao on 2018/8/14.
  */
 import request from '../utils/request'
 
@@ -23,7 +23,7 @@ export const followList = (params = {}) => {
 
 // 文章详情
 export const article = (params = {}) => {
-  return request(`/kff/home/shareArticleDetail`, {
+  return request(`/kff/home/articleDetail`, {
     body: {
       ...params
     },
@@ -32,25 +32,63 @@ export const article = (params = {}) => {
 
 // 爆料详情
 export const discuss = (params = {}) => {
-  return request(`/kff/home/discussCommentListShare`, {
+  return request(`/kff/home/discussDetail `, {
+    body: {
+      ...params
+    },
+  })
+}
+//测评
+export const articleInfo = (params = {}) => {
+  return request(`/kff/home/evaluationDetail`, {
     body: {
       ...params
     },
   })
 }
 
-//测评
-export const articleInfo = (params = {}) => {
-  return request(`/kff/home/shareEvaluationDetail`, {
+//项目列表
+export const project = (params = {}) => {
+  return request(`/kff/project/getProjectByTabId`, {
     body: {
       ...params
     },
   })
 }
+
+
 
 //认证
 export const reviewedL = (params = {}) => {
   return request(`/kff/authentication/reviewed`, {
+    body: {
+      ...params
+    },
+  })
+}
+
+//项目主页中关注
+export const  saveFollow= (params = {}) => {
+  return request(`/kff/follow/saveFollow`, {
+    body: {
+      ...params
+    },
+  })
+}
+
+
+//项目主页中取消关注
+export const  cancelFollow= (params = {}) => {
+  return request(`/kff/follow/cancelFollow`, {
+    body: {
+      ...params
+    },
+  })
+}
+
+//评测,文章评论列表接口
+export const  postCommentList= (params = {}) => {
+  return request(`/kff/home/postCommentList`, {
     body: {
       ...params
     },
