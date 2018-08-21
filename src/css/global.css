@@ -590,14 +590,9 @@
 	width: 110px;
 	word-break: break-word;
 }
-.leftname{
-	position: absolute;
-    top: 0;
-}
+
 .rightname{
-	position: absolute;
-    top: 0;
-    left: 110px;
+	text-decoration: underline;
 }
 
 /*个人主页*/

@@ -206,8 +206,8 @@
 			this.articleC()
 			//请求评论
 			this.preview(),
-				//监听滚动条
-				window.addEventListener('scroll', this.scrollHandler)
+			//监听滚动条
+			window.addEventListener('scroll', this.scrollHandler)
 
 		},
 		methods: {
@@ -222,60 +222,7 @@
 					this.previewmore()
 				}
 			},
-			articleC() {
-				//发送请求
-				var data = {
-					token: this.token,
-					postId: this.id - 0
-				}
-				article(data).then(res => {
-					if(res.code == 0) {
-						var data = res.data.articleDetail
-						//文章内容
-						this.m = data.articleContents
 
-						//标题
-						this.articleTitle = data.postTitle
-						//头像
-						this.src = data.createUserIcon;
-						//用户名
-						this.username = data.createUserName;
-						//
-						this.userSignature = data.createUserSignature;
-						//关注状态
-						this.followStatus = data.followStatus
-						//标签
-						this.tag = data.projectCode;
-						if(data.tagInfos != null) {
-							this.tagInfos = JSON.parse(data.tagInfos)
-							
-						}
-
-						//时间  字符串切割
-						//调用 Data.customData()
-						var nowdate = Data.customData()
-						var arr = data.createTimeStr.split(" ")
-
-						this.timestr = arr[0];
-						if(nowdate == this.timestr) {
-							var a1 = arr[1].split(":")
-							this.timestr1 = a1[0] + ":" + a1[1];
-						} else {
-							this.timestr1 = arr[0];
-						}
-
-						//赞助人数
-						this.donateNum = data.donateNum;
-						//评论人数
-						this.commentsNum = data.commentsNum;
-						//点赞人数
-						this.praiseNum = data.praiseNum;
-						this.createUserId = data.createUserId
-
-					}
-
-				})
-			},
 			preview() {
 				let data = {
 					token: this.token,
@@ -309,10 +256,64 @@
 						}
 					})
 				} else {
-					$('.end').css('display',"block")
-					$('.start').css('display',"none")
+					$('.end').css('display', "block")
+					$('.start').css('display', "none")
 				}
 
+			},
+			articleC() {
+				//发送请求
+				var data = {
+					token: this.token,
+					postId: this.id - 0
+				}
+				article(data).then(res => {
+					if(res.code == 0) {
+						var data = res.data.articleDetail
+						//文章内容
+						this.m = data.articleContents
+
+						//标题
+						this.articleTitle = data.postTitle
+						//头像
+						this.src = data.createUserIcon;
+						//用户名
+						this.username = data.createUserName;
+						//
+						this.userSignature = data.createUserSignature;
+						//关注状态
+						this.followStatus = data.followStatus
+						//标签
+						this.tag = data.projectCode;
+						if(data.tagInfos != null) {
+							this.tagInfos = JSON.parse(data.tagInfos)
+
+						}
+
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+						var arr = data.createTimeStr.split(" ")
+
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							this.timestr1 = a1[0] + ":" + a1[1];
+						} else {
+							this.timestr1 = arr[0];
+						}
+
+						//赞助人数
+						this.donateNum = data.donateNum;
+						//评论人数
+						this.commentsNum = data.commentsNum;
+						//点赞人数
+						this.praiseNum = data.praiseNum;
+						this.createUserId = data.createUserId
+
+					}
+
+				})
 			},
 			attention() {
 				var _this = this

@@ -17,7 +17,7 @@
 									<div class="projectName-time">{{projectSignature}}</div>
 								</div>
 								<div class="index-score projectScore">8.5分</div>
-								<div  @click="attention" class="discoveryBtn pt">
+								<div @click="attention" class="discoveryBtn pt">
 									+ 关注
 								</div>
 							</div>
@@ -80,21 +80,24 @@
 										<span>中文名</span>
 										<span>{{projectChineseName}}</span>
 									</li>
-									<li >
-										<span >发行时间</span>
+									<li>
+										<span>发行时间</span>
 										<span>{{issueDateStr}}</span>
 									</li>
-									<li class="specialleftname">
+									<!--<li class="specialleftname">
 										<span class="leftname">官网</span>
-										<span class="rightname">{{websiteUrl}}</span>
-									</li>
+										
+									</li>-->
 									<li>
 										<span>相关概念</span>
 										<span>公链</span>
 									</li>
-									<li class="specialleftname">
-										<span class="leftname">白皮书</span>
-										<span class="rightname">{{whitepaperUrl}}</span>
+									<li >
+										<span>链接</span>
+										<span>
+											<a target="_blank" :href="websiteUrl" class="rightname">官网</a>
+										    <a target="_blank" :href="whitepaperUrl" class="rightname">白皮书</a>
+										</span>
 									</li>
 
 								</ul>
@@ -161,7 +164,7 @@
 
 <script>
 	import { projectIndex } from '@/service/project';
-	import {saveFollow, cancelFollow } from '@/service/home';
+	import { saveFollow, cancelFollow } from '@/service/home';
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		name: 'projectdetail',
@@ -180,7 +183,7 @@
 				issueDateStr: '',
 				whitepaperUrl: '',
 				websiteUrl: '',
-				followStatus:0
+				followStatus: 0
 			}
 		},
 		mounted() {
@@ -193,44 +196,44 @@
 			})
 
 			//小于1600px   main-right展开
-//			this.resizeBannerImage();
-//			window.onresize = this.resizeBannerImage;
+			//			this.resizeBannerImage();
+			//			window.onresize = this.resizeBannerImage;
 
 			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
 			this.projectdetail()
 			this.$router.push('/project/evaluatingdetail?id=' + this.id)
 		},
-		updated(){
+		updated() {
 			if(this.followStatus == 1) {
-					$(".discoveryBtn").css({
-						backgroundColor: "rgb(244, 244, 244)",
-						color: "rgb(126, 126, 126)"
-					})
-					$(".discoveryBtn").html("已关注")
-				} else {
-					$(".discoveryBtn").css({
-						backgroundColor: "rgb(59, 136, 246)",
-						color: "rgb(255,255,255)"
-					})
-					$(".discoveryBtn").html("+ 关注")
-				}
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(244, 244, 244)",
+					color: "rgb(126, 126, 126)"
+				})
+				$(".discoveryBtn").html("已关注")
+			} else {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(59, 136, 246)",
+					color: "rgb(255,255,255)"
+				})
+				$(".discoveryBtn").html("+ 关注")
+			}
 		},
 		methods: {
-//			resizeBannerImage() {
-//				var _width = $(window).width();
-//				var _width1 = $(".common-article").offset().left
-//				// console.log(_width,_width1)
-//
-//				if(_width < 1590) {
-//					var left = _width1 + 650
-//					$(".common-attention").css("left", left)
-//				} else {
-//					var left = _width1 + 715
-//					$(".common-attention").css("left", left)
-//				}
-//
-//			},
+			//			resizeBannerImage() {
+			//				var _width = $(window).width();
+			//				var _width1 = $(".common-article").offset().left
+			//				// console.log(_width,_width1)
+			//
+			//				if(_width < 1590) {
+			//					var left = _width1 + 650
+			//					$(".common-attention").css("left", left)
+			//				} else {
+			//					var left = _width1 + 715
+			//					$(".common-attention").css("left", left)
+			//				}
+			//
+			//			},
 			projectdetail() {
 				//				console.log(this.$route.query.id)
 				this.id = this.$route.query.id - 0;
@@ -317,8 +320,7 @@
 						}
 					})
 				}
-				
-				
+
 			},
 			evaluating() {
 				this.$router.push('/project/evaluatingdetail')
