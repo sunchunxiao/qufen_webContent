@@ -115,10 +115,10 @@
 								<li>
 									<div class="row rowList">
 										<div class="photoList">
-											<img slot="icon" src="../../assets/login/icon2.png">
+											<img slot="icon" :src="zicon">
 										</div>
 										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">QTU </span><span class="atten-spanL">/ 柚子</span></div>
+											<div class="projectNameL"><span class="projectName-nameL">{{zuserName}}</span></div>
 											<div class="projectName-timeL">18:24</div>
 										</div>
 										<div class="btnL">
@@ -184,7 +184,9 @@
 				whitepaperUrl: '',
 				websiteUrl: '',
 				followStatus: 0,
-				totalScore:''
+				totalScore:'',
+				zicon:'',
+				zuserName:''
 			}
 		},
 		mounted() {
@@ -266,6 +268,9 @@
 						this.followStatus = res.data.project.followStatus
 						//分数
 						this.totalScore = res.data.project.totalScore
+						//站长用户信息
+						this.zicon = res.data.project.owner.icon
+						this.zuserName = res.data.project.owner.userName
 
 					}
 				})
