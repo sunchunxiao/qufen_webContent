@@ -42,7 +42,7 @@
 											<Icon type="arrow-down-b"></Icon>
 										</a>
 										<DropdownMenu slot="list">
-											<DropdownItem><span @click="onecenter">用户主页</span></DropdownItem>
+											<!--<DropdownItem><span @click="onecenter">用户主页</span></DropdownItem>-->
 											<DropdownItem><span @click="attention">认证</span></DropdownItem>
 											
 											<DropdownItem>
@@ -116,10 +116,10 @@
 			this.handleSelect()
 		},
 		methods: {
-			onecenter(){
-				console.log(111)
-				this.$router.push("/onecenter")
-			},
+//			onecenter(){
+//				console.log(111)
+//				this.$router.push("/onecenter")
+//			},
 			go(){
 				this.$router.push("/user/register")
 			},

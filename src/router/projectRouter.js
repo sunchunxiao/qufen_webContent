@@ -24,24 +24,25 @@ export const projectRouter = [
 				{
 					path: '/project/evaluatingdetail',
 					meta: {
-						title: '评测'
+						title: '项目评测'
 					},
 					component: (resolve) => require(['@/views/details/evaluatingdetail.vue'], resolve)
 				},
 				{
 					path: '/project/burstdetail',
 					meta: {
-						title: '爆料'
+						title: '项目爆料'
 					},
 					component: (resolve) => require(['@/views/details/burstdetail.vue'], resolve)
 				},
 				{
 					path: '/project/articledetail',
 					meta: {
-						title: '爆料'
+						title: '项目文章'
 					},
 					component: (resolve) => require(['@/views/details/articledetail.vue'], resolve)
-				}
+				},
+				
 				]
 			},
 

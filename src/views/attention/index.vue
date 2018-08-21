@@ -6,7 +6,7 @@
 				<!--左边文章-->
 				<div class="common-article">
 					<!--文章-->
-					<div class="common-article-wrap" v-for="item in itemList">
+					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
 							<div class="row row1">
 								<div class="photo">
@@ -28,7 +28,7 @@
 								<div class="row row3">
 									<div class="discoveryContent">
 										<!--缩略图-->
-										<div v-for="item1 in item.postSmallImages" class="contentImg">
+										<div v-for="item1 in item.postSmallImagesList" class="contentImg">
 											<img :src="item1.fileUrl" />
 										</div>
 										<p class="row3-content">
@@ -161,7 +161,7 @@
 </template>
 
 <script>
-	import { followList } from '@/service/home';
+	import { followList, saveFollow, cancelFollow } from '@/service/home';
 	import Header from '@/components/layout/header.vue'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -310,11 +310,7 @@
 				}
 
 			},
-			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
-			},
+
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {
@@ -327,58 +323,52 @@
 
 			},
 			loadPageList() {
-				if(getCookie('token')) {
-					// 查询数据
-					let data = {
-						pageIndex: 1,
-						pageSize: 10,
-						token: this.token
-					}
-					followList(data).then(res => {
-						this.itemList = res.data.follows.rows;
-						console.log(res.data.follows.rows.length)
-						if(res.data.follows.rows.length<=2){
-							$(".start").css("display","none")
-						}
-						for(var i = 0; i < res.data.follows.rows.length; i++) {
-							if(res.data.follows.rows[i].postSmallImages != null) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.follows.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-								} else {
-									res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-								}
-							}
-
-							//时间  字符串切割
-							//调用 Data.customData()
-							var nowdate = Data.customData()
-							//						console.log(nowdate)
-							var arr = res.data.follows.rows[i].createTimeStr.split(" ")
-
-							this.timestr = arr[0];
-							if(nowdate == this.timestr) {
-								var a1 = arr[1].split(":")
-								res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-							} else {
-								res.data.follows.rows[i].createTimeStr = arr[0];
-							}
-
-							this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.follows.rows[i].tagInfos = this.tagInfos
-							this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
-						}
-					})
-
-				} else {
-					this.$message('请登录阅读更多精彩内容');
-					this.$router.push('user/register')
+				// 查询数据
+				let data = {
+					token: this.token,
+					pageIndex: 1,
+					pageSize: 10
 				}
+				followList(data).then(res => {
 
+					this.itemList = res.data.follows.rows;
+					if(res.data.follows.rows.length <= 2) {
+						$(".start").css("display", "none")
+					}
+
+					for(var i = 0; i < res.data.follows.rows.length; i++) {
+						//						console.log(res.data.follows.rows[i].postSmallImagesList)
+						if(res.data.follows.rows[i].postSmallImagesList != null) {
+							if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
+								res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
+							}
+						}
+
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+
+						var arr = res.data.follows.rows[i].createTimeStr.split(" ")
+
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+						} else {
+							res.data.follows.rows[i].createTimeStr = arr[0];
+						}
+
+						if(res.data.follows.rows[i].tagInfos != null) {
+							this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
+							res.data.follows.rows[i].tagInfos = this.tagInfos
+						} else {
+							// $(".crack-tag2").css("display", "none")
+						}
+
+					}
+					this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
+
+				})
 			},
 
 			more() {
@@ -401,17 +391,14 @@
 						followList(params).then(res => {
 							for(var i = 0; i < res.data.follows.rows.length; i++) {
 								this.itemList.push(res.data.follows.rows[i]);
-								if(res.data.follows.rows[i].postSmallImages) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-									var postSmallImages = JSON.parse(res.data.follows.rows[i].postSmallImages)
-									if(postSmallImages.length != 0) {
-										res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-										//									console.log(postSmallImages.slice(0, 1))
+								if(res.data.follows.rows[i].postSmallImagesList != null) {
+									if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
+										res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
 									} else {
 										res.data.follows.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
 									}
 								}
+
 
 								//时间  字符串切割
 								//调用 Data.customData()
@@ -434,7 +421,7 @@
 								res.data.follows.rows[i].tagInfos = this.tagInfos
 
 							}
-							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
+							 this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 
 							// 是否还有下一页，如果没有就禁止上拉刷新
 							if(this.pageIndex == this.totalpage) {

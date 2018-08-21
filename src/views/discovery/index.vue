@@ -9,12 +9,14 @@
 					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
 							<div class="row row1">
-								<div class="photo">
-									<img slot="icon" :src="item.createUserIcon">
-								</div>
-								<div class="name">
-									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
-									<div class="projectName-time">{{item.createTimeStr}}</div>
+								<div class="oneuser" @click="onecenter(item.createUserId)">
+									<div class="photo">
+										<img slot="icon" :src="item.createUserIcon">
+									</div>
+									<div class="name">
+										<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
+										<div class="projectName-time">{{item.createTimeStr}}</div>
+									</div>
 								</div>
 								<div @click="attention(item.createUserId,index)" class="discoveryBtn">
 									+ 关注
@@ -220,6 +222,15 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			onecenter(id){
+				window.open('/onecenter?id=' + id, "_blank")
+//				this.$router.push({
+//					path:"/onecenter",
+//					query:{
+//						id
+//					}
+//				})
+			},
 			//下滑加载
 			scrollHandler() {
 				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
@@ -234,7 +245,7 @@
 			resizeBannerImage() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-				 console.log(_width,_width1)
+//				console.log(_width, _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
@@ -329,9 +340,9 @@
 				recommend(data).then(res => {
 
 					this.itemList = res.data.recommends.rows;
-					if(res.data.recommends.rows.length<=2){
-							$(".start").css("display","none")
-						}
+					if(res.data.recommends.rows.length <= 2) {
+						$(".start").css("display", "none")
+					}
 
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
 						if(res.data.recommends.rows[i].postSmallImagesList != null) {
@@ -363,7 +374,7 @@
 
 					}
 					this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
-//					console.log(this.totalpage)
+					//					console.log(this.totalpage)
 				})
 			},
 

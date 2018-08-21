@@ -39,6 +39,15 @@ export const  articleList= (params = {}) => {
   })
 }
 
+//获取用户信息接口
+export const  getUserInfo= (params = {}) => {
+  return request(`/kff/user/getUserInfo`, {
+    body: {
+      ...params
+    },
+  })
+}
+
 
 
 

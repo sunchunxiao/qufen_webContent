@@ -9,7 +9,7 @@
 						<div class="common-article-content">
 							<div class="row row1">
 								<div class="onephoto">
-									<img :src="projectIcon">
+									<img class="onephotoImg" :src="projectIcon">
 								</div>
 								<div style="margin-left: 20px;" class="name">
 									<div><span class="oneusername">{{projectCode}}</span></div>

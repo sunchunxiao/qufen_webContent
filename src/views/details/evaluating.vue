@@ -327,7 +327,7 @@
 					let data = {
 						token: this.token,
 						followType: 3,
-						followedId: this.id
+						followedId: this.id-0
 					}
 					cancelFollow(data).then(res => {
 						if(res.code == 0) {
@@ -347,7 +347,7 @@
 					let data = {
 						token: this.token,
 						followType: 3,
-						followedId: this.id
+						followedId: this.id-0
 					}
 					saveFollow(data).then(res => {
 						if(res.code == 0) {

@@ -1,29 +1,30 @@
 <template>
 	<div>
-		<div style="background-color:rgb(246,246,246) ; " >
+		<div style="background-color:rgb(246,246,246) ; ">
 			<div class="commmon1">
 
 				<div class="detailcommmon">
 					<!--信息-->
-					<div class="common-article-wrap" >
+					<div class="common-article-wrap">
 						<div class="common-article-content">
 							<div class="row row1">
 								<div class="onephoto">
-									<img  :src="projectIcon">
+									<img class="oneceterImg" :src="src">
+									<img class="imgV" src="" />
 								</div>
 								<div style="margin-left: 20px;" class="name">
-									<div><span class="oneusername">111</span></div>
-									<div><span class="onedec">区块链创业者,早期投资人</span></div>
-									<div class="projectName-time">300 粉丝  •  1568 内容</div>
+									<div><span class="oneusername">{{userName}}</span></div>
+									<div><span class="onedec">{{userSignature}}</span></div>
+									<div class="projectName-time">{{fansNum}} 粉丝 </div>
 								</div>
-								<div class="index-score projectScore">8.5分</div>
-								<div @click="attention" class="discoveryBtn pt">
+								<!--<div class="index-score projectScore">8.5分</div>-->
+								<div @click="attention" class="discoveryBtn">
 									+ 关注
 								</div>
 							</div>
 							<div class="onecommon">
 								<ul>
-									<li class="ping" @click="next1"><span >评测</span></li>
+									<li class="ping" @click="next1"><span>评测</span></li>
 									<li @click="next2"><span>爆料</span></li>
 									<li @click="next3"><span>文章</span></li>
 								</ul>
@@ -34,7 +35,7 @@
 					<div>
 						<router-view/>
 					</div>
-					
+
 				</div>
 
 			</div>
@@ -43,17 +44,22 @@
 </template>
 
 <script>
-	import { projectIndex } from '@/service/project';
+	import { getUserInfo } from '@/service/project';
+	import { saveFollow, cancelFollow } from '@/service/home';
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		name: 'projectdetail',
 		data() {
 			return {
-				id:'',
-				token:getCookie('token')
+				id: '',
+				token: getCookie('token'),
+				src: '',
+				userName: '',
+				userSignature: '',
+				fansNum: 0
 			}
 		},
-		mounted(){
+		mounted() {
 			$(".onecommon li").on("click", function() {
 				var index = $(this).index();
 				console.log($(this).index())
@@ -61,47 +67,125 @@
 				$(this).addClass("ping");
 
 			})
-//			console.log(this.$route.query.id)
-			this.id = this.$route.query.id-0;
+			//			console.log(this.$route.query.id)
+			this.id = this.$route.query.id - 0;
 			this.projectdetail()
-//			this.$router.push('/project/evaluatingdetail?id='+ this.id)
+			this.$router.push('/project/evaluatingcenter?id=' + this.id)
+		},
+		updated() {
+			if(this.followStatus == 1) {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(244, 244, 244)",
+					color: "rgb(126, 126, 126)"
+				})
+				$(".discoveryBtn").html("已关注")
+			} else {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(59, 136, 246)",
+					color: "rgb(255,255,255)"
+				})
+				$(".discoveryBtn").html("+ 关注")
+			}
 		},
 		methods: {
-			projectdetail(){
-//				console.log(this.$route.query.id)
-				this.id = this.$route.query.id-0;
-				
+			projectdetail() {
+				this.id = this.$route.query.id - 0;
+
 				// 查询数据
 				let data = {
-					token: this.token,
-					projectId:this.id
+					userId: this.id,
+					token: this.token
 				}
-				projectIndex(data).then(res => {
+				getUserInfo(data).then(res => {
 					if(res.code == 0) {
-						console.log(res.data)
-						
+						var data = res.data.user
+						console.log(res.data.user)
+						this.src = data.icon
+						this.userName = data.userName
+						this.userSignature = data.userSignature
+						this.fansNum = data.fansNum
+						this.followStatus = data.followStatus
+						//头像加V
+						var cuser = data.userType
+						if(cuser == 1) {
+							$(".imgV").css("display", "none")
+						}
+						//项目方
+						if(cuser == 2) {
+							$(".imgV").attr("src", "../../../static/img/p.gif")
+						}
+						//评测媒体
+						if(cuser == 3) {
+							$(".imgV").attr("src", "../../../static/img/F.gif")
+						}
+						//机构号
+						if(cuser == 4) {
+							$(".imgV").attr("src", "../../../static/img/V.gif")
+
+						}
 					}
 				})
 			},
-			next1(){
-//				this.$router.push('/project/evaluatingdetail?id='+ this.id)
+			next1() {
+				this.$router.push('/project/evaluatingcenter?id=' + this.id)
 			},
-			next2(){
-//				this.$router.push('/project/burstdetail?id='+ this.id)
+			next2() {
+				this.$router.push('/project/burstcenter?id=' + this.id)
 			},
-			next3(){
-//				this.$router.push('/project/articeldetail?id='+ this.id)
+			next3() {
+				this.$router.push('/project/articlecenter?id=' + this.id)
 			},
 			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
+				if($(".discoveryBtn").html() == "已关注") {
+					//取消关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.id
+					}
+					console.log(222)
+					cancelFollow(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 0) {
+								console.log('取消关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(59, 136, 246)",
+									color: "rgb(255,255,255)"
+								})
+								$(".discoveryBtn").html("+ 关注")
+							}
+						}
+					})
+				} else {
+					//去关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.id
+					}
+					saveFollow(data).then(res => {
+						if(res.code == 0) {
+
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 1) {
+								console.log('已经关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(244, 244, 244)",
+									color: "rgb(126, 126, 126)"
+								})
+								$(".discoveryBtn").html("已关注")
+							}
+						}
+					})
+				}
+
 			},
-			evaluating(){
+			evaluating() {
 				this.$router.push('/project/evaluatingdetail')
 			}
 		},
-		
+
 	}
 </script>
 <style lang="less">
