@@ -122,6 +122,14 @@
 								</div>
 
 							</div>-->
+							<!--加载更多-->
+							<div class="row6 start">
+								<span>加载中...</span>
+							</div>
+							<!--加载更多-->
+							<div class="row6 end">
+								<span>已经到底部了...</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -131,7 +139,7 @@
 </template>
 
 <script>
-	import { article,postCommentList } from '@/service/home';
+	import { article, postCommentList } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	import { saveFollow, cancelFollow } from '@/service/home';
@@ -157,8 +165,11 @@
 				tagInfos: [],
 				token: getCookie('token'),
 				followStatus: 0,
-				newestComments:[],
-				createUserId:0
+				newestComments: [],
+				createUserId: 0,
+				hasNext: true,
+				pageIndex: 1,
+				pageSize: 10,
 			}
 		},
 		updated() {
@@ -194,10 +205,23 @@
 			//请求文章
 			this.articleC()
 			//请求评论
-			this.preview()
+			this.preview(),
+				//监听滚动条
+				window.addEventListener('scroll', this.scrollHandler)
 
 		},
 		methods: {
+			//下滑加载
+			scrollHandler() {
+				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
+				var windowHeight = $(window).height(); // 可视区域的高度
+				var scrollHeight = $(document).height(); // 整个内容的高度
+
+				if(scrollTop + windowHeight == scrollHeight) {
+					// alert('已经到浏览器底部了，这时你可以做你需要的业务了');
+					this.previewmore()
+				}
+			},
 			articleC() {
 				//发送请求
 				var data = {
@@ -223,7 +247,8 @@
 						//标签
 						this.tag = data.projectCode;
 						if(data.tagInfos != null) {
-							this.tagInfos = JSON.parse(data.article.tagInfos)
+							this.tagInfos = JSON.parse(data.tagInfos)
+							
 						}
 
 						//时间  字符串切割
@@ -254,19 +279,45 @@
 			preview() {
 				let data = {
 					token: this.token,
-					pageIndex:1,
-					pageSize:5,
-					postId:this.id-0,
-					postType:3
+					pageIndex: 1,
+					pageSize: 5,
+					postId: this.id - 0,
+					postType: 3
 				}
 				postCommentList(data).then(res => {
 					if(res.code == 0) {
 						this.newestComments = res.data.newestComments.rows
+						this.hasNext = res.data.newestComments.hasNext
 					}
 				})
 			},
+			previewmore() {
+				if(this.hasNext != false) {
+					this.pageIndex = parseInt(this.pageIndex) + 1
+
+					let data = {
+						token: this.token,
+						pageIndex: this.pageIndex,
+						pageSize: 5,
+						postId: this.id - 0,
+						postType: 3
+					}
+					postCommentList(data).then(res => {
+						if(res.code == 0) {
+							this.newestComments = res.data.newestComments.rows
+							this.hasNext = res.data.newestComments.hasNext
+						}
+					})
+				} else {
+					$('.end').css('display',"block")
+					$('.start').css('display',"none")
+				}
+
+			},
 			attention() {
+				var _this = this
 				if($(".discoveryBtn").html() == "已关注") {
+
 					//取消关注
 					let data = {
 						token: this.token,
@@ -287,6 +338,7 @@
 						}
 					})
 				} else {
+
 					//去关注
 					let data = {
 						token: this.token,
@@ -306,7 +358,13 @@
 								$(".discoveryBtn").html("已关注")
 							}
 						}
-					})
+					}).catch(function(res) {
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
+						});
+					});
 				}
 
 			}

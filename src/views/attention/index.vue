@@ -190,9 +190,9 @@
 
 		mounted() {
 			//小于1600px   main-right展开
-			this.resizeBannerImage();
-			window.onresize = this.resizeBannerImage;
-
+			this.resizeBannerImage1();
+//			window.onresize = this.resizeBannerImage;
+			window.addEventListener('resize', this.resizeBannerImage)
 			this.loadPageList() //加载文章
 			//保留this属性
 			var _this = this
@@ -221,13 +221,14 @@
 		},
 		destroyed() {
 			window.removeEventListener("scroll", this.scrollHandler);
+			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
 			//点击关注
 			attention(createUserId, index) {
 				console.log(createUserId)
 				if(this.token != "") {
-					//					console.log($(".discoveryBtn").eq(index).html())
+					var _this = this
 					if($(".discoveryBtn").eq(index).html() == "已关注") {
 						//取消关注
 						let data = {
@@ -248,7 +249,11 @@
 								}
 							}
 						}).catch(function(res) {
-							alert(res.msg)
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
 						});
 					} else {
 						//去关注
@@ -257,7 +262,7 @@
 							followType: 3,
 							followedId: createUserId
 						}
-						var _this = this
+						
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
@@ -297,15 +302,29 @@
 					this.more()
 				}
 			},
-			resizeBannerImage() {
+			resizeBannerImage1() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
+//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
 					$(".common-attention").css("left", left)
 				} else {
 					var left = _width1 + 703
+					$(".common-attention").css("left", left)
+				}
+
+			},
+			resizeBannerImage() {
+				var _width = $(window).width();
+				var _width1 = $(".common-article").offset().left
+
+				if(_width < 1590) {
+					var left = _width1 + 650
+					$(".common-attention").css("left", left)
+				} else {
+					var left = _width1 + 710
 					$(".common-attention").css("left", left)
 				}
 
@@ -323,7 +342,8 @@
 
 			},
 			loadPageList() {
-				// 查询数据
+				if(this.token!=""){
+					// 查询数据
 				let data = {
 					token: this.token,
 					pageIndex: 1,
@@ -369,6 +389,12 @@
 					this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 
 				})
+				}else{
+					 this.$message('登陆后关注更多内容');
+					this.$router.push('/user/register')
+				}
+				
+				
 			},
 
 			more() {

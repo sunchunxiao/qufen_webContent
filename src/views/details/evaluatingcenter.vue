@@ -188,10 +188,12 @@
 								} else {
 									res.data.evaluations.rows[i].createTimeStr = arr[0];
 								}
-
-								this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
-								// console.log(this.tagInfos)
+								if(res.data.evaluations.rows[i].tagInfos!=null){
+									this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
+									// console.log(this.tagInfos)
 								res.data.evaluations.rows[i].tagInfos = this.tagInfos
+								}
+								
 								this.totalpage = Math.ceil(res.data.evaluations.rowCount / this.pageSize);
 							}
 						}

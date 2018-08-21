@@ -99,7 +99,7 @@
 				getUserInfo(data).then(res => {
 					if(res.code == 0) {
 						var data = res.data.user
-						console.log(res.data.user)
+//						console.log(res.data.user)
 						this.src = data.icon
 						this.userName = data.userName
 						this.userSignature = data.userSignature
@@ -136,7 +136,9 @@
 				this.$router.push('/project/articlecenter?id=' + this.id)
 			},
 			attention() {
+				var _this = this
 				if($(".discoveryBtn").html() == "已关注") {
+					
 					//取消关注
 					let data = {
 						token: this.token,
@@ -156,7 +158,13 @@
 								$(".discoveryBtn").html("+ 关注")
 							}
 						}
-					})
+					}).catch(function(res) {
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
+						});
+					});
 				} else {
 					//去关注
 					let data = {
@@ -177,7 +185,13 @@
 								$(".discoveryBtn").html("已关注")
 							}
 						}
-					})
+					}).catch(function(res) {
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
+						});
+					});
 				}
 
 			},

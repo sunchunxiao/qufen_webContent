@@ -56,6 +56,7 @@
 	/*position: absolute;
 	right: 0;*/
 	float: right;
+	margin-right: 3px;
 	width: 314px;
 }
 
@@ -547,7 +548,8 @@
 .block {
 	background-color: #fff;
 	margin-top: 10px;
-	padding: 10px 50px;
+	padding: 10px 0;
+	text-align: center;
 	margin-bottom: 30px;
 }
 
@@ -687,6 +689,7 @@
 	}
 	.project-attention{
 	width: 257px;
+	margin-right: 2px;
 	
 }
 	.common-attention1 {

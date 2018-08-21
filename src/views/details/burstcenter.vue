@@ -190,10 +190,13 @@
 							} else {
 								res.data.discusses.rows[i].createTimeStr = arr[0];
 							}
-
-							this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.discusses.rows[i].tagInfos = this.tagInfos
+							if(res.data.discusses.rows[i].tagInfos!==null){
+									this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.discusses.rows[i].tagInfos = this.tagInfos
+								}
+							
+							
 							this.totalpage = Math.ceil(res.data.discusses.rowCount / this.pageSize);
 						}
 					})
@@ -254,10 +257,12 @@
 									res.data.discusses.rows[i].createTimeStr = arr[0];
 
 								}
-
-								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								if(res.data.discusses.rows[i].tagInfos!==null){
+									this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
 								// console.log(this.tagInfos)
 								res.data.discusses.rows[i].tagInfos = this.tagInfos
+								}
+								
 
 							}
 							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);

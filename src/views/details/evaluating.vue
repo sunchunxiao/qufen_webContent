@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div style="background-color:rgb(246,246,246) ;" >
+		<div style="background-color:rgb(246,246,246) ;">
 			<div class="commmon indexCommon">
 				<!--左边文章-->
 				<div class="common-article">
@@ -35,7 +35,7 @@
 									<img src="../../assets/common/FIND1.png">
 									<label>待结算</label>
 								</div>
-								
+
 							</div>
 							<div class="articleDetail">
 								<div class="detail index-preview">
@@ -64,21 +64,21 @@
 								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
 								<span @click="attention" class="articleBack">回复</span>
 							</div>
-							<!--<div class="previewContent">
+							<div class="previewContent">
 								<h2>评论</h2>
-								<div class="contentList">
+								<div class="contentList" v-for="item in newestComments">
 									<div class="list">
-										<div class="contenlist-title"><img src="../../assets/common/FIND.png" /></div>
-										<span class="listName">游来游去</span>
+										<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
+										<span class="listName">{{item.commentUserName}}</span>
 										<div class="listfloor">
-											<span class="floor">16楼 03.15 11:15 </span>
+											<span class="floor">{{item.floor}}楼  {{item.createTimeStr}}</span>
 
 										</div>
 									</div>
 									<p class="listContent">
-										体自在EOS引力区的知识星球里有一个人，他在知识星球分享了一篇文章《数字会说明，老猫在想什么，写给eos的投资者们》，精明地推测出老猫分批地积累了上百万个EOS，这更能说明老猫看好EOS。道理很简单：因为看好，所以大量持有。
+										{{item.commentContent}}
 									</p>
-									
+
 									<div class="row articleRow">
 										<div class="article-atten">
 											<div class="detail1 zan">
@@ -94,8 +94,8 @@
 									</div>
 
 								</div>
-								
-								<div class="listContent">
+
+								<!--<div class="listContent">
 									<div>
 										<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
 										<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
@@ -114,8 +114,16 @@
 										</div>
 									</div>
 
-								</div>
-							</div>-->
+								</div>-->
+								<!--加载更多-->
+							<div class="row6 start">
+								<span>加载中...</span>
+							</div>
+							<!--加载更多-->
+							<div class="row6 end">
+								<span>已经到底部了...</span>
+							</div>
+							</div>
 						</div>
 					</div>
 
@@ -158,10 +166,10 @@
 </template>
 
 <script>
-	import { articleInfo } from '@/service/home';
+	import { articleInfo, postCommentList,} from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
-	import {saveFollow, cancelFollow } from '@/service/home';
+	import { saveFollow, cancelFollow } from '@/service/home';
 	export default {
 		name: 'evaluating',
 		data() {
@@ -178,24 +186,28 @@
 				timestr1: '',
 				commentsNum: '',
 				praiseNum: '',
-				projectCode:'',
+				projectCode: '',
 				token: getCookie('token'),
-				followStatus:0,
-				createUserId:0
+				followStatus: 0,
+				createUserId: 0,
+				newestComments: [],
+				hasNext: true,
+				pageIndex: 1,
+				pageSize: 10,
 			}
 		},
-		
+
 		updated() {
 			$('.articleContent').find('img').css({
 				width: '80%',
-				height:'80%'
+				height: '80%'
 			})
 			$('.articleContent').find('p').css({
 				fontSize: '15px',
 				width: "100%",
 				margin: "1em 0",
 				wordWrap: "break-word",
-				lineHeight:'26px'
+				lineHeight: '26px'
 			});
 			$(".el-slider__runway.disabled .el-slider__bar").each(function() {
 				$(".slider .el-slider__runway.disabled .el-slider__bar").eq(0).css("background-color", "rgb(60,137,247)")
@@ -217,7 +229,7 @@
 				$(".totlescore").eq(4).css("color", "rgb(255,40,81)")
 
 			});
-			
+
 			//关注状态
 			if(this.followStatus == 1) {
 				$(".discoveryBtn").css({
@@ -236,95 +248,163 @@
 		},
 		mounted() {
 			//小于1600px   main-right展开
+			//			this.resizeBannerImage();
+			//			window.onresize = this.resizeBannerImage;
+			//请求评测
+			this.id = this.$route.query.id;
 			this.resizeBannerImage();
-			window.onresize = this.resizeBannerImage;
+			window.addEventListener('resize', this.resizeBannerImage)
+
+			this.articleC()
+			//请求评论
+			this.preview(),
+				//监听滚动条
+				window.addEventListener('scroll', this.scrollHandler)
+
 			
 
-			//请求文章
-			this.id = this.$route.query.id;
-
-			var data = {
-				token:this.token,
-				postId: this.id-0
-			}
-			//测评
-			articleInfo(data).then(res => {
-				if(res.code == 0) {
-					
-					var data = res.data.evaluationDetail
-
-					this.articleTitle = data.postTitle
-					//头像
-					this.src = data.createUserIcon;
-					//用户名
-					this.username = data.createUserName;
-					this.projectCode = data.projectCode;
-					//关注状态
-					this.followStatus= data.followStatus
-					
-					//时间  字符串切割
-					//调用 Data.customData()
-					var nowdate = Data.customData()
-
-					var arr = data.createTimeStr.split(" ")
-
-					this.timestr = arr[0];
-					
-					if(nowdate == this.timestr) {
-						var a1 = arr[1].split(":")
-//						console.log(a1)
-						this.timestr1 = a1[0]+":"+a1[1];
-					} else {
-						this.timestr1 = arr[0];
-					}
-
-					//综合评分
-					this.totalscore = data.totalScore;
-					//评分
-					if(data.professionalEvaDetail != null) {
-						this.storeList = JSON.parse(data.professionalEvaDetail);
-						if(this.storeList.length == 0) {
-							$(".sliderList").css("display", "none")
-						}
-					} else {
-						//只有综合评测
-						$(".sliderList").css("display", "none")
-					}
-
-					//文章
-					this.m = data.evauationContent
-					//标签
-					this.tag = data.projectCode;
-					//赞助人数
-					this.donateNum = data.donateNum;
-					//评论人数
-					this.commentsNum = data.commentsNum;
-					//点赞人数
-					this.praiseNum = data.praiseNum;
-					this.createUserId = data.createUserId
-
-				}
-
-			})
-
+		},
+		destroyed() {
+			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			//下滑加载
+			scrollHandler() {
+				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
+				var windowHeight = $(window).height(); // 可视区域的高度
+				var scrollHeight = $(document).height(); // 整个内容的高度
+
+				if(scrollTop + windowHeight == scrollHeight) {
+					// alert('已经到浏览器底部了，这时你可以做你需要的业务了');
+					this.previewmore()
+				}
+			},
+			preview() {
+				let data = {
+					token: this.token,
+					pageIndex: 1,
+					pageSize: 5,
+					postId: this.id - 0,
+					postType: 1
+				}
+				postCommentList(data).then(res => {
+					if(res.code == 0) {
+						
+						if(res.data.newestComments.rows!=null){
+							this.newestComments = res.data.newestComments.rows
+						this.hasNext = res.data.newestComments.hasNext
+						}else{
+							$(".previewContent").css('display',"none")
+						}
+					}
+				})
+			},
+			previewmore() {
+				if(this.hasNext != false) {
+					this.pageIndex = parseInt(this.pageIndex) + 1
+
+					let data = {
+						token: this.token,
+						pageIndex: this.pageIndex,
+						pageSize: 5,
+						postId: this.id - 0,
+						postType: 1
+					}
+					postCommentList(data).then(res => {
+						if(res.code == 0) {
+							this.newestComments = res.data.newestComments.rows
+							this.hasNext = res.data.newestComments.hasNext
+						}
+					})
+				} else {
+					$('.end').css('display', "block")
+					$('.start').css('display', "none")
+				}
+
+			},
+			articleC() {
+				var data = {
+					token: this.token,
+					postId: this.id - 0
+				}
+				//测评
+				articleInfo(data).then(res => {
+					if(res.code == 0) {
+
+						var data = res.data.evaluationDetail
+
+						this.articleTitle = data.postTitle
+						//头像
+						this.src = data.createUserIcon;
+						//用户名
+						this.username = data.createUserName;
+						this.projectCode = data.projectCode;
+						//关注状态
+						this.followStatus = data.followStatus
+
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+
+						var arr = data.createTimeStr.split(" ")
+
+						this.timestr = arr[0];
+
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							//						console.log(a1)
+							this.timestr1 = a1[0] + ":" + a1[1];
+						} else {
+							this.timestr1 = arr[0];
+						}
+
+						//综合评分
+						this.totalscore = data.totalScore;
+						//评分
+						if(data.professionalEvaDetail != null) {
+							this.storeList = JSON.parse(data.professionalEvaDetail);
+							if(this.storeList.length == 0) {
+								$(".sliderList").css("display", "none")
+							}
+						} else {
+							//只有综合评测
+							$(".sliderList").css("display", "none")
+						}
+
+						//文章
+						this.m = data.evauationContent
+						//标签
+						this.tag = data.projectCode;
+						//赞助人数
+						this.donateNum = data.donateNum;
+						//评论人数
+						this.commentsNum = data.commentsNum;
+						//点赞人数
+						this.praiseNum = data.praiseNum;
+						this.createUserId = data.createUserId
+
+					}
+
+				})
+			},
 			resizeBannerImage() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
 				// console.log(_width,_width1)
 
-				if(_width<1590){
-					var left = _width1+643
-					$(".common-attention").css("left",left)
-				}else{
-					var left = _width1+703
-					$(".common-attention").css("left",left)
+				if(_width < 1590) {
+					var left = _width1 + 648
+					$(".common-attention").css("left", left)
+				} else {
+					var left = _width1 + 708
+					$(".common-attention").css("left", left)
 				}
 
 			},
 			attention() {
+				var _this = this
 				if($(".discoveryBtn").html() == "已关注") {
+
 					//取消关注
 					let data = {
 						token: this.token,
@@ -343,7 +423,13 @@
 								$(".discoveryBtn").html("+ 关注")
 							}
 						}
-					})
+					}).catch(function(res) {
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
+						});
+					});
 				} else {
 					//去关注
 					let data = {
@@ -364,9 +450,15 @@
 								$(".discoveryBtn").html("已关注")
 							}
 						}
-					})
+					}).catch(function(res) {
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
+						});
+					});
 				}
-				
+
 			}
 		}
 	}

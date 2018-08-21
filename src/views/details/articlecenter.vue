@@ -92,7 +92,7 @@
 		data() {
 			return {
 				value: 5,
-				id:'',
+				id: '',
 				postImage: [],
 				pageIndex: 1,
 				pageSize: 10,
@@ -109,9 +109,9 @@
 		},
 
 		mounted() {
-//			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
-			
+
 			this.loadPageList() //加载文章
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
@@ -157,8 +157,8 @@
 					}
 					articleList(data).then(res => {
 						this.itemList = res.data.articles.rows;
-						if(res.data.articles.rows.length<=2){
-							$(".start").css("display","none")
+						if(res.data.articles.rows.length <= 2) {
+							$(".start").css("display", "none")
 						}
 
 						for(var i = 0; i < res.data.articles.rows.length; i++) {
@@ -251,9 +251,12 @@
 
 								}
 
-								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-								// console.log(this.tagInfos)
-								res.data.articles.rows[i].tagInfos = this.tagInfos
+								if(res.data.articles.rows[i].tagInfos != null) {
+									this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+									// console.log(this.tagInfos)
+									res.data.articles.rows[i].tagInfos = this.tagInfos
+								}
+
 							}
 							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
 

@@ -99,8 +99,11 @@
 
 		mounted() {
 			//小于1600px   main-right展开
-			this.resizeBannerImage();
-			window.onresize = this.resizeBannerImage;
+//			this.resizeBannerImage();
+//			window.onresize = this.resizeBannerImage;
+			
+			this.resizeBannerImage1();
+			window.addEventListener('resize', this.resizeBannerImage)
 			//项目主页的接口
 			this.project()
 		},
@@ -123,6 +126,9 @@
 				}
 
 			}
+		},
+		destroyed() {
+			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
 			attention(id, index) {
@@ -195,10 +201,10 @@
 				})
 
 			},
-			resizeBannerImage() {
+			resizeBannerImage1() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-				// console.log(_width,_width1)
+//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
@@ -209,8 +215,23 @@
 				}
 
 			},
+			resizeBannerImage() {
+				var _width = $(window).width();
+				var _width1 = $(".common-article").offset().left
+				// console.log(_width,_width1)
+
+				if(_width < 1590) {
+					var left = _width1 + 650
+					$(".common-attention").css("left", left)
+				} else {
+					var left = _width1 + 710
+					$(".common-attention").css("left", left)
+				}
+
+			},
 			project() {
-				// 查询数据
+				if(this.token!=""){
+					// 查询数据
 				let data = {
 					token: this.token,
 					pageIndex: 1,
@@ -227,6 +248,12 @@
 
 					}
 				})
+				}else{
+					this.$message('登陆后关注更多内容');
+					this.$router.push('/user/register')
+				}
+				
+				
 			},
 			projectdetail(id) {
 				window.open('/project/projectdetail?id=' + id, "_blank")

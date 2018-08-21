@@ -16,8 +16,7 @@
 			return {
 				textnames: 'simditor', //这里防止多个富文本发生冲突
 				editor: '', //保存simditor对象
-				toolbar: ['title', 'bold', 'italic', 'underline', '|', 'strikethrough',
-					'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'
+				toolbar: ['title','fontScale', 'bold', 'color',  '|','italic',  'strikethrough','underline', '|', 'ol', 'ul', 'blockquote', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'
 				], //自定义工具栏
 				value: "",
 				token: getCookie('token'),

@@ -193,8 +193,8 @@
 			})
 
 			//小于1600px   main-right展开
-			this.resizeBannerImage();
-			window.onresize = this.resizeBannerImage;
+//			this.resizeBannerImage();
+//			window.onresize = this.resizeBannerImage;
 
 			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
@@ -217,20 +217,20 @@
 				}
 		},
 		methods: {
-			resizeBannerImage() {
-				var _width = $(window).width();
-				var _width1 = $(".common-article").offset().left
-				// console.log(_width,_width1)
-
-				if(_width < 1590) {
-					var left = _width1 + 650
-					$(".common-attention").css("left", left)
-				} else {
-					var left = _width1 + 715
-					$(".common-attention").css("left", left)
-				}
-
-			},
+//			resizeBannerImage() {
+//				var _width = $(window).width();
+//				var _width1 = $(".common-article").offset().left
+//				// console.log(_width,_width1)
+//
+//				if(_width < 1590) {
+//					var left = _width1 + 650
+//					$(".common-attention").css("left", left)
+//				} else {
+//					var left = _width1 + 715
+//					$(".common-attention").css("left", left)
+//				}
+//
+//			},
 			projectdetail() {
 				//				console.log(this.$route.query.id)
 				this.id = this.$route.query.id - 0;

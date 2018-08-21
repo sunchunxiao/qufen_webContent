@@ -68,57 +68,67 @@
 							<span @click="attention" class="articleBack">回复</span>
 						</div>
 						<div class="previewContent">
-							<h2>评论</h2>
-							<div class="preview-list" v-for="(item,index) in commentsehot">
-								<div class="contentList">
-									<div class="list">
-										<div class="contenlist-title photo"><img :src="commenticon[index]" /></div>
-										<span class="listName">{{item .commentUserName}}</span>
-										<div class="listfloor">
-											<span class="floor">{{item.floor}}楼 {{item.createTimeStr}} </span>
-										</div>
-									</div>
-									<p class="listContent">
-										{{item.commentContent}}
-									</p>
-									<!--点赞-->
-									<div class="row articleRow">
-										<div class="article-atten">
-											<div class="detail1 zan">
-												<img src="../../assets/common/FIND.png">
-												<label>{{item.praiseNum}}</label>
-											</div>
-											<div class="detail index-preview">
-												<img src="../../assets/common/preview.png">
-												<label>{{item.childCommentsNum}}</label>
-											</div>
-										</div>
+						<h2>评论</h2>
+						<div>
+							<div class="contentList" v-for="item in newestComments">
+								<div class="list">
+									<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
+									<span class="listName">{{item.commentUserName}}</span>
+									<div class="listfloor">
+										<span class="floor">{{item.floor}}楼 {{item.createTimeStr}}</span>
 
 									</div>
-
 								</div>
-								<!--评论人-->
-								<div v-if="item.childCommentsList" v-for="a in item.childCommentsList">
-									<div class="listContent">
-										<div>
-											<div>{{a.commentUserName}}：@{{a.becommentedUserName}} <span class="listContentTime">03.15 11:15</span></div>
-											<div>{{a.commentContent}}</div>
+								<p class="listContent">
+									{{item.commentContent}}
+								</p>
+
+								<!--<div class="row articleRow">
+									<div class="article-atten">
+										<div class="detail1 zan">
+											<img src="../../assets/common/FIND.png">
+											<label>128</label>
+										</div>
+										<div class="detail index-preview">
+											<img src="../../assets/common/preview.png">
+											<label>111</label>
 										</div>
 									</div>
-									<!--评论点赞-->
-									<div class="row articleRow rowLeft">
-										<div class="article-atten">
-											<div class="detail1 zan">
-												<img src="../../assets/common/zan.png">
-												<label>{{a.praiseNum}}</label>
-											</div>
 
-										</div>
+								</div>-->
 
-									</div>
+							</div>
+
+							<!--<div class="listContent">
+								<div>
+									<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
+									<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
 								</div>
 							</div>
+
+							<div class="row articleRow rowLeft">
+								<div class="article-atten">
+									<div class="detail1 zan">
+										<img src="../../assets/common/zanS.png">
+										<label>128</label>
+									</div>
+									<div class="detail index-preview">
+										<img src="../../assets/common/preview.png">
+										<label>111</label>
+									</div>
+								</div>
+
+							</div>-->
+							<!--加载更多-->
+							<div class="row6 start">
+								<span>加载中...</span>
+							</div>
+							<!--加载更多-->
+							<div class="row6 end">
+								<span>已经到底部了...</span>
+							</div>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -127,7 +137,7 @@
 </template>
 
 <script>
-	import { discuss } from '@/service/home';
+	import { discuss,discussCommentList} from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
@@ -151,14 +161,156 @@
 				commentsNum: '',
 				praiseNum: '',
 				tagInfos: [],
-				createUserId:0
+				createUserId:0,
+				newestComments: [],
+				hasNext: true,
+				pageIndex: 1,
+				pageSize: 10,
 
 			}
 		},
 
 		mounted() {
 			this.id = this.$route.query.id;
-			let data = {
+			//调取文章
+			this.articleC()
+			
+			//请求评论
+			this.preview(),
+			//监听滚动条
+			window.addEventListener('scroll', this.scrollHandler)
+			
+		},
+		updated() {
+			$('.disscussContents').find('img').css({
+				width: '80%',
+				height: '100%'
+			})
+			$('.disscussContents').find('p').css({
+				fontSize: '15px',
+				width: "100%",
+				margin: "1em 0",
+				wordWrap: "break-word",
+				lineHeight: '26px'
+			});
+
+		},
+		methods: {
+			//下滑加载
+			scrollHandler() {
+				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
+				var windowHeight = $(window).height(); // 可视区域的高度
+				var scrollHeight = $(document).height(); // 整个内容的高度
+
+				if(scrollTop + windowHeight == scrollHeight) {
+					// alert('已经到浏览器底部了，这时你可以做你需要的业务了');
+					this.previewmore()
+				}
+			},
+			
+			preview() {
+				let data = {
+					token: this.token,
+					pageIndex: 1,
+					pageSize: 5,
+					postId: this.id - 0,
+					postType: 1
+				}
+				discussCommentList(data).then(res => {
+					if(res.code == 0) {
+						
+						if(res.data.comments.rows!=null){
+							this.newestComments = res.data.comments.rows
+						this.hasNext = res.data.comments.hasNext
+						}else{
+							$(".previewContent").css('display',"none")
+						}
+					}
+				})
+			},
+			previewmore() {
+				if(this.hasNext != false) {
+					this.pageIndex = parseInt(this.pageIndex) + 1
+
+					let data = {
+						token: this.token,
+						pageIndex: this.pageIndex,
+						pageSize: 5,
+						postId: this.id - 0,
+						postType: 3
+					}
+					postCommentList(data).then(res => {
+						if(res.code == 0) {
+							this.newestComments = res.data.comments.rows
+							this.hasNext = res.data.comments.hasNext
+						}
+					})
+				} else {
+					$('.end').css('display',"block")
+					$('.start').css('display',"none")
+				}
+
+			},
+			attention() {
+				var _this = this
+				if($(".discoveryBtn").html() == "已关注") {
+					//取消关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.createUserId
+					}
+					cancelFollow(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 0) {
+								console.log('取消关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(59, 136, 246)",
+									color: "rgb(255,255,255)"
+								})
+								$(".discoveryBtn").html("+ 关注")
+							}
+						}
+					}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+				} else {
+					//去关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.createUserId
+					}
+					saveFollow(data).then(res => {
+						if(res.code == 0) {
+
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 1) {
+								console.log('已经关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(244, 244, 244)",
+									color: "rgb(126, 126, 126)"
+								})
+								$(".discoveryBtn").html("已关注")
+							}
+						}
+					}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+				}
+
+			},
+			articleC(){
+				let data = {
 				token: this.token,
 				postId: this.id - 0
 			}
@@ -251,66 +403,6 @@
 				}
 
 			})
-		},
-		updated() {
-			$('.disscussContents').find('img').css({
-				width: '80%',
-				height: '100%'
-			})
-			$('.disscussContents').find('p').css({
-				fontSize: '15px',
-				width: "100%",
-				margin: "1em 0",
-				wordWrap: "break-word",
-				lineHeight: '26px'
-			});
-
-		},
-		methods: {
-			attention() {
-				if($(".discoveryBtn").html() == "已关注") {
-					//取消关注
-					let data = {
-						token: this.token,
-						followType: 3,
-						followedId: this.createUserId
-					}
-					cancelFollow(data).then(res => {
-						if(res.code == 0) {
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 0) {
-								console.log('取消关注')
-								$(".discoveryBtn").css({
-									backgroundColor: "rgb(59, 136, 246)",
-									color: "rgb(255,255,255)"
-								})
-								$(".discoveryBtn").html("+ 关注")
-							}
-						}
-					})
-				} else {
-					//去关注
-					let data = {
-						token: this.token,
-						followType: 3,
-						followedId: this.createUserId
-					}
-					saveFollow(data).then(res => {
-						if(res.code == 0) {
-
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 1) {
-								console.log('已经关注')
-								$(".discoveryBtn").css({
-									backgroundColor: "rgb(244, 244, 244)",
-									color: "rgb(126, 126, 126)"
-								})
-								$(".discoveryBtn").html("已关注")
-							}
-						}
-					})
-				}
-
 			},
 			fun(index) {
 				if(index <= 3) {

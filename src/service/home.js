@@ -94,3 +94,12 @@ export const  postCommentList= (params = {}) => {
     },
   })
 }
+
+//爆料评论列表接口
+export const  discussCommentList= (params = {}) => {
+  return request(`/kff/home/discussCommentList`, {
+    body: {
+      ...params
+    },
+  })
+}

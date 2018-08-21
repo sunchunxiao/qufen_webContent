@@ -189,8 +189,9 @@
 
 		mounted() {
 			//小于1600px   main-right展开
-			this.resizeBannerImage();
-			window.onresize = this.resizeBannerImage;
+//			this.resizeBannerImage();
+			this.resizeBannerImage1();
+			window.addEventListener('resize', this.resizeBannerImage)
 
 			this.loadPageList() //加载文章
 			//监听滚动条
@@ -220,6 +221,7 @@
 		},
 		destroyed() {
 			window.removeEventListener("scroll", this.scrollHandler);
+			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
 			onecenter(id){
@@ -242,16 +244,31 @@
 					this.more()
 				}
 			},
-			resizeBannerImage() {
+			//第一次left值
+			resizeBannerImage1() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-//				console.log(_width, _width1)
+//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
 					$(".common-attention").css("left", left)
 				} else {
 					var left = _width1 + 703
+					$(".common-attention").css("left", left)
+				}
+
+			},
+			resizeBannerImage() {
+				var _width = $(window).width();
+				var _width1 = $(".common-article").offset().left
+//				console.log( _width1)
+
+				if(_width < 1590) {
+					var left = _width1 + 650
+					$(".common-attention").css("left", left)
+				} else {
+					var left = _width1 + 710
 					$(".common-attention").css("left", left)
 				}
 
