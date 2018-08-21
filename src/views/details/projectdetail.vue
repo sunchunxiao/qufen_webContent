@@ -16,7 +16,7 @@
 									<div><span class="onedec">{{raterNum}} 评测 •  {{followerNum}} 关注</span></div>
 									<div class="projectName-time">{{projectSignature}}</div>
 								</div>
-								<div class="index-score projectScore">8.5分</div>
+								<div class="index-score projectScore">{{totalScore}}</div>
 								<div @click="attention" class="discoveryBtn pt">
 									+ 关注
 								</div>
@@ -183,7 +183,8 @@
 				issueDateStr: '',
 				whitepaperUrl: '',
 				websiteUrl: '',
-				followStatus: 0
+				followStatus: 0,
+				totalScore:''
 			}
 		},
 		mounted() {
@@ -263,6 +264,8 @@
 						//白皮书地址
 						this.whitepaperUrl = res.data.project.whitepaperUrl
 						this.followStatus = res.data.project.followStatus
+						//分数
+						this.totalScore = res.data.project.totalScore
 
 					}
 				})
