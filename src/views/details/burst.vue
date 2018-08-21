@@ -150,7 +150,8 @@
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
-				tagInfos: []
+				tagInfos: [],
+				createUserId:0
 
 			}
 		},
@@ -246,6 +247,7 @@
 					// this.imgUrl = JSON.parse(data.post.postSmallImages)
 					//缩略文章
 					this.postShortDesc = data.postShortDesc
+					this.createUserId = data.createUserId
 				}
 
 			})
@@ -266,9 +268,49 @@
 		},
 		methods: {
 			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
+				if($(".discoveryBtn").html() == "已关注") {
+					//取消关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.createUserId
+					}
+					cancelFollow(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 0) {
+								console.log('取消关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(59, 136, 246)",
+									color: "rgb(255,255,255)"
+								})
+								$(".discoveryBtn").html("+ 关注")
+							}
+						}
+					})
+				} else {
+					//去关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.createUserId
+					}
+					saveFollow(data).then(res => {
+						if(res.code == 0) {
+
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 1) {
+								console.log('已经关注')
+								$(".discoveryBtn").css({
+									backgroundColor: "rgb(244, 244, 244)",
+									color: "rgb(126, 126, 126)"
+								})
+								$(".discoveryBtn").html("已关注")
+							}
+						}
+					})
+				}
+
 			},
 			fun(index) {
 				if(index <= 3) {

@@ -157,7 +157,8 @@
 				tagInfos: [],
 				token: getCookie('token'),
 				followStatus: 0,
-				newestComments:[]
+				newestComments:[],
+				createUserId:0
 			}
 		},
 		updated() {
@@ -244,6 +245,7 @@
 						this.commentsNum = data.commentsNum;
 						//点赞人数
 						this.praiseNum = data.praiseNum;
+						this.createUserId = data.createUserId
 
 					}
 
@@ -269,7 +271,7 @@
 					let data = {
 						token: this.token,
 						followType: 3,
-						followedId: this.id
+						followedId: this.createUserId
 					}
 					cancelFollow(data).then(res => {
 						if(res.code == 0) {
@@ -289,7 +291,7 @@
 					let data = {
 						token: this.token,
 						followType: 3,
-						followedId: this.id
+						followedId: this.createUserId
 					}
 					saveFollow(data).then(res => {
 						if(res.code == 0) {
