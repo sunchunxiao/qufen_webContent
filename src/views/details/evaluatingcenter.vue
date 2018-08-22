@@ -155,47 +155,52 @@
 						token: this.token
 					}
 					evaluationList(data).then(res => {
-						//						console.log(res)
+						
 						if(res.code == 0) {
 							this.itemList = res.data.evaluations.rows;
-							if(res.data.evaluations.rows.length <= 2) {
+
+							if(res.data.evaluations.rows != null) {
+								if(res.data.evaluations.rows.length <= 2) {
+									$(".start").css("display", "none")
+								}
+								for(var i = 0; i < res.data.evaluations.rows.length; i++) {
+									if(res.data.evaluations.rows[i].postSmallImages != null) {
+										//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+										var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
+										if(postSmallImages.length != 0) {
+											res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+										} else {
+											res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+										}
+									}
+
+									//时间  字符串切割
+									//调用 Data.customData()
+									var nowdate = Data.customData()
+									//						console.log(nowdate)
+									var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
+
+									this.timestr = arr[0];
+									if(nowdate == this.timestr) {
+										var a1 = arr[1].split(":")
+										res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+									} else {
+										res.data.evaluations.rows[i].createTimeStr = arr[0];
+									}
+									if(res.data.evaluations.rows[i].tagInfos != null) {
+										this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
+										// console.log(this.tagInfos)
+										res.data.evaluations.rows[i].tagInfos = this.tagInfos
+									}
+
+									this.totalpage = Math.ceil(res.data.evaluations.rowCount / this.pageSize);
+								}
+							} else {
 								$(".start").css("display", "none")
 							}
 
-							for(var i = 0; i < res.data.evaluations.rows.length; i++) {
-								if(res.data.evaluations.rows[i].postSmallImages != null) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-									var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
-									if(postSmallImages.length != 0) {
-										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-									} else {
-										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-									}
-								}
-
-								//时间  字符串切割
-								//调用 Data.customData()
-								var nowdate = Data.customData()
-								//						console.log(nowdate)
-								var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
-
-								this.timestr = arr[0];
-								if(nowdate == this.timestr) {
-									var a1 = arr[1].split(":")
-									res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-								} else {
-									res.data.evaluations.rows[i].createTimeStr = arr[0];
-								}
-								if(res.data.evaluations.rows[i].tagInfos!=null){
-									this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
-									// console.log(this.tagInfos)
-								res.data.evaluations.rows[i].tagInfos = this.tagInfos
-								}
-								
-								this.totalpage = Math.ceil(res.data.evaluations.rowCount / this.pageSize);
-							}
 						}
 
 					})

@@ -99,9 +99,9 @@
 
 		mounted() {
 			//小于1600px   main-right展开
-//			this.resizeBannerImage();
-//			window.onresize = this.resizeBannerImage;
-			
+			//			this.resizeBannerImage();
+			//			window.onresize = this.resizeBannerImage;
+
 			this.resizeBannerImage1();
 			window.addEventListener('resize', this.resizeBannerImage)
 			//项目主页的接口
@@ -133,48 +133,55 @@
 		methods: {
 			attention(id, index) {
 				console.log($(".discoveryBtn").eq(index).html())
-				if($(".discoveryBtn").eq(index).html() == "已关注") {
-					//取消关注
-					let data = {
-						token: this.token,
-						followType: 1,
-						followedId: id
-					}
-					console.log(222)
-					cancelFollow(data).then(res => {
-						if(res.code == 0) {
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 0) {
-								console.log('取消关注')
-								$(".discoveryBtn").eq(index).css({
-									backgroundColor: "rgb(59, 136, 246)",
-									color: "rgb(255,255,255)"
-								})
-								$(".discoveryBtn").eq(index).html("+ 关注")
-							}
+				if(this.token != "") {
+					if($(".discoveryBtn").eq(index).html() == "已关注") {
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 1,
+							followedId: id
 						}
-					})
-				} else {
-					//去关注
-					let data = {
-						token: this.token,
-						followType: 1,
-						followedId: id
-					}
-					saveFollow(data).then(res => {
-						if(res.code == 0) {
+						console.log(222)
+						cancelFollow(data).then(res => {
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".discoveryBtn").eq(index).css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".discoveryBtn").eq(index).html("+ 关注")
+								}
+							}
+						})
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 1,
+							followedId: id
+						}
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
 
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 1) {
-								console.log('已经关注')
-								$(".discoveryBtn").eq(index).css({
-									backgroundColor: "rgb(244, 244, 244)",
-									color: "rgb(126, 126, 126)"
-								})
-								$(".discoveryBtn").eq(index).html("已关注")
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".discoveryBtn").eq(index).css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".discoveryBtn").eq(index).html("已关注")
+								}
 							}
-						}
-					})
+						})
+					}
+
+				} else {
+					this.$alert('请登录', {
+						confirmButtonText: '确定',
+					});
 				}
 			},
 
@@ -204,7 +211,7 @@
 			resizeBannerImage1() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-//				console.log( _width1)
+				//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
@@ -230,8 +237,8 @@
 
 			},
 			project() {
-				if(this.token!=""){
-					// 查询数据
+
+				// 查询数据
 				let data = {
 					token: this.token,
 					pageIndex: 1,
@@ -248,21 +255,23 @@
 
 					}
 				})
-				}else{
-					this.$message('登陆后关注更多内容');
-					this.$router.push('/user/register')
-				}
-				
-				
+
 			},
 			projectdetail(id) {
-				window.open('/project/projectdetail?id=' + id, "_blank")
-				//				this.$router.push({
-				//					path:'/project/projectdetail',
-				//					query:{
-				//						id
-				//					}
-				//				})
+				console.log(this.token)
+				if(this.token !='') {
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
 			}
 
 		}

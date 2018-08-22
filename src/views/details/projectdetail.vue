@@ -92,7 +92,7 @@
 										<span>相关概念</span>
 										<span>公链</span>
 									</li>
-									<li >
+									<li>
 										<span>链接</span>
 										<span>
 											<a target="_blank" :href="websiteUrl" class="rightname">官网</a>
@@ -184,9 +184,9 @@
 				whitepaperUrl: '',
 				websiteUrl: '',
 				followStatus: 0,
-				totalScore:'',
-				zicon:'',
-				zuserName:''
+				totalScore: '',
+				zicon: '',
+				zuserName: ''
 			}
 		},
 		mounted() {
@@ -240,7 +240,7 @@
 			projectdetail() {
 				//				console.log(this.$route.query.id)
 				this.id = this.$route.query.id - 0;
-
+				var _this = this
 				// 查询数据
 				let data = {
 					token: this.token,

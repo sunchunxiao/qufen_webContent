@@ -15,7 +15,7 @@
 									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
 									<div class="projectName-time">{{item.createTimeStr}}</div>
 								</div>
-								<div @click="attention(item.createUserId,index)"  class="discoveryBtndetail">
+								<div @click="attention(item.createUserId,index)" class="discoveryBtndetail">
 									+ 关注
 								</div>
 							</div>
@@ -27,7 +27,7 @@
 								<div class="row row3">
 									<div class="discoveryContent">
 										<!--缩略图-->
-										<div  v-for="item1 in item.postSmallImages" class="contentImg">
+										<div v-for="item1 in item.postSmallImages" class="contentImg">
 											<img :src="item1.fileUrl" />
 										</div>
 										<p class="row3-content">
@@ -77,14 +77,14 @@
 						<span>已经到底部了...</span>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import {discussList} from '@/service/project';
+	import { discussList } from '@/service/project';
 	import { saveFollow, cancelFollow } from '@/service/home';
 	import Header from '@/components/layout/header.vue'
 	import Data from '../../assets/js/date'
@@ -115,7 +115,7 @@
 		mounted() {
 			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
-			
+
 			this.loadPageList() //加载文章
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
@@ -193,7 +193,7 @@
 							followType: 3,
 							followedId: createUserId
 						}
-						
+
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
@@ -243,43 +243,49 @@
 						token: this.token
 					}
 					discussList(data).then(res => {
-						this.itemList = res.data.discusses.rows;
-						if(res.data.discusses.rows.length<=2){
-							$(".start").css("display","none")
-						}
+						
 
-						for(var i = 0; i < res.data.discusses.rows.length; i++) {
-							if(res.data.discusses.rows[i].postSmallImages!=null) {
-//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-									
-								}else{
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-									
+						if(res.data.discusses.rows != null) {
+							this.itemList = res.data.discusses.rows;
+							if(res.data.discusses.rows.length <= 2) {
+								$(".start").css("display", "none")
+							}
+							for(var i = 0; i < res.data.discusses.rows.length; i++) {
+								if(res.data.discusses.rows[i].postSmallImages != null) {
+									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+									var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
+									if(postSmallImages.length != 0) {
+										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+									} else {
+										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+									}
 								}
+
+								//时间  字符串切割
+								//调用 Data.customData()
+								var nowdate = Data.customData()
+								//						console.log(nowdate)
+								var arr = res.data.discusses.rows[i].createTimeStr.split(" ")
+
+								this.timestr = arr[0];
+								if(nowdate == this.timestr) {
+									var a1 = arr[1].split(":")
+									res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								} else {
+									res.data.discusses.rows[i].createTimeStr = arr[0];
+								}
+
+								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.discusses.rows[i].tagInfos = this.tagInfos
+								this.totalpage = Math.ceil(res.data.discusses.rowCount / this.pageSize);
 							}
-
-							//时间  字符串切割
-							//调用 Data.customData()
-							var nowdate = Data.customData()
-							//						console.log(nowdate)
-							var arr = res.data.discusses.rows[i].createTimeStr.split(" ")
-
-							this.timestr = arr[0];
-							if(nowdate == this.timestr) {
-								var a1 = arr[1].split(":")
-								res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-							} else {
-								res.data.discusses.rows[i].createTimeStr = arr[0];
-							}
-
-							this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.discusses.rows[i].tagInfos = this.tagInfos
-							this.totalpage = Math.ceil(res.data.discusses.rowCount / this.pageSize);
+						}else{
+							$(".start").css("display", "none")
 						}
+
 					})
 
 				} else {
@@ -312,16 +318,16 @@
 							for(var i = 0; i < res.data.discusses.rows.length; i++) {
 								this.itemList.push(res.data.discusses.rows[i]);
 								if(res.data.discusses.rows[i].postSmallImages) {
-//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-//									console.log(postSmallImages.slice(0, 1))
-								}else{
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-									
+									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+									var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
+									if(postSmallImages.length != 0) {
+										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+										//									console.log(postSmallImages.slice(0, 1))
+									} else {
+										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+									}
 								}
-							}
 
 								//时间  字符串切割
 								//调用 Data.customData()
@@ -333,7 +339,7 @@
 									var a1 = arr[1].split(":")
 									//									console.log(a1)
 									res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-//									console.log(res.data.discusses.rows[i].createTimeStr)
+									//									console.log(res.data.discusses.rows[i].createTimeStr)
 								} else {
 									res.data.discusses.rows[i].createTimeStr = arr[0];
 
@@ -350,14 +356,14 @@
 							if(this.pageIndex == this.totalpage) {
 
 								this.allLoaded = true;
-								
+
 								$(".end").css("display", "block")
 								$(".start").css("display", "none")
 							}
 						})
-					}else{
+					} else {
 						$(".end").css("display", "block")
-								$(".start").css("display", "none")
+						$(".start").css("display", "none")
 					}
 				}
 

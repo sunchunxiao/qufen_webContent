@@ -7,6 +7,9 @@
 .indexCommon{
 	width: 1060px;
 }
+.el-message{
+	top:60px;
+}
 .oneuser{
 	display: flex;
 	align-items: center;

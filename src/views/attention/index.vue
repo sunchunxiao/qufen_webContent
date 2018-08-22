@@ -9,12 +9,14 @@
 					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
 							<div class="row row1">
-								<div class="photo">
+								<div class="oneuser" @click="onecenter(item.createUserId)">
+									<div class="photo">
 									<img slot="icon" :src="item.createUserIcon">
 								</div>
 								<div class="name">
 									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
 									<div class="projectName-time">{{item.createTimeStr}}</div>
+								</div>
 								</div>
 								<div @click="attention(item.createUserId,index)" class="discoveryBtn">
 									+ 关注
@@ -224,6 +226,9 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			onecenter(id){
+				window.open('/onecenter?id=' + id, "_blank")
+			},
 			//点击关注
 			attention(createUserId, index) {
 				console.log(createUserId)

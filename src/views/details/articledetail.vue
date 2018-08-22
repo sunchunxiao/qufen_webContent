@@ -93,7 +93,7 @@
 		data() {
 			return {
 				value: 5,
-				id:'',
+				id: '',
 				postImage: [],
 				pageIndex: 1,
 				pageSize: 10,
@@ -110,9 +110,9 @@
 		},
 
 		mounted() {
-//			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
-			
+
 			this.loadPageList() //加载文章
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
@@ -190,7 +190,7 @@
 							followType: 3,
 							followedId: createUserId
 						}
-						
+
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
@@ -240,43 +240,48 @@
 						token: this.token
 					}
 					articleList(data).then(res => {
-						this.itemList = res.data.articles.rows;
-						if(res.data.articles.rows.length<=2){
-							$(".start").css("display","none")
-						}
+						
+						if(res.data.articles.rows != null) {
+							this.itemList = res.data.articles.rows;
+							if(res.data.articles.rows.length <= 2) {
+								$(".start").css("display", "none")
+							}
+							for(var i = 0; i < res.data.articles.rows.length; i++) {
+								if(res.data.articles.rows[i].postSmallImages != null) {
+									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+									var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
+									if(postSmallImages.length != 0) {
+										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
-						for(var i = 0; i < res.data.articles.rows.length; i++) {
-							if(res.data.articles.rows[i].postSmallImages != null) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+									} else {
+										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
-								} else {
-									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+									}
 								}
+
+								//时间  字符串切割
+								//调用 Data.customData()
+								var nowdate = Data.customData()
+								//						console.log(nowdate)
+								var arr = res.data.articles.rows[i].createTimeStr.split(" ")
+
+								this.timestr = arr[0];
+								if(nowdate == this.timestr) {
+									var a1 = arr[1].split(":")
+									res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								} else {
+									res.data.articles.rows[i].createTimeStr = arr[0];
+								}
+
+								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.articles.rows[i].tagInfos = this.tagInfos
+								this.totalpage = Math.ceil(res.data.articles.rowCount / this.pageSize);
 							}
-
-							//时间  字符串切割
-							//调用 Data.customData()
-							var nowdate = Data.customData()
-							//						console.log(nowdate)
-							var arr = res.data.articles.rows[i].createTimeStr.split(" ")
-
-							this.timestr = arr[0];
-							if(nowdate == this.timestr) {
-								var a1 = arr[1].split(":")
-								res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-							} else {
-								res.data.articles.rows[i].createTimeStr = arr[0];
-							}
-
-							this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.articles.rows[i].tagInfos = this.tagInfos
-							this.totalpage = Math.ceil(res.data.articles.rowCount / this.pageSize);
+						}else{
+							$(".start").css("display", "none")
 						}
+
 					})
 
 				} else {
