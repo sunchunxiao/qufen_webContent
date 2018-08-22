@@ -20,7 +20,7 @@ export const userRouter = [
     meta: {
       title: '注册',
     },
-    component: (resolve) => require(['@/views/user/register1.vue'], resolve)
+    component: (resolve) => require(['@/views/user/register.vue'], resolve)
   }
 
 ]

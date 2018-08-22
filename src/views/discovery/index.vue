@@ -274,6 +274,7 @@
 
 			},
 			attention(createUserId, index) {
+				var _this = this
 				console.log(createUserId)
 				if(this.token != "") {
 					//					console.log($(".discoveryBtn").eq(index).html())
@@ -298,7 +299,11 @@
 								}
 							}
 						}).catch(function(res) {
-							alert(res.msg)
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
 						});
 					} else {
 						//去关注
@@ -307,7 +312,7 @@
 							followType: 3,
 							followedId: createUserId
 						}
-						var _this = this
+						
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 

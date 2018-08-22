@@ -9,7 +9,7 @@
 							<img style="cursor: pointer;" @click="dian" src="../../assets/login/logo.png" class="logo">
 						</el-col>
 						<el-col :span="16">
-							<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
+							<el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
 								<template v-for="(menu,index) in menuData">
 									<el-menu-item :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
 
@@ -126,9 +126,9 @@
 			dian(){
 				this.$router.push("/discovery")
 			},
-			next(){
-				window.open('https://www.qufen.top', "_blank")
-			},
+//			next(){
+//				window.open('https://www.qufen.top', "_blank")
+//			},
 			changeTab(index) {
 				if(index == index) {
 					this.clicked = this.clicked === index ? undefined : index

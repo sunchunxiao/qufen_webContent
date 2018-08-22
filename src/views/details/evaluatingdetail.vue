@@ -5,7 +5,7 @@
 				<!--左边文章-->
 				<div class="onedetailArticle">
 					<!--文章-->
-					<div class="common-article-wrap" v-for="item in itemList">
+					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
 							<div class="row row1">
 								<div class="photo">
@@ -15,7 +15,7 @@
 									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
 									<div class="projectName-time">{{item.createTimeStr}}</div>
 								</div>
-								<div @click="attention" class="discoveryBtndetail">
+								<div @click="attention(item.createUserId,index)" class="discoveryBtndetail">
 									+ 关注
 								</div>
 							</div>
@@ -85,6 +85,7 @@
 
 <script>
 	import { evaluationList } from '@/service/project';
+	import { saveFollow, cancelFollow } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
@@ -115,6 +116,26 @@
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
 		},
+		updated() {
+			for(let i = 0; i < this.itemList.length; i++) {
+				//							console.log(res.data.projectResponsePage.rows[i].followStatus)
+				this.followStatus = this.itemList[i].followStatus
+				if(this.itemList[i].followStatus == 1) {
+					$(".discoveryBtndetail").eq(i).css({
+						backgroundColor: "rgb(244, 244, 244)",
+						color: "rgb(126, 126, 126)"
+					})
+					$(".discoveryBtndetail").eq(i).html("已关注")
+				} else {
+					$(".discoveryBtndetail").eq(i).css({
+						backgroundColor: "rgb(59, 136, 246)",
+						color: "rgb(255,255,255)"
+					})
+					$(".discoveryBtndetail").eq(i).html("+ 关注")
+				}
+
+			}
+		},
 		destroyed() {
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
@@ -129,10 +150,73 @@
 					this.more()
 				}
 			},
-			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
+			attention(createUserId, index) {
+				console.log(createUserId)
+				var _this = this
+				if(this.token != "") {
+					//					console.log($(".discoveryBtndetail").eq(index).html())
+					if($(".discoveryBtndetail").eq(index).html() == "已关注") {
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: createUserId
+						}
+						cancelFollow(data).then(res => {
+
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".discoveryBtndetail").eq(index).css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".discoveryBtndetail").eq(index).html("+ 关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: createUserId
+						}
+						
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
+
+								//								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".discoveryBtndetail").eq(index).css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".discoveryBtndetail").eq(index).html("已关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+					}
+				} else {
+					this.$alert('前去登录', {
+						confirmButtonText: '确定',
+					});
+				}
+
 			},
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
