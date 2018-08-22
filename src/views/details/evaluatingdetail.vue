@@ -105,7 +105,8 @@
 				id: '',
 				state: "",
 				tagInfos: [],
-				token: getCookie('token')
+				token: getCookie('token'),
+				hasNext: true,
 			}
 		},
 		mounted() {
@@ -118,7 +119,6 @@
 		},
 		updated() {
 			for(let i = 0; i < this.itemList.length; i++) {
-				//							console.log(res.data.projectResponsePage.rows[i].followStatus)
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtndetail").eq(i).css({
@@ -230,98 +230,30 @@
 
 			},
 			loadPageList() {
-//				if(getCookie('token')) {
-					// 查询数据
-					let data = {
-						pageIndex: 1,
-						pageSize: 10,
-						projectId: this.id,
-						token: this.token
-					}
-					evaluationList(data).then(res => {
-						//						console.log(res)
-						if(res.code == 0) {
-							
+				//				if(getCookie('token')) {
+				// 查询数据
+				let data = {
+					pageIndex: 1,
+					pageSize: 10,
+					projectId: this.id,
+					token: this.token
+				}
+				evaluationList(data).then(res => {
+					if(res.code == 0) {
 
-							if(res.data.evaluations.rows != null) {
-								this.itemList = res.data.evaluations.rows;
-								if(res.data.evaluations.rows.length <= 2) {
-									$(".start").css("display", "none")
-								}
-								for(var i = 0; i < res.data.evaluations.rows.length; i++) {
-									if(res.data.evaluations.rows[i].postSmallImages != null) {
-										//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-										var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
-										if(postSmallImages.length != 0) {
-											res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-										} else {
-											res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-										}
-									}
-
-									//时间  字符串切割
-									//调用 Data.customData()
-									var nowdate = Data.customData()
-									//						console.log(nowdate)
-									var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
-
-									this.timestr = arr[0];
-									if(nowdate == this.timestr) {
-										var a1 = arr[1].split(":")
-										res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-									} else {
-										res.data.evaluations.rows[i].createTimeStr = arr[0];
-									}
-
-									this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
-									// console.log(this.tagInfos)
-									res.data.evaluations.rows[i].tagInfos = this.tagInfos
-									this.totalpage = Math.ceil(res.data.evaluations.rowCount / this.pageSize);
-								}
-							}else{
+						if(res.data.evaluations.rows != null) {
+							this.itemList = res.data.evaluations.rows;
+							if(res.data.evaluations.rows.length <= 2) {
 								$(".start").css("display", "none")
 							}
-
-						}
-
-					})
-
-//				} else {
-//					this.$message('请登录阅读更多精彩内容');
-//					this.$router.push('user/register')
-//				}
-
-			},
-
-			more() {
-				// 分页查询
-				if(this.allLoaded == false) {
-					if(this.totalpage == 1) {
-						this.pageIndex = 1;
-						this.allLoaded = true;
-					} else {
-						this.pageIndex = parseInt(this.pageIndex) + 1;
-						this.allLoaded = false;
-					}
-					let params = {
-						pageIndex: this.pageIndex,
-						pageSize: 10,
-						projectId: this.id,
-						token: this.token
-					}
-
-					if(this.allLoaded == false) {
-						evaluationList(params).then(res => {
+							this.hasNext = res.data.evaluations.hasNext
 							for(var i = 0; i < res.data.evaluations.rows.length; i++) {
-								this.itemList.push(res.data.evaluations.rows[i]);
-								if(res.data.evaluations.rows[i].postSmallImages) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+								if(res.data.evaluations.rows[i].postSmallImages != null) {
+
 									var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
 									if(postSmallImages.length != 0) {
 										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-										//									console.log(postSmallImages.slice(0, 1))
+
 									} else {
 										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
@@ -331,17 +263,15 @@
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
+								//						console.log(nowdate)
 								var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
 
 								this.timestr = arr[0];
 								if(nowdate == this.timestr) {
 									var a1 = arr[1].split(":")
-									//									console.log(a1)
 									res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-									//									console.log(res.data.follows.rows[i].createTimeStr)
 								} else {
 									res.data.evaluations.rows[i].createTimeStr = arr[0];
-
 								}
 
 								this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
@@ -349,22 +279,84 @@
 								res.data.evaluations.rows[i].tagInfos = this.tagInfos
 
 							}
-							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
-							// 是否还有下一页，如果没有就禁止上拉刷新
-							if(this.pageIndex == this.totalpage) {
-
-								this.allLoaded = true;
-
-								$(".end").css("display", "block")
-								$(".start").css("display", "none")
+							if(res.data.evaluations.rows.length > 2) {
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
+								}
 							}
 
-						})
-					} else {
-						$(".end").css("display", "block")
-						$(".start").css("display", "none")
+						} else {
+							$(".start").css("display", "none")
+						}
+
 					}
 
+				})
+
+				//				} else {
+				//					this.$message('请登录阅读更多精彩内容');
+				//					this.$router.push('user/register')
+				//				}
+
+			},
+
+			more() {
+				// 分页查询
+				if(this.hasNext == true) {
+					this.pageIndex = parseInt(this.pageIndex) + 1;
+					let params = {
+						pageIndex: this.pageIndex,
+						pageSize: 10,
+						projectId: this.id,
+						token: this.token
+					}
+					evaluationList(params).then(res => {
+						this.hasNext = res.data.evaluations.hasNext
+						for(var i = 0; i < res.data.evaluations.rows.length; i++) {
+							this.itemList.push(res.data.evaluations.rows[i]);
+							if(res.data.evaluations.rows[i].postSmallImages) {
+								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+								var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
+								if(postSmallImages.length != 0) {
+									res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+									//									console.log(postSmallImages.slice(0, 1))
+								} else {
+									res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+
+								}
+							}
+
+							//时间  字符串切割
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
+
+							this.timestr = arr[0];
+							if(nowdate == this.timestr) {
+								var a1 = arr[1].split(":")
+								//									console.log(a1)
+								res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								//									console.log(res.data.follows.rows[i].createTimeStr)
+							} else {
+								res.data.evaluations.rows[i].createTimeStr = arr[0];
+
+							}
+
+							this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
+							// console.log(this.tagInfos)
+							res.data.evaluations.rows[i].tagInfos = this.tagInfos
+
+						}
+						if(this.hasNext == false) {
+							$(".end").css("display", "block")
+							$(".start").css("display", "none")
+						}
+
+					})
+				} else {
+					$(".end").css("display", "block")
+					$(".start").css("display", "none")
 				}
 
 			},

@@ -68,7 +68,10 @@
 								<span class="attention-hot-pro">项目介绍</span>
 							</div>
 							<p class="projectintroduce">
-								{{projectDesc}}
+								<div class="projectintroduceS">
+									{{projectDesc}}
+								</div>
+								<span @click="showToggle" class="projectmore">更多</span>
 							</p>
 							<div style="padding-top: 30px;">
 								<ul class="attenList attenListname">
@@ -119,7 +122,7 @@
 										</div>
 										<div class="name">
 											<div class="projectNameL"><span class="projectName-nameL">{{zuserName}}</span></div>
-											<div class="projectName-timeL">18:24</div>
+											<div class="projectName-timeL">{{userSignature}}</div>
 										</div>
 										<div class="btnL">
 											+ 关注
@@ -138,14 +141,17 @@
 								<span class="attention-hot-pro">活跃用户</span>
 							</div>
 							<ul class="attenList">
-								<li>
+								<li v-for="active in activeUsers">
 									<div class="row rowList">
 										<div class="photoList">
-											<img slot="icon" src="../../assets/login/icon2.png">
+											<img slot="icon" :src="active.icon">
 										</div>
 										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">QTU </span><span class="atten-spanL">/ 柚子</span></div>
-											<div class="projectName-timeL">18:24</div>
+											<div class="projectNameL">
+												<span class="projectName-nameL">{{active.userName}}</span>
+												<!--<span class="atten-spanL">/ 柚子</span>-->
+											</div>
+											<div class="projectName-timeL">{{active.userSignature}}</div>
 										</div>
 										<div class="btnL">
 											+ 关注
@@ -170,6 +176,7 @@
 		name: 'projectdetail',
 		data() {
 			return {
+				activeNames: ['1'],
 				id: '',
 				token: getCookie('token'),
 				projectIcon: '',
@@ -186,7 +193,10 @@
 				followStatus: 0,
 				totalScore: '',
 				zicon: '',
-				zuserName: ''
+				zuserName: '',
+				isShow: true,
+				activeUsers:[],
+				userSignature:''
 			}
 		},
 		mounted() {
@@ -222,7 +232,31 @@
 				$(".discoveryBtn").html("+ 关注")
 			}
 		},
-		methods: {
+		methods: { 
+			showToggle() {
+				this.isShow = !this.isShow
+				if(this.isShow) {
+//					$(".projectintroduceS").slideUp('fast')
+					$(".projectintroduceS").css({
+						overflow: 'hidden',
+						height: '78px',
+						display:'-webkit-box'
+					})
+					$(".projectmore").html("更多")
+				}else{
+					$(".projectintroduceS").slideDown('fast')
+					$(".projectintroduceS").css({
+						overflow: 'inherit',
+						height: 'inherit',
+						display:'block'
+					})
+					$(".projectmore").html("收起")
+				}
+
+			},
+			handleChange(val) {
+				console.log(val);
+			},
 			//			resizeBannerImage() {
 			//				var _width = $(window).width();
 			//				var _width1 = $(".common-article").offset().left
@@ -248,7 +282,6 @@
 				}
 				projectIndex(data).then(res => {
 					if(res.code == 0) {
-						console.log(res.data)
 						this.projectIcon = res.data.project.projectIcon
 						this.projectCode = res.data.project.projectCode
 						this.followerNum = res.data.project.followerNum
@@ -271,6 +304,9 @@
 						//站长用户信息
 						this.zicon = res.data.project.owner.icon
 						this.zuserName = res.data.project.owner.userName
+						this.userSignature = res.data.project.owner.userSignature
+						//活跃用户
+						this.activeUsers = res.data.project.activeUsers
 
 					}
 				})

@@ -19,8 +19,9 @@
 									+ 关注
 								</div>-->
 							</div>
-							<div style="cursor: pointer" @click="article(item.postType,item.postId)">
-								<div class="row row2">
+							<div>
+								<div style="cursor: pointer" @click="article(item.postType,item.postId)">
+									<div class="row row2">
 									<div class="test">{{item.postTitle}}</div>
 									<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
 								</div>
@@ -35,9 +36,10 @@
 										</p>
 									</div>
 								</div>
+								</div>
 								<div class="row4">
 									<!--标签-->
-									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
+									<div style="cursor: pointer;" @click="projectdetail(item.projectId)"  class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
 									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
@@ -105,7 +107,8 @@
 				postType: "",
 				state: "",
 				tagInfos: [],
-				token: getCookie('token')
+				token: getCookie('token'),
+				hasNext: true,
 			}
 		},
 		components: {
@@ -166,7 +169,7 @@
 							if(res.data.discusses.rows.length <= 2) {
 								$(".start").css("display", "none")
 							}
-
+							this.hasNext = res.data.discusses.hasNext
 							for(var i = 0; i < res.data.discusses.rows.length; i++) {
 								if(res.data.discusses.rows[i].postSmallImages != null) {
 									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
@@ -199,9 +202,15 @@
 									res.data.discusses.rows[i].tagInfos = this.tagInfos
 								}
 
-								this.totalpage = Math.ceil(res.data.discusses.rowCount / this.pageSize);
 							}
-						}else{
+							if(res.data.discusses.rows.length > 2) {
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
+								}
+							}
+
+						} else {
 							$(".start").css("display", "none")
 						}
 
@@ -216,79 +225,79 @@
 
 			more() {
 				// 分页查询
-				console.log(this.totalpage)
-				if(this.allLoaded == false) {
-					if(this.totalpage == 1) {
-						this.pageIndex = 1;
-						this.allLoaded = true;
-					} else {
-						this.pageIndex = parseInt(this.pageIndex) + 1;
-						this.allLoaded = false;
-					}
+				if(this.hasNext == true) {
+					this.pageIndex = parseInt(this.pageIndex) + 1;
 					let params = {
 						pageIndex: this.pageIndex,
 						pageSize: 10,
 						kffUserId: this.id,
 						token: this.token
 					}
-
-					if(this.allLoaded == false) {
-						discussList(params).then(res => {
-
-							for(var i = 0; i < res.data.discusses.rows.length; i++) {
-								this.itemList.push(res.data.discusses.rows[i]);
-								if(res.data.discusses.rows[i].postSmallImages) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-									var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
-									if(postSmallImages.length != 0) {
-										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-										//									console.log(postSmallImages.slice(0, 1))
-									} else {
-										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-									}
-								}
-
-								//时间  字符串切割
-								//调用 Data.customData()
-								var nowdate = Data.customData()
-								var arr = res.data.discusses.rows[i].createTimeStr.split(" ")
-
-								this.timestr = arr[0];
-								if(nowdate == this.timestr) {
-									var a1 = arr[1].split(":")
-									//									console.log(a1)
-									res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-									//									console.log(res.data.discusses.rows[i].createTimeStr)
+					discussList(params).then(res => {
+						this.hasNext = res.data.discusses.hasNext
+						for(var i = 0; i < res.data.discusses.rows.length; i++) {
+							this.itemList.push(res.data.discusses.rows[i]);
+							if(res.data.discusses.rows[i].postSmallImages) {
+								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+								var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
+								if(postSmallImages.length != 0) {
+									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+									//									console.log(postSmallImages.slice(0, 1))
 								} else {
-									res.data.discusses.rows[i].createTimeStr = arr[0];
+									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
 								}
-								if(res.data.discusses.rows[i].tagInfos !== null) {
-									this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
-									// console.log(this.tagInfos)
-									res.data.discusses.rows[i].tagInfos = this.tagInfos
-								}
+							}
+
+							//时间  字符串切割
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							var arr = res.data.discusses.rows[i].createTimeStr.split(" ")
+
+							this.timestr = arr[0];
+							if(nowdate == this.timestr) {
+								var a1 = arr[1].split(":")
+								//									console.log(a1)
+								res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								//									console.log(res.data.discusses.rows[i].createTimeStr)
+							} else {
+								res.data.discusses.rows[i].createTimeStr = arr[0];
 
 							}
-							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
-
-							// 是否还有下一页，如果没有就禁止上拉刷新
-							if(this.pageIndex == this.totalpage) {
-
-								this.allLoaded = true;
-
-								$(".end").css("display", "block")
-								$(".start").css("display", "none")
+							if(res.data.discusses.rows[i].tagInfos !== null) {
+								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.discusses.rows[i].tagInfos = this.tagInfos
 							}
-						})
-					} else {
-						$(".end").css("display", "block")
-						$(".start").css("display", "none")
-					}
+
+						}
+						if(this.hasNext == false) {
+							$(".end").css("display", "block")
+							$(".start").css("display", "none")
+						}
+					})
+				} else {
+					$(".end").css("display", "block")
+					$(".start").css("display", "none")
 				}
 
 			},
+			projectdetail(id) {
+				console.log(this.token)
+				if(this.token != '') {
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			}
 
 		}
 	}

@@ -22,25 +22,27 @@
 									+ 关注
 								</div>
 							</div>
-							<div style="cursor: pointer" @click="article(item.postType,item.postId)">
-								<div class="row row2">
-									<div class="test">{{item.postTitle}}</div>
-									<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
-								</div>
-								<div class="row row3">
-									<div class="discoveryContent">
-										<!--缩略图-->
-										<div v-for="item1 in item.postSmallImagesList" class="contentImg">
-											<img :src="item1.fileUrl" />
+							<div>
+								<div style="cursor: pointer" @click="article(item.postType,item.postId)">
+									<div class="row row2">
+										<div class="test">{{item.postTitle}}</div>
+										<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
+									</div>
+									<div class="row row3">
+										<div class="discoveryContent">
+											<!--缩略图-->
+											<div v-for="item1 in item.postSmallImagesList" class="contentImg">
+												<img :src="item1.fileUrl" />
+											</div>
+											<p class="row3-content">
+												{{item.postShortDesc}}
+											</p>
 										</div>
-										<p class="row3-content">
-											{{item.postShortDesc}}
-										</p>
 									</div>
 								</div>
 								<div class="row4">
 									<!--标签-->
-									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
+									<div style="cursor: pointer;"  class="crack-tag1" @click="projectdetail(item.projectId)"><span class="span-name">{{item.projectCode}} </span></div>
 									<span class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
@@ -189,7 +191,7 @@
 
 		mounted() {
 			//小于1600px   main-right展开
-//			this.resizeBannerImage();
+			//			this.resizeBannerImage();
 			this.resizeBannerImage1();
 			window.addEventListener('resize', this.resizeBannerImage)
 
@@ -224,14 +226,14 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
-			onecenter(id){
+			onecenter(id) {
 				window.open('/onecenter?id=' + id, "_blank")
-//				this.$router.push({
-//					path:"/onecenter",
-//					query:{
-//						id
-//					}
-//				})
+				//				this.$router.push({
+				//					path:"/onecenter",
+				//					query:{
+				//						id
+				//					}
+				//				})
 			},
 			//下滑加载
 			scrollHandler() {
@@ -248,7 +250,7 @@
 			resizeBannerImage1() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-//				console.log( _width1)
+				//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
@@ -262,7 +264,7 @@
 			resizeBannerImage() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-//				console.log( _width1)
+				//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 650
@@ -312,7 +314,7 @@
 							followType: 3,
 							followedId: createUserId
 						}
-						
+
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
@@ -468,6 +470,22 @@
 				}
 
 			},
+			projectdetail(id) {
+				console.log(this.token)
+				if(this.token !='') {
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			}
 
 			// isHaveMore: function() {
 			//

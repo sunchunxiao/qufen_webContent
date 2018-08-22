@@ -105,7 +105,8 @@
 				postType: "",
 				state: "",
 				tagInfos: [],
-				token: getCookie('token')
+				token: getCookie('token'),
+				hasNext: true,
 			}
 		},
 
@@ -119,7 +120,7 @@
 		},
 		updated() {
 			for(let i = 0; i < this.itemList.length; i++) {
-				//							console.log(res.data.projectResponsePage.rows[i].followStatus)
+
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtndetail").eq(i).css({
@@ -240,12 +241,12 @@
 						token: this.token
 					}
 					articleList(data).then(res => {
-						
+						this.itemList = res.data.articles.rows;
 						if(res.data.articles.rows != null) {
-							this.itemList = res.data.articles.rows;
 							if(res.data.articles.rows.length <= 2) {
 								$(".start").css("display", "none")
 							}
+							this.hasNext = res.data.articles.hasNext
 							for(var i = 0; i < res.data.articles.rows.length; i++) {
 								if(res.data.articles.rows[i].postSmallImages != null) {
 									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
@@ -276,9 +277,14 @@
 								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
 								// console.log(this.tagInfos)
 								res.data.articles.rows[i].tagInfos = this.tagInfos
-								this.totalpage = Math.ceil(res.data.articles.rowCount / this.pageSize);
+
 							}
-						}else{
+							if(res.data.articles.rows.length > 2) {
+								$(".end").css("display", "block")
+								$(".start").css("display", "none")
+							}
+
+						} else {
 							$(".start").css("display", "none")
 						}
 
@@ -292,71 +298,135 @@
 			},
 
 			more() {
-				// 分页查询
-				if(this.allLoaded == false) {
-					if(this.totalpage == 1) {
-						this.pageIndex = 1;
-						this.allLoaded = true;
-					} else {
-						this.pageIndex = parseInt(this.pageIndex) + 1;
-						this.allLoaded = false;
-					}
+				if(this.hasNext == true) {
+					this.pageIndex = parseInt(this.pageIndex) + 1;
 					let params = {
 						pageIndex: this.pageIndex,
 						pageSize: 10,
 						projectId: this.id,
 						token: this.token
 					}
-
-					if(this.allLoaded == false) {
-						articleList(params).then(res => {
-							for(var i = 0; i < res.data.articles.rows.length; i++) {
-								this.itemList.push(res.data.articles.rows[i]);
-								if(res.data.articles.rows[i].postSmallImages) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-									var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
-									if(postSmallImages.length != 0) {
-										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-										//									console.log(postSmallImages.slice(0, 1))
-									} else {
-										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-									}
-								}
-
-								//时间  字符串切割
-								//调用 Data.customData()
-								var nowdate = Data.customData()
-								var arr = res.data.articles.rows[i].createTimeStr.split(" ")
-
-								this.timestr = arr[0];
-								if(nowdate == this.timestr) {
-									var a1 = arr[1].split(":")
-									//									console.log(a1)
-									res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-									//									console.log(res.data.follows.rows[i].createTimeStr)
+					articleList(params).then(res => {
+						this.hasNext = res.data.articles.hasNext
+						for(var i = 0; i < res.data.articles.rows.length; i++) {
+							this.itemList.push(res.data.articles.rows[i]);
+							if(res.data.articles.rows[i].postSmallImages) {
+								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+								var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
+								if(postSmallImages.length != 0) {
+									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+									//									console.log(postSmallImages.slice(0, 1))
 								} else {
-									res.data.articles.rows[i].createTimeStr = arr[0];
+									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
 								}
-
-								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-								// console.log(this.tagInfos)
-								res.data.articles.rows[i].tagInfos = this.tagInfos
 							}
-							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
 
-							// 是否还有下一页，如果没有就禁止上拉刷新
-							if(this.pageIndex == this.totalpage) {
+							//时间  字符串切割
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							var arr = res.data.articles.rows[i].createTimeStr.split(" ")
 
-								this.allLoaded = true;
+							this.timestr = arr[0];
+							if(nowdate == this.timestr) {
+								var a1 = arr[1].split(":")
+								//									console.log(a1)
+								res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								//									console.log(res.data.follows.rows[i].createTimeStr)
+							} else {
+								res.data.articles.rows[i].createTimeStr = arr[0];
 
-								$(".end").css("display", "block")
-								$(".start").css("display", "none")
 							}
-						})
-					}
+
+							this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+							// console.log(this.tagInfos)
+							res.data.articles.rows[i].tagInfos = this.tagInfos
+						}
+						if(this.hasNext == false) {
+							$(".end").css("display", "block")
+							$(".start").css("display", "none")
+						}
+
+					})
+				} else {
+					$(".end").css("display", "block")
+					$(".start").css("display", "none")
 				}
+
+				// 分页查询
+				//				if(this.allLoaded == false) {
+				//					if(this.totalpage == 1) {
+				//						this.pageIndex = 1;
+				//						this.allLoaded = true;
+				//					} else {
+				//						this.pageIndex = parseInt(this.pageIndex) + 1;
+				//						this.allLoaded = false;
+				//					}
+				//					let params = {
+				//						pageIndex: this.pageIndex,
+				//						pageSize: 10,
+				//						projectId: this.id,
+				//						token: this.token
+				//					}
+				//
+				//					if(this.allLoaded == false) {
+				//						articleList(params).then(res => {
+				//							for(var i = 0; i < res.data.articles.rows.length; i++) {
+				//								this.itemList.push(res.data.articles.rows[i]);
+				//								if(res.data.articles.rows[i].postSmallImages) {
+				//									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+				//									var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
+				//									if(postSmallImages.length != 0) {
+				//										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+				//										//									console.log(postSmallImages.slice(0, 1))
+				//									} else {
+				//										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+				//
+				//									}
+				//								}
+				//
+				//								//时间  字符串切割
+				//								//调用 Data.customData()
+				//								var nowdate = Data.customData()
+				//								var arr = res.data.articles.rows[i].createTimeStr.split(" ")
+				//
+				//								this.timestr = arr[0];
+				//								if(nowdate == this.timestr) {
+				//									var a1 = arr[1].split(":")
+				//									//									console.log(a1)
+				//									res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+				//									//									console.log(res.data.follows.rows[i].createTimeStr)
+				//								} else {
+				//									res.data.articles.rows[i].createTimeStr = arr[0];
+				//
+				//								}
+				//
+				//								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+				//								// console.log(this.tagInfos)
+				//								res.data.articles.rows[i].tagInfos = this.tagInfos
+				//							}
+				//							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
+				//
+				//							// 是否还有下一页，如果没有就禁止上拉刷新
+				//							if(this.pageIndex == this.totalpage) {
+				//
+				//								this.allLoaded = true;
+				//
+				//								$(".end").css("display", "block")
+				//								$(".start").css("display", "none")
+				//							}
+				//						})
+				//					}else{
+				//						// 是否还有下一页，如果没有就禁止上拉刷新
+				//							if(this.pageIndex == this.totalpage) {
+				//
+				//								this.allLoaded = true;
+				//
+				//								$(".end").css("display", "block")
+				//								$(".start").css("display", "none")
+				//							}
+				//					}
+				//				}
 
 			},
 

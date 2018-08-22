@@ -28,7 +28,7 @@
 							</div>
 						</div>
 						<div class="articleTag">
-							<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
+							<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
 							<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 						</div>
 					</div>
@@ -166,6 +166,7 @@
 				hasNext: true,
 				pageIndex: 1,
 				pageSize: 10,
+				projectId:0
 
 			}
 		},
@@ -330,6 +331,8 @@
 					var nowdate = Data.customData()
 					var arr = data.createTimeStr.split(" ")
 					this.projectCode = data.projectCode
+					//id
+					this.projectId  = data.projectId
 
 					if(data.tagInfos != null) {
 						this.tagInfos = JSON.parse(data.tagInfos)
@@ -415,6 +418,23 @@
 			img1(index) {
 				if(index == index) {
 					this.isScale = this.isScale === index ? undefined : index
+				}
+
+			},
+			projectdetail() {
+				console.log(this.token)
+				if(this.token != '') {
+					var id = this.projectId
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
 				}
 
 			}

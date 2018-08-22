@@ -25,7 +25,7 @@
 						{{m}}
 					</div>
 					<div class="articleTag">
-						<div class="crack-tag1"><span class="span-name">{{tag}}</span></div>
+						<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1"><span class="span-name">{{tag}}</span></div>
 						<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 					</div>
 				</div>
@@ -170,6 +170,7 @@
 				hasNext: true,
 				pageIndex: 1,
 				pageSize: 10,
+				projectId:0
 			}
 		},
 		updated() {
@@ -283,6 +284,7 @@
 						this.userSignature = data.createUserSignature;
 						//关注状态
 						this.followStatus = data.followStatus
+						this.projectId  = data.projectId
 						//标签
 						this.tag = data.projectCode;
 						if(data.tagInfos != null) {
@@ -365,6 +367,23 @@
 							message: res.msg,
 							type: 'error'
 						});
+					});
+				}
+
+			},
+			projectdetail() {
+				console.log(this.token)
+				if(this.token != '') {
+					var id = this.projectId
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
 					});
 				}
 

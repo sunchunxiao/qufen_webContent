@@ -11,36 +11,38 @@
 							<div class="row row1">
 								<div class="oneuser" @click="onecenter(item.createUserId)">
 									<div class="photo">
-									<img slot="icon" :src="item.createUserIcon">
-								</div>
-								<div class="name">
-									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
-									<div class="projectName-time">{{item.createTimeStr}}</div>
-								</div>
+										<img slot="icon" :src="item.createUserIcon">
+									</div>
+									<div class="name">
+										<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
+										<div class="projectName-time">{{item.createTimeStr}}</div>
+									</div>
 								</div>
 								<div @click="attention(item.createUserId,index)" class="discoveryBtn">
 									+ 关注
 								</div>
 							</div>
-							<div style="cursor: pointer" @click="article(item.postType,item.postId)">
-								<div class="row row2">
-									<div class="test">{{item.postTitle}}</div>
-									<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
-								</div>
-								<div class="row row3">
-									<div class="discoveryContent">
-										<!--缩略图-->
-										<div v-for="item1 in item.postSmallImagesList" class="contentImg">
-											<img :src="item1.fileUrl" />
+							<div>
+								<div style="cursor: pointer" @click="article(item.postType,item.postId)">
+									<div class="row row2">
+										<div class="test">{{item.postTitle}}</div>
+										<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
+									</div>
+									<div class="row row3">
+										<div class="discoveryContent">
+											<!--缩略图-->
+											<div v-for="item1 in item.postSmallImagesList" class="contentImg">
+												<img :src="item1.fileUrl" />
+											</div>
+											<p class="row3-content">
+												{{item.postShortDesc}}
+											</p>
 										</div>
-										<p class="row3-content">
-											{{item.postShortDesc}}
-										</p>
 									</div>
 								</div>
 								<div class="row4">
 									<!--标签-->
-									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
+									<div style="cursor: pointer;" @click="projectdetail(item.projectId)" class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
 									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
@@ -193,7 +195,7 @@
 		mounted() {
 			//小于1600px   main-right展开
 			this.resizeBannerImage1();
-//			window.onresize = this.resizeBannerImage;
+			//			window.onresize = this.resizeBannerImage;
 			window.addEventListener('resize', this.resizeBannerImage)
 			this.loadPageList() //加载文章
 			//保留this属性
@@ -226,7 +228,7 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
-			onecenter(id){
+			onecenter(id) {
 				window.open('/onecenter?id=' + id, "_blank")
 			},
 			//点击关注
@@ -267,7 +269,7 @@
 							followType: 3,
 							followedId: createUserId
 						}
-						
+
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
@@ -310,7 +312,7 @@
 			resizeBannerImage1() {
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
-//				console.log( _width1)
+				//				console.log( _width1)
 
 				if(_width < 1590) {
 					var left = _width1 + 643
@@ -347,59 +349,58 @@
 
 			},
 			loadPageList() {
-				if(this.token!=""){
+				if(this.token != "") {
 					// 查询数据
-				let data = {
-					token: this.token,
-					pageIndex: 1,
-					pageSize: 10
-				}
-				followList(data).then(res => {
-
-					this.itemList = res.data.follows.rows;
-					if(res.data.follows.rows.length <= 2) {
-						$(".start").css("display", "none")
+					let data = {
+						token: this.token,
+						pageIndex: 1,
+						pageSize: 10
 					}
+					followList(data).then(res => {
 
-					for(var i = 0; i < res.data.follows.rows.length; i++) {
-						//						console.log(res.data.follows.rows[i].postSmallImagesList)
-						if(res.data.follows.rows[i].postSmallImagesList != null) {
-							if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
-								res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
+						this.itemList = res.data.follows.rows;
+						if(res.data.follows.rows.length <= 2) {
+							$(".start").css("display", "none")
+						}
+
+						for(var i = 0; i < res.data.follows.rows.length; i++) {
+							//						console.log(res.data.follows.rows[i].postSmallImagesList)
+							if(res.data.follows.rows[i].postSmallImagesList != null) {
+								if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
+									res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
+								}
 							}
+
+							//时间  字符串切割
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+
+							var arr = res.data.follows.rows[i].createTimeStr.split(" ")
+
+							this.timestr = arr[0];
+							if(nowdate == this.timestr) {
+								var a1 = arr[1].split(":")
+								res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+							} else {
+								res.data.follows.rows[i].createTimeStr = arr[0];
+							}
+
+							if(res.data.follows.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
+								res.data.follows.rows[i].tagInfos = this.tagInfos
+							} else {
+								// $(".crack-tag2").css("display", "none")
+							}
+
 						}
+						this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 
-						//时间  字符串切割
-						//调用 Data.customData()
-						var nowdate = Data.customData()
-
-						var arr = res.data.follows.rows[i].createTimeStr.split(" ")
-
-						this.timestr = arr[0];
-						if(nowdate == this.timestr) {
-							var a1 = arr[1].split(":")
-							res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-						} else {
-							res.data.follows.rows[i].createTimeStr = arr[0];
-						}
-
-						if(res.data.follows.rows[i].tagInfos != null) {
-							this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
-							res.data.follows.rows[i].tagInfos = this.tagInfos
-						} else {
-							// $(".crack-tag2").css("display", "none")
-						}
-
-					}
-					this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
-
-				})
-				}else{
-					 this.$message('登陆后关注更多内容');
+					})
+				} else {
+					this.$message('登陆后关注更多内容');
 					this.$router.push('/user/register')
 				}
-				
-				
+
 			},
 
 			more() {
@@ -430,7 +431,6 @@
 									}
 								}
 
-
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
@@ -452,7 +452,7 @@
 								res.data.follows.rows[i].tagInfos = this.tagInfos
 
 							}
-							 this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
+							this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 
 							// 是否还有下一页，如果没有就禁止上拉刷新
 							if(this.pageIndex == this.totalpage) {
@@ -467,6 +467,22 @@
 				}
 
 			},
+			projectdetail(id) {
+				console.log(this.token)
+				if(this.token != '') {
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			}
 
 		}
 	}

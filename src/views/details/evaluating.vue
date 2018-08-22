@@ -26,7 +26,7 @@
 								{{m}}
 							</div>
 							<div class="articleTag">
-								<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
+								<div style="cursor: pointer;" @click="projectdetail"  class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
 							</div>
 						</div>
 						<div class="row articleRow5">
@@ -194,6 +194,7 @@
 				hasNext: true,
 				pageIndex: 1,
 				pageSize: 10,
+				projectId:0
 			}
 		},
 
@@ -341,6 +342,8 @@
 						this.projectCode = data.projectCode;
 						//关注状态
 						this.followStatus = data.followStatus
+						//id
+						this.projectId = data.projectId
 
 						//时间  字符串切割
 						//调用 Data.customData()
@@ -456,6 +459,23 @@
 							message: res.msg,
 							type: 'error'
 						});
+					});
+				}
+
+			},
+			projectdetail() {
+				console.log(this.token)
+				if(this.token != '') {
+					var id = this.projectId
+					window.open('/project/projectdetail?id=' + id, "_blank")
+				} else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
 					});
 				}
 
