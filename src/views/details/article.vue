@@ -4,12 +4,14 @@
 			<div class="detail-box">
 				<div class="detailWrap">
 					<div class="row row1">
-						<div class="photo">
-							<img slot="icon" :src="src">
-						</div>
-						<div class="name">
-							<div class="projectName"><span class="projectName-name">{{username}} </span></div>
-							<div class="projectName-time">{{timestr1}}</div>
+						<div class="oneuser" @click="onecenter">
+							<div class="photo">
+								<img slot="icon" :src="src">
+							</div>
+							<div class="name">
+								<div class="projectName"><span class="projectName-name">{{username}} </span></div>
+								<div class="projectName-time">{{timestr1}}</div>
+							</div>
 						</div>
 						<div @click="attention" class="discoveryBtn">
 							+ 关注
@@ -170,7 +172,7 @@
 				hasNext: true,
 				pageIndex: 1,
 				pageSize: 10,
-				projectId:0
+				projectId: 0
 			}
 		},
 		updated() {
@@ -207,11 +209,24 @@
 			this.articleC()
 			//请求评论
 			this.preview(),
-			//监听滚动条
-			window.addEventListener('scroll', this.scrollHandler)
+				//监听滚动条
+				window.addEventListener('scroll', this.scrollHandler)
 
 		},
 		methods: {
+			onecenter() {
+				if(this.token != '') {
+					var id = this.createUserId
+					window.open('/onecenter?id=' + id, "_blank")
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			},
 			//下滑加载
 			scrollHandler() {
 				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
@@ -234,13 +249,27 @@
 				}
 				postCommentList(data).then(res => {
 					if(res.code == 0) {
-						this.newestComments = res.data.newestComments.rows
 						this.hasNext = res.data.newestComments.hasNext
+						if(res.data.newestComments.rows != null) {
+							this.newestComments = res.data.newestComments.rows
+							if(res.data.newestComments.rows.length > 2) {
+
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
+								}
+							}else{
+								$(".start").css("display", "none")
+							}
+						} else {
+							$(".previewContent").css('display', "none")
+						}
+
 					}
 				})
 			},
 			previewmore() {
-				if(this.hasNext != false) {
+				if(this.hasNext == true) {
 					this.pageIndex = parseInt(this.pageIndex) + 1
 
 					let data = {
@@ -252,8 +281,19 @@
 					}
 					postCommentList(data).then(res => {
 						if(res.code == 0) {
-							this.newestComments = res.data.newestComments.rows
 							this.hasNext = res.data.newestComments.hasNext
+							console.log(this.hasNext)
+							if(res.data.newestComments.rows != null) {
+								for(var i = 0; i < res.data.newestComments.rows.length; i++) {
+									this.newestComments.push(res.data.newestComments.rows[i]);
+								}
+
+							}
+							if(this.hasNext == false) {
+								$(".end").css("display", "block")
+								$(".start").css("display", "none")
+							}
+
 						}
 					})
 				} else {
@@ -284,7 +324,7 @@
 						this.userSignature = data.createUserSignature;
 						//关注状态
 						this.followStatus = data.followStatus
-						this.projectId  = data.projectId
+						this.projectId = data.projectId
 						//标签
 						this.tag = data.projectCode;
 						if(data.tagInfos != null) {

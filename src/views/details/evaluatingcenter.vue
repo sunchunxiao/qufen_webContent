@@ -112,7 +112,9 @@
 		},
 		mounted() {
 			console.log(this.$route.query.id)
+			console.log(this.token)
 			this.id = this.$route.query.id - 0;
+			
 
 			this.loadPageList() //加载文章
 			//监听滚动条
@@ -132,11 +134,7 @@
 					this.more()
 				}
 			},
-			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
-			},
+			
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {
@@ -149,7 +147,8 @@
 
 			},
 			loadPageList() {
-				if(getCookie('token')) {
+				
+//				if(this.token!='') {
 					// 查询数据
 					let data = {
 						kffUserId: this.id,
@@ -215,10 +214,10 @@
 
 					})
 
-				} else {
-					this.$message('请登录阅读更多精彩内容');
-					this.$router.push('user/register')
-				}
+//				} else {
+//					this.$message('请登录阅读更多精彩内容');
+//					this.$router.push('user/register')
+//				}
 
 			},
 

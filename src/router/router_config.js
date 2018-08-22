@@ -54,35 +54,7 @@ export const mainRouter = [
 				},
 				component: (resolve) => require(['@/views/project/index.vue'], resolve),
 			},
-			{
-				path: "/onecenter",
-				meta: {
-					title: '个人主页',
-				},
-				component: (resolve) => require(['@/views/details/onecenter.vue'], resolve),
-				children:[
-				{
-					path: '/project/evaluatingcenter',
-					meta: {
-						title: '用户评测'
-					},
-					component: (resolve) => require(['@/views/details/evaluatingcenter.vue'], resolve)
-				},
-				{
-					path: '/project/burstcenter',
-					meta: {
-						title: '用户爆料'
-					},
-					component: (resolve) => require(['@/views/details/burstcenter.vue'], resolve)
-				},
-				{
-					path: '/project/articlecenter',
-					meta: {
-						title: '用户爆料'
-					},
-					component: (resolve) => require(['@/views/details/articlecenter.vue'], resolve)
-				},]
-			},
+			
 			
 			
 		]

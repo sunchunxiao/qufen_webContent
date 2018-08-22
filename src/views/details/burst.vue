@@ -5,12 +5,14 @@
 				<div class="detail-box">
 					<div class="detailWrap">
 						<div class="row row1">
-							<div class="photo">
-								<img slot="icon" :src="src" alt="区分">
-							</div>
-							<div class="name">
-								<div class="projectName"><span class="projectName-name">{{username}} </span></div>
-								<div class="projectName-time">{{timestr1}}</div>
+							<div class="oneuser" @click="onecenter">
+								<div class="photo">
+									<img slot="icon" :src="src" alt="区分">
+								</div>
+								<div class="name">
+									<div class="projectName"><span class="projectName-name">{{username}} </span></div>
+									<div class="projectName-time">{{timestr1}}</div>
+								</div>
 							</div>
 							<div @click="attention" class="discoveryBtn">
 								+ 关注
@@ -68,22 +70,22 @@
 							<span @click="attention" class="articleBack">回复</span>
 						</div>
 						<div class="previewContent">
-						<h2>评论</h2>
-						<div>
-							<div class="contentList" v-for="item in newestComments">
-								<div class="list">
-									<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
-									<span class="listName">{{item.commentUserName}}</span>
-									<div class="listfloor">
-										<span class="floor">{{item.floor}}楼 {{item.createTimeStr}}</span>
+							<h2>评论</h2>
+							<div>
+								<div class="contentList" v-for="item in newestComments">
+									<div class="list">
+										<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
+										<span class="listName">{{item.commentUserName}}</span>
+										<div class="listfloor">
+											<span class="floor">{{item.floor}}楼 {{item.createTimeStr}}</span>
 
+										</div>
 									</div>
-								</div>
-								<p class="listContent">
-									{{item.commentContent}}
-								</p>
+									<p class="listContent">
+										{{item.commentContent}}
+									</p>
 
-								<!--<div class="row articleRow">
+									<!--<div class="row articleRow">
 									<div class="article-atten">
 										<div class="detail1 zan">
 											<img src="../../assets/common/FIND.png">
@@ -97,9 +99,9 @@
 
 								</div>-->
 
-							</div>
+								</div>
 
-							<!--<div class="listContent">
+								<!--<div class="listContent">
 								<div>
 									<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
 									<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
@@ -119,16 +121,16 @@
 								</div>
 
 							</div>-->
-							<!--加载更多-->
-							<div class="row6 start">
-								<span>加载中...</span>
-							</div>
-							<!--加载更多-->
-							<div class="row6 end">
-								<span>已经到底部了...</span>
+								<!--加载更多-->
+								<div class="row6 start">
+									<span>加载中...</span>
+								</div>
+								<!--加载更多-->
+								<div class="row6 end">
+									<span>已经到底部了...</span>
+								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -137,7 +139,7 @@
 </template>
 
 <script>
-	import { discuss,discussCommentList} from '@/service/home';
+	import { discuss, discussCommentList } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
@@ -161,12 +163,12 @@
 				commentsNum: '',
 				praiseNum: '',
 				tagInfos: [],
-				createUserId:0,
+				createUserId: 0,
 				newestComments: [],
 				hasNext: true,
 				pageIndex: 1,
 				pageSize: 10,
-				projectId:0
+				projectId: 0
 
 			}
 		},
@@ -175,12 +177,12 @@
 			this.id = this.$route.query.id;
 			//调取文章
 			this.articleC()
-			
+
 			//请求评论
 			this.preview(),
-			//监听滚动条
-			window.addEventListener('scroll', this.scrollHandler)
-			
+				//监听滚动条
+				window.addEventListener('scroll', this.scrollHandler)
+
 		},
 		updated() {
 			$('.disscussContents').find('img').css({
@@ -197,6 +199,19 @@
 
 		},
 		methods: {
+			onecenter() {
+				if(this.token != '') {
+					var id = this.createUserId
+					window.open('/onecenter?id=' + id, "_blank")
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			},
 			//下滑加载
 			scrollHandler() {
 				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
@@ -208,29 +223,39 @@
 					this.previewmore()
 				}
 			},
-			
+
 			preview() {
 				let data = {
 					token: this.token,
 					pageIndex: 1,
 					pageSize: 5,
 					postId: this.id - 0,
-					postType: 1
+					
 				}
 				discussCommentList(data).then(res => {
 					if(res.code == 0) {
-						
-						if(res.data.comments.rows!=null){
-							this.newestComments = res.data.comments.rows
 						this.hasNext = res.data.comments.hasNext
-						}else{
-							$(".previewContent").css('display',"none")
+						if(res.data.comments.rows != null) {
+							this.newestComments = res.data.comments.rows
+							if(res.data.comments.rows.length > 2) {
+
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
+								}
+							}else{
+								$(".start").css("display", "none")
+							}
+						} else {
+							$(".previewContent").css('display', "none")
 						}
+
 					}
+					
 				})
 			},
 			previewmore() {
-				if(this.hasNext != false) {
+				if(this.hasNext == true) {
 					this.pageIndex = parseInt(this.pageIndex) + 1
 
 					let data = {
@@ -238,18 +263,29 @@
 						pageIndex: this.pageIndex,
 						pageSize: 5,
 						postId: this.id - 0,
-						postType: 3
 					}
-					postCommentList(data).then(res => {
+					discussCommentList(data).then(res => {
 						if(res.code == 0) {
-							this.newestComments = res.data.comments.rows
 							this.hasNext = res.data.comments.hasNext
+							console.log(this.hasNext)
+							if(res.data.comments.rows != null) {
+								for(var i = 0; i < res.data.comments.rows.length; i++) {
+									this.newestComments.push(res.data.comments.rows[i]);
+								}
+
+							}
+							if(this.hasNext == false) {
+								$(".end").css("display", "block")
+								$(".start").css("display", "none")
+							}
+
 						}
 					})
 				} else {
-					$('.end').css('display',"block")
-					$('.start').css('display',"none")
+					$('.end').css('display', "block")
+					$('.start').css('display', "none")
 				}
+				
 
 			},
 			attention() {
@@ -274,12 +310,12 @@
 							}
 						}
 					}).catch(function(res) {
-							_this.$message({
-								showClose: true,
-								message: res.msg,
-								type: 'error'
-							});
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
 						});
+					});
 				} else {
 					//去关注
 					let data = {
@@ -301,111 +337,112 @@
 							}
 						}
 					}).catch(function(res) {
-							_this.$message({
-								showClose: true,
-								message: res.msg,
-								type: 'error'
-							});
+						_this.$message({
+							showClose: true,
+							message: res.msg,
+							type: 'error'
 						});
+					});
 				}
 
 			},
-			articleC(){
+			articleC() {
 				let data = {
-				token: this.token,
-				postId: this.id - 0
-			}
-			//爆料
-			discuss(data).then(res => {
-				if(res.code == 0) {
-					var data = res.data.discussDetail
-
-					//标题
-					this.articleTitle = data.postTitle
-					//头像
-					this.src = data.createUserIcon;
-					//用户昵称
-					this.username = data.createUserName;
-					//时间  字符串切割
-					//调用 Data.customData()
-					var nowdate = Data.customData()
-					var arr = data.createTimeStr.split(" ")
-					this.projectCode = data.projectCode
-					//id
-					this.projectId  = data.projectId
-
-					if(data.tagInfos != null) {
-						this.tagInfos = JSON.parse(data.tagInfos)
-					}
-
-					this.timestr = arr[0];
-					if(nowdate == this.timestr) {
-						var a1 = arr[1].split(":")
-						this.timestr1 = a1[0] + ":" + a1[1];
-					} else {
-						this.timestr1 = arr[0];
-					}
-
-					this.userSignature = data.createUserSignature;
-
-					//文章内容
-					this.disscussContents = data.disscussContents;
-
-					//图片
-					if(data.postSmallImages != null) {
-						var a = JSON.parse(data.postSmallImages);
-						if(a.length != 0) {
-							if(a.length >= 3) {
-								a = a.slice(0, 3)
-							}
-
-							for(let i = 0; i < a.length; i++) {
-								this.imgUrl = a[i].fileUrl
-								this.postImg.push({
-									src: this.imgUrl
-								})
-							}
-						}
-					} else {
-						$('.burstImg').css('display', 'none')
-					}
-
-					//标签
-					this.projectCode = data.projectCode;
-					//赞助人数
-					this.donateNum = data.donateNum;
-					//评论人数
-					this.commentsNum = data.commentsNum;
-					//点赞人数
-					this.praiseNum = data.praiseNum;
-					//最多选择标签
-					//this.tagInfo = JSON.parse(data.tagInfo);
-					//热门评论
-					this.commentsehot = data.commentsehot;
-					var result = data.commentsehot;
-					//热门评论头像
-					if(result != null) {
-						for(let i = 0; i < result.length; i++) {
-							var b = data.commentsehot[i].commentUserIcon;
-							this.commenticon.push(b)
-						}
-					}
-					//热门评论如果是没有，不显示
-					if(this.commentsehot == null) {
-						$(".hot").css("display", "none")
-					}
-
-					//时间  字符串切割
-					var arr = data.createTimeStr.split(" ")
-					this.timestr = arr[0];
-					//缩略图
-					// this.imgUrl = JSON.parse(data.post.postSmallImages)
-					//缩略文章
-					this.postShortDesc = data.postShortDesc
-					this.createUserId = data.createUserId
+					token: this.token,
+					postId: this.id - 0
 				}
+				//爆料
+				discuss(data).then(res => {
+					if(res.code == 0) {
+						var data = res.data.discussDetail
 
-			})
+						//标题
+						this.articleTitle = data.postTitle
+						//头像
+						this.src = data.createUserIcon;
+						//用户昵称
+						this.username = data.createUserName;
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+						var arr = data.createTimeStr.split(" ")
+						this.projectCode = data.projectCode
+						//id
+						this.projectId = data.projectId
+						this.createUserId = data.createUserId
+
+						if(data.tagInfos != null) {
+							this.tagInfos = JSON.parse(data.tagInfos)
+						}
+
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							this.timestr1 = a1[0] + ":" + a1[1];
+						} else {
+							this.timestr1 = arr[0];
+						}
+
+						this.userSignature = data.createUserSignature;
+
+						//文章内容
+						this.disscussContents = data.disscussContents;
+
+						//图片
+						if(data.postSmallImages != null) {
+							var a = JSON.parse(data.postSmallImages);
+							if(a.length != 0) {
+								if(a.length >= 3) {
+									a = a.slice(0, 3)
+								}
+
+								for(let i = 0; i < a.length; i++) {
+									this.imgUrl = a[i].fileUrl
+									this.postImg.push({
+										src: this.imgUrl
+									})
+								}
+							}
+						} else {
+							$('.burstImg').css('display', 'none')
+						}
+
+						//标签
+						this.projectCode = data.projectCode;
+						//赞助人数
+						this.donateNum = data.donateNum;
+						//评论人数
+						this.commentsNum = data.commentsNum;
+						//点赞人数
+						this.praiseNum = data.praiseNum;
+						//最多选择标签
+						//this.tagInfo = JSON.parse(data.tagInfo);
+						//热门评论
+						this.commentsehot = data.commentsehot;
+						var result = data.commentsehot;
+						//热门评论头像
+						if(result != null) {
+							for(let i = 0; i < result.length; i++) {
+								var b = data.commentsehot[i].commentUserIcon;
+								this.commenticon.push(b)
+							}
+						}
+						//热门评论如果是没有，不显示
+						if(this.commentsehot == null) {
+							$(".hot").css("display", "none")
+						}
+
+						//时间  字符串切割
+						var arr = data.createTimeStr.split(" ")
+						this.timestr = arr[0];
+						//缩略图
+						// this.imgUrl = JSON.parse(data.post.postSmallImages)
+						//缩略文章
+						this.postShortDesc = data.postShortDesc
+						this.createUserId = data.createUserId
+					}
+
+				})
 			},
 			fun(index) {
 				if(index <= 3) {

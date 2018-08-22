@@ -262,14 +262,7 @@
 				if(this.token !='') {
 					window.open('/project/projectdetail?id=' + id, "_blank")
 				} else {
-					//					this.$alert('请登录', {
-					//						confirmButtonText: '确定',
-					//					});
-					this.$message({
-						showClose: true,
-						message: '请登录',
-						type: 'error'
-					});
+					this.$message('登陆后关注更多内容');
 				}
 
 			}

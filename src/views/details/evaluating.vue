@@ -7,12 +7,14 @@
 					<div class="detail-box evaluating">
 						<div class="detailWrap">
 							<div class="row row1">
-								<div class="photo">
-									<img slot="icon" :src="src">
-								</div>
-								<div class="name">
-									<div class="projectName"><span class="projectName-name">{{username}} </span></div>
-									<div class="projectName-time">{{timestr1}}</div>
+								<div class="oneuser" @click="onecenter">
+									<div class="photo">
+										<img slot="icon" :src="src">
+									</div>
+									<div class="name">
+										<div class="projectName"><span class="projectName-name">{{username}} </span></div>
+										<div class="projectName-time">{{timestr1}}</div>
+									</div>
 								</div>
 								<div @click="attention" class="discoveryBtn">
 									+ 关注
@@ -26,7 +28,7 @@
 								{{m}}
 							</div>
 							<div class="articleTag">
-								<div style="cursor: pointer;" @click="projectdetail"  class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
+								<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
 							</div>
 						</div>
 						<div class="row articleRow5">
@@ -116,13 +118,13 @@
 
 								</div>-->
 								<!--加载更多-->
-							<div class="row6 start">
-								<span>加载中...</span>
-							</div>
-							<!--加载更多-->
-							<div class="row6 end">
-								<span>已经到底部了...</span>
-							</div>
+								<div class="row6 start">
+									<span>加载中...</span>
+								</div>
+								<!--加载更多-->
+								<div class="row6 end">
+									<span>已经到底部了...</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -166,7 +168,7 @@
 </template>
 
 <script>
-	import { articleInfo, postCommentList,} from '@/service/home';
+	import { articleInfo, postCommentList, } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	import { saveFollow, cancelFollow } from '@/service/home';
@@ -194,7 +196,7 @@
 				hasNext: true,
 				pageIndex: 1,
 				pageSize: 10,
-				projectId:0
+				projectId: 0,
 			}
 		},
 
@@ -262,13 +264,24 @@
 				//监听滚动条
 				window.addEventListener('scroll', this.scrollHandler)
 
-			
-
 		},
 		destroyed() {
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			onecenter() {
+				if(this.token != '') {
+					var id = this.createUserId
+					window.open('/onecenter?id=' + id, "_blank")
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			},
 			//下滑加载
 			scrollHandler() {
 				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
@@ -290,18 +303,28 @@
 				}
 				postCommentList(data).then(res => {
 					if(res.code == 0) {
-						
-						if(res.data.newestComments.rows!=null){
-							this.newestComments = res.data.newestComments.rows
 						this.hasNext = res.data.newestComments.hasNext
-						}else{
-							$(".previewContent").css('display',"none")
+						if(res.data.newestComments.rows != null) {
+							this.newestComments = res.data.newestComments.rows
+							if(res.data.newestComments.rows.length > 2) {
+
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
+								}
+							}else{
+								$(".start").css("display", "none")
+							}
+						} else {
+							$(".previewContent").css('display', "none")
 						}
+
 					}
+					
 				})
 			},
 			previewmore() {
-				if(this.hasNext != false) {
+				if(this.hasNext == true) {
 					this.pageIndex = parseInt(this.pageIndex) + 1
 
 					let data = {
@@ -313,14 +336,26 @@
 					}
 					postCommentList(data).then(res => {
 						if(res.code == 0) {
-							this.newestComments = res.data.newestComments.rows
 							this.hasNext = res.data.newestComments.hasNext
+							console.log(this.hasNext)
+							if(res.data.newestComments.rows != null) {
+								for(var i = 0; i < res.data.newestComments.rows.length; i++) {
+									this.newestComments.push(res.data.newestComments.rows[i]);
+								}
+
+							}
+							if(this.hasNext == false) {
+								$(".end").css("display", "block")
+								$(".start").css("display", "none")
+							}
+
 						}
 					})
 				} else {
 					$('.end').css('display', "block")
 					$('.start').css('display', "none")
 				}
+				
 
 			},
 			articleC() {
@@ -344,6 +379,7 @@
 						this.followStatus = data.followStatus
 						//id
 						this.projectId = data.projectId
+						this.createUserId = data.createUserId
 
 						//时间  字符串切割
 						//调用 Data.customData()
@@ -469,9 +505,7 @@
 					var id = this.projectId
 					window.open('/project/projectdetail?id=' + id, "_blank")
 				} else {
-					//					this.$alert('请登录', {
-					//						confirmButtonText: '确定',
-					//					});
+					
 					this.$message({
 						showClose: true,
 						message: '请登录',

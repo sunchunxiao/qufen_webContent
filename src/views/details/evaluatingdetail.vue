@@ -8,12 +8,14 @@
 					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
 							<div class="row row1">
-								<div class="photo">
-									<img slot="icon" :src="item.createUserIcon">
-								</div>
-								<div class="name">
-									<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
-									<div class="projectName-time">{{item.createTimeStr}}</div>
+								<div class="oneuser" @click="onecenter(item.createUserId)">
+									<div class="photo">
+										<img slot="icon" :src="item.createUserIcon">
+									</div>
+									<div class="name">
+										<div class="projectName"><span class="projectName-name">{{item.createUserName}} </span></div>
+										<div class="projectName-time">{{item.createTimeStr}}</div>
+									</div>
 								</div>
 								<div @click="attention(item.createUserId,index)" class="discoveryBtndetail">
 									+ 关注
@@ -140,6 +142,9 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			onecenter(id) {
+				window.open('/onecenter?id=' + id, "_blank")
+			},
 			//下滑加载
 			scrollHandler() {
 				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离

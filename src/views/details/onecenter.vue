@@ -48,7 +48,7 @@
 	import { saveFollow, cancelFollow } from '@/service/home';
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
-		name: 'projectdetail',
+		
 		data() {
 			return {
 				id: '',
@@ -67,9 +67,9 @@
 				$(this).addClass("ping");
 
 			})
-			//			console.log(this.$route.query.id)
+			console.log(this.$route.query.id,this.token)
 			this.id = this.$route.query.id - 0;
-			this.projectdetail()
+			this.projectone()
 			this.$router.push('/project/evaluatingcenter?id=' + this.id)
 		},
 		updated() {
@@ -88,9 +88,8 @@
 			}
 		},
 		methods: {
-			projectdetail() {
+			projectone() {
 				this.id = this.$route.query.id - 0;
-
 				// 查询数据
 				let data = {
 					userId: this.id,

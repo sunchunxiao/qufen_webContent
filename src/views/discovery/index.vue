@@ -227,7 +227,19 @@
 		},
 		methods: {
 			onecenter(id) {
-				window.open('/onecenter?id=' + id, "_blank")
+				if(this.token!=''){
+					window.open('/onecenter?id=' + id, "_blank")
+				}else {
+					//					this.$alert('请登录', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+				
 				//				this.$router.push({
 				//					path:"/onecenter",
 				//					query:{
