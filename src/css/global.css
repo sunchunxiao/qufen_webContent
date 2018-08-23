@@ -103,8 +103,8 @@
 }
 
 .photo {
-	width: 32px;
-	height: 32px;
+	width: 38px;
+	height: 38px;
 }
 
 .photo>img {
@@ -609,7 +609,7 @@
 .attenListname  li{
 	font-family: PingFang-SC-Medium;
 	color: rgb(51,51,51);
-	display: inline-block;
+	display: flex;
 	font-size: 14px;
 	/*width: 110px;*/
 	padding-bottom: 10px;

@@ -266,7 +266,9 @@
 						}
 
 					}
-				})
+				}).catch(function(res) {
+					$(".previewContent").css('display', "none")
+				});
 			},
 			previewmore() {
 				if(this.hasNext == true) {

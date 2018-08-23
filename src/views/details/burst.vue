@@ -230,7 +230,7 @@
 					pageIndex: 1,
 					pageSize: 5,
 					postId: this.id - 0,
-					
+
 				}
 				discussCommentList(data).then(res => {
 					if(res.code == 0) {
@@ -243,7 +243,7 @@
 									$(".end").css("display", "block")
 									$(".start").css("display", "none")
 								}
-							}else{
+							} else {
 								$(".start").css("display", "none")
 							}
 						} else {
@@ -251,8 +251,11 @@
 						}
 
 					}
-					
-				})
+
+				}).catch(function(res) {
+					console.log(res.msg)
+					$(".previewContent").css('display', "none")
+				});
 			},
 			previewmore() {
 				if(this.hasNext == true) {
@@ -285,7 +288,6 @@
 					$('.end').css('display', "block")
 					$('.start').css('display', "none")
 				}
-				
 
 			},
 			attention() {
