@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div style="background-color:rgb(246,246,246) ;">
-			<div class="detailcommmon">
+			<div class="">
 				<!--左边文章-->
 				<div class="onedetailArticle">
 					<!--文章-->
