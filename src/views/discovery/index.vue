@@ -370,7 +370,9 @@
 					pageIndex: 1,
 					pageSize: 10
 				}
-				recommend(data).then(res => {
+				
+					recommend(data).then(res => {
+					var _this = this
 
 					this.itemList = res.data.recommends.rows;
 					if(res.data.recommends.rows.length <= 2) {
@@ -409,6 +411,9 @@
 					this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
 					//					console.log(this.totalpage)
 				})
+				
+				
+				
 			},
 
 			more() {

@@ -109,6 +109,12 @@
 			//			}
 
 		},
+//		watch: {
+//			//监测主菜单路由变化
+//			$route: function() {
+//				this.activeIndex = this.$route.path 
+//			}
+//		}
 		methods: {
 			//			hideShowPsw() {
 			//				if(passwords.type == "text") {

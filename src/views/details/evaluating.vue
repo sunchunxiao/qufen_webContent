@@ -260,7 +260,8 @@
 			this.resizeBannerImage();
 			window.addEventListener('resize', this.resizeBannerImage)
 
-			this.articleC()//请求评论
+			this.articleC()
+			//请求评论
 			this.preview(),
 				//监听滚动条
 				window.addEventListener('scroll', this.scrollHandler)
@@ -368,7 +369,8 @@
 					token: this.token,
 					postId: this.id - 0
 				}
-				//测评
+				if(this.token!=''){
+					//测评
 				articleInfo(data).then(res => {
 					if(res.code == 0) {
 
@@ -430,6 +432,10 @@
 					}
 
 				})
+				}else{
+					this.$router.push('/user/register')
+				}
+				
 			},
 			resizeBannerImage() {
 				var _width = $(window).width();
