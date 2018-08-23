@@ -252,14 +252,14 @@
 						this.hasNext = res.data.newestComments.hasNext
 						if(res.data.newestComments.rows != null) {
 							this.newestComments = res.data.newestComments.rows
-							if(res.data.newestComments.rows.length > 2) {
-
+							if(res.data.newestComments.rows.length >2) {
 								if(this.hasNext == false) {
 									$(".end").css("display", "block")
 									$(".start").css("display", "none")
 								}
 							}else{
 								$(".start").css("display", "none")
+								
 							}
 						} else {
 							$(".previewContent").css('display', "none")
@@ -284,7 +284,7 @@
 					postCommentList(data).then(res => {
 						if(res.code == 0) {
 							this.hasNext = res.data.newestComments.hasNext
-							console.log(this.hasNext)
+//							console.log(this.hasNext)
 							if(res.data.newestComments.rows != null) {
 								for(var i = 0; i < res.data.newestComments.rows.length; i++) {
 									this.newestComments.push(res.data.newestComments.rows[i]);

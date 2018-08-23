@@ -230,9 +230,6 @@
 				if(this.token!=''){
 					window.open('/onecenter?id=' + id, "_blank")
 				}else {
-					//					this.$alert('请登录', {
-					//						confirmButtonText: '确定',
-					//					});
 					this.$message({
 						showClose: true,
 						message: '请登录',
@@ -240,12 +237,6 @@
 					});
 				}
 				
-				//				this.$router.push({
-				//					path:"/onecenter",
-				//					query:{
-				//						id
-				//					}
-				//				})
 			},
 			//下滑加载
 			scrollHandler() {

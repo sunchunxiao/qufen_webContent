@@ -93,7 +93,7 @@
 									</li>-->
 									<li>
 										<span>相关概念</span>
-										<span>公链</span>
+										<span>{{projectTypeName}}</span>
 									</li>
 									<li>
 										<span>链接</span>
@@ -117,14 +117,16 @@
 							<ul class="attenList">
 								<li>
 									<div class="row rowList">
-										<div class="photoList">
-											<img slot="icon" :src="zicon">
+										<div class="oneuser" @click="onecenter">
+											<div class="photoList">
+												<img slot="icon" :src="zicon">
+											</div>
+											<div class="name">
+												<div class="projectNameL"><span class="projectName-nameL">{{zuserName}}</span></div>
+												<div class="projectName-timeL">{{userSignature}}</div>
+											</div>
 										</div>
-										<div class="name">
-											<div class="projectNameL"><span class="projectName-nameL">{{zuserName}}</span></div>
-											<div class="projectName-timeL">{{userSignature}}</div>
-										</div>
-										<div class="btnL">
+										<div @click="zattention" style="cursor: pointer;" class="zbtnL">
 											+ 关注
 										</div>
 									</div>
@@ -141,19 +143,20 @@
 								<span class="attention-hot-pro">活跃用户</span>
 							</div>
 							<ul class="attenList">
-								<li v-for="active in activeUsers">
+								<li v-for="(active,index) in activeUsers">
 									<div class="row rowList">
-										<div class="photoList">
-											<img slot="icon" :src="active.icon">
-										</div>
-										<div class="name">
-											<div class="projectNameL">
-												<span class="projectName-nameL">{{active.userName}}</span>
-												<!--<span class="atten-spanL">/ 柚子</span>-->
+										<div class="oneuser" @click="onecenter1(active.userId)">
+											<div class="photoList">
+												<img slot="icon" :src="active.icon">
 											</div>
-											<div class="projectName-timeL">{{active.userSignature}}</div>
+											<div class="name">
+												<div class="projectNameL">
+													<span class="projectName-nameL">{{active.userName}}</span>
+												</div>
+												<div class="projectName-timeL">{{active.userSignature}}</div>
+											</div>
 										</div>
-										<div class="btnL">
+										<div style="cursor:pointer;" @click="hattention(active.userId,index)" class="btnL">
 											+ 关注
 										</div>
 									</div>
@@ -181,6 +184,7 @@
 				token: getCookie('token'),
 				projectIcon: '',
 				projectCode: '',
+				projectTypeName: '',
 				followerNum: '',
 				raterNum: '',
 				projectSignature: '',
@@ -191,12 +195,14 @@
 				whitepaperUrl: '',
 				websiteUrl: '',
 				followStatus: 0,
+				zfollowStatus:0,
 				totalScore: '',
 				zicon: '',
 				zuserName: '',
 				isShow: true,
-				activeUsers:[],
-				userSignature:''
+				activeUsers: [],
+				userSignature: '',
+				userId: 0
 			}
 		},
 		mounted() {
@@ -231,24 +237,84 @@
 				})
 				$(".discoveryBtn").html("+ 关注")
 			}
+			//站长
+			if(this.zfollowStatus == 1) {
+				$(".zbtnL").css({
+					backgroundColor: "rgb(244, 244, 244)",
+					color: "rgb(126, 126, 126)"
+				})
+				$(".zbtnL").html("已关注")
+			} else {
+				$(".zbtnL").css({
+					backgroundColor: "rgb(59, 136, 246)",
+					color: "rgb(255,255,255)"
+				})
+				$(".zbtnL").html("+ 关注")
+			}
+			//活跃用户
+			for(let i = 0; i < this.activeUsers.length; i++) {
+				
+//				this.followStatus = this.activeUsers[i].followStatus
+				if(this.activeUsers[i].followStatus == 1) {
+					$(".btnL").eq(i).css({
+						backgroundColor: "rgb(244, 244, 244)",
+						color: "rgb(126, 126, 126)"
+					})
+					$(".btnL").eq(i).html("已关注")
+				} else {
+					$(".btnL").eq(i).css({
+						backgroundColor: "rgb(59, 136, 246)",
+						color: "rgb(255,255,255)"
+					})
+					$(".btnL").eq(i).html("+ 关注")
+				}
+
+			}
 		},
-		methods: { 
+		methods: {
+			//站长
+			onecenter() {
+				if(this.token != '') {
+					var id = this.userId
+					window.open('/onecenter?id=' + id, "_blank")
+				} else {
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+
+			},
+			//活跃用户
+			onecenter1(id) {
+				if(this.token!=''){
+					window.open('/onecenter?id=' + id, "_blank")
+				}else {
+					this.$message({
+						showClose: true,
+						message: '请登录',
+						type: 'error'
+					});
+				}
+				
+			},
 			showToggle() {
 				this.isShow = !this.isShow
 				if(this.isShow) {
-//					$(".projectintroduceS").slideUp('fast')
+					//					$(".projectintroduceS").slideUp('fast')
 					$(".projectintroduceS").css({
 						overflow: 'hidden',
 						height: '78px',
-						display:'-webkit-box'
+						display: '-webkit-box'
 					})
 					$(".projectmore").html("更多")
-				}else{
+				} else {
 					$(".projectintroduceS").slideDown('fast')
 					$(".projectintroduceS").css({
 						overflow: 'inherit',
 						height: 'inherit',
-						display:'block'
+						display: 'block'
 					})
 					$(".projectmore").html("收起")
 				}
@@ -301,10 +367,14 @@
 						this.followStatus = res.data.project.followStatus
 						//分数
 						this.totalScore = res.data.project.totalScore
+						//概念
+						this.projectTypeName = res.data.project.projectTypeName
 						//站长用户信息
 						this.zicon = res.data.project.owner.icon
 						this.zuserName = res.data.project.owner.userName
 						this.userSignature = res.data.project.owner.userSignature
+						this.userId = res.data.project.owner.userId
+						this.zfollowStatus = res.data.project.owner.followStatus
 						//活跃用户
 						this.activeUsers = res.data.project.activeUsers
 
@@ -363,6 +433,117 @@
 							}
 						}
 					})
+				}
+
+			},
+			zattention(){
+				if($(".zbtnL").html() == "已关注") {
+					//取消关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.userId
+					}
+					console.log(222)
+					cancelFollow(data).then(res => {
+						if(res.code == 0) {
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 0) {
+								console.log('取消关注')
+								$(".zbtnL").css({
+									backgroundColor: "rgb(59, 136, 246)",
+									color: "rgb(255,255,255)"
+								})
+								$(".zbtnL").html("+ 关注")
+							}
+						}
+					})
+				} else {
+					//去关注
+					let data = {
+						token: this.token,
+						followType: 3,
+						followedId: this.userId
+					}
+					saveFollow(data).then(res => {
+						if(res.code == 0) {
+
+							console.log(res.data.followStatus)
+							if(res.data.followStatus == 1) {
+								console.log('已经关注')
+								$(".zbtnL").css({
+									backgroundColor: "rgb(244, 244, 244)",
+									color: "rgb(126, 126, 126)"
+								})
+								$(".zbtnL").html("已关注")
+							}
+						}
+					})
+				}
+			},
+			//点击关注
+			hattention(createUserId, index) {
+				if(this.token != "") {
+					var _this = this
+					if($(".btnL").eq(index).html() == "已关注") {
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: createUserId
+						}
+						cancelFollow(data).then(res => {
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".btnL").eq(index).css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".btnL").eq(index).html("+ 关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: createUserId
+						}
+
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
+
+								//								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".btnL").eq(index).css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".btnL").eq(index).html("已关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+					}
+				} else {
+					this.$alert('前去登录', {
+						confirmButtonText: '确定',
+					});
 				}
 
 			},

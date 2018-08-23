@@ -444,7 +444,20 @@
 	font-size: 14px;
 	color: rgb(133, 144, 166);
 }
-
+/*站长按钮*/
+.zbtnL {
+	width: 50px;
+	height: 26px;
+	line-height: 26px;
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+	background-color: rgb(59, 136, 246);
+	border-radius: 3px;
+	position: absolute;
+	right: 10px;
+}
+/*活跃用户*/
 .btnL {
 	width: 50px;
 	height: 26px;
@@ -750,6 +763,9 @@
 		right: 20px;
 	}
 	.btnL {
+		right: 0;
+	}
+	.zbtnL {
 		right: 0;
 	}
 	.onedetailArticle {
