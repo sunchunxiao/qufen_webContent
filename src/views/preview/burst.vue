@@ -12,7 +12,7 @@
 								<div class="projectName"><span class="projectName-name">{{username}} </span></div>
 								<div class="projectName-time">{{timestr1}}</div>
 							</div>
-							<div @click="attention" class="discoveryBtn">
+							<div  class="discoveryBtn">
 								+ 关注
 							</div>
 						</div>
@@ -112,11 +112,11 @@
 
 		},
 		methods: {
-			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
-			},
+//			attention() {
+//				this.$alert('本功能目前只对APP开放', {
+//					confirmButtonText: '确定',
+//				});
+//			},
 			fun(index) {
 				if(index <= 3) {
 					var str = "left:" + (index * 240) + "px";

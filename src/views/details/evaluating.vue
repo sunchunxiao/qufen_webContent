@@ -260,8 +260,7 @@
 			this.resizeBannerImage();
 			window.addEventListener('resize', this.resizeBannerImage)
 
-			this.articleC()
-			//请求评论
+			this.articleC()//请求评论
 			this.preview(),
 				//监听滚动条
 				window.addEventListener('scroll', this.scrollHandler)
