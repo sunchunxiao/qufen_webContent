@@ -34,7 +34,7 @@
 						<div class="row articleRow5">
 							<div class="article-atten">
 								<div class="detail1 zan">
-									<img src="../../assets/common/FIND1.png">
+									<img src="../../assets/common/FIND.png">
 									<label>待结算</label>
 								</div>
 
@@ -64,7 +64,7 @@
 							<div class="articleF">
 								<img style="float: left;" src="../../assets/common/FIND.png" />
 								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
-								<span @click="attention" class="articleBack">回复</span>
+								<span  class="articleBack">回复</span>
 							</div>
 							<div class="previewContent">
 								<h2>评论</h2>

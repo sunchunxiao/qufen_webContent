@@ -167,6 +167,7 @@
 }
 
 .test {
+	width: 595px;
 	/*font-family: PingFang-SC-Heavy;*/
 	font-size: 21px;
 	color: rgb(51, 51, 51);
@@ -233,6 +234,21 @@
 .row3-content {
 	/*font-family: PingFang-SC-Medium;*/
 	height: 118px;
+	line-height: 30px;
+	font-size: 16px;
+	color: rgb(63, 69, 81);
+	display: -webkit-box;
+	word-break: break-word;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/*! autoprefixer: off */
+	-webkit-box-orient: vertical;
+	/*  autoprefixer: on */
+	-webkit-line-clamp: 4;
+}
+.srow3-content {
+	/*font-family: PingFang-SC-Medium;*/
+	/*height: 118px;*/
 	line-height: 30px;
 	font-size: 16px;
 	color: rgb(63, 69, 81);
@@ -745,6 +761,10 @@
 		font-size: 15px;
 		height: 90px;
 	}
+	.srow3-content {
+		font-size: 15px;
+		/*height: 90px;*/
+	}
 	.onecontent {
 		font-size: 15px;
 		height: 115px;
@@ -777,4 +797,7 @@
 	.detailcommmon {
 		width: 670px;
 	}
+	.test{
+		width: 540px;
+	} 
 }

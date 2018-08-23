@@ -34,7 +34,7 @@
 											<div v-for="item1 in item.postSmallImagesList" class="contentImg">
 												<img :src="item1.fileUrl" />
 											</div>
-											<p class="row3-content">
+											<p class="row3-content aa">
 												{{item.postShortDesc}}
 											</p>
 										</div>
@@ -204,8 +204,15 @@
 
 		},
 		updated() {
+			//
+			console.log(this.itemList)
+			//点击关注
 			for(let i = 0; i < this.itemList.length; i++) {
-				//							console.log(res.data.projectResponsePage.rows[i].followStatus)
+				if(this.itemList[i].postSmallImagesList==null){
+					$(".aa").eq(i).removeClass("row3-content")
+					$(".aa").eq(i).addClass("srow3-content")
+				}
+				
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtn").eq(i).css({

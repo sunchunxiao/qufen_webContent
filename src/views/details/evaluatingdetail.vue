@@ -32,7 +32,7 @@
 										<div v-for="item1 in item.postSmallImages" class="contentImg">
 											<img :src="item1.fileUrl" />
 										</div>
-										<p class="row3-content">
+										<p class="row3-content add">
 											{{item.postShortDesc}}
 										</p>
 									</div>
@@ -121,6 +121,12 @@
 		},
 		updated() {
 			for(let i = 0; i < this.itemList.length; i++) {
+				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
+					$(".add").eq(i).removeClass("row3-content")
+					$(".add").eq(i).addClass("srow3-content")
+
+				}
+				
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtndetail").eq(i).css({

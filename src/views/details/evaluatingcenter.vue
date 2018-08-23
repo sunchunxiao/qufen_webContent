@@ -31,7 +31,7 @@
 											<div v-for="item1 in item.postSmallImages" class="contentImg">
 												<img :src="item1.fileUrl" />
 											</div>
-											<p class="row3-content">
+											<p class="row3-content add">
 												{{item.postShortDesc}}
 											</p>
 										</div>
@@ -119,6 +119,16 @@
 			this.loadPageList() //加载文章
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
+		},
+		updated() {
+			for(let i = 0; i < this.itemList.length; i++) {
+				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
+					$(".add").eq(i).removeClass("row3-content")
+					$(".add").eq(i).addClass("srow3-content")
+
+				}
+
+			}
 		},
 		destroyed() {
 			window.removeEventListener("scroll", this.scrollHandler);

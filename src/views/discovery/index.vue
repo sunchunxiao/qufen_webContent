@@ -34,7 +34,7 @@
 											<div v-for="item1 in item.postSmallImagesList" class="contentImg">
 												<img :src="item1.fileUrl" />
 											</div>
-											<p class="row3-content">
+											<p class="row3-content add">
 												{{item.postShortDesc}}
 											</p>
 										</div>
@@ -42,7 +42,7 @@
 								</div>
 								<div class="row4">
 									<!--标签-->
-									<div style="cursor: pointer;"  class="crack-tag1" @click="projectdetail(item.projectId)"><span class="span-name">{{item.projectCode}} </span></div>
+									<div style="cursor: pointer;" class="crack-tag1" @click="projectdetail(item.projectId)"><span class="span-name">{{item.projectCode}} </span></div>
 									<span class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
@@ -202,8 +202,14 @@
 		},
 
 		updated() {
+
 			for(let i = 0; i < this.itemList.length; i++) {
-				//							console.log(res.data.projectResponsePage.rows[i].followStatus)
+				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
+					$(".add").eq(i).removeClass("row3-content")
+					$(".add").eq(i).addClass("srow3-content")
+
+				}
+
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtn").eq(i).css({
@@ -227,16 +233,16 @@
 		},
 		methods: {
 			onecenter(id) {
-				if(this.token!=''){
+				if(this.token != '') {
 					window.open('/onecenter?id=' + id, "_blank")
-				}else {
+				} else {
 					this.$message({
 						showClose: true,
 						message: '请登录',
 						type: 'error'
 					});
 				}
-				
+
 			},
 			//下滑加载
 			scrollHandler() {
@@ -475,7 +481,7 @@
 			},
 			projectdetail(id) {
 				console.log(this.token)
-				if(this.token !='') {
+				if(this.token != '') {
 					window.open('/project/projectdetail?id=' + id, "_blank")
 				} else {
 					//					this.$alert('请登录', {
