@@ -121,17 +121,18 @@
 								</div>
 
 							</div>-->
-								<!--加载更多-->
-								<div class="row6 start">
-									<span>加载中...</span>
-								</div>
-								<!--加载更多-->
-								<div class="row6 end">
-									<span>已经到底部了...</span>
-								</div>
+
 							</div>
 						</div>
 					</div>
+				</div>
+				<!--加载更多-->
+				<div class="row6 start">
+					<span>加载中...</span>
+				</div>
+				<!--加载更多-->
+				<div class="row6 end">
+					<span>已经到底部了...</span>
 				</div>
 			</div>
 		</div>
@@ -165,7 +166,7 @@
 				tagInfos: [],
 				createUserId: 0,
 				newestComments: [],
-				hasNext: true,
+				hasNext: false,
 				pageIndex: 1,
 				pageSize: 10,
 				projectId: 0
@@ -248,6 +249,7 @@
 							}
 						} else {
 							$(".previewContent").css('display', "none")
+							$(".start").css("display", "none")
 						}
 
 					}
@@ -258,35 +260,38 @@
 				});
 			},
 			previewmore() {
-				if(this.hasNext == true) {
-					this.pageIndex = parseInt(this.pageIndex) + 1
+				if(this.newestComments.length != 0) {
+					if(this.hasNext == true) {
+						this.pageIndex = parseInt(this.pageIndex) + 1
 
-					let data = {
-						token: this.token,
-						pageIndex: this.pageIndex,
-						pageSize: 5,
-						postId: this.id - 0,
-					}
-					discussCommentList(data).then(res => {
-						if(res.code == 0) {
-							this.hasNext = res.data.comments.hasNext
-							console.log(this.hasNext)
-							if(res.data.comments.rows != null) {
-								for(var i = 0; i < res.data.comments.rows.length; i++) {
-									this.newestComments.push(res.data.comments.rows[i]);
+						let data = {
+							token: this.token,
+							pageIndex: this.pageIndex,
+							pageSize: 5,
+							postId: this.id - 0,
+						}
+						discussCommentList(data).then(res => {
+							if(res.code == 0) {
+								this.hasNext = res.data.comments.hasNext
+								console.log(this.hasNext)
+								if(res.data.comments.rows != null) {
+									for(var i = 0; i < res.data.comments.rows.length; i++) {
+										this.newestComments.push(res.data.comments.rows[i]);
+									}
+
+								}
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
 								}
 
 							}
-							if(this.hasNext == false) {
-								$(".end").css("display", "block")
-								$(".start").css("display", "none")
-							}
+						})
+					} else {
+						$('.end').css('display', "block")
+						$('.start').css('display', "none")
+					}
 
-						}
-					})
-				} else {
-					$('.end').css('display', "block")
-					$('.start').css('display', "none")
 				}
 
 			},

@@ -99,7 +99,7 @@
 }
 
 .row2 {
-	padding: 15px 0;
+	padding: 15px 0 10px;
 }
 
 .photo {
@@ -299,7 +299,7 @@
 	font-size: 14px;
 	color: #3b88f6;
 	letter-spacing: 0;
-	margin-left: 10px
+	margin-left: 16px
 }
 
 
@@ -433,7 +433,7 @@
 
 .rowList {
 	align-items: center;
-	padding: 10px;
+	padding: 10px 0;
 }
 
 .photoList {
@@ -533,9 +533,13 @@
 	float: left;
 	width: 180px;
 }
+.projectMiddle{
+	float: left;
+	width: 144px;
+}
 
 .projectSpecial {
-	width: 230px;
+	width: 270px;
 	display: flex;
 	align-items: center;
 	float: left;
@@ -579,7 +583,7 @@
 }
 
 .projectNamedec {
-	width: 145px;
+	width: 170px;
 	font-size: 12px;
 	color: rgb(133, 144, 166);
 }
@@ -634,6 +638,9 @@
 	-webkit-box-orient: vertical;
 	/*  autoprefixer: on */
 	-webkit-line-clamp: 3;
+}
+.attenList{
+	margin-top: 10px;
 }
 .attenListname  li{
 	font-family: PingFang-SC-Medium;
@@ -699,7 +706,7 @@
 	overflow: hidden;
 }
 .onecommon{
-	margin-top: 10px;
+	margin-top: 20px;
 }
 .onecommon ul{
 	overflow: hidden;

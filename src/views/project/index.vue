@@ -8,7 +8,7 @@
 					<ul class="projectUl">
 						<li class="projectTitle" style="padding: 15px 20px;">
 							<div class="projectwrap projectSpecial">名称</div>
-							<div class="projectwrap projectH">关注</div>
+							<div class="projectwrap projectMiddle">关注</div>
 							<div class="projectwrap projectH">评分</div>
 						</li>
 						<li style="cursor: pointer;" v-for="(item,index) in projectList">
@@ -23,7 +23,7 @@
 											<div class="projectNamedec">{{item.projectSignature}}</div>
 										</div>
 									</div>
-									<div class="projectH">
+									<div class="projectMiddle">
 										<span class="projectNamedec1">{{item.followerNum}}</span>
 									</div>
 									<div>

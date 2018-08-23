@@ -124,17 +124,19 @@
 								</div>
 
 							</div>-->
-							<!--加载更多-->
-							<div class="row6 start">
-								<span>加载中...</span>
-							</div>
-							<!--加载更多-->
-							<div class="row6 end">
-								<span>已经到底部了...</span>
-							</div>
+
 						</div>
 					</div>
 				</div>
+
+			</div>
+			<!--加载更多-->
+			<div class="row6 start">
+				<span>加载中...</span>
+			</div>
+			<!--加载更多-->
+			<div class="row6 end">
+				<span>已经到底部了...</span>
 			</div>
 		</div>
 	</div>
@@ -169,7 +171,7 @@
 				followStatus: 0,
 				newestComments: [],
 				createUserId: 0,
-				hasNext: true,
+				hasNext: false,
 				pageIndex: 1,
 				pageSize: 10,
 				projectId: 0
@@ -252,17 +254,18 @@
 						this.hasNext = res.data.newestComments.hasNext
 						if(res.data.newestComments.rows != null) {
 							this.newestComments = res.data.newestComments.rows
-							if(res.data.newestComments.rows.length >2) {
+							if(res.data.newestComments.rows.length > 2) {
 								if(this.hasNext == false) {
 									$(".end").css("display", "block")
 									$(".start").css("display", "none")
 								}
-							}else{
+							} else {
 								$(".start").css("display", "none")
-								
+
 							}
 						} else {
 							$(".previewContent").css('display', "none")
+							$(".start").css("display", "none")
 						}
 
 					}
@@ -271,7 +274,8 @@
 				});
 			},
 			previewmore() {
-				if(this.hasNext == true) {
+				if(this.newestComments.length!=0){
+					if(this.hasNext == true) {
 					this.pageIndex = parseInt(this.pageIndex) + 1
 
 					let data = {
@@ -284,7 +288,7 @@
 					postCommentList(data).then(res => {
 						if(res.code == 0) {
 							this.hasNext = res.data.newestComments.hasNext
-//							console.log(this.hasNext)
+							//							console.log(this.hasNext)
 							if(res.data.newestComments.rows != null) {
 								for(var i = 0; i < res.data.newestComments.rows.length; i++) {
 									this.newestComments.push(res.data.newestComments.rows[i]);
@@ -302,6 +306,8 @@
 					$('.end').css('display', "block")
 					$('.start').css('display', "none")
 				}
+				}
+				
 
 			},
 			articleC() {

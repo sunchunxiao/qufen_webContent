@@ -417,7 +417,7 @@
 	}
 	
 	.logo {
-		width: 80px;
+		width: 70px;
 		margin-top: 13px;
 	}
 	
@@ -470,12 +470,13 @@
 	
 	.el-menu--horizontal>.el-menu-item {
 		height: 59px!important;
-		color: #000!important;
+		color: rgb(133,144,166)!important;
 		font-weight: 600;
 		 /*border-bottom: 2px solid #409EFF!important;*/
 	}
 	.el-menu--horizontal>.el-menu-item.is-active{
 		border-bottom: 2px solid #409EFF!important;
+		color: rgb(59,136,246)!important;
 	}
 	.el-menu--horizontal li {
 		color: rgb(133, 144, 166)!important;

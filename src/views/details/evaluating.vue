@@ -64,7 +64,7 @@
 							<div class="articleF">
 								<img style="float: left;" src="../../assets/common/FIND.png" />
 								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
-								<span  class="articleBack">回复</span>
+								<span class="articleBack">回复</span>
 							</div>
 							<div class="previewContent">
 								<h2>评论</h2>
@@ -117,16 +117,18 @@
 									</div>
 
 								</div>-->
-								<!--加载更多-->
-								<div class="row6 start">
-									<span>加载中...</span>
-								</div>
-								<!--加载更多-->
-								<div class="row6 end">
-									<span>已经到底部了...</span>
-								</div>
+
 							</div>
 						</div>
+
+					</div>
+					<!--加载更多-->
+					<div class="row6 start">
+						<span>加载中...</span>
+					</div>
+					<!--加载更多-->
+					<div class="row6 end">
+						<span>已经到底部了...</span>
 					</div>
 
 				</div>
@@ -193,7 +195,7 @@
 				followStatus: 0,
 				createUserId: 0,
 				newestComments: [],
-				hasNext: true,
+				hasNext: false,
 				pageIndex: 1,
 				pageSize: 10,
 				projectId: 0,
@@ -312,52 +314,54 @@
 									$(".end").css("display", "block")
 									$(".start").css("display", "none")
 								}
-							}else{
+							} else {
 								$(".start").css("display", "none")
 							}
 						} else {
 							$(".previewContent").css('display', "none")
+							$(".start").css("display", "none")
 						}
 
 					}
-					
+
 				}).catch(function(res) {
 					$(".previewContent").css('display', "none")
 				});
 			},
 			previewmore() {
-				if(this.hasNext == true) {
-					this.pageIndex = parseInt(this.pageIndex) + 1
+				if(this.newestComments.length != 0) {
+					if(this.hasNext == true) {
+						this.pageIndex = parseInt(this.pageIndex) + 1
 
-					let data = {
-						token: this.token,
-						pageIndex: this.pageIndex,
-						pageSize: 5,
-						postId: this.id - 0,
-						postType: 1
-					}
-					postCommentList(data).then(res => {
-						if(res.code == 0) {
-							this.hasNext = res.data.newestComments.hasNext
-							console.log(this.hasNext)
-							if(res.data.newestComments.rows != null) {
-								for(var i = 0; i < res.data.newestComments.rows.length; i++) {
-									this.newestComments.push(res.data.newestComments.rows[i]);
+						let data = {
+							token: this.token,
+							pageIndex: this.pageIndex,
+							pageSize: 5,
+							postId: this.id - 0,
+							postType: 1
+						}
+						postCommentList(data).then(res => {
+							if(res.code == 0) {
+								this.hasNext = res.data.newestComments.hasNext
+								console.log(this.hasNext)
+								if(res.data.newestComments.rows != null) {
+									for(var i = 0; i < res.data.newestComments.rows.length; i++) {
+										this.newestComments.push(res.data.newestComments.rows[i]);
+									}
+
+								}
+								if(this.hasNext == false) {
+									$(".end").css("display", "block")
+									$(".start").css("display", "none")
 								}
 
 							}
-							if(this.hasNext == false) {
-								$(".end").css("display", "block")
-								$(".start").css("display", "none")
-							}
-
-						}
-					})
-				} else {
-					$('.end').css('display', "block")
-					$('.start').css('display', "none")
+						})
+					} else {
+						$('.end').css('display', "block")
+						$('.start').css('display', "none")
+					}
 				}
-				
 
 			},
 			articleC() {
@@ -507,7 +511,7 @@
 					var id = this.projectId
 					window.open('/project/projectdetail?id=' + id, "_blank")
 				} else {
-					
+
 					this.$message({
 						showClose: true,
 						message: '请登录',
