@@ -212,7 +212,7 @@
 			//请求评论
 			this.preview(),
 				//监听滚动条
-				window.addEventListener('scroll', this.scrollHandler)
+			window.addEventListener('scroll', this.scrollHandler)
 
 		},
 		methods: {
@@ -316,7 +316,6 @@
 					postId: this.id - 0
 				}
 
-				if(this.token != '') {
 					article(data).then(res => {
 						if(res.code == 0) {
 							var data = res.data.articleDetail
@@ -365,9 +364,7 @@
 						}
 
 					})
-				} else {
-					this.$router.push('/user/register')
-				}
+				
 
 			},
 			attention() {

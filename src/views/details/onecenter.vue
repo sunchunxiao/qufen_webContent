@@ -2,7 +2,6 @@
 	<div>
 		<div style="background-color:rgb(246,246,246) ; ">
 			<div class="commmon1">
-
 				<div class="detailcommmon">
 					<!--信息-->
 					<div class="common-article-wrap">

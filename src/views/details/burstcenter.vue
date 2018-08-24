@@ -4,6 +4,11 @@
 			<div class="detailcommmon">
 				<!--左边文章-->
 				<div class="">
+					<div class="common-article-wrap commonNowrap">
+						<div class="commonNocontent">
+							<img src="../../assets/common/content.png" />
+						</div>
+					</div>
 					<!--文章-->
 					<div class="common-article-wrap" v-for="item in itemList">
 						<div class="common-article-content">
@@ -22,24 +27,24 @@
 							<div>
 								<div style="cursor: pointer" @click="article(item.postType,item.postId)">
 									<div class="row row2">
-									<div class="test">{{item.postTitle}}</div>
-									<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
-								</div>
-								<div class="row row3">
-									<div class="discoveryContent">
-										<!--缩略图-->
-										<div v-for="item1 in item.postSmallImages" class="contentImg">
-											<img :src="item1.fileUrl" />
-										</div>
-										<p class="row3-content add">
-											{{item.postShortDesc}}
-										</p>
+										<div class="test">{{item.postTitle}}</div>
+										<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
 									</div>
-								</div>
+									<div class="row row3">
+										<div class="discoveryContent">
+											<!--缩略图-->
+											<div v-for="item1 in item.postSmallImages" class="contentImg">
+												<img :src="item1.fileUrl" />
+											</div>
+											<p class="row3-content add">
+												{{item.postShortDesc}}
+											</p>
+										</div>
+									</div>
 								</div>
 								<div class="row4">
 									<!--标签-->
-									<div style="cursor: pointer;" @click="projectdetail(item.projectId)"  class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
+									<div style="cursor: pointer;" @click="projectdetail(item.projectId)" class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
 									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
@@ -124,14 +129,17 @@
 			window.addEventListener('scroll', this.scrollHandler)
 		},
 		updated() {
-			for(let i = 0; i < this.itemList.length; i++) {
-				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
-					$(".add").eq(i).removeClass("row3-content")
-					$(".add").eq(i).addClass("srow3-content")
+			if(this.itemList != null) {
+				for(let i = 0; i < this.itemList.length; i++) {
+					if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
+						$(".add").eq(i).removeClass("row3-content")
+						$(".add").eq(i).addClass("srow3-content")
+
+					}
 
 				}
-
 			}
+
 		},
 		destroyed() {
 			window.removeEventListener("scroll", this.scrollHandler);
@@ -164,72 +172,68 @@
 
 			},
 			loadPageList() {
-				if(getCookie('token')) {
-					// 查询数据
-					let data = {
-						pageIndex: 1,
-						pageSize: 10,
-						kffUserId: this.id,
-						token: this.token
-					}
-					discussList(data).then(res => {
-						this.itemList = res.data.discusses.rows;
 
-						if(res.data.discusses.rows != null) {
-							if(res.data.discusses.rows.length <= 2) {
-								$(".start").css("display", "none")
-							}
-							this.hasNext = res.data.discusses.hasNext
-							for(var i = 0; i < res.data.discusses.rows.length; i++) {
-								if(res.data.discusses.rows[i].postSmallImages != null) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-									var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
-									if(postSmallImages.length != 0) {
-										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+				// 查询数据
+				let data = {
+					pageIndex: 1,
+					pageSize: 10,
+					kffUserId: this.id,
+					token: this.token
+				}
+				discussList(data).then(res => {
+					this.itemList = res.data.discusses.rows;
 
-									} else {
-										res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-									}
-								}
-
-								//时间  字符串切割
-								//调用 Data.customData()
-								var nowdate = Data.customData()
-								//						console.log(nowdate)
-								var arr = res.data.discusses.rows[i].createTimeStr.split(" ")
-
-								this.timestr = arr[0];
-								if(nowdate == this.timestr) {
-									var a1 = arr[1].split(":")
-									res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-								} else {
-									res.data.discusses.rows[i].createTimeStr = arr[0];
-								}
-								if(res.data.discusses.rows[i].tagInfos !== null) {
-									this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
-									// console.log(this.tagInfos)
-									res.data.discusses.rows[i].tagInfos = this.tagInfos
-								}
-
-							}
-							if(res.data.discusses.rows.length > 2) {
-								if(this.hasNext == false) {
-									$(".end").css("display", "block")
-									$(".start").css("display", "none")
-								}
-							}
-
-						} else {
+					if(res.data.discusses.rows != null) {
+						if(res.data.discusses.rows.length <= 2) {
 							$(".start").css("display", "none")
 						}
+						this.hasNext = res.data.discusses.hasNext
+						for(var i = 0; i < res.data.discusses.rows.length; i++) {
+							if(res.data.discusses.rows[i].postSmallImages != null) {
+								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+								var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
+								if(postSmallImages.length != 0) {
+									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
-					})
+								} else {
+									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
-				} else {
-					this.$message('请登录阅读更多精彩内容');
-					this.$router.push('user/register')
-				}
+								}
+							}
+
+							//时间  字符串切割
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							//						console.log(nowdate)
+							var arr = res.data.discusses.rows[i].createTimeStr.split(" ")
+
+							this.timestr = arr[0];
+							if(nowdate == this.timestr) {
+								var a1 = arr[1].split(":")
+								res.data.discusses.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+							} else {
+								res.data.discusses.rows[i].createTimeStr = arr[0];
+							}
+							if(res.data.discusses.rows[i].tagInfos !== null) {
+								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.discusses.rows[i].tagInfos = this.tagInfos
+							}
+
+						}
+						if(res.data.discusses.rows.length > 2) {
+							if(this.hasNext == false) {
+								$(".end").css("display", "block")
+								$(".start").css("display", "none")
+							}
+						}
+
+					} else {
+						$(".start").css("display", "none")
+						$(".commonNowrap").css("display", "block")
+					}
+
+				})
 
 			},
 

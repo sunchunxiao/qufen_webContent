@@ -358,102 +358,99 @@
 					token: this.token,
 					postId: this.id - 0
 				}
-				if(this.token != '') {
-					//爆料
-					discuss(data).then(res => {
-						if(res.code == 0) {
-							var data = res.data.discussDetail
 
-							//标题
-							this.articleTitle = data.postTitle
-							//头像
-							this.src = data.createUserIcon;
-							//用户昵称
-							this.username = data.createUserName;
-							//时间  字符串切割
-							//调用 Data.customData()
-							var nowdate = Data.customData()
-							var arr = data.createTimeStr.split(" ")
-							this.projectCode = data.projectCode
-							//id
-							this.projectId = data.projectId
-							this.createUserId = data.createUserId
+				//爆料
+				discuss(data).then(res => {
+					if(res.code == 0) {
+						var data = res.data.discussDetail
 
-							if(data.tagInfos != null) {
-								this.tagInfos = JSON.parse(data.tagInfos)
-							}
+						//标题
+						this.articleTitle = data.postTitle
+						//头像
+						this.src = data.createUserIcon;
+						//用户昵称
+						this.username = data.createUserName;
+						//时间  字符串切割
+						//调用 Data.customData()
+						var nowdate = Data.customData()
+						var arr = data.createTimeStr.split(" ")
+						this.projectCode = data.projectCode
+						//id
+						this.projectId = data.projectId
+						this.createUserId = data.createUserId
 
-							this.timestr = arr[0];
-							if(nowdate == this.timestr) {
-								var a1 = arr[1].split(":")
-								this.timestr1 = a1[0] + ":" + a1[1];
-							} else {
-								this.timestr1 = arr[0];
-							}
-
-							this.userSignature = data.createUserSignature;
-
-							//文章内容
-							this.disscussContents = data.disscussContents;
-
-							//图片
-							if(data.postSmallImages != null) {
-								var a = JSON.parse(data.postSmallImages);
-								if(a.length != 0) {
-									if(a.length >= 3) {
-										a = a.slice(0, 3)
-									}
-
-									for(let i = 0; i < a.length; i++) {
-										this.imgUrl = a[i].fileUrl
-										this.postImg.push({
-											src: this.imgUrl
-										})
-									}
-								}
-							} else {
-								$('.burstImg').css('display', 'none')
-							}
-
-							//标签
-							this.projectCode = data.projectCode;
-							//赞助人数
-							this.donateNum = data.donateNum;
-							//评论人数
-							this.commentsNum = data.commentsNum;
-							//点赞人数
-							this.praiseNum = data.praiseNum;
-							//最多选择标签
-							//this.tagInfo = JSON.parse(data.tagInfo);
-							//热门评论
-							this.commentsehot = data.commentsehot;
-							var result = data.commentsehot;
-							//热门评论头像
-							if(result != null) {
-								for(let i = 0; i < result.length; i++) {
-									var b = data.commentsehot[i].commentUserIcon;
-									this.commenticon.push(b)
-								}
-							}
-							//热门评论如果是没有，不显示
-							if(this.commentsehot == null) {
-								$(".hot").css("display", "none")
-							}
-
-							//时间  字符串切割
-							var arr = data.createTimeStr.split(" ")
-							this.timestr = arr[0];
-							//缩略图
-							// this.imgUrl = JSON.parse(data.post.postSmallImages)
-							//缩略文章
-							this.postShortDesc = data.postShortDesc
-							this.createUserId = data.createUserId
+						if(data.tagInfos != null) {
+							this.tagInfos = JSON.parse(data.tagInfos)
 						}
 
-					})
-				} else {
-					this.$router.push('/user/register')
-				}
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							this.timestr1 = a1[0] + ":" + a1[1];
+						} else {
+							this.timestr1 = arr[0];
+						}
+
+						this.userSignature = data.createUserSignature;
+
+						//文章内容
+						this.disscussContents = data.disscussContents;
+
+						//图片
+						if(data.postSmallImages != null) {
+							var a = JSON.parse(data.postSmallImages);
+							if(a.length != 0) {
+								if(a.length >= 3) {
+									a = a.slice(0, 3)
+								}
+
+								for(let i = 0; i < a.length; i++) {
+									this.imgUrl = a[i].fileUrl
+									this.postImg.push({
+										src: this.imgUrl
+									})
+								}
+							}
+						} else {
+							$('.burstImg').css('display', 'none')
+						}
+
+						//标签
+						this.projectCode = data.projectCode;
+						//赞助人数
+						this.donateNum = data.donateNum;
+						//评论人数
+						this.commentsNum = data.commentsNum;
+						//点赞人数
+						this.praiseNum = data.praiseNum;
+						//最多选择标签
+						//this.tagInfo = JSON.parse(data.tagInfo);
+						//热门评论
+						this.commentsehot = data.commentsehot;
+						var result = data.commentsehot;
+						//热门评论头像
+						if(result != null) {
+							for(let i = 0; i < result.length; i++) {
+								var b = data.commentsehot[i].commentUserIcon;
+								this.commenticon.push(b)
+							}
+						}
+						//热门评论如果是没有，不显示
+						if(this.commentsehot == null) {
+							$(".hot").css("display", "none")
+						}
+
+						//时间  字符串切割
+						var arr = data.createTimeStr.split(" ")
+						this.timestr = arr[0];
+						//缩略图
+						// this.imgUrl = JSON.parse(data.post.postSmallImages)
+						//缩略文章
+						this.postShortDesc = data.postShortDesc
+						this.createUserId = data.createUserId
+					}
+
+				})
 
 			},
 			fun(index) {

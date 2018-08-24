@@ -80,43 +80,7 @@
 									<p class="listContent">
 										{{item.commentContent}}
 									</p>
-
-									<div class="row articleRow">
-										<div class="article-atten">
-											<div class="detail1 zan">
-												<img src="../../assets/common/FIND.png">
-												<label>128</label>
-											</div>
-											<div class="detail index-preview">
-												<img src="../../assets/common/preview.png">
-												<label>111</label>
-											</div>
-										</div>
-
-									</div>
-
 								</div>
-
-								<!--<div class="listContent">
-									<div>
-										<div>张三：@游来游去 <span class="listContentTime">03.15 11:15</span></div>
-										<div>防弹也有很多舞台为了效果是预录的，可以很明显</div>
-									</div>
-								</div>
-								
-								<div class="row articleRow rowLeft">
-									<div class="article-atten">
-										<div class="detail1 zan">
-											<img src="../../assets/common/zanS.png">
-											<label>128</label>
-										</div>
-										<div class="detail index-preview">
-											<img src="../../assets/common/preview.png">
-											<label>111</label>
-										</div>
-									</div>
-
-								</div>-->
 
 							</div>
 						</div>
@@ -369,7 +333,7 @@
 					token: this.token,
 					postId: this.id - 0
 				}
-				if(this.token!=''){
+
 					//测评
 				articleInfo(data).then(res => {
 					if(res.code == 0) {
@@ -432,9 +396,7 @@
 					}
 
 				})
-				}else{
-					this.$router.push('/user/register')
-				}
+				
 				
 			},
 			resizeBannerImage() {

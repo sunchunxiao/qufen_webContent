@@ -205,7 +205,7 @@
 		},
 		updated() {
 			//
-			console.log(this.itemList)
+//			console.log(this.itemList)
 			//点击关注
 			for(let i = 0; i < this.itemList.length; i++) {
 				if(this.itemList[i].postSmallImagesList==null){

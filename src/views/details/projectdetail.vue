@@ -136,7 +136,7 @@
 						</div>
 					</div>
 					<!--活跃用户-->
-					<div class="attention-user attention-bag margin-bottom">
+					<div class="attention-active attention-user attention-bag margin-bottom">
 						<div class="attention-wrap">
 							<div class="attention-hot-title">
 								<img src="../../assets/common/user.png" />
@@ -195,7 +195,7 @@
 				whitepaperUrl: '',
 				websiteUrl: '',
 				followStatus: 0,
-				zfollowStatus:0,
+				zfollowStatus: 0,
 				totalScore: '',
 				zicon: '',
 				zuserName: '',
@@ -253,8 +253,8 @@
 			}
 			//活跃用户
 			for(let i = 0; i < this.activeUsers.length; i++) {
-				
-//				this.followStatus = this.activeUsers[i].followStatus
+
+				//				this.followStatus = this.activeUsers[i].followStatus
 				if(this.activeUsers[i].followStatus == 1) {
 					$(".btnL").eq(i).css({
 						backgroundColor: "rgb(244, 244, 244)",
@@ -274,30 +274,30 @@
 		methods: {
 			//站长
 			onecenter() {
-				if(this.token != '') {
-					var id = this.userId
-					window.open('/onecenter?id=' + id, "_blank")
-				} else {
-					this.$message({
-						showClose: true,
-						message: '请登录',
-						type: 'error'
-					});
-				}
+				//				if(this.token != '') {
+				var id = this.userId
+				window.open('/onecenter?id=' + id, "_blank")
+				//				} else {
+				//					this.$message({
+				//						showClose: true,
+				//						message: '请登录',
+				//						type: 'error'
+				//					});
+				//				}
 
 			},
 			//活跃用户
 			onecenter1(id) {
-				if(this.token!=''){
-					window.open('/onecenter?id=' + id, "_blank")
-				}else {
-					this.$message({
-						showClose: true,
-						message: '请登录',
-						type: 'error'
-					});
-				}
-				
+				//				if(this.token!=''){
+				window.open('/onecenter?id=' + id, "_blank")
+				//				}else {
+				//					this.$message({
+				//						showClose: true,
+				//						message: '请登录',
+				//						type: 'error'
+				//					});
+				//				}
+
 			},
 			showToggle() {
 				this.isShow = !this.isShow
@@ -323,20 +323,7 @@
 			handleChange(val) {
 				console.log(val);
 			},
-			//			resizeBannerImage() {
-			//				var _width = $(window).width();
-			//				var _width1 = $(".common-article").offset().left
-			//				// console.log(_width,_width1)
-			//
-			//				if(_width < 1590) {
-			//					var left = _width1 + 650
-			//					$(".common-attention").css("left", left)
-			//				} else {
-			//					var left = _width1 + 715
-			//					$(".common-attention").css("left", left)
-			//				}
-			//
-			//			},
+			
 			projectdetail() {
 				//				console.log(this.$route.query.id)
 				this.id = this.$route.query.id - 0;
@@ -376,7 +363,12 @@
 						this.userId = res.data.project.owner.userId
 						this.zfollowStatus = res.data.project.owner.followStatus
 						//活跃用户
-						this.activeUsers = res.data.project.activeUsers
+						if(res.data.project.activeUsers!=null){
+							this.activeUsers = res.data.project.activeUsers
+						}else{
+							$(".attention-active").css('display','none')
+						}
+						
 
 					}
 				})
@@ -391,95 +383,108 @@
 				this.$router.push('/project/articledetail?id=' + this.id)
 			},
 			attention() {
-				if($(".discoveryBtn").html() == "已关注") {
-					//取消关注
-					let data = {
-						token: this.token,
-						followType: 1,
-						followedId: this.id
-					}
-					console.log(222)
-					cancelFollow(data).then(res => {
-						if(res.code == 0) {
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 0) {
-								console.log('取消关注')
-								$(".discoveryBtn").css({
-									backgroundColor: "rgb(59, 136, 246)",
-									color: "rgb(255,255,255)"
-								})
-								$(".discoveryBtn").html("+ 关注")
-							}
+				if(this.token != '') {
+					if($(".discoveryBtn").html() == "已关注") {
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 1,
+							followedId: this.id
 						}
-					})
-				} else {
-					//去关注
-					let data = {
-						token: this.token,
-						followType: 1,
-						followedId: this.id
-					}
-					saveFollow(data).then(res => {
-						if(res.code == 0) {
+						console.log(222)
+						cancelFollow(data).then(res => {
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".discoveryBtn").css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".discoveryBtn").html("+ 关注")
+								}
+							}
+						})
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 1,
+							followedId: this.id
+						}
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
 
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 1) {
-								console.log('已经关注')
-								$(".discoveryBtn").css({
-									backgroundColor: "rgb(244, 244, 244)",
-									color: "rgb(126, 126, 126)"
-								})
-								$(".discoveryBtn").html("已关注")
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".discoveryBtn").css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".discoveryBtn").html("已关注")
+								}
 							}
-						}
-					})
+						})
+					}
+				} else {
+					this.$alert('前去登录', {
+						confirmButtonText: '确定',
+					});
 				}
 
 			},
-			zattention(){
-				if($(".zbtnL").html() == "已关注") {
-					//取消关注
-					let data = {
-						token: this.token,
-						followType: 3,
-						followedId: this.userId
-					}
-					console.log(222)
-					cancelFollow(data).then(res => {
-						if(res.code == 0) {
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 0) {
-								console.log('取消关注')
-								$(".zbtnL").css({
-									backgroundColor: "rgb(59, 136, 246)",
-									color: "rgb(255,255,255)"
-								})
-								$(".zbtnL").html("+ 关注")
-							}
+			zattention() {
+				if(this.token != '') {
+					if($(".zbtnL").html() == "已关注") {
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: this.userId
 						}
-					})
-				} else {
-					//去关注
-					let data = {
-						token: this.token,
-						followType: 3,
-						followedId: this.userId
-					}
-					saveFollow(data).then(res => {
-						if(res.code == 0) {
+						
+						cancelFollow(data).then(res => {
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".zbtnL").css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".zbtnL").html("+ 关注")
+								}
+							}
+						})
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: this.userId
+						}
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
 
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 1) {
-								console.log('已经关注')
-								$(".zbtnL").css({
-									backgroundColor: "rgb(244, 244, 244)",
-									color: "rgb(126, 126, 126)"
-								})
-								$(".zbtnL").html("已关注")
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".zbtnL").css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".zbtnL").html("已关注")
+								}
 							}
-						}
-					})
+						})
+					}
+				} else {
+					this.$alert('前去登录', {
+						confirmButtonText: '确定',
+					});
 				}
+
 			},
 			//点击关注
 			hattention(createUserId, index) {

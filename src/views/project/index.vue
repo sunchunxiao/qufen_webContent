@@ -258,13 +258,8 @@
 
 			},
 			projectdetail(id) {
-				console.log(this.token)
-				if(this.token !='') {
-					window.open('/project/projectdetail?id=' + id, "_blank")
-				} else {
-					this.$message('登陆后关注更多内容');
-				}
-
+				window.open('/project/projectdetail?id=' + id, "_blank")
+				//this.$message('登陆后关注更多内容');
 			}
 
 		}

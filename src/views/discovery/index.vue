@@ -262,7 +262,7 @@
 				//				console.log( _width1)
 
 				if(_width < 1590) {
-					var left = _width1 + 643
+					var left = _width1 + 645
 					$(".common-attention").css("left", left)
 				} else {
 					var left = _width1 + 703
@@ -346,7 +346,7 @@
 						});
 					}
 				} else {
-					this.$alert('前去登录', {
+					this.$alert('请登录', {
 						confirmButtonText: '确定',
 					});
 				}

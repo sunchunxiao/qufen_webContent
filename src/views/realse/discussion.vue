@@ -319,7 +319,7 @@
 				this.arr = []
 				//循环图片
 				for(let i = 0; i < this.uploadList.length; i++) {
-					 console.log(this.uploadList)
+					console.log(this.uploadList)
 					this.arr.push({
 						fileUrl: this.uploadList[i].url
 					});
@@ -332,24 +332,24 @@
 									if(this.arr.length >= 1 && this.arr.length <= 9) {
 										if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
 											let date = new Date();
-										let year = date.getFullYear();
-										let month = date.getMonth() + 1;
-										let day = date.getDate();
-										let hour = date.getHours();
-										let minute = date.getMinutes();
+											let year = date.getFullYear();
+											let month = date.getMonth() + 1;
+											let day = date.getDate();
+											let hour = date.getHours();
+											let minute = date.getMinutes();
 
-										localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
+											localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
 
-										localStorage.search = this.search
-										localStorage.articleTitle = this.articleTitle;
-										localStorage.content = $("textarea").val();
-										//标签
-										localStorage.tag = JSON.stringify(this.tagthree)
-										localStorage.postImg = JSON.stringify(this.arr)
+											localStorage.search = this.search
+											localStorage.articleTitle = this.articleTitle;
+											localStorage.content = $("textarea").val();
+											//标签
+											localStorage.tag = JSON.stringify(this.tagthree)
+											localStorage.postImg = JSON.stringify(this.arr)
 
-										window.open("/preview/burst", "_blank")
-											
-										}else{
+											window.open("/preview/burst", "_blank")
+
+										} else {
 											this.$message({
 												showClose: true,
 												message: '标签至少一条，不能超过三条',
@@ -357,8 +357,7 @@
 												duration: 1500
 											});
 										}
-										
-										
+
 									} else {
 										this.$message({
 											showClose: true,

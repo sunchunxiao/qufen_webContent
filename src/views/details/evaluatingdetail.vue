@@ -4,6 +4,12 @@
 			<div class="">
 				<!--左边文章-->
 				<div class="onedetailArticle">
+					<!--如果没有数据显示的样式-->
+					<div class="common-article-wrap commonNowrap">
+						<div class="commonNocontent">
+							<img src="../../assets/common/content.png" />
+						</div>
+					</div>
 					<!--文章-->
 					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
@@ -120,29 +126,32 @@
 			window.addEventListener('scroll', this.scrollHandler)
 		},
 		updated() {
-			for(let i = 0; i < this.itemList.length; i++) {
-				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
-					$(".add").eq(i).removeClass("row3-content")
-					$(".add").eq(i).addClass("srow3-content")
+			if(this.itemList != null) {
+				for(let i = 0; i < this.itemList.length; i++) {
+					if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
+						$(".add").eq(i).removeClass("row3-content")
+						$(".add").eq(i).addClass("srow3-content")
+
+					}
+
+					this.followStatus = this.itemList[i].followStatus
+					if(this.itemList[i].followStatus == 1) {
+						$(".discoveryBtndetail").eq(i).css({
+							backgroundColor: "rgb(244, 244, 244)",
+							color: "rgb(126, 126, 126)"
+						})
+						$(".discoveryBtndetail").eq(i).html("已关注")
+					} else {
+						$(".discoveryBtndetail").eq(i).css({
+							backgroundColor: "rgb(59, 136, 246)",
+							color: "rgb(255,255,255)"
+						})
+						$(".discoveryBtndetail").eq(i).html("+ 关注")
+					}
 
 				}
-				
-				this.followStatus = this.itemList[i].followStatus
-				if(this.itemList[i].followStatus == 1) {
-					$(".discoveryBtndetail").eq(i).css({
-						backgroundColor: "rgb(244, 244, 244)",
-						color: "rgb(126, 126, 126)"
-					})
-					$(".discoveryBtndetail").eq(i).html("已关注")
-				} else {
-					$(".discoveryBtndetail").eq(i).css({
-						backgroundColor: "rgb(59, 136, 246)",
-						color: "rgb(255,255,255)"
-					})
-					$(".discoveryBtndetail").eq(i).html("+ 关注")
-				}
-
 			}
+
 		},
 		destroyed() {
 			window.removeEventListener("scroll", this.scrollHandler);
@@ -299,6 +308,7 @@
 
 						} else {
 							$(".start").css("display", "none")
+							$(".commonNowrap").css("display", "block")
 						}
 
 					}
