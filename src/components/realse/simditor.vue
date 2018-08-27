@@ -16,8 +16,7 @@
 			return {
 				textnames: 'simditor', //这里防止多个富文本发生冲突
 				editor: '', //保存simditor对象
-				toolbar: ['title','fontScale', 'bold', 'color',  '|','italic',  'strikethrough','underline', '|', 'ol', 'ul', 'blockquote', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'
-				], //自定义工具栏
+				toolbar: ['title', 'fontScale', 'bold', 'color', '|', 'italic', 'strikethrough', 'underline', '|', 'ol', 'ul', 'blockquote', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'], //自定义工具栏
 				value: "",
 				token: getCookie('token'),
 				userId: "",
@@ -95,12 +94,12 @@
 
 					var arr = str.match(imgReg);
 
-					//					console.log(arr)
+					console.log(arr)
 					if(arr != null) {
 						if(arr.length != 0) {
 							for(var i = 0; i < arr.length; i++) {
 								var src = arr[i].match(srcReg);
-//								console.log(src)
+								//								console.log(src)
 								if(src != null) {
 									//获取图片地址
 									if(src[1]) {
@@ -109,7 +108,7 @@
 										if(src[1].match(a1)) {
 
 											$(".simditor img").eq(i).remove()
-//											console.log(1)
+											console.log(1)
 										} else {
 //											console.log(2)
 										}

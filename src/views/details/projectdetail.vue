@@ -274,35 +274,19 @@
 		methods: {
 			//站长
 			onecenter() {
-				//				if(this.token != '') {
 				var id = this.userId
 				window.open('/onecenter?id=' + id, "_blank")
-				//				} else {
-				//					this.$message({
-				//						showClose: true,
-				//						message: '请登录',
-				//						type: 'error'
-				//					});
-				//				}
 
 			},
 			//活跃用户
 			onecenter1(id) {
-				//				if(this.token!=''){
 				window.open('/onecenter?id=' + id, "_blank")
-				//				}else {
-				//					this.$message({
-				//						showClose: true,
-				//						message: '请登录',
-				//						type: 'error'
-				//					});
-				//				}
-
+			
 			},
 			showToggle() {
 				this.isShow = !this.isShow
 				if(this.isShow) {
-					//					$(".projectintroduceS").slideUp('fast')
+					
 					$(".projectintroduceS").css({
 						overflow: 'hidden',
 						height: '78px',

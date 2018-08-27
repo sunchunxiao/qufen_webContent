@@ -28,7 +28,10 @@
 								{{m}}
 							</div>
 							<div class="articleTag">
-								<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
+								<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1">
+									<span class="span-name">{{projectCode}}</span>
+								</div>
+								<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 							</div>
 						</div>
 						<div class="row articleRow5">
@@ -163,6 +166,7 @@
 				pageIndex: 1,
 				pageSize: 10,
 				projectId: 0,
+				tagInfos: []
 			}
 		},
 
@@ -334,7 +338,7 @@
 					postId: this.id - 0
 				}
 
-					//测评
+				//测评
 				articleInfo(data).then(res => {
 					if(res.code == 0) {
 
@@ -346,6 +350,10 @@
 						//用户名
 						this.username = data.createUserName;
 						this.projectCode = data.projectCode;
+						//标签
+						if(data.evaluationTags != null) {
+							this.tagInfos = JSON.parse(data.evaluationTags)
+						}
 						//关注状态
 						this.followStatus = data.followStatus
 						//id
@@ -396,8 +404,7 @@
 					}
 
 				})
-				
-				
+
 			},
 			resizeBannerImage() {
 				var _width = $(window).width();

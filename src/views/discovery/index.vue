@@ -233,16 +233,7 @@
 		},
 		methods: {
 			onecenter(id) {
-				if(this.token != '') {
 					window.open('/onecenter?id=' + id, "_blank")
-				} else {
-					this.$message({
-						showClose: true,
-						message: '请登录',
-						type: 'error'
-					});
-				}
-
 			},
 			//下滑加载
 			scrollHandler() {

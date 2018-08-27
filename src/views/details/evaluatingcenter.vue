@@ -165,7 +165,6 @@
 			},
 			loadPageList() {
 
-				//				if(this.token!='') {
 				// 查询数据
 				let data = {
 					kffUserId: this.id,
