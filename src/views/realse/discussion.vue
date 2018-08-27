@@ -34,7 +34,6 @@
 								<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
 							</div>
 						</template>
-
 					</div>
 					<Upload ref="upload" name="file" :show-upload-list="false" :default-file-list="defaultList" :on-success="handleSuccess" :format="['jpg','jpeg','png']" :max-size="5120" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" multiple type="drag" action="https://upload-z2.qiniup.com" :data="uptoken" style="display: inline-block;width:58px;">
 						<div style="width: 58px;height:58px;line-height: 58px;">

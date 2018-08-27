@@ -17,11 +17,21 @@
 					<h3 class="progess add-title">文章内容</h3>
 					<Simditor></Simditor>
 				</div>
-				<Row class="margin-top-20 publish-button-con">
-					
-					<span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
-					<span class="publish-button"><Button style="width:90px;margin-left: 10px;" @click="handlePreview">预览</Button></span>
-				</Row>
+				<div>
+					<h3 class="p">标签</h3>
+					<p class="upload-img">选择爆料标签，最多三个</p>
+					<div class="max-nine" v-for="(item,index1) in tag">
+						<h3 class="p">{{item.typeName}}</h3>
+						<ul class="label">
+							<li class="labelLi" v-for="(item1,index) in item.dtagsList" @click="dian(item1.tagName,item1.tagId,index,index1)">{{item1.tagName}}</li>
+						</ul>
+					</div>
+					<Row class="margin-top-20 publish-button-con">
+
+						<span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
+						<span class="publish-button"><Button style="width:90px;margin-left: 10px;" @click="handlePreview">预览</Button></span>
+					</Row>
+				</div>
 			</div>
 		</div>
 		<!--发布中-->
@@ -32,7 +42,7 @@
 	import Simditor from '../../components/realse/simditor.vue'
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
-	import { publishW, savearticle } from '@/service/publish'
+	import { publishW, savearticle,getTagsAndTagType} from '@/service/publish'
 	import { getCookie } from '../../assets/js/cookie.js'
 
 	export default {
@@ -43,7 +53,9 @@
 				publishLoading: false,
 				cityList: [],
 				model1: '',
-				token: getCookie('token')
+				token: getCookie('token'),
+				tag: [],
+				tagthree: [],
 			}
 		},
 		components: {
@@ -51,8 +63,125 @@
 			Search,
 			Tip
 		},
-		mounted() {},
+		mounted() {
+			//标签
+			this.tags()
+		},
 		methods: {
+			tags() {
+				let data = {
+					typeId: 0
+				}
+				getTagsAndTagType(data).then(res => {
+					//发布成功
+					if(res.code == 0) {
+						this.tag = res.data.result
+//						console.log(result)
+						for(let i = 0; i < this.tag.length; i++) {
+							var result = this.tag[i]
+//							console.log(result)
+							for(let j = 0; j < result.dtagsList.length; j++) {
+								this.tag[i].dtagsList[j].seen = false
+//								console.log(this.tag[i].dtagsList[j])
+
+							}
+						}
+
+					}
+				})
+			},
+			//标签点击
+			dian(name, id, index, index1) {
+				console.log(status, name, id, index, index1)
+				console.log(this.tag[index1].dtagsList[index].seen)
+				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
+				
+				if(index1 == 0) {
+					if(this.tag[index1].dtagsList[index].seen == true) {
+						$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#408ff1");
+
+						//加入数组对象
+						this.tagthree.push({
+							tagName: name,
+							tagId: id
+						})
+						console.log(this.tagthree)
+						//循环，检查数组里是否是三条数据
+						for(var i = 0; i < this.tagthree.length; i++) {
+							//如果大于三条提示并从数组中删除
+							if(i >= 3) {
+								this.$message({
+									showClose: true,
+									message: "标签不能超过三条",
+									type: 'error',
+									duration: 1500
+								});
+								$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#b7b7b7");
+								this.tagthree.splice(i, 1)
+								//将其变为false，下次为true 再次点击添加样式
+								this.tag[index1].dtagsList[index].seen = false
+							}
+						}
+					} else {
+
+						$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#b7b7b7");
+						for(var i = 0; i < this.tagthree.length; i++) {
+							console.log(this.tagthree[i].tagName, name)
+							if(this.tagthree[i].tagName == name) {
+								var a = i
+								this.tagthree.splice(a, 1)
+
+							}
+						}
+
+						console.log(this.tagthree)
+
+					}
+				} else {
+					if(this.tag[index1].dtagsList[index].seen == true) {
+						$(".max-nine:eq(1) .labelLi").eq(index).css("background", "#408ff1");
+
+						//加入数组对象
+						this.tagthree.push({
+							tagName: name,
+							tagId: id
+						})
+						console.log(this.tagthree)
+						//循环，检查数组里是否是三条数据
+						for(var i = 0; i < this.tagthree.length; i++) {
+							//如果大于三条提示并从数组中删除
+							if(i >= 3) {
+								this.$message({
+									showClose: true,
+									message: "标签不能超过三条",
+									type: 'error',
+									duration: 1500
+								});
+								$(".max-nine:eq(1) .labelLi").eq(index).css("background", "#b7b7b7");
+								this.tagthree.splice(i, 1)
+								//将其变为false，下次为true 再次点击添加样式
+								this.tag[index1].dtagsList[index].seen = false
+							}
+						}
+					} else {
+
+						$(".max-nine:eq(1) .labelLi").eq(index).css("background", "#b7b7b7");
+						for(var i = 0; i < this.tagthree.length; i++) {
+							console.log(this.tagthree[i].tagName, name)
+							if(this.tagthree[i].tagName == name) {
+								var a = i
+								this.tagthree.splice(a, 1)
+
+							}
+						}
+
+						console.log(this.tagthree)
+
+					}
+				}
+
+
+			},
 			//模糊查询接收数据
 			getA(data) {
 				this.search = data;
@@ -173,6 +302,7 @@
 										toHtmlTags: dds,
 										postTitle: this.articleTitle,
 										articleContents: $("textarea").val(),
+										tagInfos: JSON.stringify(this.tagthree)
 									}
 									savearticle(data).then(res => {
 										//发布成功
