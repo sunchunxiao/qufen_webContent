@@ -244,7 +244,7 @@
 			},
 			//点击关注
 			attention(createUserId, index) {
-				console.log(createUserId)
+				//				console.log(createUserId)
 				if(this.token != "") {
 					var _this = this
 					if($(".discoveryBtn").eq(index).html() == "已关注") {
@@ -256,7 +256,7 @@
 						}
 						cancelFollow(data).then(res => {
 							if(res.code == 0) {
-								console.log(res.data.followStatus)
+								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
 									console.log('取消关注')
 									$(".discoveryBtn").eq(index).css({
@@ -408,9 +408,9 @@
 
 					})
 				} else {
-					
+
 					this.$message({
-						type: 'info',
+						type: 'error',
 						message: '登陆后关注更多内容',
 						duration: 1000
 					});
@@ -484,19 +484,14 @@
 
 			},
 			projectdetail(id) {
-				console.log(this.token)
-				if(this.token != '') {
-					window.open('/project/projectdetail?id=' + id, "_blank")
-				} else {
-					//					this.$alert('请登录', {
-					//						confirmButtonText: '确定',
-					//					});
-					this.$message({
-						showClose: true,
-						message: '请登录',
-						type: 'error'
-					});
-				}
+				window.open('/project/projectdetail?id=' + id, "_blank")
+				//			} else {
+				//					this.$message({
+				//						showClose: true,
+				//						message: '请登录',
+				//						type: 'error'
+				//					});
+				//				}
 
 			}
 

@@ -413,7 +413,7 @@
 					}
 				} else {
 					this.$message({
-						type: 'info',
+						type: 'error',
 						message: '登陆后关注更多内容',
 						duration: 1000
 					});
@@ -467,7 +467,7 @@
 					}
 				} else {
 					this.$message({
-						type: 'info',
+						type: 'error',
 						message: '登陆后关注更多内容',
 						duration: 1000
 					});
@@ -535,7 +535,7 @@
 					}
 				} else {
 					this.$message({
-						type: 'info',
+						type: 'error',
 						message: '登陆后关注更多内容',
 						duration: 1000
 					});

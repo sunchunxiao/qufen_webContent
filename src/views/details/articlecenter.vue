@@ -152,11 +152,11 @@
 					this.more()
 				}
 			},
-			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
-			},
+//			attention() {
+//				this.$alert('本功能目前只对APP开放', {
+//					confirmButtonText: '确定',
+//				});
+//			},
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {

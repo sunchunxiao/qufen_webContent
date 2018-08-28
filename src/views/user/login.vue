@@ -8,7 +8,7 @@
 					<span>投资区块链，一定要区分</span>
 				</div>
 				<div class="bac-wrapper">
-					
+
 					<!--登录-->
 					<!--autocomplete="off" 禁止输入框显示用户历史记录-->
 					<div class="bgc-wrap register-wrap" v-show="showLogin">
@@ -86,12 +86,12 @@
 			//			}
 
 		},
-//		watch: {
-//			//监测主菜单路由变化
-//			$route: function() {
-//				this.activeIndex = this.$route.path 
-//			}
-//		}
+		//		watch: {
+		//			//监测主菜单路由变化
+		//			$route: function() {
+		//				this.activeIndex = this.$route.path 
+		//			}
+		//		}
 		methods: {
 			//			hideShowPsw() {
 			//				if(passwords.type == "text") {
@@ -104,7 +104,7 @@
 			//			},
 			login() {
 				var myreg = /^1[34578]\d{9}$/;
-				console.log($("#autolog").is(":checked"))
+				//				console.log($("#autolog").is(":checked"))
 				if($("#autolog").is(":checked") == true) {
 					setCookie('rmbUser', "true", timer)
 
@@ -112,9 +112,12 @@
 				var timer = 60 * 60 * 24
 				setCookie('username', this.phone, timer)
 				if(this.phone == "" || this.password == "") {
-					this.$alert('请输入手机号或密码', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'error',
+						message: '请输入手机号或密码',
+						duration: 1000
 					});
+
 				} else {
 
 					let data = {
@@ -139,24 +142,28 @@
 
 						}).catch(function(error) {
 							//						alert(error.msg)
-							_this.$alert(error.msg, {
-								confirmButtonText: '确定',
+							_this.$message({
+								type: 'error',
+								message: error.msg,
+								duration: 1500
 							});
 						});
 					} else {
-						this.$alert('手机号码格式错误', {
-							confirmButtonText: '确定',
+						this.$message({
+							type: 'error',
+							message: '手机号码格式错误',
+							duration: 1000
 						});
+
 					}
 
 				}
 
 			},
-			
+
 			ToRegister() {
 				this.$router.push('/user/register')
 			},
-
 
 		}
 	}

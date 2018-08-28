@@ -84,7 +84,7 @@
 						//发送获取验证码的接口请求
 						var show = true
 						if(show) { //倒计时内只能点一次
-							console.log(111)
+							
 							getCode({
 								phone: $(".a1").val(),
 								module: "register"
@@ -92,6 +92,7 @@
 								_this.$alert(error.msg, {
 									confirmButtonText: '确定',
 								});
+								
 							})
 						}
 						const TIME_COUNT = 60;
@@ -130,9 +131,9 @@
 						},
 						success: function(data) {
 							if(data.data.data.status === 'success') {
-								console.log('登录成功');
+//								console.log('登录成功');
 							} else if(data.data.data.status === 'fail') {
-								console.log('登录失败，请完成验证');
+//								console.log('登录失败，请完成验证');
 								captchaObj.reset();
 							}
 						}
@@ -140,8 +141,8 @@
 
 				});
 				$('#getBtn').click(function() {
-					console.log($(".a1").val())
-					console.log($(".getCode").html())
+//					console.log($(".a1").val())
+//					console.log($(".getCode").html())
 					var phone = $(".a1").val()
 					var getCode = $(".getCode").html()
 					var myreg = /^1[345789]\d{9}$/;
@@ -204,21 +205,32 @@
 			register() {
 				var myreg = /^1[345789]\d{9}$/;
 				if(this.registerphone == "") {
-					this.$alert('请输入手机号', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'error',
+						message: '请输入手机号',
+						duration: 1000
 					});
 				} else if(!myreg.test(this.registerphone)) {
-					this.$alert('手机号码格式错误', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'error',
+						message: '手机号码格式错误',
+						duration: 1000
 					});
+					
 				} else if(this.code == "") {
-					this.$alert('请输入验证码', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'error',
+						message: '请输入验证码',
+						duration: 1000
 					});
+					
 				} else if(this.password1 == "") {
-					this.$alert('请输入密码', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'error',
+						message: '请输入密码',
+						duration: 1000
 					});
+					
 				} else {
 
 					let data = {
@@ -229,7 +241,7 @@
 					var _this = this
 					register(data).then(res => {
 						if(res.code == 0) {
-							console.log(res.msg)
+//							console.log(res.msg)
 							if(res.msg = 'Success') {
 								this.$message('注册成功');
 								this.$router.push('/user/login')
@@ -238,61 +250,13 @@
 						}
 
 					}).catch(function(error) {
-						//						alert(error.msg)
+						
 						_this.$alert(error.msg, {
 							confirmButtonText: '确定',
 						});
 					});
 				}
 			},
-			//手机验证码
-			//			getcode() {
-			//				var myreg = /^1[345789]\d{9}$/;
-			//				var _this = this
-			//				//输入框
-			//				//				var val = $(".input-val").val().toLowerCase();
-			//				if(myreg.test(this.registerphone)) {
-			//					if(this.registerphone != "") {
-			//						//发送获取验证码的接口请求
-			//						if(this.show) { //倒计时内只能点一次
-			//							console.log(111)
-			//							getCode({
-			//								phone: this.registerphone,
-			//								module: "register"
-			//							}).catch(function(error) {
-			//								_this.$alert(error.msg, {
-			//									confirmButtonText: '确定',
-			//								});
-			//							});;
-			//						}
-			//						const TIME_COUNT = 60;
-			//						if(!this.timer) {
-			//							console.log(222)
-			//							this.count = TIME_COUNT;
-			//							this.show = false;
-			//							this.timer = setInterval(() => {
-			//								if(this.count > 0 && this.count <= TIME_COUNT) {
-			//									this.count--;
-			//								} else {
-			//									this.show = true;
-			//									clearInterval(this.timer);
-			//									this.timer = null;
-			//								}
-			//							}, 1000)
-			//						}
-			//
-			//					} else {
-			//						this.$alert('请输入手机号', {
-			//							confirmButtonText: '确定',
-			//						});
-			//					}
-			//				} else {
-			//					this.$alert('手机号码格式不正确', {
-			//						confirmButtonText: '确定',
-			//					});
-			//				}
-			//
-			//			},
 
 			ToLogin() {
 				this.$router.push('/user/login')
