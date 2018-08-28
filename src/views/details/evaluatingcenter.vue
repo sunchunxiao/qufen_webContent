@@ -33,7 +33,7 @@
 									<div class="row row3">
 										<div class="discoveryContent">
 											<!--缩略图-->
-											<div v-for="item1 in item.postSmallImages" class="contentImg">
+											<div v-for="item1 in item.postSmallImagesList" class="contentImg">
 												<img :src="item1.fileUrl" />
 											</div>
 											<p class="row3-content add">
@@ -183,16 +183,12 @@
 							}
 							this.hasNext = res.data.evaluations.hasNext
 							for(var i = 0; i < res.data.evaluations.rows.length; i++) {
-								if(res.data.evaluations.rows[i].postSmallImages != null) {
-									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-									var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
-									if(postSmallImages.length != 0) {
-										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
-									} else {
-										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+								if(res.data.evaluations.rows[i].postSmallImagesList != null) {
+									if(res.data.evaluations.rows[i].postSmallImagesList.length != 0) {
+										res.data.evaluations.rows[i].postSmallImagesList = res.data.evaluations.rows[i].postSmallImagesList.slice(0, 1)
 									}
+
 								}
 
 								//时间  字符串切割
@@ -248,16 +244,11 @@
 						this.hasNext = res.data.evaluations.hasNext
 						for(var i = 0; i < res.data.evaluations.rows.length; i++) {
 							this.itemList.push(res.data.evaluations.rows[i]);
-							if(res.data.evaluations.rows[i].postSmallImages) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-									//									console.log(postSmallImages.slice(0, 1))
-								} else {
-									res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+							if(res.data.evaluations.rows[i].postSmallImagesList != null) {
+								if(res.data.evaluations.rows[i].postSmallImagesList.length != 0) {
+									res.data.evaluations.rows[i].postSmallImagesList = res.data.evaluations.rows[i].postSmallImagesList.slice(0, 1)
 								}
+
 							}
 
 							//时间  字符串切割

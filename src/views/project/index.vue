@@ -179,8 +179,10 @@
 					}
 
 				} else {
-					this.$alert('请登录', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 			},

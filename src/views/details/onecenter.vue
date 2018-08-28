@@ -47,7 +47,7 @@
 	import { saveFollow, cancelFollow } from '@/service/home';
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
-		
+
 		data() {
 			return {
 				id: '',
@@ -66,7 +66,7 @@
 				$(this).addClass("ping");
 
 			})
-			console.log(this.$route.query.id,this.token)
+			console.log(this.$route.query.id, this.token)
 			this.id = this.$route.query.id - 0;
 			this.projectone()
 			this.$router.push('/project/evaluatingcenter?id=' + this.id)
@@ -97,7 +97,7 @@
 				getUserInfo(data).then(res => {
 					if(res.code == 0) {
 						var data = res.data.user
-//						console.log(res.data.user)
+						//						console.log(res.data.user)
 						this.src = data.icon
 						this.userName = data.userName
 						this.userSignature = data.userSignature
@@ -135,60 +135,68 @@
 			},
 			attention() {
 				var _this = this
-				if($(".discoveryBtn").html() == "已关注") {
-					
-					//取消关注
-					let data = {
-						token: this.token,
-						followType: 3,
-						followedId: this.id
-					}
-					console.log(222)
-					cancelFollow(data).then(res => {
-						if(res.code == 0) {
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 0) {
-								console.log('取消关注')
-								$(".discoveryBtn").css({
-									backgroundColor: "rgb(59, 136, 246)",
-									color: "rgb(255,255,255)"
-								})
-								$(".discoveryBtn").html("+ 关注")
-							}
-						}
-					}).catch(function(res) {
-						_this.$message({
-							showClose: true,
-							message: res.msg,
-							type: 'error'
-						});
-					});
-				} else {
-					//去关注
-					let data = {
-						token: this.token,
-						followType: 3,
-						followedId: this.id
-					}
-					saveFollow(data).then(res => {
-						if(res.code == 0) {
+				if(this.token != '') {
+					if($(".discoveryBtn").html() == "已关注") {
 
-							console.log(res.data.followStatus)
-							if(res.data.followStatus == 1) {
-								console.log('已经关注')
-								$(".discoveryBtn").css({
-									backgroundColor: "rgb(244, 244, 244)",
-									color: "rgb(126, 126, 126)"
-								})
-								$(".discoveryBtn").html("已关注")
-							}
+						//取消关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: this.id
 						}
-					}).catch(function(res) {
-						_this.$message({
-							showClose: true,
-							message: res.msg,
-							type: 'error'
+						console.log(222)
+						cancelFollow(data).then(res => {
+							if(res.code == 0) {
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 0) {
+									console.log('取消关注')
+									$(".discoveryBtn").css({
+										backgroundColor: "rgb(59, 136, 246)",
+										color: "rgb(255,255,255)"
+									})
+									$(".discoveryBtn").html("+ 关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
 						});
+					} else {
+						//去关注
+						let data = {
+							token: this.token,
+							followType: 3,
+							followedId: this.id
+						}
+						saveFollow(data).then(res => {
+							if(res.code == 0) {
+
+								console.log(res.data.followStatus)
+								if(res.data.followStatus == 1) {
+									console.log('已经关注')
+									$(".discoveryBtn").css({
+										backgroundColor: "rgb(244, 244, 244)",
+										color: "rgb(126, 126, 126)"
+									})
+									$(".discoveryBtn").html("已关注")
+								}
+							}
+						}).catch(function(res) {
+							_this.$message({
+								showClose: true,
+								message: res.msg,
+								type: 'error'
+							});
+						});
+					}
+				} else {
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 

@@ -82,13 +82,17 @@
 				<!--右边消息-->
 				<div class="common-attention">
 					<!--二维码-->
-					<div class="attention-code attention-bag margin-bottom">
+					<div class="attention-code  margin-bottom">
 						<div class="attention-wrap">
 							<div class="common-attention-code">
 								<div style="padding: 7px;">
-									<img src="https://pic.qufen.top/Appdownload.png" />
+									<img style="border-radius: 4px;" src="https://pic.qufen.top/Appdownload.png" />
 								</div>
-								<p class="common-attention-down">下载区分APP不一样的区分</p>
+								<div class="attentionIcon">
+									<img src="../../assets/common/attentionicon.png" />
+									<span class="attentionTitle">区分</span>
+								</div>
+								<p class="common-attention-down">币圈大众点评 下载区分APP</p>
 							</div>
 						</div>
 					</div>
@@ -233,7 +237,7 @@
 		},
 		methods: {
 			onecenter(id) {
-					window.open('/onecenter?id=' + id, "_blank")
+				window.open('/onecenter?id=' + id, "_blank")
 			},
 			//下滑加载
 			scrollHandler() {
@@ -337,8 +341,10 @@
 						});
 					}
 				} else {
-					this.$alert('请登录', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 
@@ -361,8 +367,8 @@
 					pageIndex: 1,
 					pageSize: 10
 				}
-				
-					recommend(data).then(res => {
+
+				recommend(data).then(res => {
 					var _this = this
 
 					this.itemList = res.data.recommends.rows;
@@ -402,9 +408,7 @@
 					this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
 					//					console.log(this.totalpage)
 				})
-				
-				
-				
+
 			},
 
 			more() {
@@ -507,6 +511,12 @@
 	}
 </script>
 <style lang="less">
+	.attention-code {
+		background-image: url(../../assets/common/attentionbac.png);
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+	}
+	
 	@import '../../css/global.css';
 	@import '../../styles/common.less';
 </style>

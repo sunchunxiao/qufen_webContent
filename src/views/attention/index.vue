@@ -205,14 +205,14 @@
 		},
 		updated() {
 			//
-//			console.log(this.itemList)
+			//			console.log(this.itemList)
 			//点击关注
 			for(let i = 0; i < this.itemList.length; i++) {
-				if(this.itemList[i].postSmallImagesList==null){
+				if(this.itemList[i].postSmallImagesList == null) {
 					$(".aa").eq(i).removeClass("row3-content")
 					$(".aa").eq(i).addClass("srow3-content")
 				}
-				
+
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtn").eq(i).css({
@@ -404,8 +404,16 @@
 
 					})
 				} else {
-					this.$message('登陆后关注更多内容');
-					this.$router.push('/user/register')
+					//					this.$alert('登陆后关注更多内容', {
+					//						confirmButtonText: '确定',
+					//					});
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
+					});
+//					this.$message('登陆后关注更多内容');
+					this.$router.push('/user/login')
 				}
 
 			},

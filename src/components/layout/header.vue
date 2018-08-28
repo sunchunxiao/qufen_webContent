@@ -116,19 +116,13 @@
 			this.handleSelect()
 		},
 		methods: {
-//			onecenter(){
-//				console.log(111)
-//				this.$router.push("/onecenter")
-//			},
+//			未登录时点击头像
 			go(){
-				this.$router.push("/user/register")
+				this.$router.push("/user/login")
 			},
 			dian(){
 				this.$router.push("/discovery")
 			},
-//			next(){
-//				window.open('https://www.qufen.top', "_blank")
-//			},
 			changeTab(index) {
 				if(index == index) {
 					this.clicked = this.clicked === index ? undefined : index
@@ -172,7 +166,7 @@
 				delCookie('user')
 				delCookie('userType')
 				delCookie('img')
-				this.$router.push("/user/register");
+				this.$router.push("/user/login");
 			},
 			handleSelect(key, keyPath) {
 				if(key == '/discovery') {
@@ -191,7 +185,7 @@
 					this.$router.push('/quhomelist')
 
 				} else {
-					this.$router.push('/user/register')
+					this.$router.push('/user/login')
 				}
 
 			}

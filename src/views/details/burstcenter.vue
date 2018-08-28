@@ -33,7 +33,7 @@
 									<div class="row row3">
 										<div class="discoveryContent">
 											<!--缩略图-->
-											<div v-for="item1 in item.postSmallImages" class="contentImg">
+											<div v-for="item1 in item.postSmallImagesList" class="contentImg">
 												<img :src="item1.fileUrl" />
 											</div>
 											<p class="row3-content add">
@@ -155,11 +155,11 @@
 					this.more()
 				}
 			},
-			attention() {
-				this.$alert('本功能目前只对APP开放', {
-					confirmButtonText: '确定',
-				});
-			},
+//			attention() {
+//				this.$alert('本功能目前只对APP开放', {
+//					confirmButtonText: '确定',
+//				});
+//			},
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {
@@ -189,16 +189,11 @@
 						}
 						this.hasNext = res.data.discusses.hasNext
 						for(var i = 0; i < res.data.discusses.rows.length; i++) {
-							if(res.data.discusses.rows[i].postSmallImages != null) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
-								} else {
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+							if(res.data.discusses.rows[i].postSmallImagesList != null) {
+								if(res.data.discusses.rows[i].postSmallImagesList.length != 0) {
+									res.data.discusses.rows[i].postSmallImagesList = res.data.discusses.rows[i].postSmallImagesList.slice(0, 1)
 								}
+
 							}
 
 							//时间  字符串切割
@@ -251,16 +246,11 @@
 						this.hasNext = res.data.discusses.hasNext
 						for(var i = 0; i < res.data.discusses.rows.length; i++) {
 							this.itemList.push(res.data.discusses.rows[i]);
-							if(res.data.discusses.rows[i].postSmallImages) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.discusses.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-									//									console.log(postSmallImages.slice(0, 1))
-								} else {
-									res.data.discusses.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+							if(res.data.discusses.rows[i].postSmallImagesList != null) {
+								if(res.data.discusses.rows[i].postSmallImagesList.length != 0) {
+									res.data.discusses.rows[i].postSmallImagesList = res.data.discusses.rows[i].postSmallImagesList.slice(0, 1)
 								}
+
 							}
 
 							//时间  字符串切割

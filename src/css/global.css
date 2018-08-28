@@ -4,17 +4,21 @@
 	padding-top: 55px;
 	position: relative;
 }
-.indexCommon{
+
+.indexCommon {
 	width: 1060px;
 }
-.el-message{
-	top:60px;
+
+.el-message {
+	top: 60px;
 }
-.oneuser{
+
+.oneuser {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 }
+
 .commmon1 {
 	width: 760px;
 	margin: 20px auto 0;
@@ -23,7 +27,8 @@
 	position: relative;
 	min-height: 700px;
 }
-.projectCommon{
+
+.projectCommon {
 	width: 1060px;
 }
 
@@ -44,10 +49,12 @@
 	margin-left: 32px;
 	float: left;
 }
-.onedetailArticle{
+
+.onedetailArticle {
 	width: 700px;
 }
-.detailcommmon{
+
+.detailcommmon {
 	width: 700px;
 	float: left;
 }
@@ -55,21 +62,22 @@
 .common-attention {
 	position: fixed;
 	/*left: 900px;*/
-	width: 314px;
+	width: 300px;
 	/*height: 600px;*/
 }
-.project-attention{
+
+.project-attention {
 	/*position: absolute;
 	right: 0;*/
 	float: right;
 	margin-right: 3px;
-	width: 314px;
+	width: 300px;
 }
 
 .common-attention1 {
 	position: absolute;
 	left: 742px;
-	width: 314px;
+	width: 300px;
 	height: 600px;
 }
 
@@ -84,13 +92,16 @@
 .common-article-wrap:hover {
 	box-shadow: 0 1px 3px 0 rgba(103, 166, 255, 0.27);
 }
-.commonNowrap{
+
+.commonNowrap {
 	display: none;
 }
-.commonNocontent{
+
+.commonNocontent {
 	padding: 150px 20px;
 	text-align: center;
 }
+
 .common-article-content {
 	padding: 20px 20px 10px;
 }
@@ -252,6 +263,7 @@
 	/*  autoprefixer: on */
 	-webkit-line-clamp: 4;
 }
+
 .srow3-content {
 	/*font-family: PingFang-SC-Medium;*/
 	/*height: 118px;*/
@@ -376,7 +388,9 @@
 .attention-code {
 	height: 160px;
 	position: relative;
+	
 }
+
 
 .attention-hot {
 	/*height: 300px;*/
@@ -396,7 +410,7 @@
 .common-attention-code {
 	width: 116px;
 	height: 116px;
-	border: 1px solid rgba(0, 0, 0, 0.07);
+	/*border: 1px solid rgba(0, 0, 0, 0.07);*/
 	display: inline-block;
 }
 
@@ -405,15 +419,34 @@
 	height: 100%;
 }
 
+.attentionIcon {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	width: 80px;
+	right: 61px;
+	top: 36px;
+}
+
+.attentionIcon img {
+	width: 31%;
+}
+
+.attentionTitle {
+	color: #fff;
+	font-size: 17px;
+	margin-left: 8px;
+}
+
 .common-attention-down {
 	/*font-family: PingFang-SC-Bold;*/
-	font-size: 16px;
-	color: rgb(59, 136, 246);
-	width: 110px;
+	font-size: 15px;
+	color: #fff;
+	width: 108px;
 	position: absolute;
-	top: 44px;
+	bottom: 30px;
 	line-height: 28px;
-	right: 22px;
+	right: 33px;
 }
 
 
@@ -466,7 +499,10 @@
 	font-size: 14px;
 	color: rgb(133, 144, 166);
 }
+
+
 /*站长按钮*/
+
 .zbtnL {
 	width: 50px;
 	height: 26px;
@@ -479,7 +515,10 @@
 	position: absolute;
 	right: 10px;
 }
+
+
 /*活跃用户*/
+
 .btnL {
 	width: 50px;
 	height: 26px;
@@ -492,9 +531,6 @@
 	position: absolute;
 	right: 10px;
 }
-
-
-
 
 
 /*加载更多*/
@@ -518,16 +554,19 @@
 
 
 /*项目主页*/
-.projectName-nameL{
-	color: rgb(51,51,51);
+
+.projectName-nameL {
+	color: rgb(51, 51, 51);
 	font-size: 14px;
 }
-.projectName-timeL{
+
+.projectName-timeL {
 	width: 110px;
-	color:rgb(133,144,166) ;
+	color: rgb(133, 144, 166);
 	line-height: 14px;
 	margin-top: 3px;
 }
+
 .projectwrap {
 	font-size: 15px;
 	color: rgb(51, 51, 51);
@@ -539,7 +578,8 @@
 	float: left;
 	width: 180px;
 }
-.projectMiddle{
+
+.projectMiddle {
 	float: left;
 	width: 144px;
 }
@@ -563,9 +603,11 @@
 	list-style: none;
 	overflow: hidden;
 }
-.projectUl li:hover{
+
+.projectUl li:hover {
 	box-shadow: 1px 1px 3px rgba(200, 200, 200, 0.48);
 }
+
 .photoP {
 	width: 32px;
 	height: 32px;
@@ -618,22 +660,28 @@
 .projectScore {
 	top: 0;
 }
-.specialleftname{
-	width:200px;
-	height:50px;
+
+.specialleftname {
+	width: 200px;
+	height: 50px;
 }
+
+
 /*项目列表*/
-.projectintroduce{
+
+.projectintroduce {
 	padding: 10px 0;
 }
-.projectmore{
+
+.projectmore {
 	cursor: pointer;
 	color: #3b88f6;
 }
-.projectintroduceS{
+
+.projectintroduceS {
 	font-family: PingFang-SC-Medium;
 	font-size: 14px;
-	color: rgb(51,51,51);
+	color: rgb(51, 51, 51);
 	line-height: 25px;
 	height: 76px;
 	overflow: hidden;
@@ -645,36 +693,42 @@
 	/*  autoprefixer: on */
 	-webkit-line-clamp: 3;
 }
-.attenList{
+
+.attenList {
 	margin-top: 10px;
 }
-.attenListname  li{
+
+.attenListname li {
 	font-family: PingFang-SC-Medium;
-	color: rgb(51,51,51);
+	color: rgb(51, 51, 51);
 	display: flex;
 	font-size: 14px;
 	/*width: 110px;*/
 	padding-bottom: 10px;
 	position: relative;
 }
-.attenListname  li span{
+
+.attenListname li span {
 	display: inline-block;
 	width: 110px;
 	word-break: break-word;
 }
 
-.rightname{
+.rightname {
 	text-decoration: underline;
 }
 
+
 /*个人主页*/
-.imgV{
+
+.imgV {
 	width: 20px;
 	height: 20px;
 	position: absolute;
-	left:46px;
+	left: 46px;
 	bottom: -2px;
 }
+
 .onephoto {
 	width: 70px;
 	height: 70px;
@@ -689,14 +743,14 @@
 .onephoto .onephotoImg {
 	width: 40px;
 	height: 40px;
-	border-radius:50% ;
-}
-.oneceterImg{
-	width: 100%;
-	height: 100%;
-	border-radius:50% ;
+	border-radius: 50%;
 }
 
+.oneceterImg {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
 
 .oneusername {
 	font-size: 18px;
@@ -711,13 +765,16 @@
 .commmon1 ul {
 	overflow: hidden;
 }
-.onecommon{
+
+.onecommon {
 	margin-top: 20px;
 }
-.onecommon ul{
+
+.onecommon ul {
 	overflow: hidden;
 	height: 30px;
 }
+
 .onecommon ul li {
 	list-style: none;
 	float: left;
@@ -733,7 +790,7 @@
 	display: inline-block;
 	width: 20%;
 	margin: 2px 5%;
-	border-bottom: 3px solid rgb(59,136,246);
+	border-bottom: 3px solid rgb(59, 136, 246);
 	border-radius: 26%;
 	position: absolute;
 	bottom: -5px;
@@ -744,7 +801,7 @@
 	.indexCommon {
 		width: 930px;
 	}
-	.projectCommon{
+	.projectCommon {
 		width: 937px;
 	}
 	.common-article {
@@ -754,11 +811,10 @@
 	.common-attention {
 		width: 257px;
 	}
-	.project-attention{
-	width: 257px;
-	margin-right: 2px;
-	
-}
+	.project-attention {
+		width: 257px;
+		margin-right: 2px;
+	}
 	.common-attention1 {
 		width: 257px;
 		left: 671px;
@@ -793,7 +849,13 @@
 	.common-attention-down {
 		width: 95px;
 		font-size: 14px;
-		right: 20px;
+		bottom: 21px;
+		right: 24px;
+	}
+	.attentionIcon {
+		width: 80px;
+		right: 39px;
+		top: 29px;
 	}
 	.btnL {
 		right: 0;
@@ -810,7 +872,13 @@
 	.detailcommmon {
 		width: 670px;
 	}
-	.test{
+	.test {
 		width: 540px;
-	} 
+	}
+	.attentionTitle {
+		font-size: 15px;
+	}
+	.attentionIcon img {
+		width: 27%;
+	}
 }

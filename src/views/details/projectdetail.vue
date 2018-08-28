@@ -412,8 +412,10 @@
 						})
 					}
 				} else {
-					this.$alert('前去登录', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 
@@ -464,8 +466,10 @@
 						})
 					}
 				} else {
-					this.$alert('前去登录', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 
@@ -530,8 +534,10 @@
 						});
 					}
 				} else {
-					this.$alert('前去登录', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 

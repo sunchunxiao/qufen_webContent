@@ -14,13 +14,21 @@ export const userRouter = [
 //  },
 //  component: (resolve) => require(['@/views/user/codeLogin.vue'], resolve)
 //},
-  //注册 登录
+  //注册 
   {
     path: "/user/register",
     meta: {
       title: '注册',
     },
-    component: (resolve) => require(['@/views/user/register.vue'], resolve)
+    component: (resolve) => require(['@/views/user/register1.vue'], resolve)
+  },
+  //登录
+  {
+    path: "/user/login",
+    meta: {
+      title: '注册',
+    },
+    component: (resolve) => require(['@/views/user/login.vue'], resolve)
   }
 
 ]

@@ -35,7 +35,7 @@
 								<div class="row row3">
 									<div class="discoveryContent">
 										<!--缩略图-->
-										<div v-for="item1 in item.postSmallImages" class="contentImg">
+										<div v-for="item1 in item.postSmallImagesList" class="contentImg">
 											<img :src="item1.fileUrl" />
 										</div>
 										<p class="row3-content add">
@@ -233,8 +233,10 @@
 						});
 					}
 				} else {
-					this.$alert('前去登录', {
-						confirmButtonText: '确定',
+					this.$message({
+						type: 'info',
+						message: '登陆后关注更多内容',
+						duration: 1000
 					});
 				}
 
@@ -267,16 +269,12 @@
 						}
 						this.hasNext = res.data.articles.hasNext
 						for(var i = 0; i < res.data.articles.rows.length; i++) {
-							if(res.data.articles.rows[i].postSmallImages != null) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
 
-								} else {
-									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+							if(res.data.articles.rows[i].postSmallImagesList != null) {
+								if(res.data.articles.rows[i].postSmallImagesList.length != 0) {
+									res.data.articles.rows[i].postSmallImagesList = res.data.articles.rows[i].postSmallImagesList.slice(0, 1)
 								}
+
 							}
 
 							//时间  字符串切割
@@ -327,16 +325,11 @@
 						this.hasNext = res.data.articles.hasNext
 						for(var i = 0; i < res.data.articles.rows.length; i++) {
 							this.itemList.push(res.data.articles.rows[i]);
-							if(res.data.articles.rows[i].postSmallImages) {
-								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-								var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
-								if(postSmallImages.length != 0) {
-									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-									//									console.log(postSmallImages.slice(0, 1))
-								} else {
-									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-
+							if(res.data.articles.rows[i].postSmallImagesList != null) {
+								if(res.data.articles.rows[i].postSmallImagesList.length != 0) {
+									res.data.articles.rows[i].postSmallImagesList = res.data.articles.rows[i].postSmallImagesList.slice(0, 1)
 								}
+
 							}
 
 							//时间  字符串切割
