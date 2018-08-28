@@ -211,10 +211,11 @@
 							} else {
 								res.data.articles.rows[i].createTimeStr = arr[0];
 							}
-
-							this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.articles.rows[i].tagInfos = this.tagInfos
+							if(res.data.articles.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.articles.rows[i].tagInfos = this.tagInfos
+							}
 
 						}
 						if(res.data.articles.rows.length > 2) {

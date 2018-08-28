@@ -214,7 +214,7 @@
 							} else {
 								res.data.discusses.rows[i].createTimeStr = arr[0];
 							}
-							if(res.data.discusses.rows[i].tagInfos !== null) {
+							if(res.data.discusses.rows[i].tagInfos != null) {
 								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
 								// console.log(this.tagInfos)
 								res.data.discusses.rows[i].tagInfos = this.tagInfos
@@ -278,7 +278,7 @@
 								res.data.discusses.rows[i].createTimeStr = arr[0];
 
 							}
-							if(res.data.discusses.rows[i].tagInfos !== null) {
+							if(res.data.discusses.rows[i].tagInfos != null) {
 								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
 								// console.log(this.tagInfos)
 								res.data.discusses.rows[i].tagInfos = this.tagInfos

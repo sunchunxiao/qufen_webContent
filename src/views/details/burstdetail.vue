@@ -296,9 +296,11 @@
 								res.data.discusses.rows[i].createTimeStr = arr[0];
 							}
 
-							this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.discusses.rows[i].tagInfos = this.tagInfos
+							if(res.data.discusses.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.discusses.rows[i].tagInfos = this.tagInfos
+							}
 
 						}
 						if(res.data.discusses.rows.length > 2) {
@@ -358,10 +360,11 @@
 								res.data.discusses.rows[i].createTimeStr = arr[0];
 
 							}
-
-							this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.discusses.rows[i].tagInfos = this.tagInfos
+							if(res.data.discusses.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.discusses.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.discusses.rows[i].tagInfos = this.tagInfos
+							}
 
 						}
 						if(this.hasNext == false) {

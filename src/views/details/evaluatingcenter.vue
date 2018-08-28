@@ -6,7 +6,7 @@
 				<div class="">
 					<div class="common-article-wrap commonNowrap">
 						<div class="commonNocontent">
-							<img src="../../assets/common/content.png"/>
+							<img src="../../assets/common/content.png" />
 						</div>
 					</div>
 					<!--文章-->
@@ -117,7 +117,7 @@
 		},
 		mounted() {
 			console.log(this.$route.query.id)
-			
+
 			this.id = this.$route.query.id - 0;
 
 			this.loadPageList() //加载文章
@@ -224,14 +224,13 @@
 
 						} else {
 							$(".start").css("display", "none")
-							$(".commonNowrap").css("display","block")
-							
+							$(".commonNowrap").css("display", "block")
+
 						}
 
 					}
 
 				})
-
 
 			},
 
@@ -276,10 +275,11 @@
 								res.data.evaluations.rows[i].createTimeStr = arr[0];
 
 							}
-
-							this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.evaluations.rows[i].tagInfos = this.tagInfos
+							if(res.data.evaluations.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.evaluations.rows[i].tagInfos = this.tagInfos
+							}
 
 						}
 						if(this.hasNext == false) {

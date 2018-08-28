@@ -7,7 +7,7 @@
 					<!--如果没有数据显示的样式-->
 					<div class="common-article-wrap commonNowrap">
 						<div class="commonNocontent">
-							<img src="../../assets/common/content.png"/>
+							<img src="../../assets/common/content.png" />
 						</div>
 					</div>
 					<!--文章-->
@@ -293,9 +293,11 @@
 								res.data.articles.rows[i].createTimeStr = arr[0];
 							}
 
-							this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.articles.rows[i].tagInfos = this.tagInfos
+							if(res.data.articles.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.articles.rows[i].tagInfos = this.tagInfos
+							}
 
 						}
 						if(res.data.articles.rows.length > 2) {
@@ -352,10 +354,12 @@
 								res.data.articles.rows[i].createTimeStr = arr[0];
 
 							}
+							if(res.data.articles.rows[i].tagInfos != null) {
+								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
+								// console.log(this.tagInfos)
+								res.data.articles.rows[i].tagInfos = this.tagInfos
+							}
 
-							this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-							// console.log(this.tagInfos)
-							res.data.articles.rows[i].tagInfos = this.tagInfos
 						}
 						if(this.hasNext == false) {
 							$(".end").css("display", "block")
