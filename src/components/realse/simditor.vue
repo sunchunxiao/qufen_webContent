@@ -56,7 +56,7 @@
 				}).catch(function(res) {
 					alert(res.msg)
 					if(res.msg == "用户未登录, 请重新登录") {
-						_this.$router.push('/user/register')
+						_this.$router.push('/user/login')
 					}
 				});
 			},

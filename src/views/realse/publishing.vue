@@ -136,10 +136,10 @@
 				<!--<simditor :value.sync='value' v-ref:simditor></simditor>-->
 			</div>
 			<div>
-				<h3 class="p">标签</h3>
+				<h3 class="p">选择标签</h3>
 				<p class="upload-img">选择爆料标签，最多三个</p>
 				<div class="max-nine" v-for="(item,index1) in tag">
-					<h3 class="p">{{item.typeName}}</h3>
+					<div class="previewfontSize">{{item.typeName}}</div>
 					<ul class="label">
 						<li class="labelLi" v-for="(item1,index) in item.dtagsList" @click="dian(item1.tagName,item1.tagId,index,index1)" >{{item1.tagName}}</li>
 					</ul>

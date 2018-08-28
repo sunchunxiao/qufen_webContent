@@ -42,7 +42,7 @@
 											<Icon type="arrow-down-b"></Icon>
 										</a>
 										<DropdownMenu slot="list">
-											<!--<DropdownItem><span @click="onecenter">用户主页</span></DropdownItem>-->
+											<DropdownItem><span @click="onecenter">个人主页</span></DropdownItem>
 											<DropdownItem><span @click="attention">认证</span></DropdownItem>
 											
 											<DropdownItem>
@@ -80,7 +80,7 @@
 		},
 
 		mounted() {
-
+//			console.log(getCookie('uid'))
 			//登录后
 			if(getCookie('username') && getCookie('token')) {
 				$(".header-select").css("display", "block")
@@ -116,6 +116,10 @@
 			this.handleSelect()
 		},
 		methods: {
+			onecenter() {
+				var id = getCookie('uid')
+				window.open('/onecenter?id=' + id, "_blank")
+			},
 //			未登录时点击头像
 			go(){
 				this.$router.push("/user/login")

@@ -104,7 +104,7 @@
 						<div class="attention-wrap">
 							<div class="margin-bottom-10 " style="font-size: 13px;">本网站更多功能还在完善中，请耐心等待...</div>
 							<div class="margin-bottom-10 " style="font-size: 13px;">官方QQ群：820043115</div>
-							<div class="margin-bottom-10 " style="font-size: 13px;">官方微信：qudong0405</div>
+							<div class="margin-bottom-10 " style="font-size: 13px;">微信公众号：qufenfind</div>
 							<div class="margin-bottom-10 " style="font-size: 13px;">微信客服：qudong0405</div>
 							<div class="margin-bottom-10 " style="font-size: 13px;">官方微信社区</div>
 							<div class="common-attention-code">

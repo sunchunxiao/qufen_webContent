@@ -130,6 +130,7 @@
 								setCookie('user', res.data.userModel.userNick, timer)
 								setCookie('userType', res.data.userModel.userType, timer)
 								setCookie('token', res.data.s, timer)
+								setCookie('uid', res.data.userModel.uid, timer)
 
 								this.$router.push("/discovery")
 								//							window.open('/discovery', "_blank")
