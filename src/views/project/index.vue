@@ -48,13 +48,17 @@
 				<!--右边消息-->
 				<div class="common-attention">
 					<!--二维码-->
-					<div class="attention-code attention-bag margin-bottom">
+					<div class="attention-code  margin-bottom">
 						<div class="attention-wrap">
 							<div class="common-attention-code">
 								<div style="padding: 7px;">
-									<img src="../../assets/common/download.png" />
+									<img style="border-radius: 4px;" src="https://pic.qufen.top/Appdownload.png" />
 								</div>
-								<p class="common-attention-down">下载区分APP不一样的区分</p>
+								<div class="attentionIcon">
+									<img src="../../assets/common/attentionicon.png" />
+									<span class="attentionTitle">区分</span>
+								</div>
+								<p class="common-attention-down">币圈大众点评 下载区分APP</p>
 							</div>
 						</div>
 					</div>
