@@ -89,7 +89,7 @@
 		//		watch: {
 		//			//监测主菜单路由变化
 		//			$route: function() {
-		//				this.activeIndex = this.$route.path 
+		//				this.activeIndex = this.$route.path
 		//			}
 		//		}
 		methods: {
@@ -103,7 +103,7 @@
 			//				}
 			//			},
 			login() {
-				var myreg = /^1[34578]\d{9}$/;
+        var myreg = /^1[3456789]\d{9}$/;
 				//				console.log($("#autolog").is(":checked"))
 				if($("#autolog").is(":checked") == true) {
 					setCookie('rmbUser', "true", timer)

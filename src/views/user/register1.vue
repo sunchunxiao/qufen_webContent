@@ -84,7 +84,7 @@
 						//发送获取验证码的接口请求
 						var show = true
 						if(show) { //倒计时内只能点一次
-							
+
 							getCode({
 								phone: $(".a1").val(),
 								module: "register"
@@ -92,7 +92,7 @@
 								_this.$alert(error.msg, {
 									confirmButtonText: '确定',
 								});
-								
+
 							})
 						}
 						const TIME_COUNT = 60;
@@ -121,7 +121,7 @@
 					}
 					$.ajax({
 //						url: 'http://192.168.10.153:803/kff/startCaptcha/checkStartCaptcha', //这里的地址是根据你的后台接口的地址
-						url: '/wap/kff/startCaptcha/checkStartCaptcha', 
+						url: '/wap/kff/startCaptcha/checkStartCaptcha',
 						type: 'POST',
 						dataType: 'json',
 						data: {
@@ -145,7 +145,7 @@
 //					console.log($(".getCode").html())
 					var phone = $(".a1").val()
 					var getCode = $(".getCode").html()
-					var myreg = /^1[345789]\d{9}$/;
+          var myreg = /^1[3456789]\d{9}$/;
 
 					if(phone != '') {
 						if(myreg.test(phone)) {
@@ -161,13 +161,13 @@
 					}
 
 				});
-			
+
 
 				// 更多接口说明请参见：http://docs.geetest.com/install/client/web-front/
 			}
 			$.ajax({ //这个地址也是需要根据自己的后台接口地址来改动
 //				url: "http://192.168.10.153:803/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(), // 加随机数防止缓存
-				url: "/wap/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(), 
+				url: "/wap/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(),
 				type: "get",
 				dataType: "json",
 				success: function(data) {
@@ -196,14 +196,14 @@
 		//		watch: {
 		//			//监测主菜单路由变化
 		//			$route: function() {
-		//				this.activeIndex = this.$route.path 
+		//				this.activeIndex = this.$route.path
 		//			}
 		//		}
 		methods: {
 
 			//注册
 			register() {
-				var myreg = /^1[345789]\d{9}$/;
+				var myreg = /^1[3456789]\d{9}$/;
 				if(this.registerphone == "") {
 					this.$message({
 						type: 'error',
@@ -216,21 +216,21 @@
 						message: '手机号码格式错误',
 						duration: 1000
 					});
-					
+
 				} else if(this.code == "") {
 					this.$message({
 						type: 'error',
 						message: '请输入验证码',
 						duration: 1000
 					});
-					
+
 				} else if(this.password1 == "") {
 					this.$message({
 						type: 'error',
 						message: '请输入密码',
 						duration: 1000
 					});
-					
+
 				} else {
 
 					let data = {
@@ -246,11 +246,11 @@
 								this.$message('注册成功');
 								this.$router.push('/user/login')
 							}
-							
+
 						}
 
 					}).catch(function(error) {
-						
+
 						_this.$alert(error.msg, {
 							confirmButtonText: '确定',
 						});
