@@ -119,7 +119,8 @@
 						console.log(result)
 					}
 					$.ajax({
-						url: 'http://192.168.10.153:803/kff/startCaptcha/checkStartCaptcha', //这里的地址是根据你的后台接口的地址
+//						url: 'http://192.168.10.153:803/kff/startCaptcha/checkStartCaptcha', //这里的地址是根据你的后台接口的地址
+						url: '/wap/kff/startCaptcha/checkStartCaptcha', 
 						type: 'POST',
 						dataType: 'json',
 						data: {
@@ -164,7 +165,8 @@
 				// 更多接口说明请参见：http://docs.geetest.com/install/client/web-front/
 			}
 			$.ajax({ //这个地址也是需要根据自己的后台接口地址来改动
-				url: "http://192.168.10.153:803/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(), // 加随机数防止缓存
+//				url: "http://192.168.10.153:803/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(), // 加随机数防止缓存
+				url: "/wap/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(), 
 				type: "get",
 				dataType: "json",
 				success: function(data) {

@@ -53,26 +53,6 @@ var handler = function(captchaObj) {
 
 		}
 
-		//            $.ajax({
-		//                     url: 'http://192.168.10.151:803/kff/startCaptcha/checkStartCaptcha', //这里的地址是根据你的后台接口的地址
-		//                     type: 'POST',
-		//                    dataType: 'json',
-		//                    data: {
-		//                        geetest_challenge: result.geetest_challenge,
-		//                          geetest_validate: result.geetest_validate,
-		//                          geetest_seccode: result.geetest_seccode
-		//                     },
-		//                  success: function (data) {
-		//                       if (data.status === 'success') {
-		//                             alert('登录成功');
-		//                         } else if (data.status === 'fail') {
-		//                             alert('登录失败，请完成验证');
-		//                            captchaObj.reset();
-		//                         }
-		//                    }
-		//              });
-//	})
-
 	$('#getBtn').click(function () {
             // 调用之前先通过前端表单校验
             captchaObj.verify();
@@ -82,6 +62,7 @@ var handler = function(captchaObj) {
 
 $.ajax({ //这个地址也是需要根据自己的后台接口地址来改动
 	url: "http://192.168.10.128:8081/wap/kff/startCaptcha/sendStartCaptcha?t=" + (new Date()).getTime(), // 加随机数防止缓存
+	
 	type: "get",
 	dataType: "json",
 	success: function(data) {
