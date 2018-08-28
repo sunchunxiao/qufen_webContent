@@ -232,9 +232,9 @@
 							console.log(res.msg)
 							if(res.msg = 'Success') {
 								this.$message('注册成功');
+								this.$router.push('/user/login')
 							}
-							this.showLogin = true
-							this.showRegister = false
+							
 						}
 
 					}).catch(function(error) {
