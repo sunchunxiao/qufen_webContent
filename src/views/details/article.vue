@@ -271,6 +271,7 @@
 					}
 				}).catch(function(res) {
 					$(".previewContent").css('display', "none")
+					$(".start").css("display","none")
 				});
 			},
 			previewmore() {

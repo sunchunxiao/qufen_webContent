@@ -257,6 +257,8 @@
 				}).catch(function(res) {
 					console.log(res.msg)
 					$(".previewContent").css('display', "none")
+					$(".start").css("display","none")
+						
 				});
 			},
 			previewmore() {
