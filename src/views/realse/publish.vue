@@ -4,7 +4,6 @@
 	#tinymceEditer_ifr {
 		height: 350px;
 	}
-	
 	/*.ivu-row {
 		margin: 40px 0;
 	}*/
@@ -104,13 +103,14 @@
 	import Simditor from '../../components/realse/simditor.vue'
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
-	import { searchEvaluation, publishW,getTagsAndTagType} from '@/service/publish'
+	import { searchEvaluation, publishW, getTagsAndTagType } from '@/service/publish'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		name: 'index',
 		data() {
 			return {
 				value3: 8,
+				changev: 0,
 				search: "",
 				m: "",
 				a: "",
@@ -174,13 +174,13 @@
 					//发布成功
 					if(res.code == 0) {
 						this.tag = res.data.result
-//						console.log(result)
+						//						console.log(result)
 						for(let i = 0; i < this.tag.length; i++) {
 							var result = this.tag[i]
-//							console.log(result)
+							//							console.log(result)
 							for(let j = 0; j < result.dtagsList.length; j++) {
 								this.tag[i].dtagsList[j].seen = false
-//								console.log(this.tag[i].dtagsList[j])
+								//								console.log(this.tag[i].dtagsList[j])
 
 							}
 						}
@@ -193,7 +193,7 @@
 				console.log(status, name, id, index, index1)
 				console.log(this.tag[index1].dtagsList[index].seen)
 				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
-				
+
 				if(index1 == 0) {
 					if(this.tag[index1].dtagsList[index].seen == true) {
 						$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#408ff1");
@@ -277,7 +277,6 @@
 
 					}
 				}
-
 
 			},
 			//模糊查询接收数据
@@ -439,6 +438,8 @@
 			//改变进度条
 			change(value, percent, index) {
 
+				this.changev = value
+				console.log(this.changev)
 				var num = 0;
 				//框架的进度条默认100,换成十进制
 				var a = parseFloat(percent / 100)
@@ -536,86 +537,95 @@
 						type: 'error'
 					});
 				} else {
-					if(this.articleTitle != "") {
-						if(this.articleTitle.length <= 60) {
-							if(ddsd == "") {
-								this.$message({
-									showClose: true,
-									message: '内容不能为空',
-									type: 'error'
-								});
-							} else {
-								if(ddsd.toString().length < 25000) {
-
-									this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
-										confirmButtonText: '确认发布',
-										cancelButtonText: '再斟酌下  ',
-										type: 'warning',
-										center: true
-									}).then(() => {
-										//点击发布显示正在发布中
-										$(".web-tip").show();
-
-										setTimeout(() => {
-											//发送请求  发布文章publishW
-											let data = {
-												token: this.token,
-												projectName: this.search,
-												modelType: 2,
-												totalScore: this.m,
-												postTitle: this.articleTitle,
-												evauationContent: $("textarea").val(),
-												professionalEvaDetail: JSON.stringify(this.arr),
-												evaluationTags: JSON.stringify(this.tagthree)
-											}
-
-											publishW(data).then(res => {
-
-												if(res.code == 0) {
-													localStorage.setItem("url", JSON.stringify(res.data))
-													this.$router.push('/previewsuc');
-
-												}
-											}).catch(function(error) {
-												//如果后台报错就关闭弹窗
-												$(".web-tip").hide();
-
-												alert(error.msg);
-
-											});
-										}, 500);
-
-									}).catch(() => {
-										this.$message({
-											type: 'info',
-											message: '已取消',
-											duration: 1500
-										});
-									});
-
-								} else {
+					if(this.changev != 0) {
+						if(this.articleTitle != "") {
+							if(this.articleTitle.length <= 60) {
+								if(ddsd == "") {
 									this.$message({
 										showClose: true,
-										message: '内容不符合，不能为空',
+										message: '内容不能为空',
 										type: 'error'
 									});
+								} else {
+									if(ddsd.toString().length < 25000) {
 
+										this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
+											confirmButtonText: '确认发布',
+											cancelButtonText: '再斟酌下  ',
+											type: 'warning',
+											center: true
+										}).then(() => {
+											//点击发布显示正在发布中
+											$(".web-tip").show();
+
+											setTimeout(() => {
+												//发送请求  发布文章publishW
+												let data = {
+													token: this.token,
+													projectName: this.search,
+													modelType: 2,
+													totalScore: this.m,
+													postTitle: this.articleTitle,
+													evauationContent: $("textarea").val(),
+													professionalEvaDetail: JSON.stringify(this.arr),
+													evaluationTags: JSON.stringify(this.tagthree)
+												}
+
+												publishW(data).then(res => {
+
+													if(res.code == 0) {
+														localStorage.setItem("url", JSON.stringify(res.data))
+														this.$router.push('/previewsuc');
+
+													}
+												}).catch(function(error) {
+													//如果后台报错就关闭弹窗
+													$(".web-tip").hide();
+
+													alert(error.msg);
+
+												});
+											}, 500);
+
+										}).catch(() => {
+											this.$message({
+												type: 'info',
+												message: '已取消',
+												duration: 1500
+											});
+										});
+
+									} else {
+										this.$message({
+											showClose: true,
+											message: '内容不符合，不能为空',
+											type: 'error'
+										});
+
+									}
 								}
+							} else {
+								this.$message({
+									showClose: true,
+									message: '标题小于60字',
+									type: 'error'
+								});
+
 							}
+
 						} else {
 							this.$message({
 								showClose: true,
-								message: '标题小于60字',
+								message: '标题不能为空',
 								type: 'error'
 							});
-
 						}
-
 					} else {
 						this.$message({
 							showClose: true,
-							message: '标题不能为空',
-							type: 'error'
+							message: "请评分",
+							type: 'error',
+							duration: 1500
 						});
 					}
 

@@ -269,6 +269,7 @@ li {
 /*评测*/
 
 .articleContent {
+	line-height: 26px;
 	font-size: 16px;
 	position: relative;
 }

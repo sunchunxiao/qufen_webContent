@@ -5,7 +5,6 @@
 		text-align: left;
 	}
 	
-	
 	.evaluation .add {
 		display: inline-block;
 		width: 200px;
@@ -65,7 +64,6 @@
 		padding: 15px 0 10px 20px;
 		display: none;
 	}
-	
 	/*.scale {
 		background: #408ff1;
 	}*/
@@ -141,7 +139,7 @@
 				<div class="max-nine" v-for="(item,index1) in tag">
 					<div class="previewfontSize">{{item.typeName}}</div>
 					<ul class="label">
-						<li class="labelLi" v-for="(item1,index) in item.dtagsList" @click="dian(item1.tagName,item1.tagId,index,index1)" >{{item1.tagName}}</li>
+						<li class="labelLi" v-for="(item1,index) in item.dtagsList" @click="dian(item1.tagName,item1.tagId,index,index1)">{{item1.tagName}}</li>
 					</ul>
 				</div>
 				<Row class="margin-top-20 publish-button-con">
@@ -165,9 +163,9 @@
 			return {
 				isScale: undefined,
 				value3: 8,
-				//				value: "",
+				changev: 0,
 				search: "",
-				m: 8,
+				m: 6,
 				disabled: false,
 				a: "",
 				tag: [],
@@ -229,13 +227,13 @@
 					//发布成功
 					if(res.code == 0) {
 						this.tag = res.data.result
-//						console.log(result)
+						//						console.log(result)
 						for(let i = 0; i < this.tag.length; i++) {
 							var result = this.tag[i]
-//							console.log(result)
+							//							console.log(result)
 							for(let j = 0; j < result.dtagsList.length; j++) {
 								this.tag[i].dtagsList[j].seen = false
-//								console.log(this.tag[i].dtagsList[j])
+								//								console.log(this.tag[i].dtagsList[j])
 
 							}
 						}
@@ -248,7 +246,7 @@
 				console.log(status, name, id, index, index1)
 				console.log(this.tag[index1].dtagsList[index].seen)
 				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
-				
+
 				if(index1 == 0) {
 					if(this.tag[index1].dtagsList[index].seen == true) {
 						$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#408ff1");
@@ -332,7 +330,6 @@
 
 					}
 				}
-
 
 			},
 
@@ -627,7 +624,9 @@
 			},
 
 			change1(value) {
-				//				console.log(value)
+
+				this.changev = value
+				console.log(this.changev)
 				if(value >= 0 && value < 3) {
 					$(".cp1").html("D")
 				}
@@ -817,7 +816,6 @@
 			},
 			//发布
 			handlePublish() {
-
 				this.arr = [];
 				for(let i = 0; i < this.listData.length; i++) {
 					this.arr.push({
@@ -827,6 +825,7 @@
 						score: this.listData[i].value
 					});
 				}
+				
 				//去除文本编译器的标签
 				var dd = $("textarea").val().replace(/<\/?.+?>/g, "");
 
@@ -834,76 +833,102 @@
 				var ddsd = dds.replace(/&nbsp;/ig, "");
 				//				console.log(ddsd,ddsd.length)
 				if(this.search == "") {
-					this.$alert('请选择项目', {
-						confirmButtonText: '确定',
+					this.$message({
+						showClose: true,
+						message: "请选择项目",
+						type: 'error',
+						duration: 1000
 					});
+
 				} else if(this.articleTitle != "") {
 					if(this.articleTitle.length <= 60) {
 						if(this.listData.length == 0) {
-							if(ddsd == "") {
-								this.$alert('发布内容不能为空', {
-									confirmButtonText: '确定',
-								});
-							} else {
-								if(ddsd.toString().length < 25000) {
-
-									this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
-										confirmButtonText: '确认发布',
-										cancelButtonText: '再斟酌下  ',
-										type: 'warning',
-										center: true
-									}).then(() => {
-										//点击发布显示正在发布中
-										$(".web-tip").show();
-										setTimeout(() => {
-											let data = {
-												token: this.token,
-												projectName: this.search,
-												modelType: 4,
-												totalScore: this.m,
-												postTitle: this.articleTitle,
-												evauationContent: $("textarea").val(),
-												evaluationTags: JSON.stringify(this.tagthree)
-											}
-											publishW(data).then(res => {
-												//发布成功
-												if(res.code == 0) {
-													console.log(res.data)
-													localStorage.setItem("url", JSON.stringify(res.data))
-													this.$router.push('/previewsuc');
-												}
-											}).catch(function(error) {
-												//如果后台报错就关闭弹窗
-												$(".web-tip").hide();
-
-												alert(error.msg)
-
-											});
-										}, 500);
-
-									}).catch(() => {
-										this.$message({
-											type: 'info',
-											message: '已取消',
-											duration: 1500
-										});
+							if(this.changev != 0) {
+								if(ddsd == "") {
+									this.$message({
+										showClose: true,
+										message: "发布内容不能为空",
+										type: 'error',
+										duration: 1000
 									});
-
+									//									this.$alert('发布内容不能为空', {
+									//										confirmButtonText: '确定',
+									//									});
 								} else {
-									this.$alert('内容不符合，不能为空', {
-										confirmButtonText: '确定',
-									});
+									if(ddsd.toString().length < 25000) {
 
+										this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
+											confirmButtonText: '确认发布',
+											cancelButtonText: '再斟酌下  ',
+											type: 'warning',
+											center: true
+										}).then(() => {
+											//点击发布显示正在发布中
+											$(".web-tip").show();
+											setTimeout(() => {
+												let data = {
+													token: this.token,
+													projectName: this.search,
+													modelType: 4,
+													totalScore: this.m,
+													postTitle: this.articleTitle,
+													evauationContent: $("textarea").val(),
+													evaluationTags: JSON.stringify(this.tagthree)
+												}
+												publishW(data).then(res => {
+													//发布成功
+													if(res.code == 0) {
+														console.log(res.data)
+														localStorage.setItem("url", JSON.stringify(res.data))
+														this.$router.push('/previewsuc');
+													}
+												}).catch(function(error) {
+													//如果后台报错就关闭弹窗
+													$(".web-tip").hide();
+
+													alert(error.msg)
+
+												});
+											}, 500);
+
+										}).catch(() => {
+											this.$message({
+												type: 'info',
+												message: '已取消',
+												duration: 1500
+											});
+										});
+
+									} else {
+										this.$message({
+											showClose: true,
+											message: "内容不能为空",
+											type: 'error',
+											duration: 1000
+										});
+
+									}
 								}
+							} else {
+								this.$message({
+									showClose: true,
+									message: "请评分",
+									type: 'error',
+									duration: 1500
+								});
 							}
 
 						} else {
 							if(this.q == 1) {
 								console.log(this.q)
 								if(ddsd == "") {
-									this.$alert('发布内容不能为空', {
-										confirmButtonText: '确定',
+									this.$message({
+										showClose: true,
+										message: "发布内容不能为空",
+										type: 'error',
+										duration: 1000
 									});
+
 								} else {
 									if(dds.toString().length < 25000) {
 										this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师：', {
@@ -952,8 +977,11 @@
 										});
 
 									} else {
-										this.$alert('内容不符合，不能为空', {
-											confirmButtonText: '确定',
+										this.$message({
+											showClose: true,
+											message: "内容不符合，不能为空",
+											type: 'error',
+											duration: 1000
 										});
 
 									}
@@ -961,21 +989,31 @@
 								}
 
 							} else {
-								this.$alert('权重总和要为1', {
-									confirmButtonText: '确定',
+								this.$message({
+									showClose: true,
+									message: "权重总和要为1",
+									type: 'error',
+									duration: 1000
 								});
 
 							}
 						}
 					} else {
-						this.$alert('标题小于60字', {
-							confirmButtonText: '确定',
+						this.$message({
+							showClose: true,
+							message: "标题小于60字",
+							type: 'error',
+							duration: 1000
 						});
+
 					}
 
 				} else {
-					this.$alert('标题不能为空', {
-						confirmButtonText: '确定',
+					this.$message({
+						showClose: true,
+						message: "标题不能为空",
+						type: 'error',
+						duration: 1000
 					});
 
 				}
