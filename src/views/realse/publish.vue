@@ -7,34 +7,34 @@
 	/*.ivu-row {
 		margin: 40px 0;
 	}*/
-	
+
 	.ivu-input-group .ivu-input {
 		width: 25%;
 		text-align: center;
 	}
-	
+
 	.ivu-card-shadow {
 		box-shadow: none;
 	}
-	
+
 	.little {
 		font-size: 14px;
 	}
-	
+
 	.pc-title {
 		font-size: 15px;
 	}
-	
+
 	.evaluation .el-slider__runway.disabled .el-slider__bar {
 		background-color: #000;
 	}
-	
+
 	.pcInfo {
 		width: 800px;
 		margin-top: 15px;
 		box-shadow: 0 2px 7px 0 rgba(103, 166, 255, 0.37);
 	}
-	
+
 	.pcInfo:hover {
 		box-shadow: 0 2px 12px 0 rgba(103, 166, 255, 0.27);
 	}
@@ -623,7 +623,7 @@
 					} else {
 						this.$message({
 							showClose: true,
-							message: "请评分",
+							message: "请先评分后再提交评测",
 							type: 'error',
 							duration: 1500
 						});

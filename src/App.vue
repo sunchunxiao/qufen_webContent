@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-	<!--<div class="app-wrap">
+		<!--<div class="app-wrap">
 			<el-container>
 				<el-header>
 
@@ -23,15 +23,16 @@
 			Header
 		},
 		mounted() {
-
-
-			//    if (this._isMobile()) {
-			// alert("手机端");
-			//      window.location.href="https://m.qufen.top"
-			//    } else {
-			//    alert("pc端");
-			//      window.location.href="http://localhost:8080/discovery"
-			//    }
+//			if(this._isMobile()) {
+//				alert("手机端");
+//				window.location.href = "https://m.qufen.top/main/home"
+//			} else {
+////				this.$router.replace('https://main.qufen.top');
+//				alert("pc端");
+////				window.location.href = "https://main.qufen.top"
+////				window.location.href = "http://localhost:8080/user/register"
+//				return
+//			}
 
 		},
 		methods: {
@@ -53,15 +54,15 @@
 		height: 100%;
 		background-color: rgb(246, 246, 246);
 	}
-
+	
 	.app-wrap {
 		height: 100%;
 	}
-
+	
 	.el-container.is-vertical {
 		height: 100%;
 	}
-
+	
 	.el-header,
 	.el-footer {
 		background-color: #B3C0D1;
@@ -69,7 +70,7 @@
 		text-align: center;
 		line-height: 60px;
 	}
-
+	
 	.el-aside {
 		background-color: #D3DCE6;
 		color: #333;
@@ -77,13 +78,13 @@
 		text-align: center;
 		line-height: 200px;
 	}
-
+	
 	.el-main {
 		background-color: #E9EEF3;
 		color: #333;
 		text-align: center;
 	}
-
+	
 	body>.el-container {
 		margin-bottom: 40px;
 	}
