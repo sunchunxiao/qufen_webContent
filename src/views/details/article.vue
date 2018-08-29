@@ -19,7 +19,7 @@
 					</div>
 					<div class="row articlerow2">
 						<!--标题-->
-						<div class="test">{{articleTitle}}</div>
+						<div class="testdetail">{{articleTitle}}</div>
 						<!--<div class="index-score">8分</div>-->
 					</div>
 					<!--文章内容-->
@@ -422,7 +422,7 @@
 					}
 				} else {
 					this.$message({
-						type: 'info',
+						type: 'error',
 						message: '登陆后关注更多内容',
 						duration: 1000
 					});

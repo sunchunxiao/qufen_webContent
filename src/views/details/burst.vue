@@ -19,7 +19,7 @@
 							</div>
 						</div>
 						<div class="row articlerow2">
-							<div class="test">{{articleTitle}}</div>
+							<div class="testdetail">{{articleTitle}}</div>
 						</div>
 						<div class="articleContent">
 							<div class="disscussContents">

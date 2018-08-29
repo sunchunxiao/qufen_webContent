@@ -206,6 +206,12 @@
 .test:hover {
 	color: #406599;
 }
+.testdetail{
+	font-size: 21px;
+	color: rgb(51, 51, 51);
+	margin-right: 30px;
+	font-weight: 600;
+}
 
 .index-score {
 	font-size: 18px;

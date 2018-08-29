@@ -89,7 +89,7 @@
 									<img style="border-radius: 4px;" src="https://pic.qufen.top/Appdownload.png" />
 								</div>
 								<div class="attentionIcon">
-									<img src="../../assets/common/attentionicon.png" />
+									<img src="https://pic.qufen.top/posts201808291131215753.png" />
 									<span class="attentionTitle">区分</span>
 								</div>
 								<p class="common-attention-down">币圈大众点评 下载区分APP</p>

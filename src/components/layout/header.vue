@@ -37,14 +37,11 @@
 									<Dropdown trigger="click" style="margin-left: 20px">
 										<img class="headerImg" :src="src" />
 										<img class="layoutV" src="" />
-										<a class="cx-username" href="javascript:void(0)">
-											{{userNick}}
-											<Icon type="arrow-down-b"></Icon>
-										</a>
+										<a class="cx-username" href="javascript:void(0)">{{userNick}}</a>
 										<DropdownMenu slot="list">
 											<DropdownItem><span @click="onecenter">个人主页</span></DropdownItem>
 											<DropdownItem><span @click="attention">认证</span></DropdownItem>
-											
+
 											<DropdownItem>
 												<a href="javascript:void(0)" @click="quit">点击注销</a>
 											</DropdownItem>
@@ -114,6 +111,15 @@
 			}
 
 			this.handleSelect()
+		},
+		updated(){
+			console.log($(".cx-username").html().length)
+			var username = $(".cx-username").html().length
+			if(username<=3){
+				$(".cx-username:after").css("display","none")
+			}else{
+				$(".cx-username:after").css("display","block")
+			}
 		},
 		methods: {
 			onecenter() {
@@ -208,17 +214,17 @@
 	.bor {
 		border-bottom: 2px solid #409EFF!important;
 	}
-	
-	
-	
+
+
+
 	.app-wrap {
 		height: 100%;
 	}
-	
+
 	.el-container.is-vertical {
 		height: 100%;
 	}
-	
+
 	.el-header,
 	.el-footer {
 		background-color: #B3C0D1;
@@ -226,7 +232,7 @@
 		text-align: center;
 		line-height: 60px;
 	}
-	
+
 	.el-aside {
 		background-color: #D3DCE6;
 		color: #333;
@@ -234,32 +240,32 @@
 		text-align: center;
 		line-height: 200px;
 	}
-	
+
 	.el-main {
 		background-color: #E9EEF3;
 		color: #333;
 		text-align: center;
 	}
-	
+
 	body>.el-container {
 		margin-bottom: 40px;
 	}
-	
+
 	.ivu-select-dropdown {
 		top: 70px!important;
 	}
-	
+
 	.layout {
 		height: 100%;
 		background: #f5f7f9;
 		position: relative;
 		border-radius: 4px;
 	}
-	
+
 	.header-select {
 		display: none;
 	}
-	
+
 	.layout-logo {
 		display: inline-block;
 		width: 300px;
@@ -270,34 +276,35 @@
 		font-size: 24px;
 		cursor: pointer;
 	}
-	
+
 	.layout-logo img {
 		width: 12%;
 		display: inline-block;
 		margin-top: 7px;
 		float: left;
 	}
-	
+
 	.layout-nav {
 		width: 200px;
 		height: 60px;
 		text-align: center;
 	}
-	
+
 	.ivu-layout-header {
 		position: relative;
 		background: #fff;
 	}
-	
+
 	.ivu-dropdown {
 		/*width: 70px;*/
 		position: absolute;
 		right: -10px;
 	}
-	
+
 	.cx-username {
+		width: 46px;
 		position: absolute;
-		left: 40px;
+		left: 36px;
 		height: 50px;
 		line-height: none!important;
 		/*text-overflow: ellipsis;
@@ -307,7 +314,7 @@
 		/*  autoprefixer: on */
 		/*-webkit-line-clamp: 1;*/
 	}
-	
+
 	.cx-username:after {
 		content: "...";
 		position: absolute;
@@ -322,24 +329,24 @@
 	.ivu-dropdown-rel>a {
 		color: #fff;
 	}
-	
+
 	.ivu-menu-dark {
 		background: #fff;
 	}
-	
+
 	.ivu-dropdown-rel>a {
 		color: #000;
 	}
-	
+
 	.ivu-dropdown-item {
 		padding: 7px 26px;
 	}
-	
+
 	.ivu-dropdown-item span {
 		display: inline-block;
 		padding: 6px 35px;
 	}
-	
+
 	.headerImg {
 		width: 30px;
 		height: 30px;
@@ -349,31 +356,31 @@
 		margin-top: 14px;
 		margin-right: 10px;
 	}
-	
+
 	.layoutV {
 		width: 12px;
 		position: absolute;
 		left: 24px;
 		top: 32px;
 	}
-	
+
 	.nav-wrap {
 		float: left;
 		margin-top: 16px;
 		position: relative;
 		margin-left: 60px;
 	}
-	
+
 	.nav-wrap input::-webkit-input-placeholder {
 		font-size: 13px;
 		color: rgb(126, 126, 126);
 	}
-	
+
 	.el-row {
 		width: 1107px;
 		margin: 0 auto;
 	}
-	
+
 	.nav-input {
 		color: rgb(126, 126, 126);
 		display: block;
@@ -390,7 +397,7 @@
 		box-sizing: border-box;
 		background-color: rgb(246, 246, 246);
 	}
-	
+
 	.nav-input:focus {
 		outline: none;
 	}
@@ -400,7 +407,7 @@
 		cursor: pointer;
 		color: #000;
 		float: left;
-		
+
 	}
 	.navIcon {
 		width: 6%;
@@ -408,39 +415,39 @@
 		right: 9px;
 		top: 5px;
 	}
-	
+
 	.el-menu-vertical-demo:not(.el-menu--collapse) {
 		width: 200px;
 		min-height: 400px;
 	}
-	
+
 	.logo {
 		width: 70px;
 		margin-top: 13px;
 	}
-	
+
 	.logout {
 		cursor: pointer;
 		position: relative;
 	}
-	
+
 	.logout a {
 		color: rgb(133, 144, 166);
 	}
-	
+
 	.nav-release {
 		width: 20px;
 		position: absolute;
 		top: 19px;
 		left: 0;
 	}
-	
+
 	.el-header {
 		background-color: #fff!important;
 		border-bottom: 1px solid #dcdfe2;
 		box-shadow: 0 1px 3px 0 rgba(23, 81, 153, .05);
 	}
-	
+
 	.el-container.is-vertical {
 		background-color: rgb(246, 246, 246);
 	}
@@ -448,7 +455,7 @@
 	/*.el-footer, .el-header{
 		background-color: #fff;
 	}*/
-	
+
 	.el-header,
 	.el-footer {
 		width: 100%;
@@ -457,7 +464,7 @@
 		z-index: 100;
 		background-color: #fff;
 	}
-	
+
 	.el-menu--horizontal {
 		height: 60px;
 		background-color: #fff!important;
@@ -465,7 +472,7 @@
 		border-bottom: 1px solid #dcdfe2;
 		/*box-shadow:0 1px 3px 0 rgba(23,81,153,.05);*/
 	}
-	
+
 	.el-menu--horizontal>.el-menu-item {
 		height: 59px!important;
 		color: rgb(133,144,166)!important;
@@ -480,7 +487,7 @@
 		color: rgb(133, 144, 166)!important;
 		background-color: #fff!important;
 	}
-	
+
 	@media only screen and (max-width: 1600px) {
 		.el-row {
 			width: 965px;
