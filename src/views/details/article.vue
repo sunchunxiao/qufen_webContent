@@ -19,7 +19,7 @@
 					</div>
 					<div class="row articlerow2">
 						<!--标题-->
-						<div class="testdetail">{{articleTitle}}</div>
+						<div class="detailtest">{{articleTitle}}</div>
 						<!--<div class="index-score">8分</div>-->
 					</div>
 					<!--文章内容-->

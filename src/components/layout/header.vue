@@ -37,7 +37,7 @@
 									<Dropdown trigger="click" style="margin-left: 20px">
 										<img class="headerImg" :src="src" />
 										<img class="layoutV" src="" />
-										<a class="cx-username" href="javascript:void(0)">{{userNick}}</a>
+										<a class="cx-username cxuser" href="javascript:void(0)">{{userNick}}</a>
 										<DropdownMenu slot="list">
 											<DropdownItem><span @click="onecenter">个人主页</span></DropdownItem>
 											<DropdownItem><span @click="attention">认证</span></DropdownItem>
@@ -113,12 +113,9 @@
 			this.handleSelect()
 		},
 		updated(){
-			console.log($(".cx-username").html().length)
-			var username = $(".cx-username").html().length
+			var username = $(".cxuser").html().length
 			if(username<=3){
-				$(".cx-username:after").css("display","none")
-			}else{
-				$(".cx-username:after").css("display","block")
+				$(".cxuser ").removeClass("cx-username")
 			}
 		},
 		methods: {
@@ -314,12 +311,20 @@
 		/*  autoprefixer: on */
 		/*-webkit-line-clamp: 1;*/
 	}
+	.cxuser{
+		width: 46px;
+		position: absolute;
+		left: 36px;
+		height: 50px;
+		line-height: none!important;
+	}
 
 	.cx-username:after {
 		content: "...";
 		position: absolute;
 		right: -5px;
 		top: 0px;
+		/*display: none;*/
 	}
 	.ivu-dropdown-rel{
 		width: 87px;
