@@ -110,27 +110,6 @@
 			//标签
 			this.tags()
 
-			//发送请求
-//			let data = {
-//				id: 1
-//			}
-
-//			publishtag().then(res => {
-//				if(res.code == 0) {
-//					var result = res.data.tagList
-//					for(let i = 0; i < result.length; i++) {
-//						var name = result[i].tagName
-//						var id = result[i].tagId
-//						this.tag.push({
-//							tagName: name,
-//							seen: false,
-//							tagId: id
-//						})
-//					}
-//				}
-//			}).catch(function(error) {
-//				console.log(error.msg);
-//			});
 
 		},
 		methods: {
@@ -158,22 +137,22 @@
 			},
 			//标签点击
 			dian(name, id, index, index1) {
-				console.log(status, name, id, index, index1)
-				console.log(this.tag[index1].dtagsList[index].seen)
+//				console.log(status, name, id, index, index1)
+//				console.log(this.tag[index1].dtagsList[index].seen)
 				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
 				
 				if(index1 == 0) {
 					if(this.tag[index1].dtagsList[index].seen == true) {
 						$(".label:eq(0) .labelLi").eq(index).css("background-color", "rgb(64, 143, 241)");
 						$(".max-nine:eq(0) .labelLi").eq(index).addClass("labelLiC");
-						console.log($(".labelLi").eq(index).css("background-color"))
+//						console.log($(".labelLi").eq(index).css("background-color"))
 
 						//加入数组对象
 						this.tagthree.push({
 							tagName: name,
 							tagId: id
 						})
-						console.log(this.tagthree)
+//						console.log(this.tagthree)
 						//循环，检查数组里是否是三条数据
 						for(var i = 0; i < this.tagthree.length; i++) {
 							//如果大于三条提示并从数组中删除
