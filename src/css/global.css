@@ -33,7 +33,7 @@
 }
 
 .detailcommmon {
-	width: 760px;
+	/*width: 760px;*/
 	margin: 0 auto;
 	overflow: hidden;
 	position: relative;
@@ -55,7 +55,7 @@
 }
 
 .detailcommmon {
-	width: 700px;
+	width: 720px;
 	float: left;
 }
 
