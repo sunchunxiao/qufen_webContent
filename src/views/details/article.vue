@@ -174,7 +174,8 @@
 				hasNext: false,
 				pageIndex: 1,
 				pageSize: 10,
-				projectId: 0
+				projectId: 0,
+				length:0
 			}
 		},
 		updated() {
@@ -253,8 +254,11 @@
 					if(res.code == 0) {
 						this.hasNext = res.data.newestComments.hasNext
 						if(res.data.newestComments.rows != null) {
+							
 							this.newestComments = res.data.newestComments.rows
-							if(res.data.newestComments.rows.length > 2) {
+							console.log(this.newestComments)
+							this.length = res.data.newestComments.rows.length
+							if(res.data.newestComments.rows.length > 4) {
 								if(this.hasNext == false) {
 									$(".end").css("display", "block")
 									$(".start").css("display", "none")
@@ -264,6 +268,7 @@
 
 							}
 						} else {
+							console.log(111)
 							$(".previewContent").css('display', "none")
 							$(".start").css("display", "none")
 						}

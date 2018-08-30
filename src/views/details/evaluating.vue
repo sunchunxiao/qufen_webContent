@@ -166,7 +166,8 @@
 				pageIndex: 1,
 				pageSize: 10,
 				projectId: 0,
-				tagInfos: []
+				tagInfos: [],
+				length:0
 			}
 		},
 
@@ -274,9 +275,10 @@
 				postCommentList(data).then(res => {
 					if(res.code == 0) {
 						this.hasNext = res.data.newestComments.hasNext
+						this.length = res.data.newestComments.rows.length
 						if(res.data.newestComments.rows != null) {
 							this.newestComments = res.data.newestComments.rows
-							if(res.data.newestComments.rows.length > 2) {
+							if(res.data.newestComments.rows.length > 4) {
 
 								if(this.hasNext == false) {
 									$(".end").css("display", "block")
@@ -327,8 +329,10 @@
 							}
 						})
 					} else {
-						$('.end').css('display', "block")
-						$('.start').css('display', "none")
+						if(this.length > 4) {
+							$('.end').css('display', "block")
+							$('.start').css('display', "none")
+						}
 					}
 				}
 

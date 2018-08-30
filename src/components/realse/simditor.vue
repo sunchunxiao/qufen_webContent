@@ -84,17 +84,14 @@
 				this.editor.on("valuechanged", function(e, src) {
 					_this.value = _this.editor.getValue()
 					var str = _this.value
-					//					console.log(str)
+//					console.log(str)
 
 					//1，匹配出图片img标签（即匹配出所有图片），过滤其他不需要的字符
 					var imgReg = /<img.*?(?:>|\/>)/gi;
-
 					//匹配图片（g表示匹配所有结果i表示区分大小写）
 					var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i
-
 					var arr = str.match(imgReg);
-
-					console.log(arr)
+//					console.log(arr)
 					if(arr != null) {
 						if(arr.length != 0) {
 							for(var i = 0; i < arr.length; i++) {

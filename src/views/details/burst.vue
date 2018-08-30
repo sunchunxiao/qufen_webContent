@@ -169,7 +169,8 @@
 				hasNext: false,
 				pageIndex: 1,
 				pageSize: 10,
-				projectId: 0
+				projectId: 0,
+				length: 0
 
 			}
 		},
@@ -238,7 +239,9 @@
 						this.hasNext = res.data.comments.hasNext
 						if(res.data.comments.rows != null) {
 							this.newestComments = res.data.comments.rows
-							if(res.data.comments.rows.length > 2) {
+							this.length = res.data.comments.rows.length
+							
+							if(res.data.comments.rows.length > 4) {
 
 								if(this.hasNext == false) {
 									$(".end").css("display", "block")
@@ -290,8 +293,11 @@
 							}
 						})
 					} else {
-						$('.end').css('display', "block")
-						$('.start').css('display', "none")
+						if(this.length > 4) {
+							$('.end').css('display', "block")
+							$('.start').css('display', "none")
+						}
+
 					}
 
 				}
@@ -411,20 +417,20 @@
 						this.disscussContents = data.disscussContents;
 
 						//图片
-						if(data.postSmallImages != null&&data.postSmallImages.length!=0) {
-								var a = JSON.parse(data.postSmallImages);
-//								console.log(a)
-								if(a.length != 0) {
-									if(a.length >= 3) {
-										a = a.slice(0, 3)
-									}
-									for(let i = 0; i < a.length; i++) {
-										this.imgUrl = a[i].fileUrl
-										this.postImg.push({
-											src: this.imgUrl
-										})
-									}
+						if(data.postSmallImages != null && data.postSmallImages.length != 0) {
+							var a = JSON.parse(data.postSmallImages);
+							//								console.log(a)
+							if(a.length != 0) {
+								if(a.length >= 3) {
+									a = a.slice(0, 3)
 								}
+								for(let i = 0; i < a.length; i++) {
+									this.imgUrl = a[i].fileUrl
+									this.postImg.push({
+										src: this.imgUrl
+									})
+								}
+							}
 
 						} else {
 							$('.burstImg').css('display', 'none')
