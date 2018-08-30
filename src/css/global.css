@@ -45,13 +45,13 @@
 }
 
 .common-article {
-	width: 700px;
-	margin-left: 32px;
+	width: 720px;
+	margin-left: 11px;
 	float: left;
 }
 
 .onedetailArticle {
-	width: 700px;
+	width: 720px;
 }
 
 .detailcommmon {
@@ -70,7 +70,7 @@
 	/*position: absolute;
 	right: 0;*/
 	float: right;
-	margin-right: 3px;
+	margin-right: 18px;
 	width: 300px;
 }
 
@@ -118,10 +118,19 @@
 .row2 {
 	padding: 15px 0 0px;
 }
-.burstcontent{
+
+.burstcontent {
 	margin-top: 10px;
 }
 
+.attention-code {
+	background-image: url(../../assets/common/attentionbac.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	height: 160px;
+	position: relative;
+	cursor: pointer;
+}
 
 .photo {
 	width: 38px;
@@ -389,12 +398,7 @@
 	box-shadow: 0 1px 3px rgba(200, 200, 200, 0.48);
 }
 
-.attention-code {
-	height: 160px;
-	position: relative;
-	
-}
-
+/*.attention-code {}*/
 
 .attention-hot {
 	/*height: 300px;*/
@@ -803,13 +807,13 @@
 
 @media only screen and (max-width: 1600px) {
 	.indexCommon {
-		width: 930px;
+		width: 990px;
 	}
 	.projectCommon {
-		width: 937px;
+		width: 990px;
 	}
 	.common-article {
-		width: 640px;
+		width: 670px;
 		margin-left: 26px;
 	}
 	.common-attention {
@@ -817,7 +821,7 @@
 	}
 	.project-attention {
 		width: 257px;
-		margin-right: 2px;
+		margin-right: 25px;
 	}
 	.common-attention1 {
 		width: 257px;
@@ -868,7 +872,7 @@
 		right: 0;
 	}
 	.onedetailArticle {
-		width: 640px;
+		width: 670px;
 	}
 	.commmon1 {
 		width: 670px;

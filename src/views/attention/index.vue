@@ -24,7 +24,7 @@
 							</div>
 							<div>
 								<div style="cursor: pointer" @click="article(item.postType,item.postId)">
-									<div class="row row2">
+									<div class="row row2" v-if="item.postTitle">
 										<div class="test">{{item.postTitle}}</div>
 										<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
 									</div>
@@ -85,7 +85,7 @@
 				<!--右边消息-->
 				<div class="common-attention">
 					<!--二维码-->
-					<div class="attention-code  margin-bottom">
+					<div class="attention-code  margin-bottom" @click="official">
 						<div class="attention-wrap">
 							<div class="common-attention-code">
 								<div style="padding: 7px;">
@@ -239,6 +239,9 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			official(){
+				window.open('https://g.qufen.top', "_blank")
+			},
 			onecenter(id) {
 				window.open('/onecenter?id=' + id, "_blank")
 			},
@@ -326,10 +329,10 @@
 				//				console.log( _width1)
 
 				if(_width < 1590) {
-					var left = _width1 + 643
+					var left = _width1 + 673
 					$(".common-attention").css("left", left)
 				} else {
-					var left = _width1 + 703
+					var left = _width1 + 723
 					$(".common-attention").css("left", left)
 				}
 
@@ -339,10 +342,10 @@
 				var _width1 = $(".common-article").offset().left
 
 				if(_width < 1590) {
-					var left = _width1 + 650
+					var left = _width1 + 680
 					$(".common-attention").css("left", left)
 				} else {
-					var left = _width1 + 710
+					var left = _width1 + 730
 					$(".common-attention").css("left", left)
 				}
 

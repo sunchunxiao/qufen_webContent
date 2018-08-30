@@ -26,7 +26,7 @@
 							</div>
 							<div>
 								<div style="cursor: pointer" @click="article(item.postType,item.postId)">
-									<div class="row row2">
+									<div class="row row2" v-if="item.postTitle">
 										<div class="test">{{item.postTitle}}</div>
 										<div v-if="item.postType==1" class="index-score">{{item.totalScore}}分</div>
 									</div>

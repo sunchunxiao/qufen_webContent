@@ -5,16 +5,16 @@
 				<el-header>
 					<!--头部-->
 					<el-row>
-						<el-col :span="4">
+						<el-col :span="3">
 							<img style="cursor: pointer;" @click="dian" src="../../assets/login/logo.png" class="logo">
 						</el-col>
-						<el-col :span="16">
+						<el-col :span="17">
 							<el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
 								<template v-for="(menu,index) in menuData">
 									<el-menu-item :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
 
 								</template>
-								<!--<div class="understand" @click="next">了解区分</div>-->
+								<div class="understand" @click="next">了解区分</div>
 								<div class="nav-wrap">
 									<input class="nav-input" type="text" placeholder="搜索您感兴趣的内容">
 									<img class="navIcon" src="../../assets/login/search.png" />
@@ -119,6 +119,9 @@
 			}
 		},
 		methods: {
+			next(){
+				window.open('https://g.qufen.top', "_blank")
+			},
 			onecenter() {
 				var id = getCookie('uid')
 				window.open('/onecenter?id=' + id, "_blank")
@@ -373,7 +376,7 @@
 		float: left;
 		margin-top: 16px;
 		position: relative;
-		margin-left: 60px;
+		margin-left: 77px;
 	}
 
 	.nav-wrap input::-webkit-input-placeholder {
@@ -495,7 +498,10 @@
 
 	@media only screen and (max-width: 1600px) {
 		.el-row {
-			width: 965px;
+			width: 1000px;
+		}
+		.nav-wrap{
+			margin-left:46px;
 		}
 	}
 </style>

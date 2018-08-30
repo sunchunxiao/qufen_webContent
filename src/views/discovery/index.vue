@@ -82,7 +82,7 @@
 				<!--右边消息-->
 				<div class="common-attention">
 					<!--二维码-->
-					<div class="attention-code  margin-bottom">
+					<div class="attention-code  margin-bottom" @click="official">
 						<div class="attention-wrap">
 							<div class="common-attention-code">
 								<div style="padding: 7px;">
@@ -236,6 +236,9 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			official(){
+				window.open('https://g.qufen.top', "_blank")
+			},
 			onecenter(id) {
 				window.open('/onecenter?id=' + id, "_blank")
 			},
@@ -256,11 +259,11 @@
 				var _width1 = $(".common-article").offset().left
 				//				console.log( _width1)
 
-				if(_width < 1590) {
-					var left = _width1 + 645
+				if(_width < 1603) {
+					var left = _width1 + 672
 					$(".common-attention").css("left", left)
 				} else {
-					var left = _width1 + 703
+					var left = _width1 + 723
 					$(".common-attention").css("left", left)
 				}
 
@@ -271,10 +274,10 @@
 				//				console.log( _width1)
 
 				if(_width < 1590) {
-					var left = _width1 + 650
+					var left = _width1 + 680
 					$(".common-attention").css("left", left)
 				} else {
-					var left = _width1 + 710
+					var left = _width1 + 730
 					$(".common-attention").css("left", left)
 				}
 
@@ -511,11 +514,6 @@
 	}
 </script>
 <style lang="less">
-	.attention-code {
-		background-image: url(../../assets/common/attentionbac.png);
-		background-size: 100% 100%;
-		background-repeat: no-repeat;
-	}
 	
 	@import '../../css/global.css';
 	@import '../../styles/common.less';
