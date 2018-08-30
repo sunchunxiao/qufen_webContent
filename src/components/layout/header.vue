@@ -415,6 +415,7 @@
 		cursor: pointer;
 		color: rgb(133,144,166);
 		float: left;
+		font-size: 14px;
 
 	}
 	.navIcon {
