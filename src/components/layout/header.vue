@@ -413,7 +413,7 @@
 		width: 100px;
 		outline: none;
 		cursor: pointer;
-		color: #000;
+		color: rgb(133,144,166);
 		float: left;
 
 	}
