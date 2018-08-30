@@ -12,7 +12,9 @@
 .el-message {
 	top: 60px;
 }
-
+.discoveryContent{
+	margin-top: 15px;
+}
 .oneuser {
 	display: flex;
 	align-items: center;
