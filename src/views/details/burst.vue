@@ -255,10 +255,10 @@
 					}
 
 				}).catch(function(res) {
-//					console.log(res.msg)
+					//					console.log(res.msg)
 					$(".previewContent").css('display', "none")
-					$(".start").css("display","none")
-						
+					$(".start").css("display", "none")
+
 				});
 			},
 			previewmore() {
@@ -354,7 +354,7 @@
 							});
 						});
 					}
-				}else{
+				} else {
 					this.$message({
 						type: 'error',
 						message: '登陆后关注更多内容',
@@ -374,12 +374,12 @@
 					if(res.code == 0) {
 						var data = res.data.discussDetail
 						//标题
-						if(data.postTitle.length!=0){
+						if(data.postTitle.length != 0) {
 							this.articleTitle = data.postTitle
-						}else{
-							$("#distitle").css("display","none")
+						} else {
+							$("#distitle").css("display", "none")
 						}
-						
+
 						//头像
 						this.src = data.createUserIcon;
 						//用户昵称
@@ -411,20 +411,21 @@
 						this.disscussContents = data.disscussContents;
 
 						//图片
-						if(data.postSmallImages != null) {
-							var a = JSON.parse(data.postSmallImages);
-							if(a.length != 0) {
-								if(a.length >= 3) {
-									a = a.slice(0, 3)
+						if(data.postSmallImages != null&&data.postSmallImages.length!=0) {
+								var a = JSON.parse(data.postSmallImages);
+//								console.log(a)
+								if(a.length != 0) {
+									if(a.length >= 3) {
+										a = a.slice(0, 3)
+									}
+									for(let i = 0; i < a.length; i++) {
+										this.imgUrl = a[i].fileUrl
+										this.postImg.push({
+											src: this.imgUrl
+										})
+									}
 								}
 
-								for(let i = 0; i < a.length; i++) {
-									this.imgUrl = a[i].fileUrl
-									this.postImg.push({
-										src: this.imgUrl
-									})
-								}
-							}
 						} else {
 							$('.burstImg').css('display', 'none')
 						}
