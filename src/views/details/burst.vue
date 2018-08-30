@@ -18,7 +18,7 @@
 								+ 关注
 							</div>
 						</div>
-						<div class="row articlerow2">
+						<div class="row articlerow2" id="distitle">
 							<div class="detailtest">{{articleTitle}}</div>
 						</div>
 						<div class="articleContent">
@@ -255,7 +255,7 @@
 					}
 
 				}).catch(function(res) {
-					console.log(res.msg)
+//					console.log(res.msg)
 					$(".previewContent").css('display', "none")
 					$(".start").css("display","none")
 						
@@ -373,9 +373,13 @@
 				discuss(data).then(res => {
 					if(res.code == 0) {
 						var data = res.data.discussDetail
-
 						//标题
-						this.articleTitle = data.postTitle
+						if(data.postTitle.length!=0){
+							this.articleTitle = data.postTitle
+						}else{
+							$("#distitle").css("display","none")
+						}
+						
 						//头像
 						this.src = data.createUserIcon;
 						//用户昵称

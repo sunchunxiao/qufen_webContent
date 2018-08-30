@@ -24,7 +24,7 @@ const request = (url, options = {}) => {
      var url = "/wap" + url;
 
  //本地 栋栋
-//	var url = "http://192.168.10.153:803" + url;
+	// var url = "http://192.168.10.153:803" + url;
 
    // var url = "http://192.168.10.128:8081/wap" + url;
 

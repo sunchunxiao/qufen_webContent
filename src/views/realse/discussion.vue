@@ -11,11 +11,11 @@
 			</div>
 			<!--文字内容-->
 			<div class="evaluation">
-				<div class="evaluationContent margin-top-20">
+				<!--<div class="evaluationContent margin-top-20">
 					<div class="progess margin-top-10">爆料标题</div>
 					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
-				</div>
-				<h3 class="progess add-title">文字内容 <span class="add-title1">(内容1000 / 剩余<span id="word"> 1000</span>个)</span></h3>
+				</div>-->
+				<h3 class="progess add-title">爆料内容 <span class="add-title1">(内容500 / 剩余<span id="word"> 500</span>个)</span></h3>
 				<!--引simditor文本编译器-->
 				<!--<Simditor></Simditor>-->
 				<Input class="disText" @keyup.native="up" @keydown.native="down" id="weibo" v-model="value6" type="textarea" :rows="6" placeholder="输入内容"></Input>
@@ -290,21 +290,21 @@
 			//多文本的字数鼠标的抬起事件
 			up() {
 				var len = $("textarea").val().length;
-				if(len > 1000) {
-					$("textarea").val($("textarea").val().substring(0, 1000));
+				if(len > 500) {
+					$("textarea").val($("textarea").val().substring(0, 500));
 
 				}
-				var num = 1000 - len;
+				var num = 500 - len;
 				$("#word").text(num);
 			},
 			//发布的内容不得超过300
 			down() {
 				var len = $("textarea").val().length;
-				if(len > 1000) {
-					$("textarea").val($("textarea").val().substring(0, 1000));
+				if(len > 500) {
+					$("textarea").val($("textarea").val().substring(0, 500));
 
 				}
-				var num = 1000 - len;
+				var num = 500 - len;
 				$("#word").text(num);
 
 			},
@@ -366,9 +366,7 @@
 
 			//失焦事件
 			handleArticletitleBlur() {
-				if(this.articleTitle.length !== 0) {
-					// this.articleError = '';
-					localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
+					
 					if(!this.articlePathHasEdited) {
 						let date = new Date();
 						let year = date.getFullYear();
@@ -379,10 +377,7 @@
 						this.articlePathHasEdited = true;
 						this.showLink = true;
 					}
-				} else {
-					// this.articleError = '文章标题不可为空哦';
-					this.$Message.error('文章标题不可为空哦');
-				}
+				
 			},
 			p(s) {
 				return s < 10 ? '0' + s : s;
@@ -398,10 +393,8 @@
 					});
 				}
 				if(this.search != "") {
-					if(this.articleTitle != "") {
-						if(this.articleTitle.length <= 60) {
 							if($("textarea").val().length > 0) {
-								if($("textarea").val().length < 1001) {
+								if($("textarea").val().length < 501) {
 									if(this.arr.length >= 1 && this.arr.length <= 9) {
 										if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
 											let date = new Date();
@@ -443,7 +436,7 @@
 								} else {
 									this.$message({
 										showClose: true,
-										message: '发布内容不能超过1000字',
+										message: '发布内容不能超过500字',
 										type: 'error',
 										duration: 1500
 									});
@@ -457,21 +450,6 @@
 								});
 							}
 
-						} else {
-							this.$message({
-								showClose: true,
-								message: '文章标题小于60字',
-								type: 'error'
-							});
-						}
-
-					} else {
-						this.$message({
-							showClose: true,
-							message: '文章标题不能为空',
-							type: 'error'
-						});
-					}
 				} else {
 					this.$message({
 						showClose: true,
@@ -495,10 +473,8 @@
 
 				//发布文章
 				if(this.search != "") {
-					if(this.articleTitle != "") {
-						if(this.articleTitle.length <= 60) {
 							if($("textarea").val().length > 0) {
-								if($("textarea").val().length < 1001) {
+								if($("textarea").val().length < 501) {
 									if(this.arr.length >= 1 && this.arr.length <= 9) {
 										if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
 											//点击发布显示正在发布中
@@ -554,7 +530,7 @@
 								} else {
 									this.$message({
 										showClose: true,
-										message: '发布内容不能超过1000字',
+										message: '发布内容不能超过500字',
 										type: 'error',
 										duration: 1500
 									});
@@ -568,22 +544,6 @@
 								});
 							}
 
-						} else {
-							this.$message({
-								showClose: true,
-								message: '文章标题小于60字',
-								type: 'error',
-								duration: 1500
-							});
-						}
-					} else {
-						this.$message({
-							showClose: true,
-							message: '文章标题不能为空',
-							type: 'error',
-							duration: 1500
-						});
-					}
 
 				} else {
 					this.$message({

@@ -16,9 +16,9 @@
 								+ 关注
 							</div>
 						</div>
-						<div class="row articlerow2">
+						<!--<div class="row articlerow2">
 							<div class="detailtest">{{articleTitle}}</div>
-						</div>
+						</div>-->
 						<div class="articleContent">
 							<div class="disscussContents">
 								<pre id="prep" v-html>{{disscussContents}}</pre>

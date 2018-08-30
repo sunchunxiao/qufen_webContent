@@ -4,7 +4,7 @@
 	.xm {
 		text-align: left;
 	}
-
+	
 	.evaluation .add {
 		display: inline-block;
 		width: 200px;
@@ -12,22 +12,22 @@
 		color: #2d8cf0;
 		border: 1px solid #2d8cf0!important;
 	}
-
+	
 	.el-dialog__body .el-input__inner {
 		width: 80%;
 		border: none;
 		border-bottom: 1px solid #dcdfe6;
 		border-radius: 0;
 	}
-
+	
 	.el-dialog {
 		width: 45%;
 	}
-
+	
 	.el-dialog__body {
 		padding: 30px 0;
 	}
-
+	
 	.pcDele {
 		width: 65px;
 		height: 25px;
@@ -40,26 +40,26 @@
 		border-radius: 15px;
 		margin-left: 10px;
 	}
-
+	
 	.pcDele:hover {
 		box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
 	}
-
+	
 	.el-message {
 		width: 350px;
 		height: 50px;
 		top: 200px;
 	}
-
+	
 	.el-message--warning .el-message__content {
 		color: red;
 		font-size: 18px;
 	}
-
+	
 	.pc-title {
 		font-size: 15px;
 	}
-
+	
 	.pclis {
 		padding: 15px 0 10px 20px;
 		display: none;
@@ -243,8 +243,8 @@
 			},
 			//标签点击
 			dian(name, id, index, index1) {
-				console.log(status, name, id, index, index1)
-				console.log(this.tag[index1].dtagsList[index].seen)
+//				console.log(status, name, id, index, index1)
+//				console.log(this.tag[index1].dtagsList[index].seen)
 				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
 
 				if(index1 == 0) {
@@ -825,7 +825,7 @@
 						score: this.listData[i].value
 					});
 				}
-
+				
 				//去除文本编译器的标签
 				var dd = $("textarea").val().replace(/<\/?.+?>/g, "");
 
@@ -912,7 +912,7 @@
 							} else {
 								this.$message({
 									showClose: true,
-									message: "请先评分后再提交评测",
+									message: "请评分",
 									type: 'error',
 									duration: 1500
 								});
