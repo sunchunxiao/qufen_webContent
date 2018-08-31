@@ -382,7 +382,7 @@
 
 						if(nowdate == this.timestr) {
 							var a1 = arr[1].split(":")
-							//						console.log(a1)
+	//						console.log(a1)
 							this.timestr1 = a1[0] + ":" + a1[1];
 						} else {
 							this.timestr1 = arr[0];

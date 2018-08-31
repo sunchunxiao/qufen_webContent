@@ -352,7 +352,7 @@
 						this.projectId = data.projectId
 						//标签
 						this.tag = data.projectCode;
-						if(data.tagInfos != null) {
+						if(data.tagInfos != null&&data.tagInfos.length!=0) {
 							this.tagInfos = JSON.parse(data.tagInfos)
 
 						}

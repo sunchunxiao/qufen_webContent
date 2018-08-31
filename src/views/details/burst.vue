@@ -409,7 +409,7 @@
 						this.projectId = data.projectId
 						this.createUserId = data.createUserId
 
-						if(data.tagInfos != null) {
+						if(data.tagInfos != null&&data.tagInfos.length!=0) {
 							this.tagInfos = JSON.parse(data.tagInfos)
 						}
 
