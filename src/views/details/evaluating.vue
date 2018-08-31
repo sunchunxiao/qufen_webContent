@@ -363,7 +363,7 @@
 						this.username = data.createUserName;
 						this.projectCode = data.projectCode;
 						//标签
-						if(data.evaluationTags != null) {
+						if(data.evaluationTags != null && data.evaluationTags.length!=0) {
 							this.tagInfos = JSON.parse(data.evaluationTags)
 						}
 						//关注状态
