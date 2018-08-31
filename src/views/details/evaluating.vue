@@ -22,7 +22,7 @@
 							</div>
 							<div class="row articlerow2">
 								<div class="detailtest">{{articleTitle}}</div>
-								<div class="index-score">{{totalscore}}分</div>
+								<!--<div class="index-score">{{totalscore}}分</div>-->
 							</div>
 							<div v-html="m" class="articleContent">
 								{{m}}
