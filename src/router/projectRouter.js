@@ -15,28 +15,28 @@ export const projectRouter = [
 		children: [
 			//项目主页
 			{
-				path: '/project/projectdetail',
+				path: '/summary/projectdetail',
 				meta: {
 					title: '项目主页'
 				},
 				component: (resolve) => require(['@/views/details/projectdetail.vue'], resolve),
 				children: [
 				{
-					path: '/project/evaluatingdetail',
+					path: '/summary/evaluatingdetail',
 					meta: {
 						title: '项目评测'
 					},
 					component: (resolve) => require(['@/views/details/evaluatingdetail.vue'], resolve)
 				},
 				{
-					path: '/project/burstdetail',
+					path: '/summary/burstdetail',
 					meta: {
 						title: '项目爆料'
 					},
 					component: (resolve) => require(['@/views/details/burstdetail.vue'], resolve)
 				},
 				{
-					path: '/project/articledetail',
+					path: '/summary/articledetail',
 					meta: {
 						title: '项目文章'
 					},
@@ -53,21 +53,21 @@ export const projectRouter = [
 				component: (resolve) => require(['@/views/details/onecenter.vue'], resolve),
 				children:[
 				{
-					path: '/project/evaluatingcenter',
+					path: '/summary/evaluatingcenter',
 					meta: {
 						title: '用户评测'
 					},
 					component: (resolve) => require(['@/views/details/evaluatingcenter.vue'], resolve)
 				},
 				{
-					path: '/project/burstcenter',
+					path: '/summary/burstcenter',
 					meta: {
 						title: '用户爆料'
 					},
 					component: (resolve) => require(['@/views/details/burstcenter.vue'], resolve)
 				},
 				{
-					path: '/project/articlecenter',
+					path: '/summary/articlecenter',
 					meta: {
 						title: '用户爆料'
 					},

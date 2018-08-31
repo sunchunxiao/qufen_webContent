@@ -494,7 +494,7 @@
 			},
 			projectdetail() {
 					var id = this.projectId
-					window.open('/project/projectdetail?id=' + id, "_blank")
+					window.open('/summary/projectdetail?id=' + id, "_blank")
 //				} else {
 //
 //					this.$message({

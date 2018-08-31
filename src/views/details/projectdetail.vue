@@ -221,7 +221,7 @@
 			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
 			this.projectdetail()
-			this.$router.push('/project/evaluatingdetail?id=' + this.id)
+			this.$router.push('/summary/evaluatingdetail?id=' + this.id)
 		},
 		updated() {
 			if(this.followStatus == 1) {
@@ -358,13 +358,13 @@
 				})
 			},
 			next1() {
-				this.$router.push('/project/evaluatingdetail?id=' + this.id)
+				this.$router.push('/summary/evaluatingdetail?id=' + this.id)
 			},
 			next2() {
-				this.$router.push('/project/burstdetail?id=' + this.id)
+				this.$router.push('/summary/burstdetail?id=' + this.id)
 			},
 			next3() {
-				this.$router.push('/project/articledetail?id=' + this.id)
+				this.$router.push('/summary/articledetail?id=' + this.id)
 			},
 			attention() {
 				if(this.token != '') {
@@ -543,7 +543,7 @@
 
 			},
 			evaluating() {
-				this.$router.push('/project/evaluatingdetail')
+				this.$router.push('/summary/evaluatingdetail')
 			}
 		},
 

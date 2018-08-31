@@ -354,11 +354,11 @@
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {
-					window.open('/details/evaluating?id=' + id, "_blank")
+					window.open('/project/articleInfo?id=' + id, "_blank")
 				} else if(postType == 2) {
-					window.open('/details/burst?id=' + id, "_blank")
+					window.open('/project/discuss?id=' + id, "_blank")
 				} else if(postType == 3) {
-					window.open('/details/article?id=' + id, "_blank")
+					window.open('/project/article?id=' + id, "_blank")
 				}
 
 			},
@@ -487,7 +487,7 @@
 
 			},
 			projectdetail(id) {
-				window.open('/project/projectdetail?id=' + id, "_blank")
+				window.open('/summary/projectdetail?id=' + id, "_blank")
 				//			} else {
 				//					this.$message({
 				//						showClose: true,

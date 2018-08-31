@@ -7,7 +7,7 @@ export const detailsRouter = [
 	/*测评详细部分（start）*/
 	//文章
 	{
-		path: "/details",
+		path: "/project",
 		meta: {
 			title: '发现',
 		},
@@ -15,7 +15,7 @@ export const detailsRouter = [
 		children: [
 			//文章
 			{
-				path: '/details/article',
+				path: '/project/article',
 				meta: {
 					title: '文章'
 				},
@@ -23,7 +23,7 @@ export const detailsRouter = [
 			},
 			//爆料
 			{
-				path: '/details/burst',
+				path: '/project/discuss',
 				meta: {
 					title: '爆料'
 				},
@@ -31,7 +31,7 @@ export const detailsRouter = [
 			},
 			//评测
 			{
-				path: '/details/evaluating',
+				path: '/project/articleInfo',
 				meta: {
 					title: '爆料'
 				},

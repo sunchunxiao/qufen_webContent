@@ -69,7 +69,7 @@
 			console.log(this.$route.query.id, this.token)
 			this.id = this.$route.query.id - 0;
 			this.projectone()
-			this.$router.push('/project/evaluatingcenter?id=' + this.id)
+			this.$router.push('/summary/evaluatingcenter?id=' + this.id)
 		},
 		updated() {
 			if(this.followStatus == 1) {
@@ -125,13 +125,13 @@
 				})
 			},
 			next1() {
-				this.$router.push('/project/evaluatingcenter?id=' + this.id)
+				this.$router.push('/summary/evaluatingcenter?id=' + this.id)
 			},
 			next2() {
-				this.$router.push('/project/burstcenter?id=' + this.id)
+				this.$router.push('/summary/burstcenter?id=' + this.id)
 			},
 			next3() {
-				this.$router.push('/project/articlecenter?id=' + this.id)
+				this.$router.push('/summary/articlecenter?id=' + this.id)
 			},
 			attention() {
 				var _this = this

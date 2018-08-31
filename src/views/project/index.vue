@@ -267,7 +267,7 @@
 
 			},
 			projectdetail(id) {
-				window.open('/project/projectdetail?id=' + id, "_blank")
+				window.open('/summary/projectdetail?id=' + id, "_blank")
 				//this.$message('登陆后关注更多内容');
 			}
 
