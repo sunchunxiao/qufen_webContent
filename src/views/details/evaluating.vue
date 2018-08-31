@@ -140,6 +140,7 @@
 	import { articleInfo, postCommentList, } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
+	import {_isMobile} from '../../assets/js/mobile.js'
 	import { saveFollow, cancelFollow } from '@/service/home';
 	export default {
 		name: 'evaluating',
@@ -170,7 +171,28 @@
 				length:0
 			}
 		},
+		mounted() {
+			//请求评测
+			this.id = this.$route.query.id;
+			this.resizeBannerImage();
+			window.addEventListener('resize', this.resizeBannerImage)
 
+			this.articleC()
+			//请求评论
+			this.preview(),
+			//监听滚动条
+			window.addEventListener('scroll', this.scrollHandler)
+			//判断是否是移动端，移动端自动跳转
+//			console.log(_isMobile())
+			if(_isMobile()) {
+//				alert("手机端");
+				window.location.href = "https://m.qufen.top/project/articleInfo?id="+this.id
+			} else {
+//				alert("pc端");
+				return
+			}
+
+		},
 		updated() {
 			$('.articleContent').find('img').css({
 				width: '80%',
@@ -220,22 +242,7 @@
 			}
 
 		},
-		mounted() {
-			//小于1600px   main-right展开
-			//			this.resizeBannerImage();
-			//			window.onresize = this.resizeBannerImage;
-			//请求评测
-			this.id = this.$route.query.id;
-			this.resizeBannerImage();
-			window.addEventListener('resize', this.resizeBannerImage)
-
-			this.articleC()
-			//请求评论
-			this.preview(),
-				//监听滚动条
-				window.addEventListener('scroll', this.scrollHandler)
-
-		},
+		
 		destroyed() {
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},

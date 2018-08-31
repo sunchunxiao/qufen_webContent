@@ -146,6 +146,7 @@
 	import { article, postCommentList } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
+	import {_isMobile} from '../../assets/js/mobile.js'
 	import { saveFollow, cancelFollow } from '@/service/home';
 	export default {
 		data() {
@@ -178,6 +179,26 @@
 				length:0
 			}
 		},
+		
+		mounted() {
+			this.id = this.$route.query.id;
+			//请求文章
+			this.articleC()
+			//请求评论
+			this.preview(),
+			//监听滚动条
+			window.addEventListener('scroll', this.scrollHandler)
+			//判断是否是移动端，移动端自动跳转
+//			console.log(_isMobile())
+			if(_isMobile()) {
+//				alert("手机端");
+				window.location.href = "https://m.qufen.top/project/article?id="+this.id
+			} else {
+//				alert("pc端");
+				return
+			}
+
+		},
 		updated() {
 			$('.articleContent').find('img').css({
 				width: '80%',
@@ -204,16 +225,6 @@
 				})
 				$(".discoveryBtn").html("+ 关注")
 			}
-
-		},
-		mounted() {
-			this.id = this.$route.query.id;
-			//请求文章
-			this.articleC()
-			//请求评论
-			this.preview(),
-				//监听滚动条
-				window.addEventListener('scroll', this.scrollHandler)
 
 		},
 		methods: {
@@ -256,7 +267,7 @@
 						if(res.data.newestComments.rows != null) {
 							
 							this.newestComments = res.data.newestComments.rows
-							console.log(this.newestComments)
+//							console.log(this.newestComments)
 							this.length = res.data.newestComments.rows.length
 							if(res.data.newestComments.rows.length > 4) {
 								if(this.hasNext == false) {
@@ -268,7 +279,7 @@
 
 							}
 						} else {
-							console.log(111)
+							
 							$(".previewContent").css('display', "none")
 							$(".start").css("display", "none")
 						}
@@ -385,9 +396,9 @@
 						}
 						cancelFollow(data).then(res => {
 							if(res.code == 0) {
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-									console.log('取消关注')
+//									console.log('取消关注')
 									$(".discoveryBtn").css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -407,9 +418,9 @@
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-									console.log('已经关注')
+//									console.log('已经关注')
 									$(".discoveryBtn").css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"

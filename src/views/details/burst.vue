@@ -143,6 +143,7 @@
 	import { discuss, discussCommentList } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
+	import {_isMobile} from '../../assets/js/mobile.js'
 	export default {
 		data() {
 			return {
@@ -182,8 +183,17 @@
 
 			//请求评论
 			this.preview(),
-				//监听滚动条
-				window.addEventListener('scroll', this.scrollHandler)
+			//监听滚动条
+			window.addEventListener('scroll', this.scrollHandler)
+			//判断是否是移动端，移动端自动跳转
+//			console.log(_isMobile())
+			if(_isMobile()) {
+//				alert("手机端");
+				window.location.href = "https://m.qufen.top/project/discuss?id="+this.id
+			} else {
+//				alert("pc端");
+				return
+			}
 
 		},
 		updated() {
