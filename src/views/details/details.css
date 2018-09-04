@@ -148,7 +148,7 @@ li {
 }
 
 .elvaInput {
-	width: 355px;
+	width: 406px;
 }
 
 .articleBack {
@@ -175,7 +175,7 @@ li {
 }
 
 .elvaInput input {
-	width: 345px;
+	width: 394px;
 	height: 30px;
 	padding-left: 10px;
 	outline: none;
@@ -321,9 +321,20 @@ li {
 /*.slider .el-slider__runway.disabled .el-slider__bar{
 	background-color:rgb(60,137,247);
 }*/
-
-
-
+.el-popover__title{
+	text-align: center;
+	font-size: 15px;
+}
+#qrcode img{
+	margin-left: 10px;
+}
+/*.contentList:nth-child(1){
+		height: 0;
+		
+	}*/
+	.main{
+		/*height: 0;*/
+	}
 @media only screen and (max-width: 1600px) {
 
 }

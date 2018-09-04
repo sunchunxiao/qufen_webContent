@@ -86,7 +86,7 @@ export const  cancelFollow= (params = {}) => {
   })
 }
 
-//评测,文章评论列表接口
+//展示评测,文章评论列表接口
 export const  postCommentList= (params = {}) => {
   return request(`/kff/home/postCommentList`, {
     body: {
@@ -95,9 +95,18 @@ export const  postCommentList= (params = {}) => {
   })
 }
 
-//爆料评论列表接口
+//展示爆料评论列表接口
 export const  discussCommentList= (params = {}) => {
   return request(`/kff/home/discussCommentList`, {
+    body: {
+      ...params
+    },
+  })
+}
+
+//评论
+export const  saveComment= (params = {}) => {
+  return request(`/kff/comments/saveComment`, {
     body: {
       ...params
     },

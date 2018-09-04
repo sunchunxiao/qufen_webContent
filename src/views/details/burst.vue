@@ -47,9 +47,16 @@
 								<img src="../../assets/common/shou.png">
 								<label>收藏</label>
 							</div>
-							<div class="detail index-preview">
+							<!--<div class="detail index-preview">
 								<img src="../../assets/common/share.png">
 								<label>分享</label>
+							</div>-->
+							<div class="detail index-preview" @click="share">
+								<img class="hover-img" src="../../assets/common/share.png" alt="" />
+								<el-popover title="扫码分享至朋友圈" placement="top-start" width="150" trigger="click">
+									<div id="qrcode"></div>
+									<span slot="reference" style="cursor: pointer;font-size: 14px; margin-left: 5px;color: #aaa;">分享</span>
+								</el-popover>
 							</div>
 							<div class="detail index-preview">
 								<img src="../../assets/common/preview.png">
@@ -66,8 +73,8 @@
 						<!--请写下你的评论-->
 						<div class="articleF">
 							<img style="float: left;" src="../../assets/common/FIND1.png" />
-							<div class="articleInputC articleInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
-							<span @click="attention" class="articleBack">回复</span>
+							<div class="articleInputC articleInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." class="previewMessage"/></div>
+							<span @click="articleBack" class="articleBack">回复</span>
 						</div>
 						<div class="previewContent">
 							<h2>评论</h2>
@@ -84,20 +91,6 @@
 									<p class="listContent">
 										{{item.commentContent}}
 									</p>
-
-									<!--<div class="row articleRow">
-									<div class="article-atten">
-										<div class="detail1 zan">
-											<img src="../../assets/common/FIND.png">
-											<label>128</label>
-										</div>
-										<div class="detail index-preview">
-											<img src="../../assets/common/preview.png">
-											<label>111</label>
-										</div>
-									</div>
-
-								</div>-->
 
 								</div>
 
@@ -140,10 +133,11 @@
 </template>
 
 <script>
-	import { discuss, discussCommentList } from '@/service/home';
+	import { discuss, discussCommentList,saveComment} from '@/service/home';
+	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
-	import {_isMobile} from '../../assets/js/mobile.js'
+	import { _isMobile } from '../../assets/js/mobile.js'
 	export default {
 		data() {
 			return {
@@ -172,7 +166,6 @@
 				pageSize: 10,
 				projectId: 0,
 				length: 0
-
 			}
 		},
 
@@ -183,15 +176,15 @@
 
 			//请求评论
 			this.preview(),
-			//监听滚动条
-			window.addEventListener('scroll', this.scrollHandler)
+				//监听滚动条
+				window.addEventListener('scroll', this.scrollHandler)
 			//判断是否是移动端，移动端自动跳转
-//			console.log(_isMobile())
+			//			console.log(_isMobile())
 			if(_isMobile()) {
-//				alert("手机端");
-				window.location.href = "https://m.qufen.top/project/discuss?id="+this.id
+				//				alert("手机端");
+				window.location.href = "https://m.qufen.top/project/discuss?id=" + this.id
 			} else {
-//				alert("pc端");
+				//				alert("pc端");
 				return
 			}
 
@@ -211,6 +204,53 @@
 
 		},
 		methods: {
+			articleBack() {
+				var _this = this
+				$(".previewContent").css('display', "block")
+				//评论内容
+				var value = $(".previewMessage").val()
+				
+//				
+				//评论接口
+				let data={
+					token: this.token,
+					commentContent:value,
+					postId:this.id-0,
+				}
+				saveComment(data).then(res => {
+					if(res.code == 0) {
+						//将输入框清空
+						$(".previewMessage").val("")
+						this.preview()
+					}
+				}).catch(function(res) {
+					alert(res.msg)
+					if(res.code==11024){
+						_this.$router.push('/user/login')
+					}
+				});
+
+			},
+			share(){
+				//调用二维码
+				$("#qrcode canvas").remove()
+				$("#qrcode img").remove()
+			   this.qrcode()
+			},
+			qrcode() {
+				let qrcode = new QRCode('qrcode', {
+					width: 100,
+					height: 100,
+					text: 'https://m.qufen.top/project/discuss?id='+ this.id + '', // 二维码内容
+					//        text: 'http://192.168.10.101:5000/project/'+this.a+'?id='+this.id+'',
+
+					//					render: 'canvas', // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
+					background: 'red',
+					foreground: '#ff0',
+					src: '../../assets/logo.png'
+				})
+				
+			},
 			onecenter() {
 				if(this.token != '') {
 					var id = this.createUserId
@@ -250,7 +290,7 @@
 						if(res.data.comments.rows != null) {
 							this.newestComments = res.data.comments.rows
 							this.length = res.data.comments.rows.length
-							
+
 							if(res.data.comments.rows.length > 4) {
 
 								if(this.hasNext == false) {
@@ -409,7 +449,7 @@
 						this.projectId = data.projectId
 						this.createUserId = data.createUserId
 
-						if(data.tagInfos != null&&data.tagInfos.length!=0) {
+						if(data.tagInfos != null && data.tagInfos.length != 0) {
 							this.tagInfos = JSON.parse(data.tagInfos)
 						}
 

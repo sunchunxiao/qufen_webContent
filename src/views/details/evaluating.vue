@@ -47,9 +47,17 @@
 									<img src="../../assets/common/shou.png">
 									<label>收藏</label>
 								</div>
-								<div class="detail index-preview">
+								<!--<div class="detail index-preview">
 									<img src="../../assets/common/share.png">
 									<label>分享</label>
+								</div>-->
+								<!--分享-->
+								<div class="detail index-preview" @click="share">
+									<img class="hover-img" src="../../assets/common/share.png" alt="" />
+									<el-popover title="扫码分享至朋友圈" placement="top-start" width="150" trigger="click">
+										<div id="qrcode"></div>
+										<span slot="reference" style="cursor: pointer;font-size: 14px; margin-left: 5px;color: #aaa;">分享</span>
+									</el-popover>
 								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/preview.png">
@@ -66,8 +74,8 @@
 							<!--请写下你的评论-->
 							<div class="articleF">
 								<img style="float: left;" src="../../assets/common/FIND.png" />
-								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." /></div>
-								<span class="articleBack">回复</span>
+								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." class="previewMessage"/></div>
+								<span @click="articleBack" class="articleBack">回复</span>
 							</div>
 							<div class="previewContent">
 								<h2>评论</h2>
@@ -137,10 +145,11 @@
 </template>
 
 <script>
-	import { articleInfo, postCommentList, } from '@/service/home';
+	import { articleInfo, postCommentList,saveComment} from '@/service/home';
+	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
-	import {_isMobile} from '../../assets/js/mobile.js'
+	import { _isMobile } from '../../assets/js/mobile.js'
 	import { saveFollow, cancelFollow } from '@/service/home';
 	export default {
 		name: 'evaluating',
@@ -168,7 +177,7 @@
 				pageSize: 10,
 				projectId: 0,
 				tagInfos: [],
-				length:0
+				length: 0
 			}
 		},
 		mounted() {
@@ -180,15 +189,15 @@
 			this.articleC()
 			//请求评论
 			this.preview(),
-			//监听滚动条
-			window.addEventListener('scroll', this.scrollHandler)
+				//监听滚动条
+				window.addEventListener('scroll', this.scrollHandler)
 			//判断是否是移动端，移动端自动跳转
-//			console.log(_isMobile())
+			//			console.log(_isMobile())
 			if(_isMobile()) {
-//				alert("手机端");
-				window.location.href = "https://m.qufen.top/project/articleInfo?id="+this.id
+				//				alert("手机端");
+				window.location.href = "https://m.qufen.top/project/articleInfo?id=" + this.id
 			} else {
-//				alert("pc端");
+				//				alert("pc端");
 				return
 			}
 
@@ -242,11 +251,57 @@
 			}
 
 		},
-		
+
 		destroyed() {
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			articleBack() {
+				var _this = this
+				$(".previewContent").css('display', "block")
+				//评论内容
+				var value = $(".previewMessage").val()
+				console.log(value)
+//				
+				//评论接口
+				let data={
+					token: this.token,
+					commentContent:value,
+					postId:this.id-0,
+				}
+				saveComment(data).then(res => {
+					if(res.code == 0) {
+						//将输入框清空
+						$(".previewMessage").val("")
+						this.preview()
+					}
+				}).catch(function(res) {
+					alert(res.msg)
+					if(res.code==11024){
+						_this.$router.push('/user/login')
+					}
+				});
+
+			},
+			share() {
+				//调用二维码
+				$("#qrcode img").remove()
+				this.qrcode()
+			},
+			qrcode() {
+				let qrcode = new QRCode('qrcode', {
+					width: 100,
+					height: 100,
+					text: 'https://m.qufen.top/project/articleInfo?id=' + this.id + '', // 二维码内容
+					//        text: 'http://192.168.10.101:5000/project/'+this.a+'?id='+this.id+'',
+
+					//					render: 'canvas', // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
+					background: 'red',
+					foreground: '#ff0',
+					src: '../../assets/logo.png'
+				})
+
+			},
 			onecenter() {
 				if(this.token != '') {
 					var id = this.createUserId
@@ -303,7 +358,7 @@
 
 				}).catch(function(res) {
 					$(".previewContent").css('display', "none")
-					$(".start").css("display","none")
+					$(".start").css("display", "none")
 				});
 			},
 			previewmore() {
@@ -321,7 +376,7 @@
 						postCommentList(data).then(res => {
 							if(res.code == 0) {
 								this.hasNext = res.data.newestComments.hasNext
-								console.log(this.hasNext)
+//								console.log(this.hasNext)
 								if(res.data.newestComments.rows != null) {
 									for(var i = 0; i < res.data.newestComments.rows.length; i++) {
 										this.newestComments.push(res.data.newestComments.rows[i]);
@@ -363,7 +418,7 @@
 						this.username = data.createUserName;
 						this.projectCode = data.projectCode;
 						//标签
-						if(data.evaluationTags != null && data.evaluationTags.length!=0) {
+						if(data.evaluationTags != null && data.evaluationTags.length != 0) {
 							this.tagInfos = JSON.parse(data.evaluationTags)
 						}
 						//关注状态
@@ -382,7 +437,7 @@
 
 						if(nowdate == this.timestr) {
 							var a1 = arr[1].split(":")
-	//						console.log(a1)
+							//						console.log(a1)
 							this.timestr1 = a1[0] + ":" + a1[1];
 						} else {
 							this.timestr1 = arr[0];
@@ -500,16 +555,16 @@
 
 			},
 			projectdetail() {
-					var id = this.projectId
-					window.open('/summary/projectdetail?id=' + id, "_blank")
-//				} else {
-//
-//					this.$message({
-//						showClose: true,
-//						message: '请登录',
-//						type: 'error'
-//					});
-//				}
+				var id = this.projectId
+				window.open('/summary/projectdetail?id=' + id, "_blank")
+				//				} else {
+				//
+				//					this.$message({
+				//						showClose: true,
+				//						message: '请登录',
+				//						type: 'error'
+				//					});
+				//				}
 
 			}
 		}

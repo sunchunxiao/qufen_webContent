@@ -270,7 +270,7 @@
 				//				console.log( _width1)
 
 				if(_width < 1603) {
-					var left = _width1 + 678
+					var left = _width1 + 680
 					$(".common-attention").css("left", left)
 				} else {
 					var left = _width1 + 723
