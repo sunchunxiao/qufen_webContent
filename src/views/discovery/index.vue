@@ -496,16 +496,6 @@
 			window.open('/summary/projectdetail?id=' + id, "_blank")
 			}
 
-			// isHaveMore: function() {
-			//
-			//   //this.allLoaded = false; //true是禁止上拉加载
-			//
-			//   if(this.pageIndex == this.totalpage) {
-			//     this.allLoaded = true;
-			//     $(".end").css("display","block")
-			//     $(".start").css("display","none")
-			//   }
-			// }
 		},
 
 	}

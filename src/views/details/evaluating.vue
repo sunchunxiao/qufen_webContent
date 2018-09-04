@@ -74,7 +74,7 @@
 							<!--请写下你的评论-->
 							<div class="articleF">
 								<img style="float: left;" src="../../assets/common/FIND.png" />
-								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." class="previewMessage"/></div>
+								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="请写下您的评论..." class="previewMessage" /></div>
 								<span @click="articleBack" class="articleBack">回复</span>
 							</div>
 							<div class="previewContent">
@@ -145,7 +145,7 @@
 </template>
 
 <script>
-	import { articleInfo, postCommentList,saveComment} from '@/service/home';
+	import { articleInfo, postCommentList, saveComment } from '@/service/home';
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -258,29 +258,37 @@
 		methods: {
 			articleBack() {
 				var _this = this
-				$(".previewContent").css('display', "block")
-				//评论内容
-				var value = $(".previewMessage").val()
-				console.log(value)
-//				
-				//评论接口
-				let data={
-					token: this.token,
-					commentContent:value,
-					postId:this.id-0,
+				if(this.token != "") {
+					$(".previewContent").css('display', "block")
+					//评论内容
+					var value = $(".previewMessage").val()
+					console.log(value)
+					//				
+					//评论接口
+					let data = {
+						token: this.token,
+						commentContent: value,
+						postId: this.id - 0,
+					}
+					saveComment(data).then(res => {
+						if(res.code == 0) {
+							//将输入框清空
+							$(".previewMessage").val("")
+							this.preview()
+						}
+					}).catch(function(res) {
+						if(res.code == 11024) {
+							_this.$router.push('/user/login')
+						}
+					});
+				} else {
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
+					this.$router.push('/user/login')
 				}
-				saveComment(data).then(res => {
-					if(res.code == 0) {
-						//将输入框清空
-						$(".previewMessage").val("")
-						this.preview()
-					}
-				}).catch(function(res) {
-					alert(res.msg)
-					if(res.code==11024){
-						_this.$router.push('/user/login')
-					}
-				});
 
 			},
 			share() {
@@ -376,7 +384,7 @@
 						postCommentList(data).then(res => {
 							if(res.code == 0) {
 								this.hasNext = res.data.newestComments.hasNext
-//								console.log(this.hasNext)
+								//								console.log(this.hasNext)
 								if(res.data.newestComments.rows != null) {
 									for(var i = 0; i < res.data.newestComments.rows.length; i++) {
 										this.newestComments.push(res.data.newestComments.rows[i]);

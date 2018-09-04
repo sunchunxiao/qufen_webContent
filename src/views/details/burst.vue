@@ -73,7 +73,7 @@
 						<!--请写下你的评论-->
 						<div class="articleF">
 							<img style="float: left;" src="../../assets/common/FIND1.png" />
-							<div class="articleInputC articleInput"><input type="text" name="" placeholder="本功能目前只对APP开放..." class="previewMessage"/></div>
+							<div class="articleInputC articleInput"><input type="text" name="" placeholder="请写下您的评论..." class="previewMessage"/></div>
 							<span @click="articleBack" class="articleBack">回复</span>
 						</div>
 						<div class="previewContent">
@@ -206,7 +206,8 @@
 		methods: {
 			articleBack() {
 				var _this = this
-				$(".previewContent").css('display', "block")
+				if(this.token != "") {
+					$(".previewContent").css('display', "block")
 				//评论内容
 				var value = $(".previewMessage").val()
 				
@@ -224,11 +225,20 @@
 						this.preview()
 					}
 				}).catch(function(res) {
-					alert(res.msg)
+//					alert(res.msg)
 					if(res.code==11024){
 						_this.$router.push('/user/login')
 					}
 				});
+				}else{
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
+					this.$router.push('/user/login')
+				}
+				
 
 			},
 			share(){
