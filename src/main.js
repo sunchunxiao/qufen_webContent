@@ -10,6 +10,7 @@ import $ from 'jquery'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import 'babel-polyfill'
+import {getCookie,setCookie,delCookie} from '@/assets/js/cookie.js'
 
 
 //七牛
@@ -17,6 +18,11 @@ import * as qiniu from 'qiniu-js'
 
 
 Vue.config.productionTip = false
+Vue.prototype.$cookieStore = {
+	setCookie,
+	getCookie,
+	delCookie
+}
 
 // 加载插件
 Vue.use(iView)

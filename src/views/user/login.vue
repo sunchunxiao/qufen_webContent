@@ -50,7 +50,6 @@
 </template>
 
 <script>
-	import { setCookie, getCookie } from '../../assets/js/cookie.js'
 	import { login, register, getCode } from '@/service/user'
 	import Header from '@/components/layout/header'
 	export default {
@@ -76,13 +75,10 @@
 			Header
 		},
 		mounted() {
-			if(getCookie('rmbUser') == "true") {
-				$("#autolog").attr("checked", true);
-				this.phone = getCookie("username");
-				//				 this.phone = getCookie("");
-			}
-			//			if(getCookie('username')) {
-			//				this.$router.push('/discovery')
+			//			if(getCookie('rmbUser') == "true") {
+			//				$("#autolog").attr("checked", true);
+			//				this.phone = getCookie("username");
+			//				
 			//			}
 
 		},
@@ -93,24 +89,13 @@
 		//			}
 		//		}
 		methods: {
-			//			hideShowPsw() {
-			//				if(passwords.type == "text") {
-			//					passwords.type = "password";
-			//					//					Visiblepasswords.src = "../static/nVisiblepasswords.png";
-			//				} else {
-			//					passwords.type = "text";
-			//					//					Visiblepasswords.src = "../../static/Visiblepasswords.png";
-			//				}
-			//			},
-			login() {
-        var myreg = /^1[3456789]\d{9}$/;
-				//				console.log($("#autolog").is(":checked"))
-				if($("#autolog").is(":checked") == true) {
-					setCookie('rmbUser', "true", timer)
 
-				}
+			login() {
+				var myreg = /^1[3456789]\d{9}$/;
+
 				var timer = 60 * 60 * 24
-				setCookie('username', this.phone, timer)
+				
+				this.$cookieStore.setCookie('username', this.phone, timer)
 				if(this.phone == "" || this.password == "") {
 					this.$message({
 						type: 'error',
@@ -128,15 +113,13 @@
 					if(myreg.test(this.phone)) {
 						login(data).then(res => {
 							if(res.code == 0) {
-								setCookie('changeLogin', 100, timer)
-								setCookie('img', res.data.userModel.icon, timer)
-								setCookie('user', res.data.userModel.userNick, timer)
-								setCookie('userType', res.data.userModel.userType, timer)
-								setCookie('token', res.data.s, timer)
-								setCookie('uid', res.data.userModel.uid, timer)
-
+								this.$cookieStore.setCookie('changeLogin', 100, timer)
+								this.$cookieStore.setCookie('img', res.data.userModel.icon, timer)
+								this.$cookieStore.setCookie('user', res.data.userModel.userNick, timer)
+								this.$cookieStore.setCookie('userType', res.data.userModel.userType, timer)
+								this.$cookieStore.setCookie('token', res.data.s, timer)
+								this.$cookieStore.setCookie('uid', res.data.userModel.uid, timer)
 								this.$router.push("/discovery")
-								//							window.open('/discovery', "_blank")
 
 							}
 

@@ -190,6 +190,7 @@
 				state: "",
 				tagInfos: [],
 				token: getCookie('token')
+				
 			}
 		},
 		components: {

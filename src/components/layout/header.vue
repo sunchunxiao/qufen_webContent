@@ -61,7 +61,7 @@
 
 <script>
 	import { menuData } from '@/common/menu'
-	import { getCookie, delCookie } from '../../assets/js/cookie.js'
+//	import { delCookie } from '../../assets/js/cookie.js'
 	import { reviewedL } from '@/service/home'
 	export default {
 		data() {
@@ -71,15 +71,15 @@
 				userNick: '',
 				src: "",
 				userType: '',
-				token: getCookie('token'),
+				token: this.$cookieStore.getCookie('token'),
 				clicked: undefined //标识，初始化默认选中第一项
 			};
 		},
 
 		mounted() {
-//			console.log(getCookie('uid'))
+			console.log(this.token)
 			//登录后
-			if(getCookie('username') && getCookie('token')) {
+			if(this.$cookieStore.getCookie('username') &&this.$cookieStore.getCookie('token')  ) {
 				$(".header-select").css("display", "block")
 				$(".headerOcenter").css("display", "none")
 			} else {
@@ -88,11 +88,11 @@
 			}
 
 			//头像
-			this.src = getCookie('img')
+			this.src =this.$cookieStore.getCookie('img')
 			//用户名
-			this.userNick = unescape(getCookie('user'))
+			this.userNick = unescape(this.$cookieStore.getCookie('user'))
 			//加V
-			this.userType = getCookie('userType')
+			this.userType =this.$cookieStore.getCookie('userType')
 			//普通用户
 			if(this.userType == 1) {
 				$(".layoutV").css("display", "none")
@@ -126,7 +126,7 @@
 				window.open('https://g.qufen.top', "_blank")
 			},
 			onecenter() {
-				var id = getCookie('uid')
+				var id =this.$cookieStore.getCookie('uid')
 				window.open('/onecenter?id=' + id, "_blank")
 			},
 //			未登录时点击头像
@@ -173,12 +173,20 @@
 
 			},
 			quit() {
-				delCookie('username')
-				delCookie('token')
-				delCookie('changeLogin')
-				delCookie('user')
-				delCookie('userType')
-				delCookie('img')
+				this.$cookieStore.delCookie('username')
+				this.$cookieStore.delCookie('token')
+				this.$cookieStore.delCookie('changeLogin')
+				this.$cookieStore.delCookie('user')
+				this.$cookieStore.delCookie('userType')
+				this.$cookieStore.delCookie('img')
+				this.$cookieStore.delCookie('uid')
+//				delCookie('username')
+//				delCookie('token')
+//				delCookie('changeLogin')
+//				delCookie('user')
+//				delCookie('userType')
+//				delCookie('img')
+//				delCookie('uid')
 				this.$router.push("/user/login");
 			},
 			handleSelect(key, keyPath) {
@@ -192,8 +200,7 @@
 				//				console.log(key, keyPath);
 			},
 			release() {
-//				console.log(unescape(getCookie('user')), getCookie('token'))
-				if(getCookie('username')) {
+				if(this.$cookieStore.getCookie('username')) {
 //					window.open('/quhomelist', "_blank")
 					this.$router.push('/quhomelist')
 

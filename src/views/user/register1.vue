@@ -41,7 +41,6 @@
 </template>
 
 <script>
-	import { setCookie, getCookie } from '../../assets/js/cookie.js'
 	import { login, register, getCode } from '@/service/user'
 	import Header from '@/components/layout/header'
 	import gt from '../../assets/js/gt.js'
@@ -67,11 +66,7 @@
 			Header
 		},
 		mounted() {
-			//			if(getCookie('rmbUser') == "true") {
-			//				$("#autolog").attr("checked", true);
-			//				this.phone = getCookie("username");
-			//			}
-
+			
 			var handler = function(captchaObj) {
 				captchaObj.onReady(function() {
 					$("#wait").hide();
