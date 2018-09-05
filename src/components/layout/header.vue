@@ -113,10 +113,13 @@
 			this.handleSelect()
 		},
 		updated(){
-//			var username = $(".cxuser").html().length
-//			if(username<=3){
-//				$(".cxuser ").removeClass("cx-username")
-//			}
+			
+			var username = $(".cxuser").html()
+			var length = username.length
+//			console.log(length)
+			if(length<=3){
+				$(".cxuser ").removeClass("cx-username")
+			}
 		},
 		methods: {
 			next(){
