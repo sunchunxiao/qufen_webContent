@@ -210,28 +210,30 @@
 		updated() {
 			//
 			//			console.log(this.itemList)
-			//点击关注
-			for(let i = 0; i < this.itemList.length; i++) {
-				if(this.itemList[i].postSmallImagesList == null) {
-					$(".aa").eq(i).removeClass("row3-content")
-					$(".aa").eq(i).addClass("srow3-content")
-				}
+			if(this.itemList != null && this.itemList.length != 0) {
+				//点击关注
+				for(let i = 0; i < this.itemList.length; i++) {
+					if(this.itemList[i].postSmallImagesList == null) {
+						$(".aa").eq(i).removeClass("row3-content")
+						$(".aa").eq(i).addClass("srow3-content")
+					}
 
-				this.followStatus = this.itemList[i].followStatus
-				if(this.itemList[i].followStatus == 1) {
-					$(".discoveryBtn").eq(i).css({
-						backgroundColor: "rgb(244, 244, 244)",
-						color: "rgb(126, 126, 126)"
-					})
-					$(".discoveryBtn").eq(i).html("已关注")
-				} else {
-					$(".discoveryBtn").eq(i).css({
-						backgroundColor: "rgb(59, 136, 246)",
-						color: "rgb(255,255,255)"
-					})
-					$(".discoveryBtn").eq(i).html("+ 关注")
-				}
+					this.followStatus = this.itemList[i].followStatus
+					if(this.itemList[i].followStatus == 1) {
+						$(".discoveryBtn").eq(i).css({
+							backgroundColor: "rgb(244, 244, 244)",
+							color: "rgb(126, 126, 126)"
+						})
+						$(".discoveryBtn").eq(i).html("已关注")
+					} else {
+						$(".discoveryBtn").eq(i).css({
+							backgroundColor: "rgb(59, 136, 246)",
+							color: "rgb(255,255,255)"
+						})
+						$(".discoveryBtn").eq(i).html("+ 关注")
+					}
 
+				}
 			}
 		},
 		destroyed() {
@@ -239,7 +241,7 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
-			official(){
+			official() {
 				window.open('https://g.qufen.top', "_blank")
 			},
 			onecenter(id) {
@@ -373,40 +375,43 @@
 					followList(data).then(res => {
 
 						this.itemList = res.data.follows.rows;
-						if(res.data.follows.rows.length <= 2) {
-							$(".start").css("display", "none")
-						}
+						if(res.data.follows.rows != null && res.data.follows.rows.length != 0) {
+							if(res.data.follows.rows.length <= 2) {
+								$(".start").css("display", "none")
+							}
 
-						for(var i = 0; i < res.data.follows.rows.length; i++) {
-							//						console.log(res.data.follows.rows[i].postSmallImagesList)
-							if(res.data.follows.rows[i].postSmallImagesList != null) {
-								if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
-									res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
+							for(var i = 0; i < res.data.follows.rows.length; i++) {
+								//						console.log(res.data.follows.rows[i].postSmallImagesList)
+								if(res.data.follows.rows[i].postSmallImagesList != null) {
+									if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
+										res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
+									}
 								}
+
+								//时间  字符串切割
+								//调用 Data.customData()
+								var nowdate = Data.customData()
+
+								var arr = res.data.follows.rows[i].createTimeStr.split(" ")
+
+								this.timestr = arr[0];
+								if(nowdate == this.timestr) {
+									var a1 = arr[1].split(":")
+									res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								} else {
+									res.data.follows.rows[i].createTimeStr = arr[0];
+								}
+
+								if(res.data.follows.rows[i].tagInfos != null) {
+									this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
+									res.data.follows.rows[i].tagInfos = this.tagInfos
+								} else {
+									// $(".crack-tag2").css("display", "none")
+								}
+
 							}
-
-							//时间  字符串切割
-							//调用 Data.customData()
-							var nowdate = Data.customData()
-
-							var arr = res.data.follows.rows[i].createTimeStr.split(" ")
-
-							this.timestr = arr[0];
-							if(nowdate == this.timestr) {
-								var a1 = arr[1].split(":")
-								res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-							} else {
-								res.data.follows.rows[i].createTimeStr = arr[0];
-							}
-
-							if(res.data.follows.rows[i].tagInfos != null) {
-								this.tagInfos = JSON.parse(res.data.follows.rows[i].tagInfos)
-								res.data.follows.rows[i].tagInfos = this.tagInfos
-							} else {
-								// $(".crack-tag2").css("display", "none")
-							}
-
 						}
+
 						this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 
 					})

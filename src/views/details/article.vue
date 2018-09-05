@@ -190,6 +190,7 @@
 		},
 
 		mounted() {
+			
 			this.id = this.$route.query.id;
 			//请求文章
 			this.articleC()
@@ -392,6 +393,7 @@
 
 			},
 			articleC() {
+				console.log(111)
 				//发送请求
 				var data = {
 					token: this.token,

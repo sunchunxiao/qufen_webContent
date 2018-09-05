@@ -67,7 +67,7 @@
 
 				if(this.post.postType == 1) {
 					this.$router.push({
-						path: "/details/evaluating",
+						path: "/project/articleInfo",
 						query: {
 							id:this.id.toString()
 						}
@@ -75,7 +75,7 @@
 				}
 				if(this.post.postType == 2) {
 					this.$router.push({
-						path: "/details/burst",
+						path: "/project/discuss",
 						query: {
 							id:this.id.toString()
 						}
@@ -83,7 +83,7 @@
 				}
 				if(this.post.postType == 3) {
 					this.$router.push({
-						path: "/details/article",
+						path: "/project/article",
 						query: {
 							id:this.id.toString()
 						}
