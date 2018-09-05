@@ -66,6 +66,7 @@
 		mounted() {
 			//标签
 			this.tags()
+//			$("textarea").val('<div>lalal</div>')
 		},
 		methods: {
 			tags() {

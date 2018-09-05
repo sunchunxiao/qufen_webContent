@@ -61,7 +61,6 @@
 
 <script>
 	import { menuData } from '@/common/menu'
-//	import { delCookie } from '../../assets/js/cookie.js'
 	import { reviewedL } from '@/service/home'
 	export default {
 		data() {
@@ -77,7 +76,7 @@
 		},
 
 		mounted() {
-			console.log(this.token)
+//			console.log(this.token)
 			//登录后
 			if(this.$cookieStore.getCookie('username') &&this.$cookieStore.getCookie('token')  ) {
 				$(".header-select").css("display", "block")

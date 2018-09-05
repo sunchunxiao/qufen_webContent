@@ -47,7 +47,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="row5" style="cursor: pointer;" @click="article(item.postType,item.postId)">
+						<div class="row5" style="cursor: pointer;">
 							<div class="article-atten">
 								<span v-if="item.postType==1" class="atten-name">评测</span>
 
@@ -58,9 +58,9 @@
 									<img src="../../assets/common/FIND.png">
 									<label>{{item.donateNum}}</label>
 								</div>-->
-								<div class="detail index-preview">
-									<img src="../../assets/common/zan.png">
-									<label>{{item.praiseNum}}</label>
+								<div @click="thumbsup(index,item.postId)" class="detail index-preview">
+									<img class="commonZan" src="../../assets/common/zan.png">
+									<label class="thumbsupNum">{{item.praiseNum}}</label>
 								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/preview.png">
@@ -166,7 +166,7 @@
 </template>
 
 <script>
-	import { recommend, saveFollow, cancelFollow } from '@/service/home';
+	import { recommend, saveFollow, cancelFollow,savePostPraise} from '@/service/home';
 	import Header from '@/components/layout/header.vue'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -188,6 +188,8 @@
 				state: "",
 				tagInfos: [],
 				token: getCookie('token'),
+				flag:false,
+				num:0
 			}
 		},
 		components: {
@@ -196,7 +198,7 @@
 
 		mounted() {
 			//小于1600px   main-right展开
-			//			this.resizeBannerImage();
+//			this.resizeBannerImage();
 			this.resizeBannerImage1();
 			window.addEventListener('resize', this.resizeBannerImage)
 
@@ -214,9 +216,7 @@
 			}
 
 		},
-
 		updated() {
-
 			for(let i = 0; i < this.itemList.length; i++) {
 				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
 					$(".add").eq(i).removeClass("row3-content")
@@ -246,9 +246,36 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			//点赞
+			thumbsup(index,postId){
+				//点击更换点赞图片
+				$(".commonZan").eq(index).attr("src","../../static/img/zanb.png")
+//				console.log($(".thumbsupNum").eq(index).html(),this.flag,index)
+				this.num = $(".thumbsupNum").eq(index).html()-0
+				console.log(typeof this.num)
+				this.itemList[index].seen = !this.itemList[index].seen
+				
+				if(this.itemList[index].seen == true) {
+					this.num=this.num+1
+					$(".thumbsupNum").eq(index).html(this.num)
+					this.flag=true
+				}
+				let data={
+					token:this.token,
+					postId:postId
+				}
+				//调接口
+				savePostPraise(data).then(res => {
+					console.log(res.data)
+					
+				})
+				
+			},
+			//右侧点击下载app跳到官网
 			official(){
 				window.open('https://g.qufen.top', "_blank")
 			},
+			//个人主页
 			onecenter(id) {
 				window.open('/onecenter?id=' + id, "_blank")
 			},
@@ -390,9 +417,12 @@
 					}
 
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
+						res.data.recommends.rows[i].seen = false
 						if(res.data.recommends.rows[i].postSmallImagesList != null) {
 							if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
 								res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
+								
+								
 							}
 						}
 
@@ -446,6 +476,7 @@
 
 						recommend(params).then(res => {
 							for(var i = 0; i < res.data.recommends.rows.length; i++) {
+								res.data.recommends.rows[i].seen = false
 								this.itemList.push(res.data.recommends.rows[i]);
 								if(res.data.recommends.rows[i].postSmallImagesList != null) {
 									if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {

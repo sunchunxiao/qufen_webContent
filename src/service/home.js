@@ -112,3 +112,11 @@ export const  saveComment= (params = {}) => {
     },
   })
 }
+//点赞
+export const  savePostPraise= (params = {}) => {
+  return request(`/kff/praise/savePostPraise`, {
+    body: {
+      ...params
+    },
+  })
+}
