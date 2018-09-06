@@ -7,7 +7,7 @@ html,body{
 html, body, div, span,h1, h2, h3, h4, h5, h6, p, blockquote, a, big, cite, em, font, img, strike,  ol, ul, li, fieldset, form, table, caption, tr, th, prep,td ,textarea,input{ margin:0; padding:0;  }
 a {
     text-decoration: none;
-    color: #444444;
+    color: #000;
 }
 a:active {
     color: #444444;

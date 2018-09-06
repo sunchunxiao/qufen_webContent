@@ -38,7 +38,7 @@
 							<div class="article-atten">
 								<div class="detail1 zan">
 									<img src="../../assets/common/FIND.png">
-									<label>待结算</label>
+									<label>{{donateNum}}</label>
 								</div>
 
 							</div>
@@ -73,9 +73,9 @@
 						<div class="articlePreview">
 							<!--请写下你的评论-->
 							<div class="articleF">
-								<img style="float: left;" src="../../assets/common/FIND.png" />
+								<img style="float: left;" :src="img" />
 								<div class="articleInputC elvaInput"><input type="text" name="" placeholder="请写下您的评论..." class="previewMessage" /></div>
-								<span @click="articleBack" class="articleBack">回复</span>
+								<span @click="articleBack" class="articleBack">评论</span>
 							</div>
 							<div class="previewContent">
 								<h2>评论</h2>
@@ -167,6 +167,7 @@
 				timestr1: '',
 				commentsNum: '',
 				praiseNum: '',
+				donateNum:'',
 				projectCode: '',
 				token: getCookie('token'),
 				followStatus: 0,
@@ -181,7 +182,8 @@
 				praiseStatus: 0,
 				num: 0,
 				uid: getCookie('uid'),
-				seen:false
+				seen:false,
+				img:getCookie("img")
 			}
 		},
 		mounted() {

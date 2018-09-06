@@ -43,7 +43,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div style="cursor: pointer;" class="crack-tag1" @click="projectdetail(item.projectId)"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span @click="tags" class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -54,10 +54,10 @@
 							</div>
 							<div class="article-detail">
 								<!--打赏-->
-								<!--<div class="detail zan">
+								<div class="detail zan">
 									<img src="../../assets/common/FIND.png">
 									<label>{{item.donateNum}}</label>
-								</div>-->
+								</div>
 								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
 									<img class="commonZan" src="../../assets/common/zan.png">
 									<label class="thumbsupNum">{{item.praiseNum}}</label>
@@ -251,6 +251,10 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			//话题
+			tags(){
+				window.open('/topic', "_blank")
+			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
 				console.log(this.uid, createUserId)

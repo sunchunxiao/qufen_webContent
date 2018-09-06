@@ -36,7 +36,7 @@
 						<!--赞助-->
 						<div class="detail1 zan">
 							<img src="../../assets/common/FIND.png">
-							<label>待结算</label>
+							<label>{{donateNum}}</label>
 						</div>
 
 					</div>
@@ -72,9 +72,9 @@
 				<div class="articlePreview">
 					<!--请写下你的评论-->
 					<div class="articleF">
-						<img style="float: left;" src="../../assets/common/FIND.png" />
+						<img style="float: left;" :src="img" />
 						<div class="articleInputC articleInput"><input class="previewMessage" type="text" name="" placeholder="请写下您的评论..." /></div>
-						<span @click="articleBack" class="articleBack">回复</span>
+						<span @click="articleBack" class="articleBack">评论</span>
 					</div>
 					<!--评论-->
 					<div class="previewContent">
@@ -186,7 +186,8 @@
 				praiseStatus: 0,
 				num: 0,
 				uid: getCookie('uid'),
-				seen:false
+				seen:false,
+				img:getCookie('img')
 			}
 		},
 

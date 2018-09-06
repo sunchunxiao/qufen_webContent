@@ -54,6 +54,12 @@
 								<span v-if="item.postType==1" class="atten-name">评测</span>
 							</div>
 							<div class="article-detail">
+								<!--打赏-->
+								<div class="detail zan">
+									<img src="../../assets/common/FIND.png">
+									<label>{{item.donateNum}}</label>
+								</div>
+								<!--点赞-->
 								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
 									<img class="commonZan" src="../../assets/common/zan.png">
 									<label class="thumbsupNum">{{item.praiseNum}}</label>

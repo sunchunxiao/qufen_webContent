@@ -12,9 +12,11 @@
 .el-message {
 	top: 60px;
 }
-.discoveryContent{
+
+.discoveryContent {
 	margin-top: 15px;
 }
+
 .oneuser {
 	display: flex;
 	align-items: center;
@@ -121,8 +123,13 @@
 	padding: 15px 0 0px;
 }
 
+
 /*.burstcontent {*/
-	/*margin-top: 10px;*/
+
+
+/*margin-top: 10px;*/
+
+
 /*}*/
 
 .attention-code {
@@ -332,7 +339,8 @@
 	font-size: 14px;
 	color: #3b88f6;
 	letter-spacing: 0;
-	margin-left: 16px
+	margin-left: 16px;
+	cursor: pointer;
 }
 
 
@@ -353,7 +361,8 @@
 }
 
 .detail {
-	margin-left: 60px;
+	width: 60px;
+	margin-left: 40px;
 	float: left;
 	/*position: relative;*/
 	display: flex;
@@ -403,6 +412,7 @@
 	border-radius: 4px;
 	box-shadow: 0 1px 3px rgba(200, 200, 200, 0.48);
 }
+
 
 /*.attention-code {}*/
 
@@ -782,9 +792,12 @@
 
 .onecommon {
 	margin-top: 20px;
+	overflow: hidden;
+	position: relative;
 }
 
 .onecommon ul {
+	float: left;
 	overflow: hidden;
 	height: 30px;
 }
@@ -809,6 +822,60 @@
 	position: absolute;
 	bottom: -5px;
 	left: 32px;
+}
+
+
+/*话题主页*/
+
+.topicTags {
+	overflow: hidden;
+}
+
+.topicTag {
+	width: 80px;
+	height: 41px;
+	line-height: 41px;
+	font-size: 14px;
+	text-align: center;
+	background-color: rgb(247, 247, 247);
+	color: rgb(84, 93, 113);
+	border-radius: 4px;
+	float: left;
+	margin-bottom: 15px;
+	transition: all 0.5s;
+}
+
+.topicTag:hover {
+	/*transition-delay: 0.5;*/
+	background-color: rgb(59, 136, 246);
+	color: #fff;
+	cursor: pointer;
+}
+.topicOnedec{
+	color: rgb(51,51,51);
+	font-size: 16px;
+	font-weight: bold;
+}
+.topicSelect{
+	
+	position: absolute;
+	right: 0;
+}
+.choice1 a{
+	color: rgb(59,136,246);
+    padding-right: 20px;
+	border-right:1px solid rgb(59,136,246);
+}
+.choice2 a{
+	color:rgb(51,51,51) ;
+	padding-left: 20px;
+}
+/*.choiceness a{
+	color: rgb(51,51,51);
+}*/
+.choiceness{
+	float: left;
+	font-size: 16px;
 }
 
 @media only screen and (max-width: 1600px) {
@@ -894,5 +961,17 @@
 	}
 	.attentionIcon img {
 		width: 27%;
+	}
+	/*话题*/
+	.topicTag {
+		width: 68px;
+		height: 35px;
+		line-height: 35px;
+		font-size: 12px;
+		text-align: center;
+		background-color: rgb(247, 247, 247);
+		color: rgb(84, 93, 113);
+		border-radius: 4px;
+		float: left;
 	}
 }

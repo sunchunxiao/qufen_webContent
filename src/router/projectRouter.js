@@ -45,6 +45,7 @@ export const projectRouter = [
 				
 				]
 			},
+			//个人主页
 			{
 				path: "/onecenter",
 				meta: {
@@ -72,6 +73,36 @@ export const projectRouter = [
 						title: '用户爆料'
 					},
 					component: (resolve) => require(['@/views/details/articlecenter.vue'], resolve)
+				},]
+			},
+			//话题主页
+			{
+				path: "/topic",
+				meta: {
+					title: '话题主页',
+				},
+				component: (resolve) => require(['@/views/topic/index.vue'], resolve),
+				children:[
+				{
+					path: '/topic/evaluating',
+					meta: {
+						title: '话题评测'
+					},
+					component: (resolve) => require(['@/views/topic/evaluating.vue'], resolve)
+				},
+				{
+					path: '/topic/burst',
+					meta: {
+						title: '话题爆料'
+					},
+					component: (resolve) => require(['@/views/topic/burst.vue'], resolve)
+				},
+				{
+					path: '/topic/article',
+					meta: {
+						title: '话题文章'
+					},
+					component: (resolve) => require(['@/views/topic/article.vue'], resolve)
 				},]
 			},
 
