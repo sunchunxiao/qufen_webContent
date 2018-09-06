@@ -10,7 +10,7 @@
 						</div>
 					</div>
 					<!--文章-->
-					<div class="common-article-wrap" v-for="item in itemList">
+					<div class="common-article-wrap" v-for="(item,index) in itemList">
 						<div class="common-article-content">
 							<div class="row row1">
 								<div class="photo">
@@ -50,23 +50,15 @@
 								</div>
 							</div>
 						</div>
-						<div class="row5" style="cursor: pointer;" @click="article(item.postType,item.postId)">
-							<!--<div class="article-atten">
-								<span  class="atten-name">{{item.actionDesc}}</span>
+						<div class="row5" style="cursor: pointer;">
 
-							</div>-->
 							<div class="article-atten">
 								<span v-if="item.postType==1" class="atten-name">评测</span>
 							</div>
 							<div class="article-detail">
-								<!--打赏-->
-								<!--<div class="detail zan">
-									<img src="../../assets/common/FIND.png">
-									<label>{{item.donateNum}}</label>
-								</div>-->
-								<div class="detail index-preview">
-									<img src="../../assets/common/zan.png">
-									<label>{{item.praiseNum}}</label>
+								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
+									<img class="commonZan" src="../../assets/common/zan.png">
+									<label class="thumbsupNum">{{item.praiseNum}}</label>
 								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/preview.png">
@@ -93,6 +85,7 @@
 
 <script>
 	import { articleList } from '@/service/project';
+	import { savePostPraise } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
@@ -114,6 +107,8 @@
 				tagInfos: [],
 				token: getCookie('token'),
 				hasNext: true,
+				num: 0,
+				uid: 0
 			}
 		},
 
@@ -133,6 +128,10 @@
 						$(".add").eq(i).addClass("srow3-content")
 
 					}
+					//点赞
+					if(this.itemList[i].praiseStatus == 1) {
+						$(".commonZan").eq(i).attr("src", "../../static/img/zanb.png")
+					}
 
 				}
 			}
@@ -142,6 +141,53 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			//点赞
+			thumbsup(index, postId, createUserId, praiseStatus) {
+				console.log(this.uid, createUserId)
+				if(this.token != '') {
+					//本人不能给本人点赞
+					if(createUserId != this.uid) {
+						//点击更换点赞图片
+						$(".commonZan").eq(index).attr("src", "../../static/img/zanb.png")
+						if(praiseStatus == 1) {
+							$(".commonZan").eq(index).attr("src", "../../static/img/zanb.png")
+						} else {
+
+							this.num = $(".thumbsupNum").eq(index).html() - 0
+							console.log(typeof this.num)
+							this.itemList[index].seen = !this.itemList[index].seen
+
+							if(this.itemList[index].seen == true) {
+								this.num = this.num + 1
+								$(".thumbsupNum").eq(index).html(this.num)
+								this.flag = true
+							}
+							let data = {
+								token: this.token,
+								postId: postId
+							}
+							//调接口
+							savePostPraise(data).then(res => {
+//								console.log(res.data)
+							})
+						}
+					} else {
+
+						this.$message({
+							type: 'error',
+							message: '不能对本人进行点赞',
+							duration: 1000
+						});
+					}
+				} else {
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
+				}
+
+			},
 			//下滑加载
 			scrollHandler() {
 				var scrollTop = $(window).scrollTop(); // 滚动条Y轴滚动的距离
@@ -152,11 +198,11 @@
 					this.more()
 				}
 			},
-//			attention() {
-//				this.$alert('本功能目前只对APP开放', {
-//					confirmButtonText: '确定',
-//				});
-//			},
+			//			attention() {
+			//				this.$alert('本功能目前只对APP开放', {
+			//					confirmButtonText: '确定',
+			//				});
+			//			},
 			article(postType, id) {
 				//帖子类型：1-评测；2-爆料；3-文章，4-单项评测
 				if(postType == 1) {
@@ -186,23 +232,24 @@
 						}
 						this.hasNext = res.data.articles.hasNext
 						for(var i = 0; i < res.data.articles.rows.length; i++) {
+							res.data.articles.rows[i].seen = false
 							if(res.data.articles.rows[i].postSmallImagesList != null) {
 								if(res.data.articles.rows[i].postSmallImagesList.length != 0) {
 									res.data.articles.rows[i].postSmallImagesList = res.data.articles.rows[i].postSmallImagesList.slice(0, 1)
 								}
 
 							}
-//							if(res.data.articles.rows[i].postSmallImages != null) {
-//								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-//								var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
-//								if(postSmallImages.length != 0) {
-//									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-//
-//								} else {
-//									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-//
-//								}
-//							}
+							//							if(res.data.articles.rows[i].postSmallImages != null) {
+							//								//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
+							//								var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
+							//								if(postSmallImages.length != 0) {
+							//									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+							//
+							//								} else {
+							//									res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
+							//
+							//								}
+							//							}
 
 							//时间  字符串切割
 							//调用 Data.customData()
@@ -253,6 +300,7 @@
 					articleList(params).then(res => {
 						this.hasNext = res.data.articles.hasNext
 						for(var i = 0; i < res.data.articles.rows.length; i++) {
+							res.data.articles.rows[i].seen = false
 							this.itemList.push(res.data.articles.rows[i]);
 							if(res.data.articles.rows[i].postSmallImagesList != null) {
 								if(res.data.articles.rows[i].postSmallImagesList.length != 0) {
@@ -298,9 +346,8 @@
 
 			},
 			projectdetail(id) {
-//				console.log(this.token)
-					window.open('/summary/projectdetail?id=' + id, "_blank")
-				
+				//				console.log(this.token)
+				window.open('/summary/projectdetail?id=' + id, "_blank")
 
 			}
 

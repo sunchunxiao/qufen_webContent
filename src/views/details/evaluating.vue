@@ -63,9 +63,9 @@
 									<img src="../../assets/common/preview.png">
 									<label>{{commentsNum}}</label>
 								</div>
-								<div class="detail zan">
-									<img src="../../assets/common/zan.png">
-									<label>{{praiseNum}}</label>
+								<div @click="thumbsup" class="detail zan">
+									<img class="commonZan" src="../../assets/common/zan.png">
+									<label class="thumbsupNum">{{praiseNum}}</label>
 								</div>
 							</div>
 						</div>
@@ -145,7 +145,7 @@
 </template>
 
 <script>
-	import { articleInfo, postCommentList, saveComment } from '@/service/home';
+	import { articleInfo, postCommentList, saveComment,savePostPraise} from '@/service/home';
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -177,7 +177,11 @@
 				pageSize: 10,
 				projectId: 0,
 				tagInfos: [],
-				length: 0
+				length: 0,
+				praiseStatus: 0,
+				num: 0,
+				uid: getCookie('uid'),
+				seen:false
 			}
 		},
 		mounted() {
@@ -249,6 +253,10 @@
 				})
 				$(".discoveryBtn").html("+ 关注")
 			}
+			//点赞状态
+			if(this.praiseStatus == 1) {
+				$(".commonZan").attr("src", "../../static/img/zanb.png")
+			}
 
 		},
 
@@ -256,6 +264,53 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			//点赞
+			thumbsup() {
+				console.log(this.uid, this.createUserId)
+				if(this.token != '') {
+					//本人不能给本人点赞
+					if(this.createUserId != this.uid) {
+						//点击更换点赞图片
+						$(".commonZan").attr("src", "../../static/img/zanb.png")
+						if(this.praiseStatus == 1) {
+							$(".commonZan").attr("src", "../../static/img/zanb.png")
+						} else {
+
+							this.num = $(".thumbsupNum").html() - 0
+							console.log(typeof this.num)
+							this.seen = !this.seen
+
+							if(this.seen == true) {
+								this.num = this.num + 1
+								$(".thumbsupNum").html(this.num)
+							}
+							let data = {
+								token: this.token,
+								postId: this.id-0
+							}
+							//调接口
+							savePostPraise(data).then(res => {
+								console.log(res.data)
+
+							})
+						}
+					} else {
+
+						this.$message({
+							type: 'error',
+							message: '不能对本人进行点赞',
+							duration: 1000
+						});
+					}
+				} else {
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
+				}
+
+			},
 			articleBack() {
 				var _this = this
 				if(this.token != "") {
@@ -418,6 +473,8 @@
 					if(res.code == 0) {
 
 						var data = res.data.evaluationDetail
+						res.data.evaluationDetail.seen = false
+						this.seen  = res.data.evaluationDetail.seen
 
 						this.articleTitle = data.postTitle
 						//头像
@@ -433,6 +490,8 @@
 						this.followStatus = data.followStatus
 						//id
 						this.projectId = data.projectId
+						//点赞状态
+						this.praiseStatus = data.praiseStatus
 						this.createUserId = data.createUserId
 
 						//时间  字符串切割

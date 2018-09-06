@@ -55,19 +55,16 @@
 								<span slot="reference" style="cursor: pointer;font-size: 14px; margin-left: 5px;color: #aaa;">分享</span>
 							</el-popover>
 						</div>
-						<!--<div @click="share" style="cursor: pointer;" class="detail index-preview">
-							<img src="../../assets/common/share.png">
-							<label>分享</label>
-						</div>-->
+						
 						<!--评论-->
 						<div class="detail index-preview">
 							<img src="../../assets/common/preview.png">
 							<label>{{commentsNum}}</label>
 						</div>
 						<!--点赞-->
-						<div class="detail zan">
-							<img src="../../assets/common/zan.png">
-							<label>{{praiseNum}}</label>
+						<div @click="thumbsup" class="detail zan">
+							<img class="commonZan" src="../../assets/common/zan.png">
+							<label class="thumbsupNum">{{praiseNum}}</label>
 						</div>
 					</div>
 				</div>
@@ -151,7 +148,7 @@
 </template>
 
 <script>
-	import { article, postCommentList,saveComment} from '@/service/home';
+	import { article, postCommentList, saveComment, savePostPraise } from '@/service/home';
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -185,12 +182,16 @@
 				pageIndex: 1,
 				pageSize: 10,
 				projectId: 0,
-				length: 0
+				length: 0,
+				praiseStatus: 0,
+				num: 0,
+				uid: getCookie('uid'),
+				seen:false
 			}
 		},
 
 		mounted() {
-			
+
 			this.id = this.$route.query.id;
 			//请求文章
 			this.articleC()
@@ -235,43 +236,94 @@
 				})
 				$(".discoveryBtn").html("+ 关注")
 			}
+			//点赞状态
+			if(this.praiseStatus == 1) {
+				$(".commonZan").attr("src", "../../static/img/zanb.png")
+			}
 
 		},
 		methods: {
+			//点赞
+			thumbsup() {
+				console.log(this.uid, this.createUserId)
+				if(this.token != '') {
+					//本人不能给本人点赞
+					if(this.createUserId != this.uid) {
+						//点击更换点赞图片
+						$(".commonZan").attr("src", "../../static/img/zanb.png")
+						if(this.praiseStatus == 1) {
+							$(".commonZan").attr("src", "../../static/img/zanb.png")
+						} else {
+
+							this.num = $(".thumbsupNum").html() - 0
+							console.log(typeof this.num)
+							this.seen = !this.seen
+
+							if(this.seen == true) {
+								this.num = this.num + 1
+								$(".thumbsupNum").html(this.num)
+							}
+							let data = {
+								token: this.token,
+								postId: this.id-0
+							}
+							//调接口
+							savePostPraise(data).then(res => {
+								console.log(res.data)
+
+							})
+						}
+					} else {
+
+						this.$message({
+							type: 'error',
+							message: '不能对本人进行点赞',
+							duration: 1000
+						});
+					}
+				} else {
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
+				}
+
+			},
 			articleBack() {
 				var _this = this
 				if(this.token != "") {
-				$(".previewContent").css('display', "block")
-				//评论内容
-				var value = $(".previewMessage").val()
-				
-//				
-				//评论接口
-				let data={
-					token: this.token,
-					commentContent:value,
-					postId:this.id-0,
-				}
-				saveComment(data).then(res => {
-					if(res.code == 0) {
-						//将输入框清空
-						$(".previewMessage").val("")
-						this.preview()
+					$(".previewContent").css('display', "block")
+					//评论内容
+					var value = $(".previewMessage").val()
+
+					//				
+					//评论接口
+					let data = {
+						token: this.token,
+						commentContent: value,
+						postId: this.id - 0,
 					}
-				}).catch(function(res) {
-//					alert(res.msg)
-					if(res.code==11024){
-						_this.$router.push('/user/login')
-					}
-				});
-				}else{
+					saveComment(data).then(res => {
+						if(res.code == 0) {
+							//将输入框清空
+							$(".previewMessage").val("")
+							this.preview()
+						}
+					}).catch(function(res) {
+						//					alert(res.msg)
+						if(res.code == 11024) {
+							_this.$router.push('/user/login')
+						}
+					});
+				} else {
 					this.$message({
 						type: 'error',
 						message: '请登录',
 						duration: 1000
 					});
 					this.$router.push('/user/login')
-					
+
 				}
 
 			},
@@ -393,7 +445,6 @@
 
 			},
 			articleC() {
-				console.log(111)
 				//发送请求
 				var data = {
 					token: this.token,
@@ -403,6 +454,8 @@
 				article(data).then(res => {
 					if(res.code == 0) {
 						var data = res.data.articleDetail
+						res.data.articleDetail.seen = false
+						this.seen  = res.data.articleDetail.seen
 						//文章内容
 						this.m = data.articleContents
 
@@ -417,6 +470,9 @@
 						//关注状态
 						this.followStatus = data.followStatus
 						this.projectId = data.projectId
+						//点赞状态
+						this.praiseStatus = data.praiseStatus
+						this.createUserId = data.createUserId
 						//标签
 						this.tag = data.projectCode;
 						if(data.tagInfos != null && data.tagInfos.length != 0) {
@@ -522,7 +578,6 @@
 </script>
 
 <style>
-	
 	@import './details.css';
 	@import '../../css/global.css';
 </style>

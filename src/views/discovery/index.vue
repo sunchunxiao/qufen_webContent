@@ -58,7 +58,7 @@
 									<img src="../../assets/common/FIND.png">
 									<label>{{item.donateNum}}</label>
 								</div>-->
-								<div @click="thumbsup(index,item.postId)" class="detail index-preview">
+								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
 									<img class="commonZan" src="../../assets/common/zan.png">
 									<label class="thumbsupNum">{{item.praiseNum}}</label>
 								</div>
@@ -166,11 +166,11 @@
 </template>
 
 <script>
-	import { recommend, saveFollow, cancelFollow,savePostPraise} from '@/service/home';
+	import { recommend, saveFollow, cancelFollow, savePostPraise } from '@/service/home';
 	import Header from '@/components/layout/header.vue'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
-	import {_isMobile} from '../../assets/js/mobile.js'
+	import { _isMobile } from '../../assets/js/mobile.js'
 	export default {
 		name: 'discovery',
 		data() {
@@ -188,8 +188,8 @@
 				state: "",
 				tagInfos: [],
 				token: getCookie('token'),
-				flag:false,
-				num:0
+				num: 0,
+				uid: 0
 			}
 		},
 		components: {
@@ -197,8 +197,9 @@
 		},
 
 		mounted() {
+			this.uid = getCookie('uid')
 			//小于1600px   main-right展开
-//			this.resizeBannerImage();
+			//			this.resizeBannerImage();
 			this.resizeBannerImage1();
 			window.addEventListener('resize', this.resizeBannerImage)
 
@@ -206,12 +207,12 @@
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
 			//判断是否是移动端，移动端自动跳转
-//			console.log(_isMobile())
+			//			console.log(_isMobile())
 			if(_isMobile()) {
-//				alert("手机端");
+				//				alert("手机端");
 				window.location.href = "https://m.qufen.top/main/home"
 			} else {
-//				alert("pc端");
+				//				alert("pc端");
 				return
 			}
 
@@ -238,6 +239,10 @@
 					})
 					$(".discoveryBtn").eq(i).html("+ 关注")
 				}
+				//点赞
+				if(this.itemList[i].praiseStatus == 1) {
+					$(".commonZan").eq(i).attr("src", "../../static/img/zanb.png")
+				}
 
 			}
 		},
@@ -247,32 +252,55 @@
 		},
 		methods: {
 			//点赞
-			thumbsup(index,postId){
-				//点击更换点赞图片
-				$(".commonZan").eq(index).attr("src","../../static/img/zanb.png")
-//				console.log($(".thumbsupNum").eq(index).html(),this.flag,index)
-				this.num = $(".thumbsupNum").eq(index).html()-0
-				console.log(typeof this.num)
-				this.itemList[index].seen = !this.itemList[index].seen
-				
-				if(this.itemList[index].seen == true) {
-					this.num=this.num+1
-					$(".thumbsupNum").eq(index).html(this.num)
-					this.flag=true
+			thumbsup(index, postId, createUserId, praiseStatus) {
+				console.log(this.uid, createUserId)
+				if(this.token != '') {
+					//本人不能给本人点赞
+					if(createUserId != this.uid) {
+						//点击更换点赞图片
+						$(".commonZan").eq(index).attr("src", "../../static/img/zanb.png")
+						if(praiseStatus == 1) {
+							$(".commonZan").eq(index).attr("src", "../../static/img/zanb.png")
+						} else {
+
+							this.num = $(".thumbsupNum").eq(index).html() - 0
+							console.log(typeof this.num)
+							this.itemList[index].seen = !this.itemList[index].seen
+
+							if(this.itemList[index].seen == true) {
+								this.num = this.num + 1
+								$(".thumbsupNum").eq(index).html(this.num)
+								this.flag = true
+							}
+							let data = {
+								token: this.token,
+								postId: postId
+							}
+							//调接口
+							savePostPraise(data).then(res => {
+								console.log(res.data)
+
+							})
+						}
+					} else {
+
+						this.$message({
+							type: 'error',
+							message: '不能对本人进行点赞',
+							duration: 1000
+						});
+					}
+				} else {
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
 				}
-				let data={
-					token:this.token,
-					postId:postId
-				}
-				//调接口
-				savePostPraise(data).then(res => {
-					console.log(res.data)
-					
-				})
-				
+
 			},
 			//右侧点击下载app跳到官网
-			official(){
+			official() {
 				window.open('https://g.qufen.top', "_blank")
 			},
 			//个人主页
@@ -421,8 +449,7 @@
 						if(res.data.recommends.rows[i].postSmallImagesList != null) {
 							if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
 								res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)
-								
-								
+
 							}
 						}
 
@@ -524,7 +551,7 @@
 
 			},
 			projectdetail(id) {
-			window.open('/summary/projectdetail?id=' + id, "_blank")
+				window.open('/summary/projectdetail?id=' + id, "_blank")
 			}
 
 		},
@@ -532,7 +559,6 @@
 	}
 </script>
 <style lang="less">
-	
 	@import '../../css/global.css';
 	@import '../../styles/common.less';
 </style>

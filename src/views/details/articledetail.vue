@@ -50,23 +50,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="row5" style="cursor: pointer;" @click="article(item.postType,item.postId)">
-							<!--<div class="article-atten">
-								<span  class="atten-name">{{item.actionDesc}}</span>
-
-							</div>-->
+						<div class="row5" style="cursor: pointer;">
 							<div class="article-atten">
 								<span v-if="item.postType==1" class="atten-name">评测</span>
 							</div>
 							<div class="article-detail">
-								<!--打赏-->
-								<!--<div class="detail zan">
-									<img src="../../assets/common/FIND.png">
-									<label>{{item.donateNum}}</label>
-								</div>-->
-								<div class="detail index-preview">
-									<img src="../../assets/common/zan.png">
-									<label>{{item.praiseNum}}</label>
+								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
+									<img class="commonZan" src="../../assets/common/zan.png">
+									<label class="thumbsupNum">{{item.praiseNum}}</label>
 								</div>
 								<div class="detail index-preview">
 									<img src="../../assets/common/preview.png">
@@ -93,7 +84,7 @@
 
 <script>
 	import { articleList } from '@/service/project';
-	import { saveFollow, cancelFollow } from '@/service/home';
+	import { saveFollow, cancelFollow, savePostPraise } from '@/service/home';
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
@@ -115,6 +106,8 @@
 				tagInfos: [],
 				token: getCookie('token'),
 				hasNext: true,
+				num: 0,
+				uid: 0
 			}
 		},
 
@@ -149,6 +142,10 @@
 						})
 						$(".discoveryBtndetail").eq(i).html("+ 关注")
 					}
+					//点赞
+					if(this.itemList[i].praiseStatus == 1) {
+						$(".commonZan").eq(i).attr("src", "../../static/img/zanb.png")
+					}
 
 				}
 			}
@@ -158,6 +155,53 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			//点赞
+			thumbsup(index, postId, createUserId, praiseStatus) {
+				console.log(this.uid, createUserId)
+				if(this.token != '') {
+					//本人不能给本人点赞
+					if(createUserId != this.uid) {
+						//点击更换点赞图片
+						$(".commonZan").eq(index).attr("src", "../../static/img/zanb.png")
+						if(praiseStatus == 1) {
+							$(".commonZan").eq(index).attr("src", "../../static/img/zanb.png")
+						} else {
+
+							this.num = $(".thumbsupNum").eq(index).html() - 0
+							console.log(typeof this.num)
+							this.itemList[index].seen = !this.itemList[index].seen
+
+							if(this.itemList[index].seen == true) {
+								this.num = this.num + 1
+								$(".thumbsupNum").eq(index).html(this.num)
+								this.flag = true
+							}
+							let data = {
+								token: this.token,
+								postId: postId
+							}
+							//调接口
+							savePostPraise(data).then(res => {
+//								console.log(res.data)
+							})
+						}
+					} else {
+
+						this.$message({
+							type: 'error',
+							message: '不能对本人进行点赞',
+							duration: 1000
+						});
+					}
+				} else {
+					this.$message({
+						type: 'error',
+						message: '请登录',
+						duration: 1000
+					});
+				}
+
+			},
 			onecenter(id) {
 				window.open('/onecenter?id=' + id, "_blank")
 			},
