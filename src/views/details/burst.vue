@@ -84,7 +84,7 @@
 										<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
 										<span class="listName">{{item.commentUserName}}</span>
 										<div class="listfloor">
-											<span class="floor">{{item.floor}}楼 {{item.createTimeStr}}</span>
+											<span class="floor">{{item.createTimeStr}}</span>
 
 										</div>
 									</div>
@@ -133,7 +133,8 @@
 </template>
 
 <script>
-	import { discuss, discussCommentList, saveComment, savePostPraise } from '@/service/home';
+	import {saveFollow, cancelFollow,discuss, discussCommentList, saveComment, savePostPraise } from '@/service/home';
+	
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -158,6 +159,7 @@
 				postTotalIncome: '',
 				commentsNum: '',
 				praiseNum: '',
+				followStatus: 0,
 				tagInfos: [],
 				createUserId: 0,
 				newestComments: [],
@@ -206,6 +208,20 @@
 				wordWrap: "break-word",
 				lineHeight: '26px'
 			});
+			//关注状态
+			if(this.followStatus == 1) {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(244, 244, 244)",
+					color: "rgb(126, 126, 126)"
+				})
+				$(".discoveryBtn").html("已关注")
+			} else {
+				$(".discoveryBtn").css({
+					backgroundColor: "rgb(59, 136, 246)",
+					color: "rgb(255,255,255)"
+				})
+				$(".discoveryBtn").html("+ 关注")
+			}
 			//点赞状态
 			if(this.praiseStatus == 1) {
 				$(".commonZan").attr("src", "../../static/img/zanb.png")
@@ -547,6 +563,8 @@
 						var nowdate = Data.customData()
 						var arr = data.createTimeStr.split(" ")
 						this.projectCode = data.projectCode
+						//关注状态
+						this.followStatus = data.followStatus
 						//id
 						this.projectId = data.projectId
 						//点赞状态

@@ -84,7 +84,7 @@
 										<div class="contenlist-title"><img :src="item.commentUserIcon" /></div>
 										<span class="listName">{{item.commentUserName}}</span>
 										<div class="listfloor">
-											<span class="floor">{{item.floor}}楼  {{item.createTimeStr}}</span>
+											<span class="floor">{{item.createTimeStr}}</span>
 
 										</div>
 									</div>
