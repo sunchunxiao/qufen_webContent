@@ -38,7 +38,7 @@
 							<div class="article-atten">
 								<div class="detail1 zan">
 									<img src="../../assets/common/FIND.png">
-									<label>{{donateNum}}</label>
+									<label>{{postTotalIncome}}</label>
 								</div>
 
 							</div>
@@ -145,7 +145,7 @@
 </template>
 
 <script>
-	import { articleInfo, postCommentList, saveComment,savePostPraise} from '@/service/home';
+	import { articleInfo, postCommentList, saveComment, savePostPraise } from '@/service/home';
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -167,7 +167,7 @@
 				timestr1: '',
 				commentsNum: '',
 				praiseNum: '',
-				donateNum:'',
+				postTotalIncome: '',
 				projectCode: '',
 				token: getCookie('token'),
 				followStatus: 0,
@@ -182,8 +182,8 @@
 				praiseStatus: 0,
 				num: 0,
 				uid: getCookie('uid'),
-				seen:false,
-				img:getCookie("img")
+				seen: false,
+				img: getCookie("img")
 			}
 		},
 		mounted() {
@@ -288,7 +288,7 @@
 							}
 							let data = {
 								token: this.token,
-								postId: this.id-0
+								postId: this.id - 0
 							}
 							//调接口
 							savePostPraise(data).then(res => {
@@ -313,31 +313,43 @@
 				}
 
 			},
+			//评论
 			articleBack() {
 				var _this = this
+				//评论内容
+				var value = $(".previewMessage").val()
+				//				console.log(value)
 				if(this.token != "") {
-					$(".previewContent").css('display', "block")
-					//评论内容
-					var value = $(".previewMessage").val()
-					console.log(value)
-					//				
-					//评论接口
-					let data = {
-						token: this.token,
-						commentContent: value,
-						postId: this.id - 0,
+					if(value != '' && value.length != 0) {
+
+						$(".previewContent").css('display', "block")
+
+						//				
+						//评论接口
+						let data = {
+							token: this.token,
+							commentContent: value,
+							postId: this.id - 0,
+						}
+						saveComment(data).then(res => {
+							if(res.code == 0) {
+								//将输入框清空
+								$(".previewMessage").val("")
+								this.preview()
+							}
+						}).catch(function(res) {
+							if(res.code == 11024) {
+								_this.$router.push('/user/login')
+							}
+						})
+					} else {
+						this.$message({
+							type: 'error',
+							message: '评论不能为空',
+							duration: 1000
+						});
 					}
-					saveComment(data).then(res => {
-						if(res.code == 0) {
-							//将输入框清空
-							$(".previewMessage").val("")
-							this.preview()
-						}
-					}).catch(function(res) {
-						if(res.code == 11024) {
-							_this.$router.push('/user/login')
-						}
-					});
+
 				} else {
 					this.$message({
 						type: 'error',
@@ -405,6 +417,22 @@
 						this.length = res.data.newestComments.rows.length
 						if(res.data.newestComments.rows != null) {
 							this.newestComments = res.data.newestComments.rows
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							for(let i = 0; i < res.data.newestComments.rows.length; i++) {
+								//时间  字符串切割
+
+								var arr = res.data.newestComments.rows[i].createTimeStr.split(" ")
+								this.timestr = arr[0];
+								if(nowdate == this.timestr) {
+									var a1 = arr[1].split(":")
+									res.data.newestComments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								} else {
+									res.data.newestComments.rows[i].createTimeStr = arr[0];
+								}
+
+							}
+
 							if(res.data.newestComments.rows.length > 4) {
 
 								if(this.hasNext == false) {
@@ -443,7 +471,20 @@
 								this.hasNext = res.data.newestComments.hasNext
 								//								console.log(this.hasNext)
 								if(res.data.newestComments.rows != null) {
+									//调用 Data.customData()
+									var nowdate = Data.customData()
 									for(var i = 0; i < res.data.newestComments.rows.length; i++) {
+										//时间  字符串切割
+
+										var arr = res.data.newestComments.rows[i].createTimeStr.split(" ")
+										this.timestr = arr[0];
+										if(nowdate == this.timestr) {
+											var a1 = arr[1].split(":")
+											res.data.newestComments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+										} else {
+											res.data.newestComments.rows[i].createTimeStr = arr[0];
+										}
+
 										this.newestComments.push(res.data.newestComments.rows[i]);
 									}
 
@@ -476,7 +517,7 @@
 
 						var data = res.data.evaluationDetail
 						res.data.evaluationDetail.seen = false
-						this.seen  = res.data.evaluationDetail.seen
+						this.seen = res.data.evaluationDetail.seen
 
 						this.articleTitle = data.postTitle
 						//头像
@@ -530,7 +571,7 @@
 						//标签
 						this.tag = data.projectCode;
 						//赞助人数
-						this.donateNum = data.donateNum;
+						this.postTotalIncome = data.postTotalIncome;
 						//评论人数
 						this.commentsNum = data.commentsNum;
 						//点赞人数

@@ -38,7 +38,7 @@
 						<div class="article-atten">
 							<div class="detail1 zan">
 								<img src="../../assets/common/FIND.png">
-								<label>{{donateNum}}</label>
+								<label>{{postTotalIncome}}</label>
 							</div>
 						</div>
 						<div class="articleDetail">
@@ -73,7 +73,7 @@
 						<!--请写下你的评论-->
 						<div class="articleF">
 							<img style="float: left;" :src="img" />
-							<div class="articleInputC articleInput"><input type="text" name="" placeholder="请写下您的评论..." class="previewMessage"/></div>
+							<div class="articleInputC articleInput"><input type="text" name="" placeholder="请写下您的评论..." class="previewMessage" /></div>
 							<span @click="articleBack" class="articleBack">评论</span>
 						</div>
 						<div class="previewContent">
@@ -133,7 +133,7 @@
 </template>
 
 <script>
-	import { discuss, discussCommentList,saveComment,savePostPraise} from '@/service/home';
+	import { discuss, discussCommentList, saveComment, savePostPraise } from '@/service/home';
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -155,7 +155,7 @@
 				commenticon: [],
 				timestr: '',
 				timestr1: '',
-				donateNum: '',
+				postTotalIncome: '',
 				commentsNum: '',
 				praiseNum: '',
 				tagInfos: [],
@@ -169,8 +169,8 @@
 				praiseStatus: 0,
 				num: 0,
 				uid: getCookie('uid'),
-				seen:false,
-				img:getCookie('img')
+				seen: false,
+				img: getCookie('img')
 			}
 		},
 
@@ -192,7 +192,6 @@
 				//				alert("pc端");
 				return
 			}
-			
 
 		},
 		updated() {
@@ -235,7 +234,7 @@
 							}
 							let data = {
 								token: this.token,
-								postId: this.id-0
+								postId: this.id - 0
 							}
 							//调接口
 							savePostPraise(data).then(res => {
@@ -260,33 +259,42 @@
 				}
 
 			},
+			//评论
 			articleBack() {
 				var _this = this
-				if(this.token != "") {
-					$(".previewContent").css('display', "block")
 				//评论内容
 				var value = $(".previewMessage").val()
-				
-//				
-				//评论接口
-				let data={
-					token: this.token,
-					commentContent:value,
-					postId:this.id-0,
-				}
-				saveComment(data).then(res => {
-					if(res.code == 0) {
-						//将输入框清空
-						$(".previewMessage").val("")
-						this.preview()
+				if(this.token != "") {
+					if(value != '' && value.length != 0) {
+						$(".previewContent").css('display', "block")
+
+						//评论接口
+						let data = {
+							token: this.token,
+							commentContent: value,
+							postId: this.id - 0,
+						}
+						saveComment(data).then(res => {
+							if(res.code == 0) {
+								//将输入框清空
+								$(".previewMessage").val("")
+								this.preview()
+							}
+						}).catch(function(res) {
+							//					alert(res.msg)
+							if(res.code == 11024) {
+								_this.$router.push('/user/login')
+							}
+						});
+					}else{
+						this.$message({
+							type: 'error',
+							message: '评论不能为空',
+							duration: 1000
+						});
 					}
-				}).catch(function(res) {
-//					alert(res.msg)
-					if(res.code==11024){
-						_this.$router.push('/user/login')
-					}
-				});
-				}else{
+
+				} else {
 					this.$message({
 						type: 'error',
 						message: '请登录',
@@ -294,20 +302,19 @@
 					});
 					this.$router.push('/user/login')
 				}
-				
 
 			},
-			share(){
+			share() {
 				//调用二维码
 				$("#qrcode canvas").remove()
 				$("#qrcode img").remove()
-			   this.qrcode()
+				this.qrcode()
 			},
 			qrcode() {
 				let qrcode = new QRCode('qrcode', {
 					width: 100,
 					height: 100,
-					text: 'https://m.qufen.top/project/discuss?id='+ this.id + '', // 二维码内容
+					text: 'https://m.qufen.top/project/discuss?id=' + this.id + '', // 二维码内容
 					//        text: 'http://192.168.10.101:5000/project/'+this.a+'?id='+this.id+'',
 
 					//					render: 'canvas', // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
@@ -315,7 +322,7 @@
 					foreground: '#ff0',
 					src: '../../assets/logo.png'
 				})
-				
+
 			},
 			onecenter() {
 				if(this.token != '') {
@@ -355,6 +362,21 @@
 						this.hasNext = res.data.comments.hasNext
 						if(res.data.comments.rows != null) {
 							this.newestComments = res.data.comments.rows
+							//调用 Data.customData()
+							var nowdate = Data.customData()
+							for(let i = 0; i < res.data.comments.rows.length; i++) {
+								//时间  字符串切割
+
+								var arr = res.data.comments.rows[i].createTimeStr.split(" ")
+								this.timestr = arr[0];
+								if(nowdate == this.timestr) {
+									var a1 = arr[1].split(":")
+									res.data.comments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+								} else {
+									res.data.comments.rows[i].createTimeStr = arr[0];
+								}
+
+							}
 							this.length = res.data.comments.rows.length
 
 							if(res.data.comments.rows.length > 4) {
@@ -396,7 +418,19 @@
 								this.hasNext = res.data.comments.hasNext
 								console.log(this.hasNext)
 								if(res.data.comments.rows != null) {
+									//调用 Data.customData()
+									var nowdate = Data.customData()
 									for(var i = 0; i < res.data.comments.rows.length; i++) {
+										//时间  字符串切割
+										var arr = res.data.comments.rows[i].createTimeStr.split(" ")
+										this.timestr = arr[0];
+										if(nowdate == this.timestr) {
+											var a1 = arr[1].split(":")
+											res.data.comments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
+										} else {
+											res.data.comments.rows[i].createTimeStr = arr[0];
+										}
+
 										this.newestComments.push(res.data.comments.rows[i]);
 									}
 
@@ -496,7 +530,7 @@
 					if(res.code == 0) {
 						var data = res.data.discussDetail
 						res.data.discussDetail.seen = false
-						this.seen  = res.data.discussDetail.seen
+						this.seen = res.data.discussDetail.seen
 						//标题
 						if(data.postTitle.length != 0) {
 							this.articleTitle = data.postTitle
@@ -559,7 +593,7 @@
 						//标签
 						this.projectCode = data.projectCode;
 						//赞助人数
-						this.donateNum = data.donateNum;
+						this.postTotalIncome = data.postTotalIncome;
 						//评论人数
 						this.commentsNum = data.commentsNum;
 						//点赞人数

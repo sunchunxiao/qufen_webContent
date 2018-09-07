@@ -56,7 +56,7 @@
 								<!--打赏-->
 								<div class="detail zan">
 									<img src="../../assets/common/FIND.png">
-									<label>{{item.donateNum}}</label>
+									<label>{{item.postTotalIncome}}</label>
 								</div>
 								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
 									<img class="commonZan" src="../../assets/common/zan.png">

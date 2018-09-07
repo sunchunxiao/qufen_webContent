@@ -56,7 +56,7 @@
 								<!--打赏-->
 								<div class="detail zan">
 									<img src="../../assets/common/FIND.png">
-									<label>{{item.donateNum}}</label>
+									<label>{{item.postTotalIncome}}</label>
 								</div>
 								<div @click="thumbsup(index,item.postId,item.createUserId,item.praiseStatus)" class="detail index-preview">
 									<img class="commonZan" src="../../assets/common/zan.png">
@@ -218,13 +218,14 @@
 
 		},
 		updated() {
+			console.log($('.contentImg img').width())
+			
 			for(let i = 0; i < this.itemList.length; i++) {
 				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
 					$(".add").eq(i).removeClass("row3-content")
 					$(".add").eq(i).addClass("srow3-content")
 
 				}
-
 				this.followStatus = this.itemList[i].followStatus
 				if(this.itemList[i].followStatus == 1) {
 					$(".discoveryBtn").eq(i).css({
