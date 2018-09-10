@@ -857,107 +857,12 @@
 	color:rgb(51,51,51) ;
 	padding-left: 20px;
 }
-/*.choiceness a{
-	color: rgb(51,51,51);
-}*/
+
 .choiceness{
 	float: left;
 	font-size: 16px;
 }
 
-@media only screen and (max-width: 1600px) {
-	/*.indexCommon {
-		width: 990px;
-	}*/
-	/*.projectCommon {
-		width: 990px;
-	}*/
-	/*.common-article {
-		width: 670px;
-		margin-left: 26px;
-	}*/
-	/*.common-attention {
-		width: 257px;
-	}*/
-	/*.project-attention {
-		width: 257px;
-		margin-right: 25px;
-	}*/
-	/*.common-attention1 {
-		width: 257px;
-		left: 671px;
-	}*/
-	/*.common-attention-code {
-		width: 105px;
-		height: 105px;
-	}
-	.attention-code {
-		height: 138px;
-	}
-	.row3-content {
-		font-size: 15px;
-		height: 90px;
-	}*/
-	/*.srow3-content {
-		font-size: 15px;
-		
-	}
-	.onecontent {
-		font-size: 15px;
-		height: 115px;
-	}
-	.contentImg {
-		width: 200px;
-		height: 90px;
-		margin-right: 25px;
-	}*/
-	/*.attention-wrap {
-		padding: 15px;
-	}*/
-	/*.common-attention-down {
-		width: 95px;
-		font-size: 14px;
-		bottom: 21px;
-		right: 24px;
-	}
-	.attentionIcon {
-		width: 80px;
-		right: 39px;
-		top: 29px;
-	}
-	.btnL {
-		right: 0;
-	}
-	.zbtnL {
-		right: 0;
-	}
-	.onedetailArticle {
-		width: 670px;
-	}
-	.commmon1 {
-		width: 670px;
-	}
-	.detailcommmon {
-		width: 670px;
-	}
-	.test {
-		width: 540px;
-	}
-	.attentionTitle {
-		font-size: 15px;
-	}
-	.attentionIcon img {
-		width: 27%;
-	}
-	.topicTag {
-		width: 68px;
-		height: 35px;
-		line-height: 35px;
-		font-size: 12px;
-		text-align: center;
-		background-color: rgb(247, 247, 247);
-		color: rgb(84, 93, 113);
-		border-radius: 4px;
-		float: left;
-	}*/
-}
+/*@media only screen and (max-width: 1600px) {
+	
+}*/
