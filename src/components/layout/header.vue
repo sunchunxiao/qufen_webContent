@@ -8,7 +8,7 @@
 						<el-col :span="3">
 							<img style="cursor: pointer;" @click="dian" src="../../assets/login/logo.png" class="logo">
 						</el-col>
-						<el-col :span="17">
+						<el-col :span="15">
 							<el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
 								<template v-for="(menu,index) in menuData">
 									<el-menu-item :index="menu.path" :key="index">{{menu.name}}</el-menu-item>
@@ -20,6 +20,12 @@
 									<img class="navIcon" src="../../assets/login/search.png" />
 								</div>
 							</el-menu>
+						</el-col>
+						<el-col :span="2">
+							<div class="logout" @click="release">
+								<img class="nav-phone" src="../../assets/down/mobile.png" />
+								<a href="javascript:void(0)">下载APP</a>
+							</div>
 						</el-col>
 						<el-col :span="2">
 							<div class="logout" @click="release">
@@ -380,12 +386,17 @@
 		left: 24px;
 		top: 32px;
 	}
-
+	.nav-phone{
+		width: 14px;
+		position: absolute;
+		top: 19px;
+		left: 0;
+	}
 	.nav-wrap {
 		float: left;
 		margin-top: 16px;
 		position: relative;
-		margin-left: 77px;
+		margin-left: 26px;
 	}
 
 	.nav-wrap input::-webkit-input-placeholder {
@@ -394,7 +405,7 @@
 	}
 
 	.el-row {
-		width: 1107px;
+		width: 1100px;
 		margin: 0 auto;
 	}
 
@@ -506,12 +517,12 @@
 		background-color: #fff!important;
 	}
 
-	@media only screen and (max-width: 1600px) {
+	/*@media only screen and (max-width: 1600px) {
 		.el-row {
-			width: 1000px;
+			width: 1100px;
 		}
 		.nav-wrap{
-			margin-left:46px;
+			margin-left:15px;
 		}
-	}
+	}*/
 </style>

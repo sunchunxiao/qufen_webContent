@@ -50,7 +50,7 @@
 
 .common-article {
 	width: 720px;
-	margin-left: 11px;
+	margin-left: 16px;
 	float: left;
 }
 
@@ -65,16 +65,12 @@
 
 .common-attention {
 	position: fixed;
-	/*left: 900px;*/
 	width: 300px;
-	/*height: 600px;*/
 }
 
 .project-attention {
-	/*position: absolute;
-	right: 0;*/
 	float: right;
-	margin-right: 18px;
+	margin-right: 14px;
 	width: 300px;
 }
 
@@ -122,15 +118,6 @@
 .row2 {
 	padding: 15px 0 0px;
 }
-
-
-/*.burstcontent {*/
-
-
-/*margin-top: 10px;*/
-
-
-/*}*/
 
 .attention-code {
 	background-image: url(../../assets/common/attentionbac.png);
@@ -879,28 +866,28 @@
 }
 
 @media only screen and (max-width: 1600px) {
-	.indexCommon {
+	/*.indexCommon {
 		width: 990px;
-	}
-	.projectCommon {
+	}*/
+	/*.projectCommon {
 		width: 990px;
-	}
-	.common-article {
+	}*/
+	/*.common-article {
 		width: 670px;
 		margin-left: 26px;
-	}
-	.common-attention {
+	}*/
+	/*.common-attention {
 		width: 257px;
-	}
-	.project-attention {
+	}*/
+	/*.project-attention {
 		width: 257px;
 		margin-right: 25px;
-	}
-	.common-attention1 {
+	}*/
+	/*.common-attention1 {
 		width: 257px;
 		left: 671px;
-	}
-	.common-attention-code {
+	}*/
+	/*.common-attention-code {
 		width: 105px;
 		height: 105px;
 	}
@@ -910,10 +897,10 @@
 	.row3-content {
 		font-size: 15px;
 		height: 90px;
-	}
-	.srow3-content {
+	}*/
+	/*.srow3-content {
 		font-size: 15px;
-		/*height: 90px;*/
+		
 	}
 	.onecontent {
 		font-size: 15px;
@@ -923,11 +910,11 @@
 		width: 200px;
 		height: 90px;
 		margin-right: 25px;
-	}
-	.attention-wrap {
+	}*/
+	/*.attention-wrap {
 		padding: 15px;
-	}
-	.common-attention-down {
+	}*/
+	/*.common-attention-down {
 		width: 95px;
 		font-size: 14px;
 		bottom: 21px;
@@ -962,7 +949,6 @@
 	.attentionIcon img {
 		width: 27%;
 	}
-	/*话题*/
 	.topicTag {
 		width: 68px;
 		height: 35px;
@@ -973,5 +959,5 @@
 		color: rgb(84, 93, 113);
 		border-radius: 4px;
 		float: left;
-	}
+	}*/
 }

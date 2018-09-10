@@ -588,13 +588,8 @@
 				var _width1 = $(".common-article").offset().left
 				// console.log(_width,_width1)
 
-				if(_width < 1590) {
-					var left = _width1 + 675
-					$(".common-attention").css("left", left)
-				} else {
-					var left = _width1 + 726
-					$(".common-attention").css("left", left)
-				}
+				var left = _width1 + 725
+				$(".common-attention").css("left", left)
 
 			},
 			attention() {
