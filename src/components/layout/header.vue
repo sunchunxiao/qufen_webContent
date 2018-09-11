@@ -22,7 +22,7 @@
 							</el-menu>
 						</el-col>
 						<el-col :span="2">
-							<div class="logout" @click="release">
+							<div class="logout" @click="app">
 								<img class="nav-phone" src="../../assets/down/mobile.png" />
 								<a href="javascript:void(0)">下载APP</a>
 							</div>
@@ -127,6 +127,10 @@
 			}
 		},
 		methods: {
+			//下载app
+			app(){
+				this.$router.push('/download')	
+			},
 			next(){
 				window.open('https://g.qufen.top', "_blank")
 			},

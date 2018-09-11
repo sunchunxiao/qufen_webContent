@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {mainRouter} from './router_config'
-import {userRouter} from './userRouter'     //用户相关 路由
-import {detailsRouter} from './detailsRouter'     //文章相关 路由
-import {writeRouter} from './writeRouter'     //文章相关 路由
-import {projectRouter} from './projectRouter'     //项目相关 路由
+import {userRouter} from './userRouter'     //用户路由
+import {detailsRouter} from './detailsRouter'     //文章路由
+import {writeRouter} from './writeRouter'     //文章 路由
+import {projectRouter} from './projectRouter'     //项目 路由
+import {downRouter} from './downRouter'     //下载app路由
 import { getCookie } from '../assets/js/cookie.js'
 Vue.use(Router)
 // 模块路由合并
@@ -13,7 +14,8 @@ const routes = [
   ...mainRouter,
   ...detailsRouter,
 	...writeRouter,
-	...projectRouter
+	...projectRouter,
+	...downRouter
 ]
 const router = new Router({
 	mode:'history',
