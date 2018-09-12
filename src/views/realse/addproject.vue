@@ -97,9 +97,8 @@
 				console.log(this.tag[index1].dtagsList[index].seen)
 				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
 				
-				if(index1 == 0) {
-					if(this.tag[index1].dtagsList[index].seen == true) {
-						$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#408ff1");
+				if(this.tag[index1].dtagsList[index].seen == true) {
+						$(".max-nine:eq("+index1+") .labelLi").eq(index).css("background", "#408ff1");
 
 						//加入数组对象
 						this.tagthree.push({
@@ -117,7 +116,7 @@
 									type: 'error',
 									duration: 1500
 								});
-								$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#b7b7b7");
+								$(".max-nine:eq("+index1+") .labelLi").eq(index).css("background", "#b7b7b7");
 								this.tagthree.splice(i, 1)
 								//将其变为false，下次为true 再次点击添加样式
 								this.tag[index1].dtagsList[index].seen = false
@@ -125,7 +124,7 @@
 						}
 					} else {
 
-						$(".max-nine:eq(0) .labelLi").eq(index).css("background", "#b7b7b7");
+						$(".max-nine:eq("+index1+") .labelLi").eq(index).css("background", "#b7b7b7");
 						for(var i = 0; i < this.tagthree.length; i++) {
 							console.log(this.tagthree[i].tagName, name)
 							if(this.tagthree[i].tagName == name) {
@@ -138,49 +137,6 @@
 						console.log(this.tagthree)
 
 					}
-				} else {
-					if(this.tag[index1].dtagsList[index].seen == true) {
-						$(".max-nine:eq(1) .labelLi").eq(index).css("background", "#408ff1");
-
-						//加入数组对象
-						this.tagthree.push({
-							tagName: name,
-							tagId: id
-						})
-						console.log(this.tagthree)
-						//循环，检查数组里是否是三条数据
-						for(var i = 0; i < this.tagthree.length; i++) {
-							//如果大于三条提示并从数组中删除
-							if(i >= 3) {
-								this.$message({
-									showClose: true,
-									message: "标签不能超过三条",
-									type: 'error',
-									duration: 1500
-								});
-								$(".max-nine:eq(1) .labelLi").eq(index).css("background", "#b7b7b7");
-								this.tagthree.splice(i, 1)
-								//将其变为false，下次为true 再次点击添加样式
-								this.tag[index1].dtagsList[index].seen = false
-							}
-						}
-					} else {
-
-						$(".max-nine:eq(1) .labelLi").eq(index).css("background", "#b7b7b7");
-						for(var i = 0; i < this.tagthree.length; i++) {
-							console.log(this.tagthree[i].tagName, name)
-							if(this.tagthree[i].tagName == name) {
-								var a = i
-								this.tagthree.splice(a, 1)
-
-							}
-						}
-
-						console.log(this.tagthree)
-
-					}
-				}
-
 
 			},
 			//模糊查询接收数据

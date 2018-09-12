@@ -45,7 +45,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div style="cursor: pointer;" @click="projectdetail(item.projectId)" class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span @click="tags(item.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -145,6 +145,10 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			//点击标签
+			tags(id){
+				window.open('/topic?id='+id, "_blank")
+			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
 				console.log(this.uid, createUserId)

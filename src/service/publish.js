@@ -77,7 +77,7 @@ export const upload= (params = {}) => {
 
 //标签
 export const getTagsAndTagType= (params = {}) => {
-  return request(`/kff/tags/getTagsAndTagType`, {
+  return request(`/H5/tags/getTagsAndTagType`, {
     body: {
       ...params
     },

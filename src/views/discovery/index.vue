@@ -43,7 +43,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div style="cursor: pointer;" class="crack-tag1" @click="projectdetail(item.projectId)"><span class="span-name">{{item.projectCode}} </span></div>
-									<span @click="tags" class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span @click="tags(item1.tagId)" class="crack-tag2" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -252,9 +252,9 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
-			//话题
-			tags(){
-				window.open('/topic', "_blank")
+			//标签
+			tags(id){
+				window.open('/topic?id='+id, "_blank")
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
@@ -333,7 +333,7 @@
 //					var left = _width1 + 680
 //					$(".common-attention").css("left", left)
 //				} else {
-					var left = _width1 + 723
+					var left = _width1 + 728
 					$(".common-attention").css("left", left)
 //				}
 

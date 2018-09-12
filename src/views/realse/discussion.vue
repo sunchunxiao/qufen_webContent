@@ -68,7 +68,7 @@
 <script>
 	import Search from '../../components/realse/search.vue'
 	import Tip from '../../components/realse/publishon.vue'
-	import { publishtag, savediscuss, upload,getTagsAndTagType} from '@/service/publish'
+	import { publishtag, savediscuss, upload, getTagsAndTagType } from '@/service/publish'
 	import { getCookie } from '../../assets/js/cookie.js'
 	export default {
 		data() {
@@ -110,7 +110,6 @@
 			//标签
 			this.tags()
 
-
 		},
 		methods: {
 			tags() {
@@ -121,13 +120,13 @@
 					//发布成功
 					if(res.code == 0) {
 						this.tag = res.data.result
-//						console.log(result)
+						//						console.log(result)
 						for(let i = 0; i < this.tag.length; i++) {
 							var result = this.tag[i]
-//							console.log(result)
+							//							console.log(result)
 							for(let j = 0; j < result.dtagsList.length; j++) {
 								this.tag[i].dtagsList[j].seen = false
-//								console.log(this.tag[i].dtagsList[j])
+								//								console.log(this.tag[i].dtagsList[j])
 
 							}
 						}
@@ -137,96 +136,49 @@
 			},
 			//标签点击
 			dian(name, id, index, index1) {
-//				console.log(status, name, id, index, index1)
-//				console.log(this.tag[index1].dtagsList[index].seen)
+				//				console.log(status, name, id, index, index1)
+				//				console.log(this.tag[index1].dtagsList[index].seen)
 				this.tag[index1].dtagsList[index].seen = !this.tag[index1].dtagsList[index].seen
-				
-				if(index1 == 0) {
-					if(this.tag[index1].dtagsList[index].seen == true) {
-						$(".label:eq(0) .labelLi").eq(index).css("background-color", "rgb(64, 143, 241)");
-						$(".max-nine:eq(0) .labelLi").eq(index).addClass("labelLiC");
-//						console.log($(".labelLi").eq(index).css("background-color"))
 
-						//加入数组对象
-						this.tagthree.push({
-							tagName: name,
-							tagId: id
-						})
-//						console.log(this.tagthree)
-						//循环，检查数组里是否是三条数据
-						for(var i = 0; i < this.tagthree.length; i++) {
-							//如果大于三条提示并从数组中删除
-							if(i >= 3) {
-								this.$message({
-									showClose: true,
-									message: "标签不能超过三条",
-									type: 'error',
-									duration: 1500
-								});
-								$(".label:eq(0) .labelLi").eq(index).css("background", "rgb(183, 183, 183)");
-								this.tagthree.splice(i, 1)
-								//将其变为false，下次为true 再次点击添加样式
-								this.tag[index1].dtagsList[index].seen = false
-							}
+				if(this.tag[index1].dtagsList[index].seen == true) {
+					$(".label:eq(" + index1 + ") .labelLi").eq(index).css("background-color", "rgb(64, 143, 241)");
+					$(".max-nine:eq(" + index1 + ") .labelLi").eq(index).addClass("labelLiC");
+					//						console.log($(".labelLi").eq(index).css("background-color"))
+
+					//加入数组对象
+					this.tagthree.push({
+						tagName: name,
+						tagId: id
+					})
+					//						console.log(this.tagthree)
+					//循环，检查数组里是否是三条数据
+					for(var i = 0; i < this.tagthree.length; i++) {
+						//如果大于三条提示并从数组中删除
+						if(i >= 3) {
+							this.$message({
+								showClose: true,
+								message: "标签不能超过三条",
+								type: 'error',
+								duration: 1500
+							});
+							$(".label:eq(" + index1 + ") .labelLi").eq(index).css("background", "rgb(183, 183, 183)");
+							this.tagthree.splice(i, 1)
+							//将其变为false，下次为true 再次点击添加样式
+							this.tag[index1].dtagsList[index].seen = false
 						}
-					} else {
-
-						$(".label:eq(0) .labelLi").eq(index).css("background", "#b7b7b7");
-						for(var i = 0; i < this.tagthree.length; i++) {
-							console.log(this.tagthree[i].tagName, name)
-							if(this.tagthree[i].tagName == name) {
-								var a = i
-								this.tagthree.splice(a, 1)
-
-							}
-						}
-
-						console.log(this.tagthree)
-
 					}
 				} else {
-					if(this.tag[index1].dtagsList[index].seen == true) {
-						$(".label:eq(1) .labelLi").eq(index).css("background", "rgb(64, 143, 241)");
 
-						//加入数组对象
-						this.tagthree.push({
-							tagName: name,
-							tagId: id
-						})
-						console.log(this.tagthree)
-						//循环，检查数组里是否是三条数据
-						for(var i = 0; i < this.tagthree.length; i++) {
-							//如果大于三条提示并从数组中删除
-							if(i >= 3) {
-								this.$message({
-									showClose: true,
-									message: "标签不能超过三条",
-									type: 'error',
-									duration: 1500
-								});
-								$(".label:eq(1) .labelLi").eq(index).css("background", "rgb(183, 183, 183)");
-								this.tagthree.splice(i, 1)
-								//将其变为false，下次为true 再次点击添加样式
-								this.tag[index1].dtagsList[index].seen = false
-							}
+					$(".label:eq(" + index1 + ") .labelLi").eq(index).css("background", "#b7b7b7");
+					for(var i = 0; i < this.tagthree.length; i++) {
+						console.log(this.tagthree[i].tagName, name)
+						if(this.tagthree[i].tagName == name) {
+							var a = i
+							this.tagthree.splice(a, 1)
 						}
-					} else {
-
-						$(".label:eq(1) .labelLi").eq(index).css("background", "#b7b7b7");
-						for(var i = 0; i < this.tagthree.length; i++) {
-							console.log(this.tagthree[i].tagName, name)
-							if(this.tagthree[i].tagName == name) {
-								var a = i
-								this.tagthree.splice(a, 1)
-
-							}
-						}
-
-						console.log(this.tagthree)
-
 					}
+					console.log(this.tagthree)
 				}
-
 
 			},
 			//时间
@@ -291,7 +243,7 @@
 			getA(data) {
 				this.search = data;
 			},
-			
+
 			//点击查看图片
 			handleView(name) {
 				//				console.log(name)
@@ -345,18 +297,18 @@
 
 			//失焦事件
 			handleArticletitleBlur() {
-					
-					if(!this.articlePathHasEdited) {
-						let date = new Date();
-						let year = date.getFullYear();
-						let month = date.getMonth() + 1;
-						let day = date.getDate();
-						this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
-						this.articlePath = this.articleTitle;
-						this.articlePathHasEdited = true;
-						this.showLink = true;
-					}
-				
+
+				if(!this.articlePathHasEdited) {
+					let date = new Date();
+					let year = date.getFullYear();
+					let month = date.getMonth() + 1;
+					let day = date.getDate();
+					this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
+					this.articlePath = this.articleTitle;
+					this.articlePathHasEdited = true;
+					this.showLink = true;
+				}
+
 			},
 			p(s) {
 				return s < 10 ? '0' + s : s;
@@ -372,50 +324,32 @@
 					});
 				}
 				if(this.search != "") {
-							if($("textarea").val().length > 0) {
-								if($("textarea").val().length < 501) {
-									if(this.arr.length >= 1 && this.arr.length <= 9) {
-										if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
-											let date = new Date();
-											let year = date.getFullYear();
-											let month = date.getMonth() + 1;
-											let day = date.getDate();
-											let hour = date.getHours();
-											let minute = date.getMinutes();
+					if($("textarea").val().length > 0) {
+						if($("textarea").val().length < 501) {
+							if(this.arr.length >= 1 && this.arr.length <= 9) {
+								if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
+									let date = new Date();
+									let year = date.getFullYear();
+									let month = date.getMonth() + 1;
+									let day = date.getDate();
+									let hour = date.getHours();
+									let minute = date.getMinutes();
 
-											localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
+									localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
 
-											localStorage.search = this.search
-											localStorage.articleTitle = this.articleTitle;
-											localStorage.content = $("textarea").val();
-											//标签
-											localStorage.tag = JSON.stringify(this.tagthree)
-											localStorage.postImg = JSON.stringify(this.arr)
+									localStorage.search = this.search
+									localStorage.articleTitle = this.articleTitle;
+									localStorage.content = $("textarea").val();
+									//标签
+									localStorage.tag = JSON.stringify(this.tagthree)
+									localStorage.postImg = JSON.stringify(this.arr)
 
-											window.open("/preview/burst", "_blank")
-
-										} else {
-											this.$message({
-												showClose: true,
-												message: '标签至少一条，不能超过三条',
-												type: 'error',
-												duration: 1500
-											});
-										}
-
-									} else {
-										this.$message({
-											showClose: true,
-											message: '请上传图片',
-											type: 'error',
-											duration: 1500
-										});
-									}
+									window.open("/preview/burst", "_blank")
 
 								} else {
 									this.$message({
 										showClose: true,
-										message: '发布内容不能超过500字',
+										message: '标签至少一条，不能超过三条',
 										type: 'error',
 										duration: 1500
 									});
@@ -424,10 +358,28 @@
 							} else {
 								this.$message({
 									showClose: true,
-									message: '内容不能为空',
-									type: 'error'
+									message: '请上传图片',
+									type: 'error',
+									duration: 1500
 								});
 							}
+
+						} else {
+							this.$message({
+								showClose: true,
+								message: '发布内容不能超过500字',
+								type: 'error',
+								duration: 1500
+							});
+						}
+
+					} else {
+						this.$message({
+							showClose: true,
+							message: '内容不能为空',
+							type: 'error'
+						});
+					}
 
 				} else {
 					this.$message({
@@ -452,64 +404,47 @@
 
 				//发布文章
 				if(this.search != "") {
-							if($("textarea").val().length > 0) {
-								if($("textarea").val().length < 501) {
-									if(this.arr.length >= 1 && this.arr.length <= 9) {
-										if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
-											//点击发布显示正在发布中
-											$(".web-tip").show();
+					if($("textarea").val().length > 0) {
+						if($("textarea").val().length < 501) {
+							if(this.arr.length >= 1 && this.arr.length <= 9) {
+								if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
+									//点击发布显示正在发布中
+									$(".web-tip").show();
 
-											setTimeout(() => {
-												let data = {
-													token: this.token,
-													projectName: this.search,
-													postTitle: this.articleTitle,
-													disscussContents: $("textarea").val(),
-													discussImages: JSON.stringify(this.arr),
-													tagInfos: JSON.stringify(this.tagthree)
-												}
-												savediscuss(data).then(res => {
-													if(res.code == 0) {
-														console.log(res.data)
-														localStorage.setItem("url", JSON.stringify(res.data))
-														this.$router.push('/previewsuc');
-													} else {
-														this.$message({
-															showClose: true,
-															message: data.msg,
-															type: 'error',
-															duration: 1500
-														});
-													}
-												}).catch(function(error) {
-													//如果后台报错就关闭弹窗
-													$(".web-tip").hide();
-													alert(error.msg)
-
-												});
-											}, 500);
-
-										} else {
-											this.$message({
-												showClose: true,
-												message: '标签至少一条，不能超过三条',
-												type: 'error',
-												duration: 1500
-											});
+									setTimeout(() => {
+										let data = {
+											token: this.token,
+											projectName: this.search,
+											postTitle: this.articleTitle,
+											disscussContents: $("textarea").val(),
+											discussImages: JSON.stringify(this.arr),
+											tagInfos: JSON.stringify(this.tagthree)
 										}
-									} else {
-										this.$message({
-											showClose: true,
-											message: '请上传图片',
-											type: 'error',
-											duration: 1500
-										});
+										savediscuss(data).then(res => {
+											if(res.code == 0) {
+												console.log(res.data)
+												localStorage.setItem("url", JSON.stringify(res.data))
+												this.$router.push('/previewsuc');
+											} else {
+												this.$message({
+													showClose: true,
+													message: data.msg,
+													type: 'error',
+													duration: 1500
+												});
+											}
+										}).catch(function(error) {
+											//如果后台报错就关闭弹窗
+											$(".web-tip").hide();
+											alert(error.msg)
 
-									}
+										});
+									}, 500);
+
 								} else {
 									this.$message({
 										showClose: true,
-										message: '发布内容不能超过500字',
+										message: '标签至少一条，不能超过三条',
 										type: 'error',
 										duration: 1500
 									});
@@ -517,12 +452,28 @@
 							} else {
 								this.$message({
 									showClose: true,
-									message: '发布内容不能为空',
+									message: '请上传图片',
 									type: 'error',
 									duration: 1500
 								});
-							}
 
+							}
+						} else {
+							this.$message({
+								showClose: true,
+								message: '发布内容不能超过500字',
+								type: 'error',
+								duration: 1500
+							});
+						}
+					} else {
+						this.$message({
+							showClose: true,
+							message: '发布内容不能为空',
+							type: 'error',
+							duration: 1500
+						});
+					}
 
 				} else {
 					this.$message({
@@ -565,17 +516,14 @@
 	.background {
 		background: lightblue;
 	}
-	
 	/*.discussion .max-nine {
 		text-align: left;
 		margin: 20px 0;
 	}*/
-	
 	/*.discussion .label {
 		list-style: none;
 		overflow: hidden;
 	}*/
-	
 	/*.labelLi {
 		width: 90px;
 		height: 25px;

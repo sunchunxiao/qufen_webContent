@@ -46,7 +46,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span @click="tags(item.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -161,6 +161,10 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			//点击标签
+			tags(id){
+				window.open('/topic?id='+id, "_blank")
+			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
 				console.log(this.uid, createUserId)
@@ -328,18 +332,6 @@
 									}
 
 								}
-
-								//								if(res.data.evaluations.rows[i].postSmallImages != null) {
-								//
-								//									var postSmallImages = JSON.parse(res.data.evaluations.rows[i].postSmallImages)
-								//									if(postSmallImages.length != 0) {
-								//										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-								//
-								//									} else {
-								//										res.data.evaluations.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-								//
-								//									}
-								//								}
 
 								//时间  字符串切割
 								//调用 Data.customData()

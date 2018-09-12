@@ -8,7 +8,7 @@
 					<h1><span class="codeTitle">区分</span>-币圈大众点评</h1>
 					<div class="downCodewrapper">
 						<div class="downCodewrap">
-							<img src="../../assets/common/Appdownload.png" />
+							<img src="../../assets/down/new.png" />
 							<div class="codeDown">IOS 下载</div>
 							<div class="codeDown">Android 下载</div>
 						</div>

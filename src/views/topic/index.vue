@@ -12,9 +12,8 @@
 									<img class="onephotoImg" :src="projectIcon">
 								</div>
 								<div style="margin-left: 20px;" class="name">
-									<div><span class="oneusername">{{projectCode}}</span></div>
-									<div><span class="topicOnedec">行情分析</span></div>
-									<div class="projectName-time">111</div>
+									<div><span class="topicOnedec">{{name}}</span></div>
+									<div class="projectName-time">{{projectSignature}}</div>
 								</div>
 								<div class="index-score projectScore">9.1</div>
 								<div @click="attention" class="discoveryBtn pt">
@@ -73,9 +72,10 @@
 </template>
 
 <script>
-	import { projectIndex } from '@/service/project';
+	import {getDTagDetail} from '@/service/topic';
 	import { saveFollow, cancelFollow } from '@/service/home';
 	import { getCookie } from '../../assets/js/cookie.js'
+	import eventVue from '../../assets/js/event.js'
 	export default {
 		name: 'projectdetail',
 		data() {
@@ -84,46 +84,32 @@
 				id: '',
 				token: getCookie('token'),
 				projectIcon: '',
-				projectCode: '',
-				projectTypeName: '',
-				followerNum: '',
-				raterNum: '',
+				name:'',
 				projectSignature: '',
-				projectDesc: '',
-				projectEnglishName: '',
-				projectChineseName: '',
-				issueDateStr: '',
-				whitepaperUrl: '',
-				websiteUrl: '',
-				followStatus: 0,
-				zfollowStatus: 0,
-				totalScore: '',
-				zicon: '',
-				zuserName: '',
 				isShow: true,
 				activeUsers: [],
 				userSignature: '',
-				userId: 0
+				userId: 0,
+				sort:1,
 			}
 		},
 		mounted() {
 			$(".onecommon li").on("click", function() {
 				var index = $(this).index();
-				console.log($(this).index())
+//				console.log($(this).index())
 				$(".onecommon li").removeClass("ping");
 				$(this).addClass("ping");
 
 			})
 
-			//小于1600px   main-right展开
-			//			this.resizeBannerImage();
-			//			window.onresize = this.resizeBannerImage;
-
-			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
+			//调用主页接口
 			this.projectdetail()
-//			this.$router.push('/topic/evaluating?id=' + this.id)
-			this.$router.push('/topic/evaluating')
+			//调用精选的接口
+			this.choiceness()
+			
+			this.$router.push('/topic/evaluating?id=' + this.id)
+//			this.$router.push('/topic/evaluating')
 			
 			//
 			$(".choiceness").on("click", function() {
@@ -154,12 +140,14 @@
 		},
 		methods: {
 			choiceness(){
-				
+				this.sort = 1
+				eventVue .$emit("myFun",this.sort)   //$emit这个方法会触发一个事件
 			},
 			datenew(){
-				
+				this.sort = 2
+				eventVue .$emit("myFun",this.sort)   //$emit这个方法会触发一个事件
+//				console.log("最新")
 			},
-			
 			projectdetail() {
 				//				console.log(this.$route.query.id)
 				this.id = this.$route.query.id - 0;
@@ -167,44 +155,13 @@
 				// 查询数据
 				let data = {
 					token: this.token,
-					projectId: this.id
+					id:this.id
 				}
-				projectIndex(data).then(res => {
+				getDTagDetail(data).then(res => {
 					if(res.code == 0) {
-						this.projectIcon = res.data.project.projectIcon
-						this.projectCode = res.data.project.projectCode
-						this.followerNum = res.data.project.followerNum
-						this.raterNum = res.data.project.raterNum
-						this.projectSignature = res.data.project.projectSignature
-						this.projectDesc = res.data.project.projectDesc
-						//英文名
-						this.projectEnglishName = res.data.project.projectEnglishName
-						//中文名
-						this.projectChineseName = res.data.project.projectChineseName
-						//发行时间
-						this.issueDateStr = res.data.project.issueDateStr
-						//官网地址
-						this.websiteUrl = res.data.project.websiteUrl
-						//白皮书地址
-						this.whitepaperUrl = res.data.project.whitepaperUrl
-						this.followStatus = res.data.project.followStatus
-						//分数
-						this.totalScore = res.data.project.totalScore
-						//概念
-						this.projectTypeName = res.data.project.projectTypeName
-						//站长用户信息
-						this.zicon = res.data.project.owner.icon
-						this.zuserName = res.data.project.owner.userName
-						this.userSignature = res.data.project.owner.userSignature
-						this.userId = res.data.project.owner.userId
-						this.zfollowStatus = res.data.project.owner.followStatus
-						//活跃用户
-						if(res.data.project.activeUsers!=null){
-							this.activeUsers = res.data.project.activeUsers
-						}else{
-							$(".attention-active").css('display','none')
-						}
-						
+						this.projectIcon = res.data.imgPath
+						this.name = res.data.tagName
+						this.projectSignature = res.data.memo
 
 					}
 				})
@@ -213,9 +170,13 @@
 				this.$router.push('/topic/evaluating?id=' + this.id)
 			},
 			next2() {
-				this.$router.push('/topic/burst?id=' + this.id)
+				$(".choiceness a ").eq(0).css("color","rgb(59,136,246)")
+				$(".choiceness a ").eq(1).css("color","rgb(51,51,51)")
+				this.$router.push('/topic/discuss?id=' + this.id)
 			},
 			next3() {
+				$(".choiceness a ").eq(0).css("color","rgb(59,136,246)")
+				$(".choiceness a ").eq(1).css("color","rgb(51,51,51)")
 				this.$router.push('/topic/article?id=' + this.id)
 			},
 			attention() {

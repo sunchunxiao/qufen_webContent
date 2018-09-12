@@ -43,7 +43,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div style="cursor: pointer;" @click="projectdetail(item.projectId)" class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -245,6 +245,11 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			//标签
+			tags(id){
+				console.log(id)
+				window.open('/topic?id='+id, "_blank")
+			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
 				console.log(this.uid, createUserId)
@@ -381,7 +386,7 @@
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
 				//				console.log( _width1)
-				var left = _width1 + 723
+				var left = _width1 + 728
 				$(".common-attention").css("left", left)
 
 			},

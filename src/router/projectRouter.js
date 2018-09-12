@@ -91,7 +91,7 @@ export const projectRouter = [
 					component: (resolve) => require(['@/views/topic/evaluating.vue'], resolve)
 				},
 				{
-					path: '/topic/burst',
+					path: '/topic/discuss',
 					meta: {
 						title: '话题爆料'
 					},
