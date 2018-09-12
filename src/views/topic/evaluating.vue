@@ -5,7 +5,7 @@
 				<!--左边文章-->
 				<div class="onedetailArticle">
 					<!--如果没有数据显示的样式-->
-					<div class="common-article-wrap commonNowrap">
+					<div class="common-article-wrap article-commonNowrap">
 						<div class="commonNocontent">
 							<img src="../../assets/common/content.png" />
 						</div>
@@ -126,7 +126,7 @@
 
 			this.bbtn();
 
-			this.loadPageList() //加载文章
+			this.loadPageList1() //加载文章
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
 		},
@@ -171,7 +171,7 @@
 					this.sort = message
 					this.sort1 = this.sort
 					console.log(this.sort1)
-					this.loadPageList()
+					this.loadPageList1()
 				})
 			},
 			//点赞
@@ -317,9 +317,9 @@
 				}
 
 			},
-			loadPageList() {
+			loadPageList1() {
 				$(".start").css("display", "block")
-				$(".commonNowrap").css("display", "none")
+				$(".article-commonNowrap").css("display", "none")
 				this.itemList = []
 				
 				//				if(getCookie('token')) {
@@ -380,14 +380,15 @@
 
 						} else {
 							$(".start").css("display", "none")
-							$(".commonNowrap").css("display", "block")
+							$(".article-commonNowrap").css("display", "block")
 						}
 
 					}
 
 				}).catch(function(res) {
+					$(".end").css("display", "none")
 					$(".start").css("display", "none")
-					$(".commonNowrap").css("display", "block")
+					$(".article-commonNowrap").css("display", "block")
 
 				});
 

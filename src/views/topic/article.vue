@@ -126,7 +126,7 @@
 
 			this.bbtn();
 
-			this.loadPageList() //加载文章
+			this.loadPageList3() //加载文章
 			//监听滚动条
 			window.addEventListener('scroll', this.scrollHandler)
 		},
@@ -171,7 +171,7 @@
 					this.sort = message
 					this.sort1 = this.sort
 					console.log(this.sort1)
-					this.loadPageList()
+					this.loadPageList3()
 				})
 			},
 			//点赞
@@ -317,13 +317,20 @@
 				}
 
 			},
-			loadPageList() {
+			loadPageList3() {
+				console.log(111)
+				$(".start").css("display", "block")
+				
+				$(".commonNowrap").css("display", "none")
+				
+				this.itemList=[]
+				
 				//				if(getCookie('token')) {
 				// 查询数据  sort 1精选  type：1评测  爆料2 文章3
 				let data = {
 					type: 3,
 					sort: this.sort,
-					tagId: 1,
+					tagId: this.id-0,
 					pageIndex: 1,
 					pageSize: 10,
 					token: this.token

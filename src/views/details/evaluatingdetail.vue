@@ -43,11 +43,12 @@
 										</p>
 									</div>
 								</div>
-								<div class="row4">
-									<!--标签-->
-									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span @click="tags(item.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
-								</div>
+
+							</div>
+							<div class="row4">
+								<!--标签-->
+								<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
+								<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
 							</div>
 						</div>
 						<div class="row5" style="cursor: pointer;">
@@ -162,8 +163,8 @@
 		},
 		methods: {
 			//点击标签
-			tags(id){
-				window.open('/topic?id='+id, "_blank")
+			tags(id) {
+				window.open('/topic?id=' + id, "_blank")
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
@@ -192,7 +193,7 @@
 							}
 							//调接口
 							savePostPraise(data).then(res => {
-//								console.log(res.data)
+								//								console.log(res.data)
 
 							})
 						}

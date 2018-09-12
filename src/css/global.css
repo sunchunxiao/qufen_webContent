@@ -96,6 +96,9 @@
 .commonNowrap {
 	display: none;
 }
+.article-commonNowrap{
+	display: none;
+}
 
 .commonNocontent {
 	padding: 150px 20px;
