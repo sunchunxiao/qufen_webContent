@@ -15,10 +15,7 @@
 									<div><span class="topicOnedec">{{name}}</span></div>
 									<div class="projectName-time">{{projectSignature}}</div>
 								</div>
-								<div class="index-score projectScore">9.1</div>
-								<div @click="attention" class="discoveryBtn pt">
-									+ 关注
-								</div>
+								
 							</div>
 							<div class="onecommon">
 								<ul>

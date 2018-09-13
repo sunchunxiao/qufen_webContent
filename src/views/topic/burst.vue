@@ -5,7 +5,7 @@
 				<!--左边文章-->
 				<div class="onedetailArticle">
 					<!--如果没有数据显示的样式-->
-					<div class="common-article-wrap commonNowrap">
+					<div class="common-article-wrap burst-commonNowrap">
 						<div class="commonNocontent">
 							<img src="../../assets/common/content.png" />
 						</div>
@@ -319,7 +319,7 @@
 			},
 			loadPageList() {
 				$(".start").css("display", "block")
-				$(".commonNowrap").css("display", "none")
+				$(".burst-commonNowrap").css("display", "none")
 				this.itemList=[]
 				
 				// 查询数据  sort 1精选  type：1评测  爆料2 文章3
@@ -379,14 +379,14 @@
 
 						} else {
 							$(".start").css("display", "none")
-							$(".commonNowrap").css("display", "block")
+							$(".burst-commonNowrap").css("display", "block")
 						}
 
 					}
 
 				}).catch(function(res) {
 					$(".start").css("display", "none")
-					$(".commonNowrap").css("display", "block")
+					$(".burst-commonNowrap").css("display", "block")
 
 				});
 
