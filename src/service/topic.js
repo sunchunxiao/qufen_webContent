@@ -21,4 +21,13 @@ export const getPostInfoWithTags = (params = {}) => {
   })
 }
 
+//话题标签
+export const getDTagsInfo = (params = {}) => {
+  return request(`/H5/tags/getDTagsInfo`, {
+    body: {
+      ...params
+    },
+  })
+}
+
 

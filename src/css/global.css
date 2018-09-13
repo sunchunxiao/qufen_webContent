@@ -823,9 +823,14 @@
 .topicTags {
 	overflow: hidden;
 }
+.topicTags li:nth-child(3n+3){
+	margin-right: 0;
+}
 
 .topicTag {
+	margin-right:10px;
 	width: 80px;
+	/*padding: 10px;*/
 	height: 41px;
 	line-height: 41px;
 	font-size: 14px;

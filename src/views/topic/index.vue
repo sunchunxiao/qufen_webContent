@@ -48,15 +48,7 @@
 							</div>
 							<div style="padding-top: 30px;">
 								<ul class="topicTags">
-									<li class="topicTag">团队调研</li>
-									<li style="margin: 0 10px;" class="topicTag">团队调研</li>
-									<li class="topicTag">技术分析</li>
-									<li class="topicTag">团队调研</li>
-									<li style="margin: 0 10px;" class="topicTag">团队调研</li>
-									<li class="topicTag">技术分析</li>
-									<li class="topicTag">团队调研</li>
-									<li style="margin: 0 10px;" class="topicTag">团队调研</li>
-									<li class="topicTag">团队调研</li>
+									<li @click="tags(item.tagId)" class="topicTag" v-for="(item,index) in tag">{{item.tagName}}</li>
 								</ul>
 							</div>
 						</div>
@@ -69,7 +61,7 @@
 </template>
 
 <script>
-	import {getDTagDetail} from '@/service/topic';
+	import {getDTagDetail,getDTagsInfo} from '@/service/topic';
 	import { saveFollow, cancelFollow } from '@/service/home';
 	import { getCookie } from '../../assets/js/cookie.js'
 	import eventVue from '../../assets/js/event.js'
@@ -88,6 +80,7 @@
 				userSignature: '',
 				userId: 0,
 				sort:1,
+				tag:[]
 			}
 		},
 		mounted() {
@@ -104,6 +97,8 @@
 			this.projectdetail()
 			//调用精选的接口
 			this.choiceness()
+			//调用标签的接口
+			this.getDTags()
 			
 			this.$router.push('/topic/evaluating?id=' + this.id)
 //			this.$router.push('/topic/evaluating')
@@ -136,6 +131,18 @@
 			
 		},
 		methods: {
+			//点击标签
+			tags(id) {
+				window.open('/topic?id=' + id, "_blank")
+			},
+			getDTags(){
+				getDTagsInfo().then(res => {
+					if(res.code == 0) {
+						console.log(res.data)
+						this.tag = res.data
+					}
+				})
+			},
 			choiceness(){
 				this.sort = 1
 				eventVue .$emit("myFun",this.sort)   //$emit这个方法会触发一个事件
