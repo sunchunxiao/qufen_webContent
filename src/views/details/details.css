@@ -323,7 +323,7 @@ li {
 /*.slider .el-slider__runway.disabled .el-slider__bar{
 	background-color:rgb(60,137,247);
 }*/
-.el-popover__title{
+.detail .el-popover__title{
 	text-align: center;
 	font-size: 15px;
 }
