@@ -219,7 +219,7 @@
 		},
 		updated() {
 			console.log($('.contentImg img').width())
-			
+
 			for(let i = 0; i < this.itemList.length; i++) {
 				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
 					$(".add").eq(i).removeClass("row3-content")
@@ -253,8 +253,8 @@
 		},
 		methods: {
 			//标签
-			tags(id){
-				window.open('/topic?id='+id, "_blank")
+			tags(id) {
+				window.open('/topic?id=' + id, "_blank")
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
@@ -329,13 +329,13 @@
 				var _width1 = $(".common-article").offset().left
 				//				console.log( _width1)
 
-//				if(_width < 1603) {
-//					var left = _width1 + 680
-//					$(".common-attention").css("left", left)
-//				} else {
-					var left = _width1 + 725
-					$(".common-attention").css("left", left)
-//				}
+				//				if(_width < 1603) {
+				//					var left = _width1 + 680
+				//					$(".common-attention").css("left", left)
+				//				} else {
+				var left = _width1 + 725
+				$(".common-attention").css("left", left)
+				//				}
 
 			},
 			resizeBannerImage() {
@@ -343,13 +343,13 @@
 				var _width1 = $(".common-article").offset().left
 				//				console.log( _width1)
 
-//				if(_width < 1590) {
-//					var left = _width1 + 680
-//					$(".common-attention").css("left", left)
-//				} else {
-					var left = _width1 + 730
-					$(".common-attention").css("left", left)
-//				}
+				//				if(_width < 1590) {
+				//					var left = _width1 + 680
+				//					$(".common-attention").css("left", left)
+				//				} else {
+				var left = _width1 + 730
+				$(".common-attention").css("left", left)
+				//				}
 
 			},
 			attention(createUserId, index) {
@@ -461,6 +461,9 @@
 						//时间  字符串切割
 						//调用 Data.customData()
 						var nowdate = Data.customData()
+						//切割当前时间获取当前年份
+						var time = nowdate.split("-")
+						console.log(time[0])
 
 						var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
 
@@ -469,7 +472,15 @@
 							var a1 = arr[1].split(":")
 							res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 						} else {
-							res.data.recommends.rows[i].createTimeStr = arr[0];
+							//年份分割
+							var year = this.timestr.split("-")
+							console.log(year[0])
+							if(time[0] == year[0]) {
+								res.data.recommends.rows[i].createTimeStr = year[1] + "-" + year[2];
+							}else{
+								res.data.recommends.rows[i].createTimeStr = arr[0];
+							}
+							
 						}
 
 						if(res.data.recommends.rows[i].tagInfos != null) {
