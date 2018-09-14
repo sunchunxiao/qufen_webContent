@@ -42,13 +42,13 @@
 <template>
 	<div>
 		<div class="xm">
-			<div class="pos progess">项目</div>
+			<div class="pos progess"><img class="previewSelect" src="../../assets/preview/red.png"/>项目</div>
 			<!--模糊查询币种-->
 			<Search @aa="getA($event)"></Search>
 			<span class="select">请选择相应的区块链项目</span>
 		</div>
 		<div class="evaluation">
-			<div class="progess">综合评估</div>
+			<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png"/>综合评估</div>
 			<p class="screen">经过科学筛选，区分提供以下几个测评维度，可按照FIND模型进行评测。
 				<a target="_blank" class="special" style="color: #3c89f6;" href="https://app.qufen.top/user/model">模型说明></a>
 			</p>
@@ -74,10 +74,10 @@
 			<!--编译器-->
 			<div>
 				<div class="evaluationContent">
-					<div class="progess margin-top-20">评测标题</div>
+					<div class="progess margin-top-20"><img class="previewSelect" src="../../assets/preview/red.png"/>评测标题</div>
 					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
 				</div>
-				<div class="margin-top-20 progess margin-bottom-10">评测报告</div>
+				<div class="margin-top-20 progess margin-bottom-10"><img class="previewSelect" src="../../assets/preview/red.png"/>评测报告</div>
 				<Simditor></Simditor>
 			</div>
 			<div>

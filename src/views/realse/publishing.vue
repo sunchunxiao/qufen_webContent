@@ -71,7 +71,7 @@
 <template>
 	<div>
 		<div class="xm">
-			<div class="pos progess">项目</div>
+			<div class="pos progess"><img class="" src="../../assets/preview/red.png"/>项目</div>
 			<!--模糊查询币种-->
 			<Search @aa="getA($event)"></Search>
 			<span class="select">请选择相应的区块链项目</span>
@@ -106,7 +106,7 @@
 			<!--評分-->
 			<!--评测分数-->
 			<div class="pcZ pcWid">
-				<div class="pc-title margin-top-10">综合评分</div>
+				<div class="pc-title margin-top-10"><img class="previewSelect" src="../../assets/preview/red.png"/>综合评分</div>
 				<el-slider @change="change1(m)" :max="10" :step="0.1" style="width: 50%;display: inline-block;margin-left:6px" type="range" v-model="m" :show-tooltip="false" :disabled='disabled'></el-slider>
 				<div class="label"><label class="store">{{m}}<span class="littleStore">分</span></label><span class="cp1">BBB</span></div>
 				<!--<span class="cp"></span>-->
@@ -126,10 +126,10 @@
 
 			<div>
 				<div class="evaluationContent">
-					<div class="progess margin-top-10">评测标题</div>
+					<div class="progess margin-top-10"><img class="previewSelect" src="../../assets/preview/red.png"/>评测标题</div>
 					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
 				</div>
-				<h3 class="progess margin-top-20 margin-bottom-10">评测报告</h3>
+				<h3 class="progess margin-top-20 margin-bottom-10"><img class="previewSelect" src="../../assets/preview/red.png"/>评测报告</h3>
 				<simditor></simditor>
 				<!--<simditor :value.sync='value' v-ref:simditor></simditor>-->
 			</div>

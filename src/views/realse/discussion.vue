@@ -4,7 +4,7 @@
 		<div class="cx-addproject">
 			<!--项目选择-->
 			<div class="xm">
-				<div class="pos progess">项目</div>
+				<div class="pos progess"><img src="../../assets/preview/red.png"/>项目</div>
 				<!--模糊查询币种-->
 				<Search @aa="getA($event)"></Search>
 				<span class="select">请选择相应的区块链项目</span>
@@ -15,7 +15,7 @@
 					<div class="progess margin-top-10">爆料标题</div>
 					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
 				</div>-->
-				<h3 class="progess add-title">爆料内容 <span class="add-title1">(内容500 / 剩余<span id="word"> 500</span>个)</span></h3>
+				<h3 class="progess add-title"><img class="previewSelect" src="../../assets/preview/red.png"/>爆料内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span></h3>
 				<!--引simditor文本编译器-->
 				<!--<Simditor></Simditor>-->
 				<Input class="disText" @keyup.native="up" @keydown.native="down" id="weibo" v-model="value6" type="textarea" :rows="6" placeholder="输入内容"></Input>
@@ -221,21 +221,21 @@
 			//多文本的字数鼠标的抬起事件
 			up() {
 				var len = $("textarea").val().length;
-				if(len > 500) {
-					$("textarea").val($("textarea").val().substring(0, 500));
+				if(len > 300) {
+					$("textarea").val($("textarea").val().substring(0, 300));
 
 				}
-				var num = 500 - len;
+				var num = 300 - len;
 				$("#word").text(num);
 			},
 			//发布的内容不得超过300
 			down() {
 				var len = $("textarea").val().length;
-				if(len > 500) {
-					$("textarea").val($("textarea").val().substring(0, 500));
+				if(len > 300) {
+					$("textarea").val($("textarea").val().substring(0, 300));
 
 				}
-				var num = 500 - len;
+				var num = 300 - len;
 				$("#word").text(num);
 
 			},
@@ -325,7 +325,7 @@
 				}
 				if(this.search != "") {
 					if($("textarea").val().length > 0) {
-						if($("textarea").val().length < 501) {
+						if($("textarea").val().length < 301) {
 							if(this.arr.length >= 1 && this.arr.length <= 9) {
 								if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
 									let date = new Date();
@@ -405,7 +405,7 @@
 				//发布文章
 				if(this.search != "") {
 					if($("textarea").val().length > 0) {
-						if($("textarea").val().length < 501) {
+						if($("textarea").val().length < 301) {
 							if(this.arr.length >= 1 && this.arr.length <= 9) {
 								if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
 									//点击发布显示正在发布中
