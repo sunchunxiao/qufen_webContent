@@ -3,7 +3,7 @@
 		<h1 class="showprojectH">发布文章</h1>
 		<div class="cx-addproject">
 
-			<div class="evaluation">
+			<div class="evaluation" style="margin-top:0;">
 				<div class="evaluationContent">
 					<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png" />文章标题</div>
 					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />

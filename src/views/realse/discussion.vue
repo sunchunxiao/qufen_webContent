@@ -2,13 +2,7 @@
 	<div class="discussion">
 		<h1 class="showprojectH">发表爆料</h1>
 		<div class="cx-addproject">
-			<!--项目选择-->
-			<div class="xm">
-				<div class="pos progess"><img src="../../assets/preview/red.png"/>项目</div>
-				<!--模糊查询币种-->
-				<Search @aa="getA($event)"></Search>
-				<span class="select">请选择相应的区块链项目</span>
-			</div>
+			
 			<!--文字内容-->
 			<div class="evaluation">
 				<!--<div class="evaluationContent margin-top-20">
@@ -46,6 +40,14 @@
 					<img :src="imgName" v-if="visible" style="width: 100%">
 				</Modal>
 			</div>
+			<!--项目选择-->
+			<div class="xm" style="margin-top: 10px;">
+				<h3 class="pos1 p">项目</h3>
+				<!--模糊查询币种-->
+				<Search @aa="getA($event)"></Search>
+				<span class="select">请选择相应的区块链项目</span>
+			</div>
+			
 			<!--标签选择和保存文章-->
 			<div>
 				<h3 class="p">选择标签</h3>
