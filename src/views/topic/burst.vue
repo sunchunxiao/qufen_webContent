@@ -121,7 +121,7 @@
 			}
 		},
 		created() {
-			console.log(this.$route.query.id)
+//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
 
 			this.bbtn();
@@ -170,13 +170,13 @@
 				eventVue.$on("myFun", (message) => { //这里最好用箭头函数，不然this指向有问题
 					this.sort = message
 					this.sort1 = this.sort
-					console.log(this.sort1)
+//					console.log(this.sort1)
 					this.loadPageList()
 				})
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
-				console.log(this.uid, createUserId)
+//				console.log(this.uid, createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(createUserId != this.uid) {
@@ -187,7 +187,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").eq(index).html() - 0
-							console.log(typeof this.num)
+//							console.log(typeof this.num)
 							this.itemList[index].seen = !this.itemList[index].seen
 
 							if(this.itemList[index].seen == true) {
@@ -237,7 +237,7 @@
 			},
 			//关注
 			attention(createUserId, index) {
-				console.log(createUserId)
+//				console.log(createUserId)
 				var _this = this
 				if(this.token != "") {
 					//					console.log($(".discoveryBtndetail").eq(index).html())
@@ -251,9 +251,9 @@
 						cancelFollow(data).then(res => {
 
 							if(res.code == 0) {
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-									console.log('取消关注')
+//									console.log('取消关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -281,7 +281,7 @@
 
 								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-									console.log('已经关注')
+//									console.log('已经关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"
@@ -335,7 +335,7 @@
 					if(res.code == 0) {
 
 						if(res.data.rows != null) {
-							console.log(res.data)
+//							console.log(res.data)
 							this.itemList = res.data.rows;
 							if(res.data.rows.length <= 2) {
 								$(".start").css("display", "none")
@@ -393,7 +393,7 @@
 			},
 
 			more() {
-				console.log(this.sort1)
+//				console.log(this.sort1)
 				// 分页查询
 				if(this.hasNext == true) {
 					this.pageIndex = parseInt(this.pageIndex) + 1;

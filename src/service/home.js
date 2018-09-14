@@ -32,7 +32,7 @@ export const article = (params = {}) => {
 
 // 爆料详情
 export const discuss = (params = {}) => {
-  return request(`/kff/home/discussDetail `, {
+  return request(`/kff/home/discussDetail`, {
     body: {
       ...params
     },
