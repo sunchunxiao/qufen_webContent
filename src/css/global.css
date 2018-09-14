@@ -357,10 +357,16 @@
 	width: 60px;
 	margin-left: 40px;
 	float: left;
-	/*position: relative;*/
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+}
+.detail .hover-img{
+	margin-right: 3px;
+}
+.detail .el-popover__reference{
+	display: flex;
+	align-items: center;
 }
 
 .detail img {
@@ -841,6 +847,7 @@
 	float: left;
 	margin-bottom: 15px;
 	transition: all 0.5s;
+	overflow: hidden;
 }
 
 .topicTag:hover {

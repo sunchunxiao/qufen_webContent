@@ -327,16 +327,11 @@ li {
 	text-align: center;
 	font-size: 15px;
 }
-#qrcode img{
+.detail #qrcode img{
+	width: 100%;
 	margin-left: 10px;
 }
-/*.contentList:nth-child(1){
-		height: 0;
-		
-	}*/
-	.main{
-		/*height: 0;*/
-	}
+
 @media only screen and (max-width: 1600px) {
 
 }
