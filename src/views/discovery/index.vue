@@ -463,7 +463,7 @@
 						var nowdate = Data.customData()
 						//切割当前时间获取当前年份
 						var time = nowdate.split("-")
-						console.log(time[0])
+//						console.log(time[0])
 
 						var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
 
@@ -474,13 +474,13 @@
 						} else {
 							//年份分割
 							var year = this.timestr.split("-")
-							console.log(year[0])
+//							console.log(year[0])
 							if(time[0] == year[0]) {
 								res.data.recommends.rows[i].createTimeStr = year[1] + "-" + year[2];
-							}else{
+							} else {
 								res.data.recommends.rows[i].createTimeStr = arr[0];
 							}
-							
+
 						}
 
 						if(res.data.recommends.rows[i].tagInfos != null) {
@@ -530,6 +530,9 @@
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
+								//切割当前时间获取当前年份
+								var time = nowdate.split("-")
+
 								var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
 
 								this.timestr = arr[0];
@@ -539,7 +542,13 @@
 									res.data.recommends.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 									//									console.log(res.data.recommends.rows[i].createTimeStr)
 								} else {
-									res.data.recommends.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									if(time[0] == year[0]) {
+										res.data.recommends.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.recommends.rows[i].createTimeStr = arr[0];
+									}
 
 								}
 

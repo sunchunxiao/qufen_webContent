@@ -246,9 +246,9 @@
 		},
 		methods: {
 			//标签
-			tags(id){
+			tags(id) {
 				console.log(id)
-				window.open('/topic?id='+id, "_blank")
+				window.open('/topic?id=' + id, "_blank")
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
@@ -436,6 +436,9 @@
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
+								//切割当前时间获取当前年份
+								var time = nowdate.split("-")
+								//						console.log(time[0])
 
 								var arr = res.data.follows.rows[i].createTimeStr.split(" ")
 
@@ -444,7 +447,15 @@
 									var a1 = arr[1].split(":")
 									res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								} else {
-									res.data.follows.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									//							console.log(year[0])
+									if(time[0] == year[0]) {
+										res.data.follows.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.follows.rows[i].createTimeStr = arr[0];
+									}
+
 								}
 
 								if(res.data.follows.rows[i].tagInfos != null) {
@@ -503,6 +514,9 @@
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
+								//切割当前时间获取当前年份
+								var time = nowdate.split("-")
+								//						console.log(time[0])
 								var arr = res.data.follows.rows[i].createTimeStr.split(" ")
 
 								this.timestr = arr[0];
@@ -512,7 +526,14 @@
 									res.data.follows.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 									//									console.log(res.data.follows.rows[i].createTimeStr)
 								} else {
-									res.data.follows.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									//							console.log(year[0])
+									if(time[0] == year[0]) {
+										res.data.follows.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.follows.rows[i].createTimeStr = arr[0];
+									}
 
 								}
 
