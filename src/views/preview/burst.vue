@@ -66,6 +66,10 @@
 			this.articleTitle = localStorage.articleTitle;
 			this.disscussContents = localStorage.content;
 			var tag = localStorage.search.split("/")
+//			console.log(tag[0])
+			if(tag[0]==""){
+				$(".crack-tag1").css("display","none")
+			}
 			this.projectCode = tag[0]
 //			console.log(localStorage.tag)
 			if(localStorage.tag!=null){
@@ -93,6 +97,8 @@
 				this.postImg = JSON.parse(localStorage.postImg)
 				if(this.postImg.length!=0){
 					this.postImg = this.postImg.splice(0,3)
+				}else{
+					$(".burstImg").css("display","none")
 				}
 			}
 			

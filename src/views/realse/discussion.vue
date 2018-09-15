@@ -4,8 +4,9 @@
 		<div class="cx-addproject">
 			<!--文字内容-->
 			<div class="evaluation" style="margin-top:0;">
-				
-				<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png"/>爆料内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span></div>
+
+				<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png" />爆料内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span>
+				</div>
 				<!--引simditor文本编译器-->
 				<!--<Simditor></Simditor>-->
 				<Input class="disText margin-top-20" @keyup.native="up" @keydown.native="down" id="weibo" v-model="value6" type="textarea" :rows="6" placeholder="输入内容"></Input>
@@ -42,7 +43,7 @@
 				<Search style="margin-left: 76px;" @aa="getA($event)"></Search>
 				<span class="select">请选择相应的区块链项目</span>
 			</div>
-			
+
 			<!--标签选择和保存文章-->
 			<div>
 				<h3 class="p margin-top-20">选择标签 <span class="newTags">选择爆料标签，最多三个</span></h3>
@@ -291,21 +292,6 @@
 				return check;
 			},
 
-			//失焦事件
-			handleArticletitleBlur() {
-
-				if(!this.articlePathHasEdited) {
-					let date = new Date();
-					let year = date.getFullYear();
-					let month = date.getMonth() + 1;
-					let day = date.getDate();
-					this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
-					this.articlePath = this.articleTitle;
-					this.articlePathHasEdited = true;
-					this.showLink = true;
-				}
-
-			},
 			p(s) {
 				return s < 10 ? '0' + s : s;
 			},
@@ -319,51 +305,31 @@
 						fileUrl: this.uploadList[i].url
 					});
 				}
-				if(this.search != "") {
-					if($("textarea").val().length > 0) {
-						if($("textarea").val().length < 301) {
-							if(this.arr.length >= 1 && this.arr.length <= 9) {
-								if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
-									let date = new Date();
-									let year = date.getFullYear();
-									let month = date.getMonth() + 1;
-									let day = date.getDate();
-									let hour = date.getHours();
-									let minute = date.getMinutes();
+				if($("textarea").val().length > 0) {
+					if($("textarea").val().length < 301) {
+						if(this.arr.length <= 9) {
+							let date = new Date();
+							let year = date.getFullYear();
+							let month = date.getMonth() + 1;
+							let day = date.getDate();
+							let hour = date.getHours();
+							let minute = date.getMinutes();
 
-									localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
+							localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
 
-									localStorage.search = this.search
-									localStorage.articleTitle = this.articleTitle;
-									localStorage.content = $("textarea").val();
-									//标签
-									localStorage.tag = JSON.stringify(this.tagthree)
-									localStorage.postImg = JSON.stringify(this.arr)
+							localStorage.search = this.search
+							localStorage.articleTitle = this.articleTitle;
+							localStorage.content = $("textarea").val();
+							//标签
+							localStorage.tag = JSON.stringify(this.tagthree)
+							localStorage.postImg = JSON.stringify(this.arr)
 
-									window.open("/preview/burst", "_blank")
-
-								} else {
-									this.$message({
-										showClose: true,
-										message: '标签至少一条，不能超过三条',
-										type: 'error',
-										duration: 1500
-									});
-								}
-
-							} else {
-								this.$message({
-									showClose: true,
-									message: '请上传图片',
-									type: 'error',
-									duration: 1500
-								});
-							}
+							window.open("/preview/burst", "_blank")
 
 						} else {
 							this.$message({
 								showClose: true,
-								message: '发布内容不能超过500字',
+								message: '图片不超过9张',
 								type: 'error',
 								duration: 1500
 							});
@@ -372,15 +338,16 @@
 					} else {
 						this.$message({
 							showClose: true,
-							message: '内容不能为空',
-							type: 'error'
+							message: '发布内容不能超过500字',
+							type: 'error',
+							duration: 1500
 						});
 					}
 
 				} else {
 					this.$message({
 						showClose: true,
-						message: '请选择项目',
+						message: '内容不能为空',
 						type: 'error'
 					});
 				}
@@ -399,82 +366,63 @@
 				}
 
 				//发布文章
-				if(this.search != "") {
-					if($("textarea").val().length > 0) {
-						if($("textarea").val().length < 301) {
-							if(this.arr.length >= 1 && this.arr.length <= 9) {
-								if(this.tagthree.length <= 3 && this.tagthree.length >= 1) {
-									//点击发布显示正在发布中
-									$(".web-tip").show();
+				if($("textarea").val().length > 0) {
+					if($("textarea").val().length < 301) {
+						if(this.arr.length <= 9) {
+							//点击发布显示正在发布中
+							$(".web-tip").show();
 
-									setTimeout(() => {
-										let data = {
-											token: this.token,
-											projectName: this.search,
-											postTitle: this.articleTitle,
-											disscussContents: $("textarea").val(),
-											discussImages: JSON.stringify(this.arr),
-											tagInfos: JSON.stringify(this.tagthree)
-										}
-										savediscuss(data).then(res => {
-											if(res.code == 0) {
-												console.log(res.data)
-												localStorage.setItem("url", JSON.stringify(res.data))
-												this.$router.push('/previewsuc');
-											} else {
-												this.$message({
-													showClose: true,
-													message: data.msg,
-													type: 'error',
-													duration: 1500
-												});
-											}
-										}).catch(function(error) {
-											//如果后台报错就关闭弹窗
-											$(".web-tip").hide();
-											alert(error.msg)
-
-										});
-									}, 500);
-
-								} else {
-									this.$message({
-										showClose: true,
-										message: '标签至少一条，不能超过三条',
-										type: 'error',
-										duration: 1500
-									});
+							setTimeout(() => {
+								let data = {
+									token: this.token,
+									projectName: this.search,
+									postTitle: this.articleTitle,
+									disscussContents: $("textarea").val(),
+									discussImages: JSON.stringify(this.arr),
+									tagInfos: JSON.stringify(this.tagthree)
 								}
-							} else {
-								this.$message({
-									showClose: true,
-									message: '请上传图片',
-									type: 'error',
-									duration: 1500
-								});
+								savediscuss(data).then(res => {
+									if(res.code == 0) {
+										console.log(res.data)
+										localStorage.setItem("url", JSON.stringify(res.data))
+										this.$router.push('/previewsuc');
+									} else {
+										this.$message({
+											showClose: true,
+											message: data.msg,
+											type: 'error',
+											duration: 1500
+										});
+									}
+								}).catch(function(error) {
+									//如果后台报错就关闭弹窗
+									$(".web-tip").hide();
+									alert(error.msg)
 
-							}
+								});
+							}, 500);
+
 						} else {
 							this.$message({
 								showClose: true,
-								message: '发布内容不能超过500字',
+								message: '图片不超过9张',
 								type: 'error',
 								duration: 1500
 							});
+
 						}
 					} else {
 						this.$message({
 							showClose: true,
-							message: '发布内容不能为空',
+							message: '发布内容不能超过500字',
 							type: 'error',
 							duration: 1500
 						});
 					}
-
 				} else {
 					this.$message({
 						showClose: true,
-						message: '请选择项目',
+						message: '发布内容不能为空',
 						type: 'error',
 						duration: 1500
 					});

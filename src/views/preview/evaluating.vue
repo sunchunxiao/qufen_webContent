@@ -27,6 +27,7 @@
 							</div>
 							<div class="articleTag">
 								<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
+								<span class="crack-tag2"  v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 							</div>
 						</div>
 						
@@ -93,6 +94,7 @@
 				commentsNum: '',
 				praiseNum: '',
 				projectCode:'',
+				tagInfos:[]
 			}
 		},
 		
@@ -153,6 +155,13 @@
 			}
 			//总分
 			this.totalscore = localStorage.totalscore-0
+			
+			if(localStorage.tag!=null){
+				var tagInfo = JSON.parse(localStorage.tag)
+				if(tagInfo.length!=0){
+					this.tagInfos = JSON.parse(localStorage.tag)
+				}
+			}
 			//自定义项
 			if(localStorage.scoreList!=null){
 				var storeList =  JSON.parse(localStorage.scoreList)

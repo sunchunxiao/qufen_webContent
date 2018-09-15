@@ -25,7 +25,7 @@
 						{{content}}
 					</div>
 					<div class="articleTag">
-						<div class="crack-tag1"><span class="span-name">{{tag}}</span></div>
+						<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
 						<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 					</div>
 				</div>
@@ -46,9 +46,8 @@
 				id: '',
 				articleTitle: '',
 				src: '',
+				projectCode:'',
 				username: '',
-				userSignature: '',
-				tag: '',
 				timestr: '',
 				timestr1: '',
 				imgUrls: [],
@@ -59,7 +58,8 @@
 				imgUrl: '',
 				commendationListL: '',
 				tagInfos: [],
-				content: ''
+				content: '',
+				tagInfos:[]
 
 			}
 		},
@@ -82,13 +82,23 @@
 			this.articleTitle = localStorage.articleTitle;
 			this.content = localStorage.content;
 			var tag = localStorage.search.split("/")
-			this.tag = tag[0]
+
+			if(tag[0]==""){
+				$(".crack-tag1").css("display","none")
+			}
+			this.projectCode = tag[0]
 			this.src = getCookie("img")
 			this.username = getCookie("user")
 
 			var nowdate = Data.customData()
 			var arr = localStorage.publishTime.split(" ")
 //			console.log(arr,nowdate)
+			if(localStorage.tag!=null){
+				var tagInfo = JSON.parse(localStorage.tag)
+				if(tagInfo.length!=0){
+					this.tagInfos = JSON.parse(localStorage.tag)
+				}
+			}
 			
 			this.timestr = arr[0];
 			if(nowdate == this.timestr) {

@@ -626,9 +626,13 @@
 						this.disscussContents = data.disscussContents;
 
 						//图片
+						
 						if(data.postSmallImages != null && data.postSmallImages.length != 0) {
 							var a = JSON.parse(data.postSmallImages);
-							//								console.log(a)
+							if(a.length==0){
+								$('.burstImg').css('display', 'none')
+							}
+//															console.log(a)
 							if(a.length != 0) {
 								if(a.length >= 3) {
 									a = a.slice(0, 3)

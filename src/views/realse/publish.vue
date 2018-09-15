@@ -42,13 +42,13 @@
 <template>
 	<div>
 		<div class="xm">
-			<div class="pos progess"><img class="previewSelect" src="../../assets/preview/red.png"/>项目</div>
+			<div class="pos progess"><img class="previewSelect" src="../../assets/preview/red.png" />项目</div>
 			<!--模糊查询币种-->
 			<Search @aa="getA($event)"></Search>
 			<span class="select">请选择相应的区块链项目</span>
 		</div>
 		<div class="evaluation">
-			<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png"/>综合评估</div>
+			<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png" />综合评估</div>
 			<p class="screen">经过科学筛选，区分提供以下几个测评维度，可按照FIND模型进行评测。
 				<a target="_blank" class="special" style="color: #3c89f6;" href="https://app.qufen.top/user/model">模型说明></a>
 			</p>
@@ -74,10 +74,11 @@
 			<!--编译器-->
 			<div>
 				<div class="evaluationContent">
-					<div class="progess margin-top-20"><img class="previewSelect" src="../../assets/preview/red.png"/>评测标题</div>
-					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
+					<div class="progess margin-top-20"><img class="previewSelect" src="../../assets/preview/red.png" />评测标题</div>
+					<!--	<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />-->
+					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" class="margin-top-20" />
 				</div>
-				<div class="margin-top-20 progess margin-bottom-10"><img class="previewSelect" src="../../assets/preview/red.png"/>评测报告</div>
+				<div class="margin-top-20 progess margin-bottom-10"><img class="previewSelect" src="../../assets/preview/red.png" />评测报告</div>
 				<Simditor></Simditor>
 			</div>
 			<div>
@@ -240,24 +241,24 @@
 				this.search = data;
 			},
 			//标题
-			handleArticletitleBlur() {
-				if(this.articleTitle.length !== 0) {
-					// this.articleError = '';
-					localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
-					if(!this.articlePathHasEdited) {
-						let date = new Date();
-						let year = date.getFullYear();
-						let month = date.getMonth() + 1;
-						let day = date.getDate();
-						this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
-						this.articlePath = this.articleTitle;
-						this.articlePathHasEdited = true;
-						this.showLink = true;
-					}
-				} else {
-					this.$Message.error('文章标题不可为空哦');
-				}
-			},
+			//			handleArticletitleBlur() {
+			//				if(this.articleTitle.length !== 0) {
+			//					// this.articleError = '';
+			//					localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
+			//					if(!this.articlePathHasEdited) {
+			//						let date = new Date();
+			//						let year = date.getFullYear();
+			//						let month = date.getMonth() + 1;
+			//						let day = date.getDate();
+			//						this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
+			//						this.articlePath = this.articleTitle;
+			//						this.articlePathHasEdited = true;
+			//						this.showLink = true;
+			//					}
+			//				} else {
+			//					this.$Message.error('文章标题不可为空哦');
+			//				}
+			//			},
 			p(s) {
 				return s < 10 ? '0' + s : s;
 			},
@@ -270,50 +271,62 @@
 				//替换空格
 				var ddsd = dds.replace(/&nbsp;/ig, "");
 				if(this.search != "") {
-					if(this.articleTitle.length !== 0) {
-						if(this.articleTitle.length <= 60) {
-							if(ddsd != "") {
+					if(this.changev != 0) {
+						if(this.articleTitle.length !== 0) {
+							if(this.articleTitle.length <= 60) {
+								if(ddsd != "") {
 
-								if(1) {
-									let date = new Date();
-									let year = date.getFullYear();
-									let month = date.getMonth() + 1;
-									let day = date.getDate();
-									let hour = date.getHours();
-									let minute = date.getMinutes();
+									if(1) {
+										let date = new Date();
+										let year = date.getFullYear();
+										let month = date.getMonth() + 1;
+										let day = date.getDate();
+										let hour = date.getHours();
+										let minute = date.getMinutes();
 
-									localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
+										localStorage.publishTime = year + '-' + this.p(month) + '-' + this.p(day) + ' ' + this.p(hour) + ':' + this.p(minute);
 
-								} else {
-									localStorage.publishTime = this.publishTime; // 本地存储发布时间
-								}
-								//项目
-								localStorage.search = this.search
-								//评分项
-								for(let i = 0; i < this.listData.length; i++) {
-									if(this.arr.length < 4) {
-										this.arr.push({
-											modelId: this.listData[i].modelId,
-											modelName: this.listData[i].title,
-											modelWeight: this.listData[i].percent,
-											score: this.listData[i].value,
-
-										});
+									} else {
+										localStorage.publishTime = this.publishTime; // 本地存储发布时间
 									}
+									//项目
+									localStorage.search = this.search
+									//评分项
+									for(let i = 0; i < this.listData.length; i++) {
+										if(this.arr.length < 4) {
+											this.arr.push({
+												modelId: this.listData[i].modelId,
+												modelName: this.listData[i].title,
+												modelWeight: this.listData[i].percent,
+												score: this.listData[i].value,
 
+											});
+										}
+
+									}
+									localStorage.scoreList = JSON.stringify(this.arr)
+									//标题
+									localStorage.articleTitle = this.articleTitle;
+									//内容
+									localStorage.content = $("textarea").val();
+									//总分
+									localStorage.totalscore = this.m
+									//标签
+									localStorage.tag = JSON.stringify(this.tagthree)
+
+									window.open("/preview/evaluating", "_blank")
+								} else {
+									this.$message({
+										showClose: true,
+										message: '内容不能为空',
+										type: 'error'
+									});
 								}
-								localStorage.scoreList = JSON.stringify(this.arr)
-								//标题
-								localStorage.articleTitle = this.articleTitle;
-								//内容
-								localStorage.content = $("textarea").val();
-								//总分
-								localStorage.totalscore = this.m
-								window.open("/preview/evaluating", "_blank")
+
 							} else {
 								this.$message({
 									showClose: true,
-									message: '内容不能为空',
+									message: '标题小于60字',
 									type: 'error'
 								});
 							}
@@ -321,16 +334,16 @@
 						} else {
 							this.$message({
 								showClose: true,
-								message: '标题小于60字',
+								message: '文章标题不能为空',
 								type: 'error'
 							});
 						}
-
 					} else {
 						this.$message({
 							showClose: true,
-							message: '文章标题不能为空',
-							type: 'error'
+							message: "请先评分后再提交评测",
+							type: 'error',
+							duration: 1500
 						});
 					}
 

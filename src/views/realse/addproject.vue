@@ -6,7 +6,7 @@
 			<div class="evaluation" style="margin-top:0;">
 				<div class="evaluationContent">
 					<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png" />文章标题</div>
-					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
+					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" class="margin-top-20" />
 				</div>
 				<div>
 					<h3 class="progess add-title"><img class="previewSelect" src="../../assets/preview/red.png"/>文章内容</h3>
@@ -105,7 +105,7 @@
 						tagName: name,
 						tagId: id
 					})
-					console.log(this.tagthree)
+//					console.log(this.tagthree)
 					//循环，检查数组里是否是三条数据
 					for(var i = 0; i < this.tagthree.length; i++) {
 						//如果大于三条提示并从数组中删除
@@ -143,35 +143,19 @@
 			getA(data) {
 				this.search = data;
 			},
-			handleArticletitleBlur() {
-				if(this.articleTitle.length !== 0) {
-					// this.articleError = '';
-					localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
-					if(!this.articlePathHasEdited) {
-						let date = new Date();
-						let year = date.getFullYear();
-						let month = date.getMonth() + 1;
-						let day = date.getDate();
-						this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
-						this.articlePath = this.articleTitle;
-						this.articlePathHasEdited = true;
-						this.showLink = true;
-					}
-				} else {
-					this.$Message.error('文章标题不可为空哦');
-				}
-			},
+			
 			p(s) {
 				return s < 10 ? '0' + s : s;
 			},
 			//预览
 			handlePreview() {
+				console.log(this.tagthree)
 				//去除文本编译器的标签
 				var dd = $("textarea").val().replace(/<\/?.+?>/g, "");
 
 				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
 				var ddsd = dds.replace(/&nbsp;/ig, "");
-				if(this.search != "") {
+
 					if(this.articleTitle.length <= 60 && this.articleTitle != "") {
 
 						if(ddsd != "") {
@@ -186,6 +170,9 @@
 							localStorage.search = this.search
 							localStorage.articleTitle = this.articleTitle;
 							localStorage.content = $("textarea").val();
+							
+							//标签
+							localStorage.tag = JSON.stringify(this.tagthree)
 
 							window.open("/preview/article", "_blank")
 							this.$router.push({
@@ -207,13 +194,6 @@
 							type: 'error'
 						});
 					}
-				} else {
-					this.$message({
-						showClose: true,
-						message: '请选择项目',
-						type: 'error'
-					});
-				}
 
 			},
 			canPublish() {
@@ -233,14 +213,15 @@
 				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
 				var ddsd = dds.replace(/&nbsp;/ig, "");
 
-				if(this.search == "") {
-					this.$message({
-						showClose: true,
-						message: '请选择项目',
-						type: 'error'
-					});
-				} else {
-					if(this.articleTitle.length <= 60 && this.articleTitle != "") {
+				//				if(this.search == "") {
+				//					this.$message({
+				//						showClose: true,
+				//						message: '请选择项目',
+				//						type: 'error'
+				//					});
+				//				} else {
+				if(this.articleTitle != "") {
+					if(this.articleTitle.length <= 60) {
 						if(ddsd == "") {
 							this.$message({
 								showClose: true,
@@ -293,6 +274,12 @@
 							type: 'error'
 						});
 					}
+				} else {
+					this.$message({
+						showClose: true,
+						message: '文章标题不能为空',
+						type: 'error'
+					});
 				}
 
 			}

@@ -71,7 +71,7 @@
 <template>
 	<div>
 		<div class="xm">
-			<div class="pos progess"><img class="" src="../../assets/preview/red.png"/>项目</div>
+			<div class="pos progess"><img class="" src="../../assets/preview/red.png" />项目</div>
 			<!--模糊查询币种-->
 			<Search @aa="getA($event)"></Search>
 			<span class="select">请选择相应的区块链项目</span>
@@ -106,7 +106,7 @@
 			<!--評分-->
 			<!--评测分数-->
 			<div class="pcZ pcWid">
-				<div class="pc-title margin-top-10"><img class="previewSelect" src="../../assets/preview/red.png"/>综合评分</div>
+				<div class="pc-title margin-top-10"><img class="previewSelect" src="../../assets/preview/red.png" />综合评分</div>
 				<el-slider @change="change1(m)" :max="10" :step="0.1" style="width: 50%;display: inline-block;margin-left:6px" type="range" v-model="m" :show-tooltip="false" :disabled='disabled'></el-slider>
 				<div class="label"><label class="store">{{m}}<span class="littleStore">分</span></label><span class="cp1">BBB</span></div>
 				<!--<span class="cp"></span>-->
@@ -126,8 +126,8 @@
 
 			<div>
 				<div class="evaluationContent">
-					<div class="progess margin-top-10"><img class="previewSelect" src="../../assets/preview/red.png"/>评测标题</div>
-					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
+					<div class="progess margin-top-10"><img class="previewSelect" src="../../assets/preview/red.png" />评测标题</div>
+					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" class="margin-top-20" />
 				</div>
 				<h3 class="progess margin-top-20 margin-bottom-10"><img class="previewSelect" src="../../assets/preview/red.png"/>评测报告</h3>
 				<simditor></simditor>
@@ -294,25 +294,7 @@
 			getA(data) {
 				this.search = data;
 			},
-			//标题
-			handleArticletitleBlur() {
-				if(this.articleTitle.length !== 0) {
-					// this.articleError = '';
-					localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
-					if(!this.articlePathHasEdited) {
-						let date = new Date();
-						let year = date.getFullYear();
-						let month = date.getMonth() + 1;
-						let day = date.getDate();
-						this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
-						this.articlePath = this.articleTitle;
-						this.articlePathHasEdited = true;
-						this.showLink = true;
-					}
-				} else {
-					this.$Message.error('文章标题不可为空哦');
-				}
-			},
+
 			//动态添加维度
 			FormVisible() {
 				var num = 0,
@@ -706,42 +688,53 @@
 				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
 				var ddsd = dds.replace(/&nbsp;/ig, "");
 				if(this.search != "") {
-					if(this.articleTitle.length !== 0) {
-						if(this.articleTitle.length <= 60) {
-							if(ddsd != "") {
-								let date = new Date();
-								let year = date.getFullYear();
-								let month = date.getMonth() + 1;
-								let day = date.getDate();
-								let hour = date.getHours();
-								let minute = date.getMinutes();
+					if(this.changev != 0) {
+						if(this.articleTitle.length !== 0) {
+							if(this.articleTitle.length <= 60) {
+								if(ddsd != "") {
+									let date = new Date();
+									let year = date.getFullYear();
+									let month = date.getMonth() + 1;
+									let day = date.getDate();
+									let hour = date.getHours();
+									let minute = date.getMinutes();
 
-								localStorage.publishTime = year + '-' + this.p1(month) + '-' + this.p1(day) + ' ' + this.p1(hour) + ':' + this.p1(minute);
-								//项目
-								localStorage.search = this.search
-								//自定义评分项
-								this.arr = [];
-								for(let i = 0; i < this.listData.length; i++) {
-									//									console.log(this.listData)
-									this.arr.push({
-										modelId: this.listData[i].modelId,
-										modelName: this.listData[i].title,
-										modelWeight: this.listData[i].percent,
-										score: this.listData[i].value
+									localStorage.publishTime = year + '-' + this.p1(month) + '-' + this.p1(day) + ' ' + this.p1(hour) + ':' + this.p1(minute);
+									//项目
+									localStorage.search = this.search
+									//自定义评分项
+									this.arr = [];
+									for(let i = 0; i < this.listData.length; i++) {
+										//									console.log(this.listData)
+										this.arr.push({
+											modelId: this.listData[i].modelId,
+											modelName: this.listData[i].title,
+											modelWeight: this.listData[i].percent,
+											score: this.listData[i].value
+										});
+									}
+									localStorage.scoreList = JSON.stringify(this.arr) //标题
+									localStorage.articleTitle = this.articleTitle;
+									//内容
+									localStorage.content = $("textarea").val();
+									//总分
+									localStorage.totalscore = this.m
+									//标签
+									localStorage.tag = JSON.stringify(this.tagthree)
+									window.open("/preview/evaluating", "_blank")
+
+								} else {
+									this.$message({
+										showClose: true,
+										message: '内容不能为空',
+										type: 'error'
 									});
 								}
-								localStorage.scoreList = JSON.stringify(this.arr) //标题
-								localStorage.articleTitle = this.articleTitle;
-								//内容
-								localStorage.content = $("textarea").val();
-								//总分
-								localStorage.totalscore = this.m
-								window.open("/preview/evaluating", "_blank")
 
 							} else {
 								this.$message({
 									showClose: true,
-									message: '内容不能为空',
+									message: '标题小于60字',
 									type: 'error'
 								});
 							}
@@ -749,16 +742,16 @@
 						} else {
 							this.$message({
 								showClose: true,
-								message: '标题小于60字',
+								message: '文章标题不能为空',
 								type: 'error'
 							});
 						}
-
 					} else {
 						this.$message({
 							showClose: true,
-							message: '文章标题不能为空',
-							type: 'error'
+							message: "请评分",
+							type: 'error',
+							duration: 1500
 						});
 					}
 
@@ -789,190 +782,185 @@
 				var dds = dd.replace(/ /g, ""); //dds为得到后的内容
 				var ddsd = dds.replace(/&nbsp;/ig, "");
 				//				console.log(ddsd,ddsd.length)
-				if(this.search == "") {
+				if(this.search != "") {
+					if(this.changev != 0) {
+						if(this.articleTitle != "") {
+							if(this.articleTitle.length <= 60) {
+								if(this.listData.length == 0) {
+									if(ddsd == "") {
+										this.$message({
+											showClose: true,
+											message: "发布内容不能为空",
+											type: 'error',
+											duration: 1000
+										});
+
+									} else {
+										if(ddsd.toString().length < 25000) {
+
+											this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
+												confirmButtonText: '确认发布',
+												cancelButtonText: '再斟酌下  ',
+												type: 'warning',
+												center: true
+											}).then(() => {
+												//点击发布显示正在发布中
+												$(".web-tip").show();
+												setTimeout(() => {
+													let data = {
+														token: this.token,
+														projectName: this.search,
+														modelType: 4,
+														totalScore: this.m,
+														postTitle: this.articleTitle,
+														evauationContent: $("textarea").val(),
+														evaluationTags: JSON.stringify(this.tagthree)
+													}
+													publishW(data).then(res => {
+														//发布成功
+														if(res.code == 0) {
+															console.log(res.data)
+															localStorage.setItem("url", JSON.stringify(res.data))
+															this.$router.push('/previewsuc');
+														}
+													}).catch(function(error) {
+														//如果后台报错就关闭弹窗
+														$(".web-tip").hide();
+
+														alert(error.msg)
+
+													});
+												}, 500);
+
+											}).catch(() => {
+												this.$message({
+													type: 'info',
+													message: '已取消',
+													duration: 1500
+												});
+											});
+
+										} else {
+											this.$message({
+												showClose: true,
+												message: "内容不能为空",
+												type: 'error',
+												duration: 1000
+											});
+
+										}
+									}
+
+								} else {
+									if(this.q == 1) {
+										console.log(this.q)
+										if(ddsd == "") {
+											this.$message({
+												showClose: true,
+												message: "发布内容不能为空",
+												type: 'error',
+												duration: 1000
+											});
+
+										} else {
+											if(dds.toString().length < 25000) {
+												this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师：', {
+													confirmButtonText: '确认发布',
+													cancelButtonText: '再斟酌下  ',
+													type: 'warning',
+													center: true
+												}).then(() => {
+													//点击发布显示正在发布中
+													$(".web-tip").show();
+													setTimeout(() => {
+														let data = {
+															token: this.token,
+															projectName: this.search,
+															modelType: 4,
+															postTitle: this.articleTitle,
+															totalScore: this.m,
+															evauationContent: $("textarea").val(),
+															professionalEvaDetail: JSON.stringify(this.arr),
+															tagInfos: JSON.stringify(this.tagthree)
+														}
+														publishW(data).then(res => {
+															if(res.code == 0) {
+																localStorage.setItem("url", JSON.stringify(res.data))
+																this.$router.push('/previewsuc');
+															}
+														}).catch(function(error) {
+															//如果后台报错就关闭弹窗
+															$(".web-tip").hide();
+
+															alert(error.msg)
+														});
+													}, 500);
+
+												}).catch(() => {
+													this.$message({
+														type: 'info',
+														message: '已取消',
+														duration: 1500
+													});
+												});
+
+											} else {
+												this.$message({
+													showClose: true,
+													message: "内容不符合，不能为空",
+													type: 'error',
+													duration: 1000
+												});
+
+											}
+
+										}
+
+									} else {
+										this.$message({
+											showClose: true,
+											message: "权重总和要为1",
+											type: 'error',
+											duration: 1000
+										});
+
+									}
+								}
+							} else {
+								this.$message({
+									showClose: true,
+									message: "标题小于60字",
+									type: 'error',
+									duration: 1000
+								});
+
+							}
+
+						} else {
+							this.$message({
+								showClose: true,
+								message: "标题不能为空",
+								type: 'error',
+								duration: 1000
+							});
+
+						}
+					} else {
+						this.$message({
+							showClose: true,
+							message: "请评分",
+							type: 'error',
+							duration: 1500
+						});
+					}
+
+				} else {
 					this.$message({
 						showClose: true,
 						message: "请选择项目",
 						type: 'error',
 						duration: 1000
 					});
-
-				} else if(this.articleTitle != "") {
-					if(this.articleTitle.length <= 60) {
-						if(this.listData.length == 0) {
-							if(this.changev != 0) {
-								if(ddsd == "") {
-									this.$message({
-										showClose: true,
-										message: "发布内容不能为空",
-										type: 'error',
-										duration: 1000
-									});
-									//									this.$alert('发布内容不能为空', {
-									//										confirmButtonText: '确定',
-									//									});
-								} else {
-									if(ddsd.toString().length < 25000) {
-
-										this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师', {
-											confirmButtonText: '确认发布',
-											cancelButtonText: '再斟酌下  ',
-											type: 'warning',
-											center: true
-										}).then(() => {
-											//点击发布显示正在发布中
-											$(".web-tip").show();
-											setTimeout(() => {
-												let data = {
-													token: this.token,
-													projectName: this.search,
-													modelType: 4,
-													totalScore: this.m,
-													postTitle: this.articleTitle,
-													evauationContent: $("textarea").val(),
-													evaluationTags: JSON.stringify(this.tagthree)
-												}
-												publishW(data).then(res => {
-													//发布成功
-													if(res.code == 0) {
-														console.log(res.data)
-														localStorage.setItem("url", JSON.stringify(res.data))
-														this.$router.push('/previewsuc');
-													}
-												}).catch(function(error) {
-													//如果后台报错就关闭弹窗
-													$(".web-tip").hide();
-
-													alert(error.msg)
-
-												});
-											}, 500);
-
-										}).catch(() => {
-											this.$message({
-												type: 'info',
-												message: '已取消',
-												duration: 1500
-											});
-										});
-
-									} else {
-										this.$message({
-											showClose: true,
-											message: "内容不能为空",
-											type: 'error',
-											duration: 1000
-										});
-
-									}
-								}
-							} else {
-								this.$message({
-									showClose: true,
-									message: "请评分",
-									type: 'error',
-									duration: 1500
-								});
-							}
-
-						} else {
-							if(this.q == 1) {
-								console.log(this.q)
-								if(ddsd == "") {
-									this.$message({
-										showClose: true,
-										message: "发布内容不能为空",
-										type: 'error',
-										duration: 1000
-									});
-
-								} else {
-									if(dds.toString().length < 25000) {
-										this.$confirm('为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认?', '尊敬的项目分析师：', {
-											confirmButtonText: '确认发布',
-											cancelButtonText: '再斟酌下  ',
-											type: 'warning',
-											center: true
-										}).then(() => {
-											//点击发布显示正在发布中
-											$(".web-tip").show();
-											setTimeout(() => {
-												let data = {
-													token: this.token,
-													projectName: this.search,
-													modelType: 4,
-													postTitle: this.articleTitle,
-													totalScore: this.m,
-													evauationContent: $("textarea").val(),
-													professionalEvaDetail: JSON.stringify(this.arr),
-													tagInfos: JSON.stringify(this.tagthree)
-												}
-												publishW(data).then(res => {
-													if(res.code == 0) {
-														localStorage.setItem("url", JSON.stringify(res.data))
-														this.$router.push('/previewsuc');
-													}
-												}).catch(function(error) {
-													//如果后台报错就关闭弹窗
-													$(".web-tip").hide();
-
-													alert(error.msg)
-												});
-											}, 500);
-
-											//										this.$message({
-											//											type: 'success',
-											//											message: '提交成功!',
-											//											duration: 1500
-											//										});
-										}).catch(() => {
-											this.$message({
-												type: 'info',
-												message: '已取消',
-												duration: 1500
-											});
-										});
-
-									} else {
-										this.$message({
-											showClose: true,
-											message: "内容不符合，不能为空",
-											type: 'error',
-											duration: 1000
-										});
-
-									}
-
-								}
-
-							} else {
-								this.$message({
-									showClose: true,
-									message: "权重总和要为1",
-									type: 'error',
-									duration: 1000
-								});
-
-							}
-						}
-					} else {
-						this.$message({
-							showClose: true,
-							message: "标题小于60字",
-							type: 'error',
-							duration: 1000
-						});
-
-					}
-
-				} else {
-					this.$message({
-						showClose: true,
-						message: "标题不能为空",
-						type: 'error',
-						duration: 1000
-					});
-
 				}
 
 			},
