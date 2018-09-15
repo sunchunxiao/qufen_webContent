@@ -50,7 +50,7 @@
 						<!--<div id="qrcode"></div>-->
 						<div class="detail index-preview" @click="share">
 							
-							<el-popover title="扫码分享至朋友圈" placement="top-start" width="150" trigger="click">
+							<el-popover  title="扫码分享至朋友圈" placement="top-start" width="155" trigger="click">
 								<div id="qrcode"></div>
 								<span slot="reference" style="cursor: pointer;font-size: 14px; margin-left: 5px;color: #aaa;"><img class="hover-img" src="../../assets/common/share.png" alt="" />分享</span>
 							</el-popover>

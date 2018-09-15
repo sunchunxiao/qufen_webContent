@@ -337,7 +337,9 @@
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
-								//						console.log(nowdate)
+								//切割当前时间获取当前年份
+								var time = nowdate.split("-")
+								//						console.log(time[0])
 								var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
 
 								this.timestr = arr[0];
@@ -345,7 +347,15 @@
 									var a1 = arr[1].split(":")
 									res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								} else {
-									res.data.evaluations.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									//							console.log(year[0])
+									if(time[0] == year[0]) {
+										res.data.evaluations.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.evaluations.rows[i].createTimeStr = arr[0];
+									}
+
 								}
 
 								if(res.data.evaluations.rows[i].tagInfos != null) {
@@ -403,6 +413,9 @@
 							//时间  字符串切割
 							//调用 Data.customData()
 							var nowdate = Data.customData()
+							//切割当前时间获取当前年份
+							var time = nowdate.split("-")
+							//						console.log(time[0])
 							var arr = res.data.evaluations.rows[i].createTimeStr.split(" ")
 
 							this.timestr = arr[0];
@@ -412,9 +425,17 @@
 								res.data.evaluations.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								//									console.log(res.data.follows.rows[i].createTimeStr)
 							} else {
-								res.data.evaluations.rows[i].createTimeStr = arr[0];
+								//年份分割
+								var year = this.timestr.split("-")
+								//							console.log(year[0])
+								if(time[0] == year[0]) {
+									res.data.evaluations.rows[i].createTimeStr = year[1] + "-" + year[2];
+								} else {
+									res.data.evaluations.rows[i].createTimeStr = arr[0];
+								}
 
 							}
+							
 							if(res.data.evaluations.rows[i].tagInfos != null) {
 								this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
 								// console.log(this.tagInfos)

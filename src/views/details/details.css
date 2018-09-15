@@ -325,7 +325,7 @@ li {
 }*/
 .detail .el-popover__title{
 	text-align: center;
-	font-size: 15px;
+	font-size: 15px!important;
 }
 .detail #qrcode img{
 	width: 100%;

@@ -66,7 +66,7 @@
 				$(this).addClass("ping");
 
 			})
-			console.log(this.$route.query.id, this.token)
+//			console.log(this.$route.query.id, this.token)
 			this.id = this.$route.query.id - 0;
 			this.projectone()
 			this.$router.push('/summary/evaluatingcenter?id=' + this.id)

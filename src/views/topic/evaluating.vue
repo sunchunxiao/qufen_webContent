@@ -121,7 +121,7 @@
 			}
 		},
 		created() {
-//			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
 
 			this.bbtn();
@@ -170,13 +170,13 @@
 				eventVue.$on("myFun", (message) => { //这里最好用箭头函数，不然this指向有问题
 					this.sort = message
 					this.sort1 = this.sort
-//					console.log(this.sort1)
+					//					console.log(this.sort1)
 					this.loadPageList1()
 				})
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
-//				console.log(this.uid, createUserId)
+				//				console.log(this.uid, createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(createUserId != this.uid) {
@@ -187,7 +187,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").eq(index).html() - 0
-//							console.log(typeof this.num)
+							//							console.log(typeof this.num)
 							this.itemList[index].seen = !this.itemList[index].seen
 
 							if(this.itemList[index].seen == true) {
@@ -237,7 +237,7 @@
 			},
 			//关注
 			attention(createUserId, index) {
-//				console.log(createUserId)
+				//				console.log(createUserId)
 				var _this = this
 				if(this.token != "") {
 					//					console.log($(".discoveryBtndetail").eq(index).html())
@@ -251,9 +251,9 @@
 						cancelFollow(data).then(res => {
 
 							if(res.code == 0) {
-//								console.log(res.data.followStatus)
+								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-//									console.log('取消关注')
+									//									console.log('取消关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -281,7 +281,7 @@
 
 								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-//									console.log('已经关注')
+									//									console.log('已经关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"
@@ -321,7 +321,7 @@
 				$(".start").css("display", "block")
 				$(".article-commonNowrap").css("display", "none")
 				this.itemList = []
-				
+
 				//				if(getCookie('token')) {
 				// 查询数据  sort 1精选  type：1评测  爆料2 文章3
 				let data = {
@@ -336,7 +336,7 @@
 					if(res.code == 0) {
 
 						if(res.data.rows != null) {
-//							console.log(res.data)
+							//							console.log(res.data)
 							this.itemList = res.data.rows;
 							if(res.data.rows.length <= 2) {
 								$(".start").css("display", "none")
@@ -353,7 +353,9 @@
 								//时间  字符串切割
 								//调用 Data.customData()
 								var nowdate = Data.customData()
-								//						console.log(nowdate)
+								//切割当前时间获取当前年份
+								var time = nowdate.split("-")
+								//						console.log(time[0])
 								var arr = res.data.rows[i].createTimeStr.split(" ")
 
 								this.timestr = arr[0];
@@ -361,7 +363,15 @@
 									var a1 = arr[1].split(":")
 									res.data.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								} else {
-									res.data.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									//							console.log(year[0])
+									if(time[0] == year[0]) {
+										res.data.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.rows[i].createTimeStr = arr[0];
+									}
+
 								}
 
 								if(res.data.rows[i].tagInfos != null) {
@@ -395,7 +405,7 @@
 			},
 
 			more() {
-//				console.log(this.sort1)
+				//				console.log(this.sort1)
 				// 分页查询
 				if(this.hasNext == true) {
 					this.pageIndex = parseInt(this.pageIndex) + 1;
@@ -403,7 +413,7 @@
 					let data = {
 						type: 1,
 						sort: this.sort1,
-						tagId: 1,
+						tagId: this.id-0,
 						pageIndex: this.pageIndex,
 						pageSize: 10,
 						token: this.token
@@ -423,6 +433,9 @@
 							//时间  字符串切割
 							//调用 Data.customData()
 							var nowdate = Data.customData()
+							//切割当前时间获取当前年份
+							var time = nowdate.split("-")
+							//						console.log(time[0])
 							var arr = res.data.rows[i].createTimeStr.split(" ")
 
 							this.timestr = arr[0];
@@ -430,9 +443,16 @@
 								var a1 = arr[1].split(":")
 								//									console.log(a1)
 								res.data.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-								//									console.log(res.data.follows.rows[i].createTimeStr)
+							
 							} else {
-								res.data.rows[i].createTimeStr = arr[0];
+								//年份分割
+								var year = this.timestr.split("-")
+								//							console.log(year[0])
+								if(time[0] == year[0]) {
+									res.data.rows[i].createTimeStr = year[1] + "-" + year[2];
+								} else {
+									res.data.rows[i].createTimeStr = arr[0];
+								}
 
 							}
 							if(res.data.rows[i].tagInfos != null) {

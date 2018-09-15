@@ -21,10 +21,10 @@ axios.interceptors.response.use((res) => {
 // option = {method,body,header}
 const request = (url, options = {}) => {
   //测试地址2
-      var url = "/wap" + url;
+  //    var url = "/wap" + url;
 
  //本地 栋栋
-	//var url = "http://192.168.10.153:803" + url;
+	var url = "http://192.168.10.153:803" + url;
 
    //var url = "http://192.168.10.128:8081/wap" + url;
 

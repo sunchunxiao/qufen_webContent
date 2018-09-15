@@ -335,7 +335,9 @@
 							//时间  字符串切割
 							//调用 Data.customData()
 							var nowdate = Data.customData()
-							//						console.log(nowdate)
+							//切割当前时间获取当前年份
+							var time = nowdate.split("-")
+							//						console.log(time[0])
 							var arr = res.data.articles.rows[i].createTimeStr.split(" ")
 
 							this.timestr = arr[0];
@@ -343,7 +345,15 @@
 								var a1 = arr[1].split(":")
 								res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 							} else {
-								res.data.articles.rows[i].createTimeStr = arr[0];
+								//年份分割
+								var year = this.timestr.split("-")
+								//							console.log(year[0])
+								if(time[0] == year[0]) {
+									res.data.articles.rows[i].createTimeStr = year[1] + "-" + year[2];
+								} else {
+									res.data.articles.rows[i].createTimeStr = arr[0];
+								}
+
 							}
 
 							if(res.data.articles.rows[i].tagInfos != null) {
@@ -354,8 +364,10 @@
 
 						}
 						if(res.data.articles.rows.length > 2) {
-							$(".end").css("display", "block")
-							$(".start").css("display", "none")
+							if(this.hasNext == false) {
+								$(".end").css("display", "block")
+								$(".start").css("display", "none")
+							}
 						}
 
 					} else {
@@ -390,6 +402,9 @@
 							//时间  字符串切割
 							//调用 Data.customData()
 							var nowdate = Data.customData()
+							//切割当前时间获取当前年份
+							var time = nowdate.split("-")
+							//						console.log(time[0])
 							var arr = res.data.articles.rows[i].createTimeStr.split(" ")
 
 							this.timestr = arr[0];
@@ -399,7 +414,14 @@
 								res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								//									console.log(res.data.follows.rows[i].createTimeStr)
 							} else {
-								res.data.articles.rows[i].createTimeStr = arr[0];
+								//年份分割
+								var year = this.timestr.split("-")
+								//							console.log(year[0])
+								if(time[0] == year[0]) {
+									res.data.articles.rows[i].createTimeStr = year[1] + "-" + year[2];
+								} else {
+									res.data.articles.rows[i].createTimeStr = arr[0];
+								}
 
 							}
 							if(res.data.articles.rows[i].tagInfos != null) {
@@ -419,81 +441,6 @@
 					$(".end").css("display", "block")
 					$(".start").css("display", "none")
 				}
-
-				// 分页查询
-				//				if(this.allLoaded == false) {
-				//					if(this.totalpage == 1) {
-				//						this.pageIndex = 1;
-				//						this.allLoaded = true;
-				//					} else {
-				//						this.pageIndex = parseInt(this.pageIndex) + 1;
-				//						this.allLoaded = false;
-				//					}
-				//					let params = {
-				//						pageIndex: this.pageIndex,
-				//						pageSize: 10,
-				//						projectId: this.id,
-				//						token: this.token
-				//					}
-				//
-				//					if(this.allLoaded == false) {
-				//						articleList(params).then(res => {
-				//							for(var i = 0; i < res.data.articles.rows.length; i++) {
-				//								this.itemList.push(res.data.articles.rows[i]);
-				//								if(res.data.articles.rows[i].postSmallImages) {
-				//									//								console.log(JSON.parse(res.data.follows.rows[i].postSmallImages))
-				//									var postSmallImages = JSON.parse(res.data.articles.rows[i].postSmallImages)
-				//									if(postSmallImages.length != 0) {
-				//										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-				//										//									console.log(postSmallImages.slice(0, 1))
-				//									} else {
-				//										res.data.articles.rows[i].postSmallImages = postSmallImages.slice(0, 1)
-				//
-				//									}
-				//								}
-				//
-				//								//时间  字符串切割
-				//								//调用 Data.customData()
-				//								var nowdate = Data.customData()
-				//								var arr = res.data.articles.rows[i].createTimeStr.split(" ")
-				//
-				//								this.timestr = arr[0];
-				//								if(nowdate == this.timestr) {
-				//									var a1 = arr[1].split(":")
-				//									//									console.log(a1)
-				//									res.data.articles.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-				//									//									console.log(res.data.follows.rows[i].createTimeStr)
-				//								} else {
-				//									res.data.articles.rows[i].createTimeStr = arr[0];
-				//
-				//								}
-				//
-				//								this.tagInfos = JSON.parse(res.data.articles.rows[i].tagInfos)
-				//								// console.log(this.tagInfos)
-				//								res.data.articles.rows[i].tagInfos = this.tagInfos
-				//							}
-				//							// this.totalpage = Math.ceil(res.data.recommends.rowCount / this.pageSize);
-				//
-				//							// 是否还有下一页，如果没有就禁止上拉刷新
-				//							if(this.pageIndex == this.totalpage) {
-				//
-				//								this.allLoaded = true;
-				//
-				//								$(".end").css("display", "block")
-				//								$(".start").css("display", "none")
-				//							}
-				//						})
-				//					}else{
-				//						// 是否还有下一页，如果没有就禁止上拉刷新
-				//							if(this.pageIndex == this.totalpage) {
-				//
-				//								this.allLoaded = true;
-				//
-				//								$(".end").css("display", "block")
-				//								$(".start").css("display", "none")
-				//							}
-				//					}
-				//				}
 
 			},
 
