@@ -12,15 +12,14 @@
 					<h3 class="progess add-title"><img class="previewSelect" src="../../assets/preview/red.png"/>文章内容</h3>
 					<Simditor></Simditor>
 				</div>
-				<div class="xm" style="margin-top: 10px;">
+				<div class="xm margin-top-20">
 					<h3 class="pos1 p">项目</h3>
 					<!--模糊查询币种-->
 					<Search @aa="getA($event)"></Search>
 					<span class="select">请选择相应的区块链项目</span>
 				</div>
 				<div>
-					<h3 class="p">标签</h3>
-					<p class="upload-img">选择爆料标签，最多三个</p>
+					<h3 class="p margin-top-20">选择标签<span class="newTags">选择爆料标签，最多三个</span></h3>
 					<div class="max-nine" v-for="(item,index1) in tag">
 						<div class="previewfontSize">{{item.typeName}}</div>
 						<ul class="label">

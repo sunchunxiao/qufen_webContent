@@ -2,22 +2,17 @@
 	<div class="discussion">
 		<h1 class="showprojectH">发表爆料</h1>
 		<div class="cx-addproject">
-			
 			<!--文字内容-->
-			<div class="evaluation">
-				<!--<div class="evaluationContent margin-top-20">
-					<div class="progess margin-top-10">爆料标题</div>
-					<Input type="text" placeholder="请输入标题，建议标题字数在60个字以内" v-model="articleTitle" @on-blur="handleArticletitleBlur" class="margin-top-20" />
-				</div>-->
-				<h3 class="progess add-title"><img class="previewSelect" src="../../assets/preview/red.png"/>爆料内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span></h3>
+			<div class="evaluation" style="margin-top:0;">
+				
+				<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png"/>爆料内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span></div>
 				<!--引simditor文本编译器-->
 				<!--<Simditor></Simditor>-->
-				<Input class="disText" @keyup.native="up" @keydown.native="down" id="weibo" v-model="value6" type="textarea" :rows="6" placeholder="输入内容"></Input>
+				<Input class="disText margin-top-20" @keyup.native="up" @keydown.native="down" id="weibo" v-model="value6" type="textarea" :rows="6" placeholder="输入内容"></Input>
 			</div>
 			<!--图片上传-->
 			<div style="color: black;font-size: 12px;">
-				<h3 class="p margin-top-10">上传图片</h3>
-				<p class="upload-img">选择图片上传，支持jpg.png. 小于5M，最多9张</p>
+				<h3 class="p margin-top-20">上传图片<span style="font-size: 13px;font-weight: 400;margin-left: 15px;">选择图片上传，支持jpg.png. 小于5M，最多9张</span></h3>
 				<div class="max-nine">
 
 					<div class="demo-upload-list" v-for="item in uploadList">
@@ -41,17 +36,16 @@
 				</Modal>
 			</div>
 			<!--项目选择-->
-			<div class="xm" style="margin-top: 10px;">
+			<div class="xm margin-top-20">
 				<h3 class="pos1 p">项目</h3>
 				<!--模糊查询币种-->
-				<Search @aa="getA($event)"></Search>
+				<Search style="margin-left: 76px;" @aa="getA($event)"></Search>
 				<span class="select">请选择相应的区块链项目</span>
 			</div>
 			
 			<!--标签选择和保存文章-->
 			<div>
-				<h3 class="p">选择标签</h3>
-				<p class="upload-img">选择爆料标签，最多三个</p>
+				<h3 class="p margin-top-20">选择标签 <span class="newTags">选择爆料标签，最多三个</span></h3>
 				<div class="max-nine" v-for="(item,index1) in tag">
 					<div class="previewfontSize">{{item.typeName}}</div>
 					<ul class="label">
