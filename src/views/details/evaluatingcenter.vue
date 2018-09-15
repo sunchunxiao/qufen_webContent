@@ -45,7 +45,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div style="cursor: pointer;" @click="projectdetail(item.projectId)" class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.evaluationTags" v-for="item1 in item.evaluationTags">#{{item1.tagName}}#</span>
 								</div>
 							</div>
 						</div>
@@ -116,7 +116,7 @@
 			}
 		},
 		mounted() {
-//			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 
 			this.id = this.$route.query.id - 0;
 
@@ -271,11 +271,10 @@
 									}
 
 								}
-
-								if(res.data.evaluations.rows[i].tagInfos != null) {
-									this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
-									// console.log(this.tagInfos)
-									res.data.evaluations.rows[i].tagInfos = this.tagInfos
+								//标签
+								if(res.data.evaluations.rows[i].evaluationTags != null && res.data.evaluations.rows[i].evaluationTags.length != 0) {
+									this.tagInfos = JSON.parse(res.data.evaluations.rows[i].evaluationTags)
+									res.data.evaluations.rows[i].evaluationTags = this.tagInfos
 								}
 
 							}
@@ -346,11 +345,11 @@
 								}
 
 							}
-							
-							if(res.data.evaluations.rows[i].tagInfos != null) {
-								this.tagInfos = JSON.parse(res.data.evaluations.rows[i].tagInfos)
-								// console.log(this.tagInfos)
-								res.data.evaluations.rows[i].tagInfos = this.tagInfos
+
+							//标签
+							if(res.data.evaluations.rows[i].evaluationTags != null && res.data.evaluations.rows[i].evaluationTags.length != 0) {
+								this.tagInfos = JSON.parse(res.data.evaluations.rows[i].evaluationTags)
+								res.data.evaluations.rows[i].evaluationTags = this.tagInfos
 							}
 
 						}
