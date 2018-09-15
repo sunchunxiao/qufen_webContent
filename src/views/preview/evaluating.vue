@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div style="background-color:rgb(246,246,246) ;" >
+		<div style="background-color:rgb(246,246,246) ;">
 			<div class="commmon indexCommon">
 				<!--左边文章-->
 				<div class="common-article">
@@ -27,10 +27,10 @@
 							</div>
 							<div class="articleTag">
 								<div class="crack-tag1"><span class="span-name">{{projectCode}}</span></div>
-								<span class="crack-tag2"  v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
+								<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 							</div>
 						</div>
-						
+
 					</div>
 
 				</div>
@@ -93,22 +93,22 @@
 				donateNum: '',
 				commentsNum: '',
 				praiseNum: '',
-				projectCode:'',
-				tagInfos:[]
+				projectCode: '',
+				tagInfos: []
 			}
 		},
-		
+
 		updated() {
 			$('.articleContent').find('img').css({
 				width: '80%',
-				height:'80%'
+				height: '80%'
 			})
 			$('.articleContent').find('p').css({
 				fontSize: '15px',
 				width: "100%",
 				margin: "1em 0",
 				wordWrap: "break-word",
-				lineHeight:'26px'
+				lineHeight: '26px'
 			});
 			$(".el-slider__runway.disabled .el-slider__bar").each(function() {
 				$(".slider .el-slider__runway.disabled .el-slider__bar").eq(0).css("background-color", "rgb(60,137,247)")
@@ -136,44 +136,43 @@
 			//小于1600px   main-right展开
 			this.resizeBannerImage1();
 			window.addEventListener('resize', this.resizeBannerImage)
-			
+
 			this.articleTitle = localStorage.articleTitle;
 			this.m = localStorage.content;
-//			console.log(localStorage)
+			//			console.log(localStorage)
 			this.src = getCookie("img")
 			this.username = getCookie("user")
-            //时间
+			//时间
 			var nowdate = Data.customData()
 			var arr = localStorage.publishTime.split(" ")
-//			console.log(arr,nowdate)
-			
+			//			console.log(arr,nowdate)
+
 			this.timestr = arr[0];
 			if(nowdate == this.timestr) {
-				this.timestr1 =arr[1];
+				this.timestr1 = arr[1];
 			} else {
 				this.timestr1 = arr[0];
 			}
 			//总分
-			this.totalscore = localStorage.totalscore-0
-			
-			if(localStorage.tag!=null){
+			this.totalscore = localStorage.totalscore - 0
+
+			if(localStorage.tag != null) {
 				var tagInfo = JSON.parse(localStorage.tag)
-				if(tagInfo.length!=0){
+				if(tagInfo.length != 0) {
 					this.tagInfos = JSON.parse(localStorage.tag)
 				}
 			}
 			//自定义项
-			if(localStorage.scoreList!=null){
-				var storeList =  JSON.parse(localStorage.scoreList)
-				if(storeList.length!=0){
+			if(localStorage.scoreList != null) {
+				var storeList = JSON.parse(localStorage.scoreList)
+				if(storeList.length != 0) {
 					this.storeList = JSON.parse(localStorage.scoreList)
-				}else{
-					$(".sliderList").css("display","none")
+				} else {
+					$(".sliderList").css("display", "none")
 				}
 
 			}
-			
-			
+
 			var projectCode = localStorage.search.split("/")
 			this.projectCode = projectCode[0]
 		},
@@ -186,13 +185,8 @@
 				var _width1 = $(".common-article").offset().left
 				// console.log(_width,_width1)
 
-				if(_width<1590){
-					var left = _width1+643
-					$(".common-attention").css("left",left)
-				}else{
-					var left = _width1+703
-					$(".common-attention").css("left",left)
-				}
+				var left = _width1 + 727
+				$(".common-attention").css("left", left)
 
 			},
 			resizeBannerImage() {
@@ -200,19 +194,14 @@
 				var _width1 = $(".common-article").offset().left
 				// console.log(_width,_width1)
 
-				if(_width<1590){
-					var left = _width1+650
-					$(".common-attention").css("left",left)
-				}else{
-					var left = _width1+713
-					$(".common-attention").css("left",left)
-				}
+				var left = _width1 + 730
+				$(".common-attention").css("left", left)
 
 			},
-			attention(){
+			attention() {
 				this.$alert('本功能目前只对APP开放', {
-						confirmButtonText: '确定',
-					});
+					confirmButtonText: '确定',
+				});
 			}
 		}
 	}
