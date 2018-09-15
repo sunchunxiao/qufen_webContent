@@ -31,7 +31,7 @@
 								<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1">
 									<span class="span-name">{{projectCode}}</span>
 								</div>
-								<span class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
+								<span @click="tags(item1.tagId)" class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
 							</div>
 						</div>
 						<div class="row articleRow5">
@@ -266,6 +266,10 @@
 			window.removeEventListener("resize", this.resizeBannerImage);
 		},
 		methods: {
+			//标签
+			tags(id) {
+				window.open('/topic?id=' + id, "_blank")
+			},
 			//点赞
 			thumbsup() {
 				console.log(this.uid, this.createUserId)
