@@ -81,9 +81,8 @@
 				<div class="margin-top-20 progess margin-bottom-10"><img class="previewSelect" src="../../assets/preview/red.png" />评测报告</div>
 				<Simditor></Simditor>
 			</div>
-			<div>
-				<h3 class="p">选择标签</h3>
-				<p class="upload-img">选择爆料标签，最多三个</p>
+			<div class="margin-top-20">
+				<h3 class=" p">选择标签<span class="newTags ">选择爆料标签，最多三个</span></h3>
 				<div class="max-nine" v-for="(item,index1) in tag">
 					<div class="previewfontSize">{{item.typeName}}</div>
 					<ul class="label">
