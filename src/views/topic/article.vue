@@ -117,7 +117,7 @@
 				num: 0,
 				uid: 0,
 				sort: 1,
-				sort1:1
+				sort1: 1
 			}
 		},
 		created() {
@@ -170,7 +170,7 @@
 				eventVue.$on("myFun", (message) => { //这里最好用箭头函数，不然this指向有问题
 					this.sort = message
 					this.sort1 = this.sort
-					console.log(this.sort1)
+					//					console.log(this.sort1)
 					this.loadPageList3()
 				})
 			},
@@ -404,21 +404,21 @@
 				});
 			},
 			more() {
-				console.log(this.sort1)
+				//				console.log(this.sort1)
 				// 分页查询
 				if(this.hasNext == true) {
-					
+
 					this.pageIndex = parseInt(this.pageIndex) + 1;
 					// 查询数据  sort 1精选  type：1评测  爆料2 文章3
 					let data = {
 						type: 3,
 						sort: this.sort1,
-						tagId: this.id-0,
+						tagId: this.id - 0,
 						pageIndex: this.pageIndex,
 						pageSize: 10,
 						token: this.token
 					}
-					console.log(this.pageIndex)
+
 					getPostInfoWithTags(data).then(res => {
 						this.hasNext = res.data.hasNext
 						for(var i = 0; i < res.data.rows.length; i++) {

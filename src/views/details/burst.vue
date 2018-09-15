@@ -133,8 +133,8 @@
 </template>
 
 <script>
-	import {saveFollow, cancelFollow,discuss, discussCommentList, saveComment, savePostPraise } from '@/service/home';
-	
+	import { saveFollow, cancelFollow, discuss, discussCommentList, saveComment, savePostPraise } from '@/service/home';
+
 	import QRCode from 'qrcodejs2'
 	import Data from '../../assets/js/date'
 	import { getCookie } from '../../assets/js/cookie.js'
@@ -302,7 +302,7 @@
 								_this.$router.push('/user/login')
 							}
 						});
-					}else{
+					} else {
 						this.$message({
 							type: 'error',
 							message: '评论不能为空',
@@ -380,6 +380,9 @@
 							this.newestComments = res.data.comments.rows
 							//调用 Data.customData()
 							var nowdate = Data.customData()
+							//切割当前时间获取当前年份
+							var time = nowdate.split("-")
+							//						console.log(time[0])
 							for(let i = 0; i < res.data.comments.rows.length; i++) {
 								//时间  字符串切割
 
@@ -389,7 +392,15 @@
 									var a1 = arr[1].split(":")
 									res.data.comments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								} else {
-									res.data.comments.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									//							console.log(year[0])
+									if(time[0] == year[0]) {
+										res.data.comments.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.comments.rows[i].createTimeStr = arr[0];
+									}
+
 								}
 
 							}
@@ -432,10 +443,13 @@
 						discussCommentList(data).then(res => {
 							if(res.code == 0) {
 								this.hasNext = res.data.comments.hasNext
-								console.log(this.hasNext)
+								//								console.log(this.hasNext)
 								if(res.data.comments.rows != null) {
 									//调用 Data.customData()
 									var nowdate = Data.customData()
+									//切割当前时间获取当前年份
+									var time = nowdate.split("-")
+									//						console.log(time[0])
 									for(var i = 0; i < res.data.comments.rows.length; i++) {
 										//时间  字符串切割
 										var arr = res.data.comments.rows[i].createTimeStr.split(" ")
@@ -444,7 +458,15 @@
 											var a1 = arr[1].split(":")
 											res.data.comments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 										} else {
-											res.data.comments.rows[i].createTimeStr = arr[0];
+											//年份分割
+											var year = this.timestr.split("-")
+											//							console.log(year[0])
+											if(time[0] == year[0]) {
+												res.data.comments.rows[i].createTimeStr = year[1] + "-" + year[2];
+											} else {
+												res.data.comments.rows[i].createTimeStr = arr[0];
+											}
+
 										}
 
 										this.newestComments.push(res.data.comments.rows[i]);
@@ -561,7 +583,26 @@
 						//时间  字符串切割
 						//调用 Data.customData()
 						var nowdate = Data.customData()
+						//切割当前时间获取当前年份
+						var time = nowdate.split("-")
+						//						console.log(time[0])
 						var arr = data.createTimeStr.split(" ")
+						this.timestr = arr[0];
+						if(nowdate == this.timestr) {
+							var a1 = arr[1].split(":")
+							this.timestr1 = a1[0] + ":" + a1[1];
+						} else {
+							//年份分割
+							var year = this.timestr.split("-")
+							//							console.log(year[0])
+							if(time[0] == year[0]) {
+								this.timestr1 = year[1] + "-" + year[2];
+							} else {
+								this.timestr1 = arr[0];
+							}
+
+						}
+
 						this.projectCode = data.projectCode
 						//关注状态
 						this.followStatus = data.followStatus
@@ -573,14 +614,6 @@
 
 						if(data.tagInfos != null && data.tagInfos.length != 0) {
 							this.tagInfos = JSON.parse(data.tagInfos)
-						}
-
-						this.timestr = arr[0];
-						if(nowdate == this.timestr) {
-							var a1 = arr[1].split(":")
-							this.timestr1 = a1[0] + ":" + a1[1];
-						} else {
-							this.timestr1 = arr[0];
 						}
 
 						this.userSignature = data.createUserSignature;

@@ -49,8 +49,8 @@
 						<!--分享-->
 						<!--<div id="qrcode"></div>-->
 						<div class="detail index-preview" @click="share">
-							
-							<el-popover  title="扫码分享至朋友圈" placement="top-start" width="155" trigger="click">
+
+							<el-popover title="扫码分享至朋友圈" placement="top-start" width="155" trigger="click">
 								<div id="qrcode"></div>
 								<span slot="reference" style="cursor: pointer;font-size: 14px; margin-left: 5px;color: #aaa;"><img class="hover-img" src="../../assets/common/share.png" alt="" />分享</span>
 							</el-popover>
@@ -398,6 +398,9 @@
 							this.newestComments = res.data.newestComments.rows
 							//调用 Data.customData()
 							var nowdate = Data.customData()
+							//切割当前时间获取当前年份
+							var time = nowdate.split("-")
+							//						console.log(time[0])
 							for(let i = 0; i < res.data.newestComments.rows.length; i++) {
 								//时间  字符串切割
 
@@ -407,7 +410,15 @@
 									var a1 = arr[1].split(":")
 									res.data.newestComments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 								} else {
-									res.data.newestComments.rows[i].createTimeStr = arr[0];
+									//年份分割
+									var year = this.timestr.split("-")
+									//							console.log(year[0])
+									if(time[0] == year[0]) {
+										res.data.newestComments.rows[i].createTimeStr = year[1] + "-" + year[2];
+									} else {
+										res.data.newestComments.rows[i].createTimeStr = arr[0];
+									}
+
 								}
 
 							}
@@ -452,6 +463,9 @@
 								if(res.data.newestComments.rows != null) {
 									//调用 Data.customData()
 									var nowdate = Data.customData()
+									//切割当前时间获取当前年份
+									var time = nowdate.split("-")
+									//						console.log(time[0])
 									for(var i = 0; i < res.data.newestComments.rows.length; i++) {
 
 										//时间  字符串切割
@@ -461,7 +475,15 @@
 											var a1 = arr[1].split(":")
 											res.data.newestComments.rows[i].createTimeStr = a1[0] + ":" + a1[1];
 										} else {
-											res.data.newestComments.rows[i].createTimeStr = arr[0];
+											//年份分割
+											var year = this.timestr.split("-")
+											//							console.log(year[0])
+											if(time[0] == year[0]) {
+												res.data.newestComments.rows[i].createTimeStr = year[1] + "-" + year[2];
+											} else {
+												res.data.newestComments.rows[i].createTimeStr = arr[0];
+											}
+
 										}
 
 										this.newestComments.push(res.data.newestComments.rows[i]);
@@ -521,6 +543,9 @@
 						//时间  字符串切割
 						//调用 Data.customData()
 						var nowdate = Data.customData()
+						//切割当前时间获取当前年份
+						var time = nowdate.split("-")
+						//						console.log(time[0])
 						var arr = data.createTimeStr.split(" ")
 
 						this.timestr = arr[0];
@@ -528,7 +553,15 @@
 							var a1 = arr[1].split(":")
 							this.timestr1 = a1[0] + ":" + a1[1];
 						} else {
-							this.timestr1 = arr[0];
+							//年份分割
+							var year = this.timestr.split("-")
+							//							console.log(year[0])
+							if(time[0] == year[0]) {
+								this.timestr1 = year[1] + "-" + year[2];
+							} else {
+								this.timestr1 = arr[0];
+							}
+
 						}
 
 						//赞助人数

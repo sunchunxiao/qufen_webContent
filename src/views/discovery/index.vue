@@ -218,7 +218,7 @@
 
 		},
 		updated() {
-			console.log($('.contentImg img').width())
+//			console.log($('.contentImg img').width())
 
 			for(let i = 0; i < this.itemList.length; i++) {
 				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
