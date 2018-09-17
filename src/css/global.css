@@ -316,13 +316,15 @@
 	display: inline-block;
 	background-color: #d8e7fd;
 	border-radius: 35px;
-	width: 61px;
+	/*width: 61px;*/
 	height: 22px;
 	text-align: center;
 	line-height: 22px;
 }
 
 .span-name {
+	display: inline-block;
+	padding: 0 10px;
 	font-size: 14px;
 	color: #3b88f6;
 }
@@ -334,6 +336,9 @@
 	letter-spacing: 0;
 	margin-left: 16px;
 	cursor: pointer;
+	padding: 0 5px;
+	border: 1px solid #3b88f6;
+	border-radius:3px ;
 }
 
 

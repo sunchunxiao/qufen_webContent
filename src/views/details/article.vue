@@ -28,7 +28,7 @@
 					</div>
 					<div class="articleTag">
 						<div style="cursor: pointer;" @click="projectdetail" class="crack-tag1"><span class="span-name">{{tag}}</span></div>
-						<span @click="tags(item1.tagId)" class="crack-tag2" v-for="item1 in tagInfos">#{{item1.tagName}}#</span>
+						<span @click="tags(item1.tagId)" class="crack-tag2" v-for="item1 in tagInfos">{{item1.tagName}}</span>
 					</div>
 				</div>
 				<div class="row articleRow5">

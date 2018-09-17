@@ -45,7 +45,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div style="cursor: pointer;" @click="projectdetail(item.projectId)" class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.evaluationTags" v-for="item1 in item.evaluationTags">#{{item1.tagName}}#</span>
+									<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.evaluationTags" v-for="item1 in item.evaluationTags">{{item1.tagName}}</span>
 								</div>
 							</div>
 						</div>

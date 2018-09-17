@@ -46,7 +46,7 @@
 								<div class="row4">
 									<!--标签-->
 									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">#{{item1.tagName}}#</span>
+									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">{{item1.tagName}}</span>
 								</div>
 							</div>
 						</div>
@@ -457,7 +457,7 @@
 							}
 							if(res.data.rows[i].tagInfos != null) {
 								this.tagInfos = JSON.parse(res.data.rows[i].tagInfos)
-								res.data.evaluations.rows[i].tagInfos = this.tagInfos
+								res.data.rows[i].tagInfos = this.tagInfos
 							}
 
 						}
