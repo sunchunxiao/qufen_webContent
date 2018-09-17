@@ -61,7 +61,7 @@
 		mounted() {
 			$(".onecommon li").on("click", function() {
 				var index = $(this).index();
-				console.log($(this).index())
+//				console.log($(this).index())
 				$(".onecommon li").removeClass("ping");
 				$(this).addClass("ping");
 
@@ -144,12 +144,11 @@
 							followType: 3,
 							followedId: this.id
 						}
-						console.log(222)
 						cancelFollow(data).then(res => {
 							if(res.code == 0) {
 								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-									console.log('取消关注')
+//									console.log('取消关注')
 									$(".discoveryBtn").css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -176,7 +175,7 @@
 
 								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-									console.log('已经关注')
+//									console.log('已经关注')
 									$(".discoveryBtn").css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"

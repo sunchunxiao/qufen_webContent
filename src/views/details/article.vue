@@ -250,7 +250,7 @@
 			},
 			//点赞
 			thumbsup() {
-				console.log(this.uid, this.createUserId)
+//				console.log(this.uid, this.createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(this.createUserId != this.uid) {
@@ -261,7 +261,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").html() - 0
-							console.log(typeof this.num)
+//							console.log(typeof this.num)
 							this.seen = !this.seen
 
 							if(this.seen == true) {
@@ -274,7 +274,7 @@
 							}
 							//调接口
 							savePostPraise(data).then(res => {
-								console.log(res.data)
+//								console.log(res.data)
 
 							})
 						}
@@ -300,7 +300,7 @@
 				var _this = this
 				//评论内容
 				var value = $(".previewMessage").val()
-				console.log(value.length)
+//				console.log(value.length)
 				if(this.token != "") {
 					if(value != '' && value.length != 0) {
 						$(".previewContent").css('display', "block")

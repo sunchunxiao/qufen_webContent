@@ -155,7 +155,7 @@
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
-				console.log(this.uid, createUserId)
+//				console.log(this.uid, createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(createUserId != this.uid) {
@@ -166,7 +166,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").eq(index).html() - 0
-							console.log(typeof this.num)
+//							console.log(typeof this.num)
 							this.itemList[index].seen = !this.itemList[index].seen
 
 							if(this.itemList[index].seen == true) {

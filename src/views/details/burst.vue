@@ -235,7 +235,7 @@
 			},
 			//点赞
 			thumbsup() {
-				console.log(this.uid, this.createUserId)
+//				console.log(this.uid, this.createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(this.createUserId != this.uid) {
@@ -245,7 +245,7 @@
 							$(".commonZan").attr("src", "../../static/img/zanb.png")
 						} else {
 							this.num = $(".thumbsupNum").html() - 0
-							console.log(typeof this.num)
+//							console.log(typeof this.num)
 							this.seen = !this.seen
 
 							if(this.seen == true) {
@@ -258,7 +258,7 @@
 							}
 							//调接口
 							savePostPraise(data).then(res => {
-								console.log(res.data)
+//								console.log(res.data)
 
 							})
 						}
@@ -507,9 +507,9 @@
 						}
 						cancelFollow(data).then(res => {
 							if(res.code == 0) {
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-									console.log('取消关注')
+//									console.log('取消关注')
 									$(".discoveryBtn").css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -534,9 +534,9 @@
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-									console.log('已经关注')
+//									console.log('已经关注')
 									$(".discoveryBtn").css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"

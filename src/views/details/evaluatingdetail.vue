@@ -119,7 +119,7 @@
 			}
 		},
 		mounted() {
-			console.log(this.$route.query.id)
+//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
 
 			this.loadPageList() //加载文章
@@ -168,7 +168,7 @@
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
-				console.log(this.uid, createUserId)
+//				console.log(this.uid, createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(createUserId != this.uid) {
@@ -179,7 +179,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").eq(index).html() - 0
-							console.log(typeof this.num)
+//							console.log(typeof this.num)
 							this.itemList[index].seen = !this.itemList[index].seen
 
 							if(this.itemList[index].seen == true) {
@@ -242,9 +242,9 @@
 						cancelFollow(data).then(res => {
 
 							if(res.code == 0) {
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-									console.log('取消关注')
+//									console.log('取消关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -272,7 +272,7 @@
 
 								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-									console.log('已经关注')
+//									console.log('已经关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"

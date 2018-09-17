@@ -139,7 +139,7 @@
 				window.open('https://g.qufen.top', "_blank")
 			},
 			attention(id, index) {
-				console.log($(".discoveryBtn").eq(index).html())
+//				console.log($(".discoveryBtn").eq(index).html())
 				if(this.token != "") {
 					if($(".discoveryBtn").eq(index).html() == "已关注") {
 						//取消关注
@@ -148,12 +148,12 @@
 							followType: 1,
 							followedId: id
 						}
-						console.log(222)
+						
 						cancelFollow(data).then(res => {
 							if(res.code == 0) {
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-									console.log('取消关注')
+//									console.log('取消关注')
 									$(".discoveryBtn").eq(index).css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -172,9 +172,9 @@
 						saveFollow(data).then(res => {
 							if(res.code == 0) {
 
-								console.log(res.data.followStatus)
+//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-									console.log('已经关注')
+//									console.log('已经关注')
 									$(".discoveryBtn").eq(index).css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"
@@ -195,7 +195,6 @@
 			},
 
 			handleSizeChange(val) {
-				console.log(qq)
 				console.log(`每页 ${val} 条`);
 
 			},
