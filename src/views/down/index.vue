@@ -9,8 +9,8 @@
 					<div class="downCodewrapper">
 						<div class="downCodewrap">
 							<img src="../../assets/down/new.png" />
-							<div class="codeDown">IOS 下载</div>
-							<div class="codeDown">Android 下载</div>
+							<div @click="ios" class="codeDown">IOS 下载</div>
+							<div @click="android" class="codeDown">Android 下载</div>
 						</div>
 					</div>
 				</div>
@@ -107,6 +107,14 @@
 			);
 
 		},
+		methods:{
+			ios(){
+				window.location.href = "itms-services://?action=download-manifest&url=https://pic.qufen.top/ipa.plist"
+			},
+			android(){
+				window.location.href = "https://pic.qufen.top/qufen_update.apk"
+			}
+		}
 
 	}
 </script>

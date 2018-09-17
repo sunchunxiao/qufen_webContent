@@ -386,7 +386,7 @@
 				var _width = $(window).width();
 				var _width1 = $(".common-article").offset().left
 				//				console.log( _width1)
-				var left = _width1 + 727
+				var left = _width1 + 724
 				$(".common-attention").css("left", left)
 
 			},

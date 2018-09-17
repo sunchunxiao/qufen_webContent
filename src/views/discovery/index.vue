@@ -333,7 +333,7 @@
 				//					var left = _width1 + 680
 				//					$(".common-attention").css("left", left)
 				//				} else {
-				var left = _width1 + 727
+				var left = _width1 + 724
 				$(".common-attention").css("left", left)
 				//				}
 
