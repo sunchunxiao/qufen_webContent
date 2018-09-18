@@ -2,7 +2,6 @@
 	<div>
 		<div style="background-color:rgb(246,246,246) ; ">
 			<div class="commmon projectCommon">
-
 				<div class="common-article">
 					<!--信息-->
 					<div class="common-article-wrap">
@@ -13,7 +12,7 @@
 								</div>
 								<div style="margin-left: 20px;" class="name">
 									<div><span class="oneusername">{{projectCode}}</span></div>
-									<div><span class="onedec">{{raterNum}} 评测 •  {{followerNum}} 关注</span></div>
+									<div><span class="onedec">{{followerNum}} 关注</span></div>
 									<div class="projectName-time">{{projectSignature}}</div>
 								</div>
 								<div class="index-score projectScore">{{totalScore}}</div>
