@@ -419,14 +419,17 @@
 					}
 					followList(data).then(res => {
 
-						this.itemList = res.data.follows.rows;
 						if(res.data.follows.rows != null && res.data.follows.rows.length != 0) {
+							this.itemList = res.data.follows.rows;
 							if(res.data.follows.rows.length <= 2) {
 								$(".start").css("display", "none")
 							}
 
 							for(var i = 0; i < res.data.follows.rows.length; i++) {
-								//						console.log(res.data.follows.rows[i].postSmallImagesList)
+								//待结算
+								if(res.data.follows.rows[i].postTotalIncome == null) {
+									res.data.follows.rows[i].postTotalIncome = "待结算"
+								}
 								if(res.data.follows.rows[i].postSmallImagesList != null) {
 									if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
 										res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)
@@ -466,9 +469,8 @@
 								}
 
 							}
+							this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 						}
-
-						this.totalpage = Math.ceil(res.data.follows.rowCount / this.pageSize);
 
 					})
 				} else {
@@ -503,6 +505,10 @@
 						followList(params).then(res => {
 							for(var i = 0; i < res.data.follows.rows.length; i++) {
 								this.itemList.push(res.data.follows.rows[i]);
+								//待结算
+								if(res.data.follows.rows[i].postTotalIncome == null) {
+									res.data.follows.rows[i].postTotalIncome = "待结算"
+								}
 								if(res.data.follows.rows[i].postSmallImagesList != null) {
 									if(res.data.follows.rows[i].postSmallImagesList.length != 0) {
 										res.data.follows.rows[i].postSmallImagesList = res.data.follows.rows[i].postSmallImagesList.slice(0, 1)

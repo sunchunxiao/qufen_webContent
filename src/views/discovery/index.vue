@@ -44,7 +44,7 @@
 									<!--标签-->
 									<div style="cursor: pointer;" class="crack-tag1" @click="projectdetail(item.projectId)">
 										<span class="span-name">{{item.projectCode}}</span>
-										
+
 									</div>
 									<span @click="tags(item1.tagId)" class="crack-tag2" v-for="item1 in item.tagInfos">{{item1.tagName}}</span>
 								</div>
@@ -221,7 +221,7 @@
 
 		},
 		updated() {
-//			console.log($('.contentImg img').width())
+			//			console.log($('.contentImg img').width())
 
 			for(let i = 0; i < this.itemList.length; i++) {
 				if(this.itemList[i].postSmallImagesList == null || this.itemList[i].postSmallImagesList.length == 0) {
@@ -261,7 +261,7 @@
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
-//				console.log(this.uid, createUserId)
+				//				console.log(this.uid, createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(createUserId != this.uid) {
@@ -272,7 +272,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").eq(index).html() - 0
-//							console.log(typeof this.num)
+							//							console.log(typeof this.num)
 							this.itemList[index].seen = !this.itemList[index].seen
 
 							if(this.itemList[index].seen == true) {
@@ -286,7 +286,7 @@
 							}
 							//调接口
 							savePostPraise(data).then(res => {
-//								console.log(res.data)
+								//								console.log(res.data)
 
 							})
 						}
@@ -453,6 +453,10 @@
 					}
 
 					for(var i = 0; i < res.data.recommends.rows.length; i++) {
+						//待结算
+						if(res.data.recommends.rows[i].postTotalIncome == null) {
+							res.data.recommends.rows[i].postTotalIncome = "待结算"
+						}
 						res.data.recommends.rows[i].seen = false
 						if(res.data.recommends.rows[i].postSmallImagesList != null) {
 							if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
@@ -466,7 +470,7 @@
 						var nowdate = Data.customData()
 						//切割当前时间获取当前年份
 						var time = nowdate.split("-")
-//						console.log(time[0])
+						//						console.log(time[0])
 
 						var arr = res.data.recommends.rows[i].createTimeStr.split(" ")
 
@@ -477,7 +481,7 @@
 						} else {
 							//年份分割
 							var year = this.timestr.split("-")
-//							console.log(year[0])
+							//							console.log(year[0])
 							if(time[0] == year[0]) {
 								res.data.recommends.rows[i].createTimeStr = year[1] + "-" + year[2];
 							} else {
@@ -524,6 +528,10 @@
 							for(var i = 0; i < res.data.recommends.rows.length; i++) {
 								res.data.recommends.rows[i].seen = false
 								this.itemList.push(res.data.recommends.rows[i]);
+								//待结算
+								if(res.data.recommends.rows[i].postTotalIncome == null) {
+									res.data.recommends.rows[i].postTotalIncome = "待结算"
+								}
 								if(res.data.recommends.rows[i].postSmallImagesList != null) {
 									if(res.data.recommends.rows[i].postSmallImagesList.length != 0) {
 										res.data.recommends.rows[i].postSmallImagesList = res.data.recommends.rows[i].postSmallImagesList.slice(0, 1)

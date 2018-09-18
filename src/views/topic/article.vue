@@ -338,13 +338,17 @@
 					if(res.code == 0) {
 
 						if(res.data.rows != null) {
-							//							console.log(res.data)
+
 							this.itemList = res.data.rows;
 							if(res.data.rows.length <= 2) {
 								$(".start").css("display", "none")
 							}
 							this.hasNext = res.data.hasNext
 							for(var i = 0; i < res.data.rows.length; i++) {
+								//待结算
+								if(res.data.rows[i].postTotalIncome == null) {
+									res.data.rows[i].postTotalIncome = "待结算"
+								}
 								if(res.data.rows[i].postSmallImagesList != null) {
 									if(res.data.rows[i].postSmallImagesList.length != 0) {
 										res.data.rows[i].postSmallImagesList = res.data.rows[i].postSmallImagesList.slice(0, 1)
@@ -423,6 +427,10 @@
 						this.hasNext = res.data.hasNext
 						for(var i = 0; i < res.data.rows.length; i++) {
 							this.itemList.push(res.data.rows[i]);
+							//待结算
+							if(res.data.rows[i].postTotalIncome == null) {
+								res.data.rows[i].postTotalIncome = "待结算"
+							}
 
 							if(res.data.rows[i].postSmallImagesList != null) {
 								if(res.data.rows[i].postSmallImagesList.length != 0) {
@@ -456,7 +464,7 @@
 								}
 
 							}
-							if(res.data.rows[i].tagInfos != null&&res.data.rows[i].tagInfos.length!=0) {
+							if(res.data.rows[i].tagInfos != null && res.data.rows[i].tagInfos.length != 0) {
 								this.tagInfos = JSON.parse(res.data.rows[i].tagInfos)
 								res.data.rows[i].tagInfos = this.tagInfos
 							}

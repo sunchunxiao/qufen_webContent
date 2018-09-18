@@ -245,6 +245,11 @@
 						this.hasNext = res.data.discusses.hasNext
 						for(var i = 0; i < res.data.discusses.rows.length; i++) {
 							res.data.discusses.rows[i].seen = false
+							//待结算
+							if(res.data.discusses.rows[i].postTotalIncome == null) {
+								res.data.discusses.rows[i].postTotalIncome = "待结算"
+							}
+							
 							if(res.data.discusses.rows[i].postSmallImagesList != null) {
 								if(res.data.discusses.rows[i].postSmallImagesList.length != 0) {
 									res.data.discusses.rows[i].postSmallImagesList = res.data.discusses.rows[i].postSmallImagesList.slice(0, 1)
@@ -315,6 +320,10 @@
 						for(var i = 0; i < res.data.discusses.rows.length; i++) {
 							res.data.discusses.rows[i].seen = false
 							this.itemList.push(res.data.discusses.rows[i]);
+							//待结算
+							if(res.data.discusses.rows[i].postTotalIncome == null) {
+								res.data.discusses.rows[i].postTotalIncome = "待结算"
+							}
 							if(res.data.discusses.rows[i].postSmallImagesList != null) {
 								if(res.data.discusses.rows[i].postSmallImagesList.length != 0) {
 									res.data.discusses.rows[i].postSmallImagesList = res.data.discusses.rows[i].postSmallImagesList.slice(0, 1)

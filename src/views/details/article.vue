@@ -569,6 +569,9 @@
 						}
 
 						//赞助人数
+						if(data.postTotalIncome==null){
+							data.postTotalIncome="待结算"
+						}
 						this.postTotalIncome = data.postTotalIncome;
 						//评论人数
 						this.commentsNum = data.commentsNum;

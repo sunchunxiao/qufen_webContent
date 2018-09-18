@@ -43,11 +43,11 @@
 										</p>
 									</div>
 								</div>
-								<div class="row4">
-									<!--标签-->
-									<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
-									<span class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">{{item1.tagName}}</span>
-								</div>
+							</div>
+							<div class="row4">
+								<!--标签-->
+								<div class="crack-tag1"><span class="span-name">{{item.projectCode}} </span></div>
+								<span @click="tags(item1.tagId)" class="crack-tag2" v-if="item.tagInfos" v-for="item1 in item.tagInfos">{{item1.tagName}}</span>
 							</div>
 						</div>
 						<div class="row5" style="cursor: pointer;">
@@ -166,6 +166,10 @@
 			window.removeEventListener("scroll", this.scrollHandler);
 		},
 		methods: {
+			//点击标签
+			tags(id) {
+				window.open('/topic?id=' + id, "_blank")
+			},
 			bbtn: function() {
 				eventVue.$on("myFun", (message) => { //这里最好用箭头函数，不然this指向有问题
 					this.sort = message
@@ -343,6 +347,10 @@
 							}
 							this.hasNext = res.data.hasNext
 							for(var i = 0; i < res.data.rows.length; i++) {
+								//待结算
+								if(res.data.rows[i].postTotalIncome == null) {
+									res.data.rows[i].postTotalIncome = "待结算"
+								}
 								if(res.data.rows[i].postSmallImagesList != null) {
 									if(res.data.rows[i].postSmallImagesList.length != 0) {
 										res.data.rows[i].postSmallImagesList = res.data.rows[i].postSmallImagesList.slice(0, 1)
@@ -413,7 +421,7 @@
 					let data = {
 						type: 1,
 						sort: this.sort1,
-						tagId: this.id-0,
+						tagId: this.id - 0,
 						pageIndex: this.pageIndex,
 						pageSize: 10,
 						token: this.token
@@ -422,6 +430,10 @@
 						this.hasNext = res.data.hasNext
 						for(var i = 0; i < res.data.rows.length; i++) {
 							this.itemList.push(res.data.rows[i]);
+							//待结算
+							if(res.data.rows[i].postTotalIncome == null) {
+								res.data.rows[i].postTotalIncome = "待结算"
+							}
 
 							if(res.data.rows[i].postSmallImagesList != null) {
 								if(res.data.rows[i].postSmallImagesList.length != 0) {
@@ -443,7 +455,7 @@
 								var a1 = arr[1].split(":")
 								//									console.log(a1)
 								res.data.rows[i].createTimeStr = a1[0] + ":" + a1[1];
-							
+
 							} else {
 								//年份分割
 								var year = this.timestr.split("-")

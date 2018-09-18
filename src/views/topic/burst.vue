@@ -342,6 +342,10 @@
 							}
 							this.hasNext = res.data.hasNext
 							for(var i = 0; i < res.data.rows.length; i++) {
+								//待结算
+								if(res.data.rows[i].postTotalIncome == null) {
+									res.data.rows[i].postTotalIncome = "待结算"
+								}
 								if(res.data.rows[i].postSmallImagesList != null) {
 									if(res.data.rows[i].postSmallImagesList.length != 0) {
 										res.data.rows[i].postSmallImagesList = res.data.rows[i].postSmallImagesList.slice(0, 1)
@@ -411,7 +415,7 @@
 					let data = {
 						type: 2,
 						sort: this.sort1,
-						tagId: this.id-0,
+						tagId: this.id - 0,
 						pageIndex: this.pageIndex,
 						pageSize: 10,
 						token: this.token
@@ -420,6 +424,10 @@
 						this.hasNext = res.data.hasNext
 						for(var i = 0; i < res.data.rows.length; i++) {
 							this.itemList.push(res.data.rows[i]);
+							//待结算
+							if(res.data.rows[i].postTotalIncome == null) {
+								res.data.rows[i].postTotalIncome = "待结算"
+							}
 
 							if(res.data.rows[i].postSmallImagesList != null) {
 								if(res.data.rows[i].postSmallImagesList.length != 0) {

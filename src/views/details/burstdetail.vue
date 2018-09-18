@@ -122,7 +122,7 @@
 		},
 
 		mounted() {
-//			console.log(this.$route.query.id)
+			//			console.log(this.$route.query.id)
 			this.id = this.$route.query.id - 0;
 
 			this.loadPageList() //加载文章
@@ -171,7 +171,7 @@
 			},
 			//点赞
 			thumbsup(index, postId, createUserId, praiseStatus) {
-//				console.log(this.uid, createUserId)
+				//				console.log(this.uid, createUserId)
 				if(this.token != '') {
 					//本人不能给本人点赞
 					if(createUserId != this.uid) {
@@ -182,7 +182,7 @@
 						} else {
 
 							this.num = $(".thumbsupNum").eq(index).html() - 0
-//							console.log(typeof this.num)
+							//							console.log(typeof this.num)
 							this.itemList[index].seen = !this.itemList[index].seen
 
 							if(this.itemList[index].seen == true) {
@@ -231,7 +231,7 @@
 				}
 			},
 			attention(createUserId, index) {
-//				console.log(createUserId)
+				//				console.log(createUserId)
 				var _this = this
 				if(this.token != "") {
 					//					console.log($(".discoveryBtndetail").eq(index).html())
@@ -245,9 +245,9 @@
 						cancelFollow(data).then(res => {
 
 							if(res.code == 0) {
-//								console.log(res.data.followStatus)
+								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 0) {
-//									console.log('取消关注')
+									//									console.log('取消关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(59, 136, 246)",
 										color: "rgb(255,255,255)"
@@ -275,7 +275,7 @@
 
 								//								console.log(res.data.followStatus)
 								if(res.data.followStatus == 1) {
-//									console.log('已经关注')
+									//									console.log('已经关注')
 									$(".discoveryBtndetail").eq(index).css({
 										backgroundColor: "rgb(244, 244, 244)",
 										color: "rgb(126, 126, 126)"
@@ -328,6 +328,11 @@
 						}
 						this.hasNext = res.data.discusses.hasNext
 						for(var i = 0; i < res.data.discusses.rows.length; i++) {
+							//待结算
+							if(res.data.discusses.rows[i].postTotalIncome == null) {
+								res.data.discusses.rows[i].postTotalIncome = "待结算"
+							}
+
 							if(res.data.discusses.rows[i].postSmallImagesList != null) {
 								if(res.data.discusses.rows[i].postSmallImagesList.length != 0) {
 									res.data.discusses.rows[i].postSmallImagesList = res.data.discusses.rows[i].postSmallImagesList.slice(0, 1)
@@ -396,6 +401,10 @@
 						this.hasNext = res.data.discusses.hasNext
 						for(var i = 0; i < res.data.discusses.rows.length; i++) {
 							this.itemList.push(res.data.discusses.rows[i]);
+							//待结算
+							if(res.data.discusses.rows[i].postTotalIncome == null) {
+								res.data.discusses.rows[i].postTotalIncome = "待结算"
+							}
 							if(res.data.discusses.rows[i].postSmallImagesList != null) {
 								if(res.data.discusses.rows[i].postSmallImagesList.length != 0) {
 									res.data.discusses.rows[i].postSmallImagesList = res.data.discusses.rows[i].postSmallImagesList.slice(0, 1)
