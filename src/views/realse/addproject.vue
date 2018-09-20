@@ -19,7 +19,7 @@
 					<span class="select">请选择相应的区块链项目</span>
 				</div>
 				<div>
-					<h3 class="p margin-top-20">选择标签<span class="newTags">选择爆料标签，最多三个</span></h3>
+					<h3 class="p margin-top-20">选择标签<span class="newTags">选择标签，最多三个</span></h3>
 					<div class="max-nine" v-for="(item,index1) in tag">
 						<div class="previewfontSize">{{item.typeName}}</div>
 						<ul class="label">

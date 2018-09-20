@@ -78,7 +78,7 @@
 			//			if(getCookie('rmbUser') == "true") {
 			//				$("#autolog").attr("checked", true);
 			//				this.phone = getCookie("username");
-			//				
+			//
 			//			}
 
 		},
@@ -94,7 +94,7 @@
 				var myreg = /^1[3456789]\d{9}$/;
 
 				var timer = 60 * 60 * 24
-				
+
 				this.$cookieStore.setCookie('username', this.phone, timer)
 				if(this.phone == "" || this.password == "") {
 					this.$message({
@@ -122,7 +122,6 @@
 								this.$router.push("/discovery")
 
 							}
-
 						}).catch(function(error) {
 							//						alert(error.msg)
 							_this.$message({

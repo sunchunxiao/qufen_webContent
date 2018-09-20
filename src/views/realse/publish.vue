@@ -82,7 +82,7 @@
 				<Simditor></Simditor>
 			</div>
 			<div class="margin-top-20">
-				<h3 class=" p">选择标签<span class="newTags ">选择爆料标签，最多三个</span></h3>
+				<h3 class=" p">选择标签<span class="newTags ">选择标签，最多三个</span></h3>
 				<div class="max-nine" v-for="(item,index1) in tag">
 					<div class="previewfontSize">{{item.typeName}}</div>
 					<ul class="label">

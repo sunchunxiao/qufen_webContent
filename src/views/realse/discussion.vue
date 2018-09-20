@@ -1,11 +1,11 @@
 <template>
 	<div class="discussion">
-		<h1 class="showprojectH">发表爆料</h1>
+		<h1 class="showprojectH">发表讨论</h1>
 		<div class="cx-addproject">
 			<!--文字内容-->
 			<div class="evaluation" style="margin-top:0;">
 
-				<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png" />爆料内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span>
+				<div class="progess"><img class="previewSelect" src="../../assets/preview/red.png" />讨论内容 <span class="add-title1">(内容300 / 剩余<span id="word"> 300</span>个)</span>
 				</div>
 				<!--引simditor文本编译器-->
 				<!--<Simditor></Simditor>-->
@@ -46,7 +46,7 @@
 
 			<!--标签选择和保存文章-->
 			<div>
-				<h3 class="p margin-top-20">选择标签 <span class="newTags">选择爆料标签，最多三个</span></h3>
+				<h3 class="p margin-top-20">选择标签 <span class="newTags">选择讨论标签，最多三个</span></h3>
 				<div class="max-nine" v-for="(item,index1) in tag">
 					<div class="previewfontSize">{{item.typeName}}</div>
 					<ul class="label">

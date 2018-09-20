@@ -20,7 +20,7 @@
 							<div class="onecommon">
 								<ul>
 									<li class="ping" @click="next1"><span>评测</span></li>
-									<li @click="next2"><span>爆料</span></li>
+									<li @click="next2"><span>讨论</span></li>
 									<li @click="next3"><span>文章</span></li>
 									
 								</ul>
