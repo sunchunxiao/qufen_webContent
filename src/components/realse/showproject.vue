@@ -193,7 +193,7 @@
 						<router-link class="showA" to="/addproject">发表文章</router-link>
 						</MenuItem>
 						<MenuItem name="1-3">
-						<router-link class="showA" to="/discussion">发表爆料</router-link>
+						<router-link class="showA" to="/discussion">发表讨论</router-link>
 						</MenuItem>
 					</Submenu>
 				</Menu>
